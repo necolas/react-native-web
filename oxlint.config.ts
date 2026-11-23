@@ -91,7 +91,6 @@ export default defineConfig({
     // temporarily disabled
     'capitalized-calls': 'off',
     'no-await-in-loop': 'off',
-    'no-unused-expressions': 'off',
 
     'react/jsx-no-constructed-context-values': 'off',
     'react/no-array-index-key': 'off',

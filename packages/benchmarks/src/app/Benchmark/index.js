@@ -203,7 +203,7 @@ export default class Benchmark extends Component {
       if (forceLayout) {
         this._samples[cycle].layoutStart = Timing.now();
         if (document.body) {
-          document.body.offsetWidth;
+          void document.body.offsetWidth;
         }
         this._samples[cycle].layoutEnd = Timing.now();
       }
