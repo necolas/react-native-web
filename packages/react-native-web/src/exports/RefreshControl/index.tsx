@@ -6,12 +6,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import type { ReactNode } from 'react';
+import React from 'react';
+
 import type { ColorValue } from '../../types';
 import type { ViewProps } from '../View';
-import type { ReactNode } from 'react';
-
 import View from '../View';
-import React from 'react';
 
 type RefreshControlProps = ViewProps & {
   colors?: Array<ColorValue>;
@@ -28,7 +28,7 @@ type RefreshControlProps = ViewProps & {
 
 function RefreshControl(props: RefreshControlProps): ReactNode {
   const {
-    /* eslint-disable */
+    /* oxlint-disable no-unused-vars */
     colors,
     enabled,
     onRefresh,
@@ -39,7 +39,7 @@ function RefreshControl(props: RefreshControlProps): ReactNode {
     tintColor,
     title,
     titleColor,
-    /* eslint-enable */
+    /* oxlint-enable no-unused-vars */
     ...rest
   } = props;
 

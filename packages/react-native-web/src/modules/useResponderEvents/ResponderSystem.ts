@@ -129,11 +129,11 @@ to return true:wantsResponderID|                            |
                                |                            |
                                +                            + */
 
+import type { Nullable } from '../../types';
+import canUseDOM from '../canUseDom';
 import type { ResponderEvent } from './createResponderEvent';
-import type { ResponderDOMEvent } from './ResponderEventTypes';
-import type { ResponderNode } from './utils';
-
 import createResponderEvent from './createResponderEvent';
+import type { ResponderDOMEvent } from './ResponderEventTypes';
 import {
   isCancelish,
   isEndish,
@@ -142,6 +142,8 @@ import {
   isSelectionChange,
   isStartish
 } from './ResponderEventTypes';
+import { ResponderTouchHistoryStore } from './ResponderTouchHistoryStore';
+import type { ResponderNode } from './utils';
 import {
   getLowestCommonAncestor,
   getResponderPaths,
@@ -150,9 +152,6 @@ import {
   isPrimaryPointerDown,
   setResponderId
 } from './utils';
-import { ResponderTouchHistoryStore } from './ResponderTouchHistoryStore';
-import canUseDOM from '../canUseDom';
-import type { Nullable } from '../../types';
 
 /* ------------ TYPES ------------ */
 

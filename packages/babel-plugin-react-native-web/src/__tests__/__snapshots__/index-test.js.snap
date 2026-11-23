@@ -10,12 +10,12 @@ import * as ReactNativeModules from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import ReactNative from 'react-native-web/dist/index.js';
-import View from 'react-native-web/dist/exports/View';
-import { Invalid } from 'react-native-web/dist/index.js';
-import MyView from 'react-native-web/dist/exports/View';
-import useLocaleContext from 'react-native-web/dist/exports/useLocaleContext';
-import * as ReactNativeModules from 'react-native-web/dist/index.js';
+import ReactNative from "react-native-web/dist/index.js";
+import View from "react-native-web/dist/exports/View";
+import { Invalid } from "react-native-web/dist/index.js";
+import MyView from "react-native-web/dist/exports/View";
+import useLocaleContext from "react-native-web/dist/exports/useLocaleContext";
+import * as ReactNativeModules from "react-native-web/dist/index.js";
 
 `;
 
@@ -27,12 +27,12 @@ import * as ReactNativeModules from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import unstable_createElement from 'react-native-web/dist/exports/createElement';
-import StyleSheet from 'react-native-web/dist/exports/StyleSheet';
-import View from 'react-native-web/dist/exports/View';
-import Pressable from 'react-native-web/dist/exports/Pressable';
-import processColor from 'react-native-web/dist/exports/processColor';
-import * as ReactNativeModules from 'react-native-web/dist/index.js';
+import unstable_createElement from "react-native-web/dist/exports/createElement";
+import StyleSheet from "react-native-web/dist/exports/StyleSheet";
+import View from "react-native-web/dist/exports/View";
+import Pressable from "react-native-web/dist/exports/Pressable";
+import processColor from "react-native-web/dist/exports/processColor";
+import * as ReactNativeModules from "react-native-web/dist/index.js";
 
 `;
 
@@ -43,10 +43,10 @@ export { StyleSheet, Text, unstable_createElement } from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export { default as View } from 'react-native-web/dist/exports/View';
-export { default as StyleSheet } from 'react-native-web/dist/exports/StyleSheet';
-export { default as Text } from 'react-native-web/dist/exports/Text';
-export { default as unstable_createElement } from 'react-native-web/dist/exports/createElement';
+export { default as View } from "react-native-web/dist/exports/View";
+export { default as StyleSheet } from "react-native-web/dist/exports/StyleSheet";
+export { default as Text } from "react-native-web/dist/exports/Text";
+export { default as unstable_createElement } from "react-native-web/dist/exports/createElement";
 
 `;
 
@@ -57,10 +57,10 @@ export { StyleSheet, Text, unstable_createElement } from 'react-native-web';
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export { default as View } from 'react-native-web/dist/exports/View';
-export { default as StyleSheet } from 'react-native-web/dist/exports/StyleSheet';
-export { default as Text } from 'react-native-web/dist/exports/Text';
-export { default as unstable_createElement } from 'react-native-web/dist/exports/createElement';
+export { default as View } from "react-native-web/dist/exports/View";
+export { default as StyleSheet } from "react-native-web/dist/exports/StyleSheet";
+export { default as Text } from "react-native-web/dist/exports/Text";
+export { default as unstable_createElement } from "react-native-web/dist/exports/createElement";
 
 `;
 
@@ -72,10 +72,10 @@ const { StyleSheet, Pressable } = require('react-native');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/index.js');
-const View = require('react-native-web/dist/exports/View').default;
-const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
-const Pressable = require('react-native-web/dist/exports/Pressable').default;
+const ReactNative = require("react-native-web/dist/index.js");
+const View = require("react-native-web/dist/exports/View").default;
+const StyleSheet = require("react-native-web/dist/exports/StyleSheet").default;
+const Pressable = require("react-native-web/dist/exports/Pressable").default;
 
 `;
 
@@ -87,13 +87,13 @@ const { StyleSheet, View, Pressable, processColor } = require('react-native-web'
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ReactNative = require('react-native-web/dist/index.js');
+const ReactNative = require("react-native-web/dist/index.js");
 const unstable_createElement =
-  require('react-native-web/dist/exports/createElement').default;
-const StyleSheet = require('react-native-web/dist/exports/StyleSheet').default;
-const View = require('react-native-web/dist/exports/View').default;
-const Pressable = require('react-native-web/dist/exports/Pressable').default;
+  require("react-native-web/dist/exports/createElement").default;
+const StyleSheet = require("react-native-web/dist/exports/StyleSheet").default;
+const View = require("react-native-web/dist/exports/View").default;
+const Pressable = require("react-native-web/dist/exports/Pressable").default;
 const processColor =
-  require('react-native-web/dist/exports/processColor').default;
+  require("react-native-web/dist/exports/processColor").default;
 
 `;

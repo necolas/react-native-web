@@ -1,5 +1,6 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import React from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+
 import Example from '../../shared/example';
 
 export default function ActivityIndicatorPage() {

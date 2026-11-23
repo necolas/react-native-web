@@ -6,8 +6,9 @@
  */
 
 import { act, render } from '@testing-library/react';
-import * as React from 'react';
 import { clearPointers, createEventTarget } from 'dom-event-testing-library';
+import * as React from 'react';
+
 import useHover from '..';
 
 type DivRef = React.RefObject<HTMLDivElement | null>;

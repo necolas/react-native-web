@@ -6,9 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ViewProps } from '../View';
-
 import * as React from 'react';
+
+import type { ViewProps } from '../View';
 import View from '../View';
 
 type KeyboardAvoidingViewProps = ViewProps & {
@@ -22,11 +22,11 @@ const KeyboardAvoidingView = (
   props: KeyboardAvoidingViewProps
 ): React.ReactNode => {
   const {
-    /* eslint-disable */
+    /* oxlint-disable no-unused-vars */
     behavior,
     contentContainerStyle,
     keyboardVerticalOffset,
-    /* eslint-enable */
+    /* oxlint-enable no-unused-vars */
     ...rest
   } = props;
 

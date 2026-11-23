@@ -1,6 +1,7 @@
-import Text from './Text';
-import { StyleSheet, View } from 'react-native';
 import React, { Fragment } from 'react';
+import { StyleSheet, View } from 'react-native';
+
+import Text from './Text';
 
 /** @param {number} time */
 const fmt = (time) => {

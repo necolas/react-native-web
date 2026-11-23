@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { HostNode } from '../../../types';
+import { act, render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
 
 import ActivityIndicator from '..';
-import React from 'react';
-import { createEventTarget } from 'dom-event-testing-library';
-import { act, render } from '@testing-library/react';
+import type { HostNode } from '../../../types';
 
 describe('components/ActivityIndicator', () => {
   describe('prop "aria-label"', () => {

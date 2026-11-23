@@ -1,5 +1,6 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+
 import Example from '../../shared/example';
 
 const placeholder = process.env.basePath + '/image/placeholder.svg';

@@ -4,6 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+
 import { minify } from 'terser';
 
 async function minifyDir(dir) {

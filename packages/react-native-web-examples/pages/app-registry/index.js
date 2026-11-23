@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppRegistry, Text, StyleSheet } from 'react-native';
+
 import Example from '../../shared/example';
 
 function App() {

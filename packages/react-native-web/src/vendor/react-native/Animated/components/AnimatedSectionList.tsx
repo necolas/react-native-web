@@ -15,7 +15,9 @@ import createAnimatedComponent from '../createAnimatedComponent';
 /**
  * @see https://github.com/facebook/react-native/commit/b8c8562
  */
-const SectionListWithEventThrottle = (props: React.ComponentProps<typeof SectionList>) => <SectionList scrollEventThrottle={0.0001} {...props} />;
+const SectionListWithEventThrottle = (
+  props: React.ComponentProps<typeof SectionList>
+) => <SectionList scrollEventThrottle={0.0001} {...props} />;
 
 export default createAnimatedComponent<
   Omit<React.ComponentProps<typeof SectionList>, 'ref'>,

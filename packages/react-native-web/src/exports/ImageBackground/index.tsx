@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ImageProps } from '../Image';
-import type { ViewProps, ViewStyle } from '../View/types';
-
 import * as React from 'react';
+
+import type { ImageProps } from '../Image';
 import Image from '../Image';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
+import type { ViewProps, ViewStyle } from '../View/types';
 
 type ImageBackgroundProps = Omit<ImageProps, 'style'> & {
   imageRef?: React.Ref<React.ComponentRef<typeof View>>;

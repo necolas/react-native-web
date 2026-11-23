@@ -7,11 +7,12 @@
  * @format
  */
 
-import {useCallback} from 'react';
+import { useCallback } from 'react';
+
 import type { Nullable } from '../../../types';
 
 type CallbackRef<T> = (instance: T) => unknown;
-type ObjectRef<T> = {current: T};
+type ObjectRef<T> = { current: T };
 
 type Ref<T> = CallbackRef<T> | ObjectRef<T>;
 
@@ -39,6 +40,6 @@ export default function useMergeRefs<T>(
         }
       }
     },
-    [...refs], // eslint-disable-line react-hooks/exhaustive-deps
+    [...refs]
   );
 }

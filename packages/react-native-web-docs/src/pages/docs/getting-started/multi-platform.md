@@ -72,6 +72,7 @@ Create a `web/webpack.config.js` file:
 // web/webpack.config.js
 
 import path from 'node:path';
+
 import webpack from 'webpack';
 
 const appDirectory = path.resolve(import.meta.dirname, '../');

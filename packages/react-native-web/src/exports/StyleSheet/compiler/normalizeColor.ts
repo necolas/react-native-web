@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { getSystemColor } from '../../../modules/systemColors';
-import isWebColor from '../../../modules/isWebColor';
 import processColor from '../../../exports/processColor';
+import isWebColor from '../../../modules/isWebColor';
+import { getSystemColor } from '../../../modules/systemColors';
 import type { Nullable } from '../../../types';
 
 const normalizeColor = (

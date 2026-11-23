@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* oxlint-disable */
 
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
@@ -9,8 +9,8 @@
  * From React 16.0.0
  */
 
-import isUnitlessNumber from '../isUnitlessNumber';
 import type { Nullable } from '../../types';
+import isUnitlessNumber from '../isUnitlessNumber';
 
 /**
  * Convert a value into the proper css writable value. The style name `name`

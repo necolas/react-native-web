@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 import type { ReactNode } from 'react';
-import type { ViewProps, ViewStyle } from '../../exports/View/types';
+import React from 'react';
 
 import View from '../../exports/View';
-import React from 'react';
+import type { ViewProps, ViewStyle } from '../../exports/View/types';
 
 /**
  * Common implementation for a simple stubbed view.

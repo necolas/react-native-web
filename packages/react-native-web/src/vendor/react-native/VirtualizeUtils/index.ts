@@ -9,7 +9,7 @@
 
 'use strict';
 
-import type {FrameMetricProps} from '../VirtualizedList/VirtualizedListProps';
+import type { FrameMetricProps } from '../VirtualizedList/VirtualizedListProps';
 
 /**
  * Used to find the indices of the frames that overlap the given offsets. Useful for finding the
@@ -21,12 +21,12 @@ export function elementsThatOverlapOffsets(
   props: FrameMetricProps,
   getFrameMetrics: (
     index: number,
-    props: FrameMetricProps,
+    props: FrameMetricProps
   ) => {
-    length: number,
-    offset: number,
+    length: number;
+    offset: number;
   },
-  zoomScale: number = 1,
+  zoomScale: number = 1
 ): Array<number> {
   const itemCount = props.getItemCount(props.data);
   const result = [];
@@ -36,7 +36,6 @@ export function elementsThatOverlapOffsets(
     let right = itemCount - 1;
 
     while (left <= right) {
-      // eslint-disable-next-line no-bitwise
       const mid = left + ((right - left) >>> 1);
       const frame = getFrameMetrics(mid, props);
       const scaledOffsetStart = frame.offset * zoomScale;
@@ -69,13 +68,13 @@ export function elementsThatOverlapOffsets(
  */
 export function newRangeCount(
   prev: {
-    first: number,
-    last: number,
+    first: number;
+    last: number;
   },
   next: {
-    first: number,
-    last: number,
-  },
+    first: number;
+    last: number;
+  }
 ): number {
   return (
     next.last -
@@ -83,7 +82,7 @@ export function newRangeCount(
     1 -
     Math.max(
       0,
-      1 + Math.min(next.last, prev.last) - Math.max(next.first, prev.first),
+      1 + Math.min(next.last, prev.last) - Math.max(next.first, prev.first)
     )
   );
 }
@@ -99,32 +98,32 @@ export function computeWindowedRenderLimits(
   maxToRenderPerBatch: number,
   windowSize: number,
   prev: {
-    first: number,
-    last: number,
+    first: number;
+    last: number;
   },
   getFrameMetricsApprox: (
     index: number,
-    props: FrameMetricProps,
+    props: FrameMetricProps
   ) => {
-    length: number,
-    offset: number,
+    length: number;
+    offset: number;
   },
   scrollMetrics: {
-    dt: number,
-    offset: number,
-    velocity: number,
-    visibleLength: number,
-    zoomScale: number | undefined,
-  },
+    dt: number;
+    offset: number;
+    velocity: number;
+    visibleLength: number;
+    zoomScale: number | undefined;
+  }
 ): {
-  first: number,
-  last: number,
+  first: number;
+  last: number;
 } {
   const itemCount = props.getItemCount(props.data);
   if (itemCount === 0) {
-    return {first: 0, last: -1};
+    return { first: 0, last: -1 };
   }
-  const {offset, velocity, visibleLength, zoomScale = 1} = scrollMetrics;
+  const { offset, velocity, visibleLength, zoomScale = 1 } = scrollMetrics;
 
   // Start with visible area, then compute maximum overscan region by expanding from there, biased
   // in the direction of scroll. Total overscan area is capped, which should cap memory consumption
@@ -141,7 +140,7 @@ export function computeWindowedRenderLimits(
 
   const overscanBegin = Math.max(
     0,
-    visibleBegin - (1 - leadFactor) * overscanLength,
+    visibleBegin - (1 - leadFactor) * overscanLength
   );
   const overscanEnd = Math.max(0, visibleEnd + leadFactor * overscanLength);
 
@@ -151,7 +150,7 @@ export function computeWindowedRenderLimits(
     // Entire list is before our overscan window
     return {
       first: Math.max(0, itemCount - 1 - maxToRenderPerBatch),
-      last: itemCount - 1,
+      last: itemCount - 1
     };
   }
 
@@ -160,7 +159,7 @@ export function computeWindowedRenderLimits(
     [overscanBegin, visibleBegin, visibleEnd, overscanEnd],
     props,
     getFrameMetricsApprox,
-    zoomScale,
+    zoomScale
   );
   overscanFirst = overscanFirst == null ? 0 : overscanFirst;
   first = first == null ? Math.max(0, overscanFirst) : first;
@@ -169,7 +168,7 @@ export function computeWindowedRenderLimits(
     last == null
       ? Math.min(overscanLast, first + maxToRenderPerBatch - 1)
       : last;
-  const visible = {first, last};
+  const visible = { first, last };
 
   // We want to limit the number of new cells we're rendering per batch so that we can fill the
   // content on the screen quickly. If we rendered the entire overscan window at once, the user
@@ -234,14 +233,14 @@ export function computeWindowedRenderLimits(
           itemCount,
           overscanFirst,
           overscanLast,
-          visible,
-        }),
+          visible
+        })
     );
   }
-  return {first, last};
+  return { first, last };
 }
 
-type KeyedItem = {key: string, id: string};
+type KeyedItem = { key: string; id: string };
 
 export function keyExtractor(item: unknown, index: number): string {
   if (typeof item === 'object' && (item as KeyedItem | null)?.key != null) {

@@ -9,12 +9,12 @@
 
 'use client';
 
+import { useRef } from 'react';
+
+import type { Nullable } from '../../types';
 import type AnimatedValue from '../../vendor/react-native/Animated/nodes/AnimatedValue';
 import type { AnimatedValueConfig } from '../../vendor/react-native/Animated/nodes/AnimatedValue';
-
 import Animated from '../Animated';
-import { useRef } from 'react';
-import type { Nullable } from '../../types';
 
 export default function useAnimatedValue(
   initialValue: number,

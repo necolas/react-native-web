@@ -9,17 +9,17 @@
 
 'use client';
 
-import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { PlatformMethods, Nullable } from '../../types';
-import type { ViewProps } from '../View';
-import type { AccessibilityProps } from '../View/types';
-
 import * as React from 'react';
 import { useMemo } from 'react';
+
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+import type { PlatformMethods, Nullable } from '../../types';
+import type { ViewProps } from '../View';
+import type { AccessibilityProps } from '../View/types';
 
 export type Props = Readonly<
   AccessibilityProps & {

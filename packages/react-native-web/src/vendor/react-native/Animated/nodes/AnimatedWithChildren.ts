@@ -9,11 +9,10 @@
 
 'use strict';
 
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-
-import AnimatedNode from './AnimatedNode';
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import AnimatedNode from './AnimatedNode';
 
 class AnimatedWithChildren extends AnimatedNode {
   _children: Array<AnimatedNode>;
@@ -30,7 +29,7 @@ class AnimatedWithChildren extends AnimatedNode {
         child.__makeNative(platformConfig);
         NativeAnimatedHelper.API.connectAnimatedNodes(
           this.__getNativeTag(),
-          child.__getNativeTag(),
+          child.__getNativeTag()
         );
       }
     }
@@ -47,7 +46,7 @@ class AnimatedWithChildren extends AnimatedNode {
       child.__makeNative(this.__getPlatformConfig());
       NativeAnimatedHelper.API.connectAnimatedNodes(
         this.__getNativeTag(),
-        child.__getNativeTag(),
+        child.__getNativeTag()
       );
     }
   }
@@ -61,7 +60,7 @@ class AnimatedWithChildren extends AnimatedNode {
     if (this.__isNative && child.__isNative) {
       NativeAnimatedHelper.API.disconnectAnimatedNodes(
         this.__getNativeTag(),
-        child.__getNativeTag(),
+        child.__getNativeTag()
       );
     }
     this._children.splice(index, 1);

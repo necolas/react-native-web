@@ -9,73 +9,69 @@
 
 'use strict';
 
-import type AnimatedValue from '../nodes/AnimatedValue';
-import type AnimatedValueXY from '../nodes/AnimatedValueXY';
-import type AnimatedInterpolation from '../nodes/AnimatedInterpolation';
-
-import Animation from './Animation';
-import SpringConfig from '../SpringConfig';
-
 import invariant from 'invariant';
 
-import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
-
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type {AnimationConfig, EndCallback} from './Animation';
-
-import AnimatedColor from '../nodes/AnimatedColor';
 import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import AnimatedColor from '../nodes/AnimatedColor';
+import type AnimatedInterpolation from '../nodes/AnimatedInterpolation';
+import type AnimatedValue from '../nodes/AnimatedValue';
+import type AnimatedValueXY from '../nodes/AnimatedValueXY';
+import SpringConfig from '../SpringConfig';
+import Animation from './Animation';
+import type { AnimationConfig, EndCallback } from './Animation';
 
 export type SpringAnimationConfig = AnimationConfig & {
   toValue:
     | number
     | AnimatedValue
     | {
-        x: number,
-        y: number,
+        x: number;
+        y: number;
       }
     | AnimatedValueXY
     | {
-        r: number,
-        g: number,
-        b: number,
-        a: number,
+        r: number;
+        g: number;
+        b: number;
+        a: number;
       }
     | AnimatedColor
-    | AnimatedInterpolation<number>,
-  overshootClamping?: boolean,
-  restDisplacementThreshold?: number,
-  restSpeedThreshold?: number,
+    | AnimatedInterpolation<number>;
+  overshootClamping?: boolean;
+  restDisplacementThreshold?: number;
+  restSpeedThreshold?: number;
   velocity?:
     | number
     | {
-        x: number,
-        y: number,
-      },
-  bounciness?: number,
-  speed?: number,
-  tension?: number,
-  friction?: number,
-  stiffness?: number,
-  damping?: number,
-  mass?: number,
-  delay?: number,
+        x: number;
+        y: number;
+      };
+  bounciness?: number;
+  speed?: number;
+  tension?: number;
+  friction?: number;
+  stiffness?: number;
+  damping?: number;
+  mass?: number;
+  delay?: number;
 };
 
 export type SpringAnimationConfigSingle = AnimationConfig & {
-  toValue: number,
-  overshootClamping?: boolean,
-  restDisplacementThreshold?: number,
-  restSpeedThreshold?: number,
-  velocity?: number,
-  bounciness?: number,
-  speed?: number,
-  tension?: number,
-  friction?: number,
-  stiffness?: number,
-  damping?: number,
-  mass?: number,
-  delay?: number,
+  toValue: number;
+  overshootClamping?: boolean;
+  restDisplacementThreshold?: number;
+  restSpeedThreshold?: number;
+  velocity?: number;
+  bounciness?: number;
+  speed?: number;
+  tension?: number;
+  friction?: number;
+  stiffness?: number;
+  damping?: number;
+  mass?: number;
+  delay?: number;
 };
 
 class SpringAnimation extends Animation {
@@ -126,7 +122,7 @@ class SpringAnimation extends Animation {
           config.speed === undefined &&
           config.tension === undefined &&
           config.friction === undefined,
-        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one',
+        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one'
       );
       this._stiffness = config.stiffness ?? 100;
       this._damping = config.damping ?? 10;
@@ -140,11 +136,11 @@ class SpringAnimation extends Animation {
           config.stiffness === undefined &&
           config.damping === undefined &&
           config.mass === undefined,
-        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one',
+        'You can define one of bounciness/speed, tension/friction, or stiffness/damping/mass, but not more than one'
       );
       const springConfig = SpringConfig.fromBouncinessAndSpeed(
         config.bounciness ?? 8,
-        config.speed ?? 12,
+        config.speed ?? 12
       );
       this._stiffness = springConfig.stiffness;
       this._damping = springConfig.damping;
@@ -154,7 +150,7 @@ class SpringAnimation extends Animation {
       // We assume mass is 1.
       const springConfig = SpringConfig.fromOrigamiTensionAndFriction(
         config.tension ?? 40,
-        config.friction ?? 7,
+        config.friction ?? 7
       );
       this._stiffness = springConfig.stiffness;
       this._damping = springConfig.damping;
@@ -167,17 +163,17 @@ class SpringAnimation extends Animation {
   }
 
   __getNativeAnimationConfig(): {
-    damping: number,
-    initialVelocity: number,
-    iterations: number,
-    mass: number,
-    platformConfig: Nullable<PlatformConfig>,
-    overshootClamping: boolean,
-    restDisplacementThreshold: number,
-    restSpeedThreshold: number,
-    stiffness: number,
-    toValue: number,
-    type: string,
+    damping: number;
+    initialVelocity: number;
+    iterations: number;
+    mass: number;
+    platformConfig: Nullable<PlatformConfig>;
+    overshootClamping: boolean;
+    restDisplacementThreshold: number;
+    restSpeedThreshold: number;
+    stiffness: number;
+    toValue: number;
+    type: string;
   } {
     return {
       type: 'spring',
@@ -190,7 +186,7 @@ class SpringAnimation extends Animation {
       initialVelocity: this._initialVelocity ?? this._lastVelocity,
       toValue: this._toValue,
       iterations: this.__iterations,
-      platformConfig: this._platformConfig,
+      platformConfig: this._platformConfig
     };
   }
 
@@ -199,7 +195,7 @@ class SpringAnimation extends Animation {
     onUpdate: (value: number) => void,
     onEnd: Nullable<EndCallback>,
     previousAnimation: Nullable<Animation>,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {
     this.__active = true;
     this._startPosition = fromValue;
@@ -236,14 +232,14 @@ class SpringAnimation extends Animation {
   }
 
   getInternalState(): {
-    lastPosition: number,
-    lastVelocity: number,
-    lastTime: number,
+    lastPosition: number;
+    lastVelocity: number;
+    lastTime: number;
   } {
     return {
       lastPosition: this._lastPosition,
       lastVelocity: this._lastVelocity,
-      lastTime: this._lastTime,
+      lastTime: this._lastTime
     };
   }
 
@@ -356,12 +352,10 @@ class SpringAnimation extends Animation {
         this._onUpdate(this._toValue);
       }
 
-      this.__debouncedOnEnd({finished: true});
+      this.__debouncedOnEnd({ finished: true });
       return;
     }
-    this._animationFrame = requestAnimationFrame(
-      this.onUpdate.bind(this),
-    );
+    this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
   }
 
   stop(): void {
@@ -369,7 +363,7 @@ class SpringAnimation extends Animation {
     this.__active = false;
     clearTimeout(this._timeout);
     global.cancelAnimationFrame(this._animationFrame);
-    this.__debouncedOnEnd({finished: false});
+    this.__debouncedOnEnd({ finished: false });
   }
 }
 

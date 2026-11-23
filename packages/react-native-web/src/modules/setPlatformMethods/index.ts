@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { PlatformMethods, Nullable } from '../../types';
-
 import UIManager from '../../exports/UIManager';
+import type { PlatformMethods, Nullable } from '../../types';
 
 /**
  * Adds non-standard methods to the hode element. This is temporarily until an

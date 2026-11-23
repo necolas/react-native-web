@@ -9,30 +9,29 @@
 
 'use strict';
 
+import StyleSheet from '../../../../exports/StyleSheet';
+import type { Nullable } from '../../../../types';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import AnimatedNode from './AnimatedNode';
 import AnimatedTransform from './AnimatedTransform';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
-
-import StyleSheet from '../../../../exports/StyleSheet';
-import type { Nullable } from '../../../../types';
 
 const flattenStyle = StyleSheet.flatten;
 
-type AnimatedStyleObject = {[key: string]: AnimatedNode | AnimatedStyleObject};
+type AnimatedStyleObject = {
+  [key: string]: AnimatedNode | AnimatedStyleObject;
+};
 
 function createAnimatedStyle(inputStyle: unknown): AnimatedStyleObject {
   const style = flattenStyle(inputStyle);
-  const animatedStyles: AnimatedStyleObject = {}
+  const animatedStyles: AnimatedStyleObject = {};
   for (const key in style) {
     const value = style[key];
     if (key === 'transform' && Array.isArray(value)) {
       animatedStyles[key] = new AnimatedTransform(value);
-    }
-    else if (value instanceof AnimatedNode) {
+    } else if (value instanceof AnimatedNode) {
       animatedStyles[key] = value;
-    }
-    else if (value && !Array.isArray(value) && typeof value === 'object') {
+    } else if (value && !Array.isArray(value) && typeof value === 'object') {
       animatedStyles[key] = createAnimatedStyle(value);
     }
   }
@@ -50,7 +49,9 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   // Recursively get values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetValues(style: Readonly<AnimatedStyleObject>): Record<string, unknown> {
+  _walkStyleAndGetValues(
+    style: Readonly<AnimatedStyleObject>
+  ): Record<string, unknown> {
     const updatedStyle: Record<string, unknown> = {};
     for (const key in style) {
       const value = style[key];
@@ -71,14 +72,13 @@ class AnimatedStyle extends AnimatedWithChildren {
   }
 
   __getValue(): Array<unknown> {
-    return [
-      this._inputStyle,
-      this._walkStyleAndGetValues(this._style)
-    ];
+    return [this._inputStyle, this._walkStyleAndGetValues(this._style)];
   }
 
   // Recursively get animated values for nested styles (like iOS's shadowOffset)
-  _walkStyleAndGetAnimatedValues(style: Readonly<AnimatedStyleObject>): Record<string, unknown> {
+  _walkStyleAndGetAnimatedValues(
+    style: Readonly<AnimatedStyleObject>
+  ): Record<string, unknown> {
     const updatedStyle: Record<string, unknown> = {};
     for (const key in style) {
       const value = style[key];
@@ -137,7 +137,7 @@ class AnimatedStyle extends AnimatedWithChildren {
     NativeAnimatedHelper.validateStyles(styleConfig);
     return {
       type: 'style',
-      style: styleConfig,
+      style: styleConfig
     };
   }
 }

@@ -6,19 +6,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import invariant from 'invariant';
 import type {
   ComponentProps,
   ComponentType,
   ReactElement,
   ReactNode
 } from 'react';
+import React from 'react';
 
-import AppContainer from './AppContainer';
-import invariant from 'invariant';
+import type { Nullable } from '../../types';
 import render, { hydrate } from '../render';
 import StyleSheet from '../StyleSheet';
-import React from 'react';
-import type { Nullable } from '../../types';
+import AppContainer from './AppContainer';
 
 export type Application = {
   unmount: () => void;

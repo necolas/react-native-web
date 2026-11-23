@@ -1,16 +1,22 @@
 {
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
   "name": "react-ui-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Nicolas Gallagher",
+  "workspaces": [
+    "packages/react-native-web",
+    "packages/*"
+  ],
+  "type": "module",
   "scripts": {
     "clean": "del-cli ./packages/*/dist",
     "build": "npm run clean && npm run build --workspaces --if-present",
     "dev": "npm run dev --workspaces --if-present",
-    "format": "prettier --check --ignore-unknown .",
-    "format:fix": "prettier --write --ignore-unknown .",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "format": "oxfmt --check",
+    "format:fix": "oxfmt",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "module-map": "node ./scripts/createModuleMap.js --write",
     "release": "node ./scripts/releasePackages.js",
     "release:benchmarks": "git checkout gh-pages && rm -rf ./docs/benchmarks && mv packages/benchmarks/dist ./docs/benchmarks && git add -A && git commit -m \"Deploy benchmarks\" && git push origin gh-pages && git checkout -",
@@ -22,12 +28,6 @@
     "unit:dom": "npm run unit -- --selectProjects dom",
     "unit:node": "npm run unit -- --selectProjects node"
   },
-  "allowScripts": {
-    "@parcel/watcher": false,
-    "core-js": false,
-    "fsevents": false,
-    "unrs-resolver@1.12.2": true
-  },
   "devDependencies": {
     "@babel/cli": "^7.29.7",
     "@babel/core": "^7.29.13",
@@ -38,41 +38,33 @@
     "@types/jest": "^30.0.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.73.0",
-    "@typescript-eslint/parser": "^8.73.0",
     "babel-jest": "^30.5.2",
     "babel-plugin-fully-specified": "^1.3.1",
     "cross-env": "^10.1.0",
     "del-cli": "^8.0.1",
-    "eslint": "^8.57.1",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.1.1",
     "husky": "^9.1.7",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
     "lint-staged": "^17.6.1",
-    "prettier": "^3.10.1",
+    "oxfmt": "0.79.0",
+    "oxlint": "1.94.0",
+    "oxlint-tsgolint": "7.0.2008",
     "terser": "^5.51.2",
     "typescript": "^6.0.3"
   },
-  "workspaces": [
-    "packages/react-native-web",
-    "packages/*"
-  ],
   "lint-staged": {
     "packages/react-native-web/src/{index.ts,exports/*/index.{ts,tsx}}": [
       "node ./scripts/createModuleMap.js"
     ],
     "**/*.{js,ts,tsx}": [
-      "prettier --write --ignore-unknown --no-error-on-unmatched-pattern",
-      "eslint --fix --no-error-on-unmatched-pattern"
+      "oxfmt --no-error-on-unmatched-pattern",
+      "oxlint --fix --no-error-on-unmatched-pattern"
     ]
   },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "none"
-  },
-  "author": "Nicolas Gallagher",
-  "license": "MIT"
+  "allowScripts": {
+    "@parcel/watcher": false,
+    "core-js": false,
+    "fsevents": false,
+    "unrs-resolver@1.12.2": true
+  }
 }

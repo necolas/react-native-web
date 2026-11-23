@@ -25,6 +25,7 @@ Render apps using [AppRegistry]({{ '/docs/app-registry' | url }}):
 // index.web.js
 
 import { AppRegistry } from 'react-native';
+
 import App from './src/App';
 
 // register the app
@@ -40,6 +41,7 @@ Or render individual components:
 
 ```js
 import { render } from 'react-native';
+
 import Header from './src/Header';
 
 render(<Header />, document.getElementById('header'));
@@ -66,9 +68,10 @@ You might need to adjust the styles of the HTML document's root elements for you
 Server-side rendering to HTML is supported using `AppRegistry`:
 
 ```js
-import App from './src/App';
 import ReactDOMServer from 'react-dom/server';
 import { AppRegistry } from 'react-native-web';
+
+import App from './src/App';
 
 // register the app
 AppRegistry.registerComponent('App', () => App);

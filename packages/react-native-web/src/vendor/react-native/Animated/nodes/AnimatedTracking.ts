@@ -9,26 +9,27 @@
 
 'use strict';
 
-import AnimatedValue from './AnimatedValue';
-import AnimatedNode from './AnimatedNode';
-import {
-  generateNewAnimationId,
-  shouldUseNativeDriver,
-} from '../NativeAnimatedHelper';
-
-import type SpringAnimation from '../animations/SpringAnimation';
-import type TimingAnimation from '../animations/TimingAnimation';
+import type { Nullable } from '../../../../types';
 import type {
   default as Animation,
   AnimationConfig,
-  EndCallback,
+  EndCallback
 } from '../animations/Animation';
-import type { Nullable } from '../../../../types';
+import type SpringAnimation from '../animations/SpringAnimation';
+import type TimingAnimation from '../animations/TimingAnimation';
+import {
+  generateNewAnimationId,
+  shouldUseNativeDriver
+} from '../NativeAnimatedHelper';
+import AnimatedNode from './AnimatedNode';
+import AnimatedValue from './AnimatedValue';
 
-type TrackingAnimationConfig = Readonly<AnimationConfig & {toValue: AnimatedNode}>;
+type TrackingAnimationConfig = Readonly<
+  AnimationConfig & { toValue: AnimatedNode }
+>;
 
 type TrackingAnimationClass = new (
-  config: AnimationConfig & {toValue: unknown},
+  config: AnimationConfig & { toValue: unknown }
 ) => Animation;
 
 class AnimatedTracking extends AnimatedNode {
@@ -44,7 +45,7 @@ class AnimatedTracking extends AnimatedNode {
     parent: AnimatedNode,
     animationClass: typeof SpringAnimation | typeof TimingAnimation,
     animationConfig: TrackingAnimationConfig,
-    callback?: Nullable<EndCallback>,
+    callback?: Nullable<EndCallback>
   ) {
     super();
     this._value = value;
@@ -88,9 +89,9 @@ class AnimatedTracking extends AnimatedNode {
     this._value.animate(
       new this._animationClass({
         ...this._animationConfig,
-        toValue: this._animationConfig.toValue.__getValue(),
+        toValue: this._animationConfig.toValue.__getValue()
       }),
-      this._callback,
+      this._callback
     );
   }
 
@@ -98,7 +99,7 @@ class AnimatedTracking extends AnimatedNode {
     const animation = new this._animationClass({
       ...this._animationConfig,
       // remove toValue from the config as it's a ref to Animated.Value
-      toValue: undefined,
+      toValue: undefined
     });
     const animationConfig = animation.__getNativeAnimationConfig();
     return {
@@ -106,7 +107,7 @@ class AnimatedTracking extends AnimatedNode {
       animationId: generateNewAnimationId(),
       animationConfig,
       toValue: this._parent.__getNativeTag(),
-      value: this._value.__getNativeTag(),
+      value: this._value.__getNativeTag()
     };
   }
 }

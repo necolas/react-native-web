@@ -6,10 +6,6 @@
  */
 
 import { act, render } from '@testing-library/react';
-import React, { createRef } from 'react';
-import useResponderEvents from '..';
-import type { ResponderEvent } from '../createResponderEvent';
-import { getResponderNode, terminateResponder } from '../ResponderSystem';
 import {
   buttonType,
   buttonsType,
@@ -17,6 +13,11 @@ import {
   createEventTarget,
   testWithPointerType
 } from 'dom-event-testing-library';
+import React, { createRef } from 'react';
+
+import useResponderEvents from '..';
+import type { ResponderEvent } from '../createResponderEvent';
+import { getResponderNode, terminateResponder } from '../ResponderSystem';
 
 type DivRef = React.RefObject<HTMLDivElement | null>;
 

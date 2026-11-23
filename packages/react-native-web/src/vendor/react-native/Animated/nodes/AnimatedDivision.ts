@@ -9,22 +9,24 @@
 
 'use strict';
 
+import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
 import AnimatedInterpolation from './AnimatedInterpolation';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
 import AnimatedNode from './AnimatedNode';
-import type {AnimatedNumericNode} from './AnimatedNode';
+import type { AnimatedNumericNode } from './AnimatedNode';
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
-
-import type {InterpolationConfigType} from './AnimatedInterpolation';
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type { Nullable } from '../../../../types';
 
 class AnimatedDivision extends AnimatedWithChildren {
   _a: AnimatedNumericNode;
   _b: AnimatedNumericNode;
   _warnedAboutDivideByZero: boolean = false;
 
-  constructor(a: AnimatedNumericNode | number, b: AnimatedNumericNode | number) {
+  constructor(
+    a: AnimatedNumericNode | number,
+    b: AnimatedNumericNode | number
+  ) {
     super();
     if (b === 0 || (b instanceof AnimatedNode && b.__getValue() === 0)) {
       console.error('Detected potential division by zero in AnimatedDivision');
@@ -56,7 +58,7 @@ class AnimatedDivision extends AnimatedWithChildren {
   }
 
   interpolate<OutputT extends number | string>(
-    config: InterpolationConfigType<OutputT>,
+    config: InterpolationConfigType<OutputT>
   ): AnimatedInterpolation<OutputT> {
     return new AnimatedInterpolation(this, config);
   }
@@ -75,7 +77,7 @@ class AnimatedDivision extends AnimatedWithChildren {
   __getNativeConfig(): Record<string, unknown> {
     return {
       type: 'division',
-      input: [this._a.__getNativeTag(), this._b.__getNativeTag()],
+      input: [this._a.__getNativeTag(), this._b.__getNativeTag()]
     };
   }
 }

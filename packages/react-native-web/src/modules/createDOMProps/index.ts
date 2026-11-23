@@ -6,12 +6,12 @@
  */
 
 import type { ElementType } from 'react';
+import type { Styles } from 'styleq';
 
-import AccessibilityUtil from '../AccessibilityUtil';
 import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
 import type { AccessibilityProps } from '../../exports/View/types';
 import type { Nullable } from '../../types';
-import type { Styles } from 'styleq';
+import AccessibilityUtil from '../AccessibilityUtil';
 
 export type ElementProps = {
   accessibilityRole?: Nullable<string>;
@@ -93,12 +93,12 @@ const createDOMProps = (
     accessibilityState: _accessibilityState,
     accessibilityValue: _accessibilityValue,
 
-    /* eslint-disable @typescript-eslint/no-unused-vars */
+    /* oxlint-disable no-unused-vars */
     accessibilityActions,
     accessibilityRole,
     onAccessibilityAction,
     role: _role,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
+    /* oxlint-enable no-unused-vars */
 
     ...domProps
   } = props;

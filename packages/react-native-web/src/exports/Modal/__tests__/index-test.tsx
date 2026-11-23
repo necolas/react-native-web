@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Modal from '..';
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import React from 'react';
+
+import Modal from '..';
 
 describe('components/Modal', () => {
   test('visible by default', () => {
@@ -850,7 +851,7 @@ describe('components/Modal with reduced motion', () => {
     jest.resetModules();
 
     // Testing Library can't be imported again, as it registers Jest hooks
-    const { default: React, act } = await import('react');
+    const { act } = await import('react');
     const { createRoot } = await import('react-dom/client');
     const { default: Modal } = await import('..');
 

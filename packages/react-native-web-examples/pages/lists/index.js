@@ -18,6 +18,7 @@ import {
   TextInput,
   View
 } from 'react-native';
+
 import Example from '../../shared/example';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

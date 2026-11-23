@@ -6,13 +6,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-
 import * as React from 'react';
-import StyleSheet from '../StyleSheet';
-import TouchableOpacity from '../TouchableOpacity';
-import Text from '../Text';
+
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { Nullable } from '../../types';
+import StyleSheet from '../StyleSheet';
+import Text from '../Text';
+import TouchableOpacity from '../TouchableOpacity';
 
 type ButtonProps = {
   accessibilityLabel?: Nullable<string>;

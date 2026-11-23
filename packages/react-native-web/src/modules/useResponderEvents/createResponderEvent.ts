@@ -5,19 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type {
-  ResponderTouchHistoryStore,
-  TouchHistory
-} from './ResponderTouchHistoryStore';
+import getBoundingClientRect from '../../modules/getBoundingClientRect';
+import type { Nullable } from '../../types';
 import type {
   ResponderDOMEvent,
   Touch,
   TouchEvent
 } from './ResponderEventTypes';
+import type {
+  ResponderTouchHistoryStore,
+  TouchHistory
+} from './ResponderTouchHistoryStore';
 import type { ResponderNode } from './utils';
-
-import getBoundingClientRect from '../../modules/getBoundingClientRect';
-import type { Nullable } from '../../types';
 
 export type ResponderEvent = {
   bubbles: boolean;

@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
 import { render } from '@testing-library/react';
-import Animated from '../../Animated';
+import * as React from 'react';
+
 import useAnimatedColor from '..';
+import Animated from '../../Animated';
 
 describe('useAnimatedColor', () => {
   test('returns an Animated.Color with the initial value', () => {

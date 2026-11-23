@@ -30,7 +30,7 @@ function solveTForX(x: number, a: number, b: number, c: number): number {
   if (m === 0 || D > 1e-12 * h * h) {
     // one real root (Cardano)
     const U = -Math.cbrt(h < 0 ? h - Math.sqrt(D) : h + Math.sqrt(D));
-    v = (U + m / U) || 0;
+    v = U + m / U || 0;
   } else {
     // three real roots, take the largest
     const r = Math.sqrt(m);
@@ -44,7 +44,7 @@ export default function bezier(
   mX1: number,
   mY1: number,
   mX2: number,
-  mY2: number,
+  mY2: number
 ): (x: number) => number {
   if (!(mX1 >= 0 && mX1 <= 1 && mX2 >= 0 && mX2 <= 1)) {
     throw new Error('bezier x values must be in [0, 1] range');
@@ -75,4 +75,4 @@ export default function bezier(
     const t = solveTForX(x, a, b, c);
     return ((ay * t + by) * t + cy) * t;
   };
-};
+}

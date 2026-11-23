@@ -16,7 +16,7 @@ export default class ChildListCollection<TList> {
   add(list: TList, cellKey: string): void {
     invariant(
       !this._childrenToCellKey.has(list),
-      'Trying to add already present child list',
+      'Trying to add already present child list'
     );
 
     const cellLists = this._cellKeyToChildren.get(cellKey) ?? new Set();

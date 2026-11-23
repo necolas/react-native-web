@@ -5,12 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-import TextInput from '..';
-import View from '../../View';
-import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
+
+import TextInput from '..';
 import type { PlatformMethods } from '../../../types';
+import View from '../../View';
 
 type TextInputNode = HTMLElement &
   PlatformMethods & {

@@ -7,13 +7,14 @@
 
 'use strict';
 
+import { act, render } from '@testing-library/react';
+import React from 'react';
+
 import Animated from '..';
-import Easing from '../../Easing';
 import AnimatedImplementation from '../../../vendor/react-native/Animated/AnimatedImplementation';
 import type { CompositeAnimation } from '../../../vendor/react-native/Animated/AnimatedImplementation';
 import type { EndCallback } from '../../../vendor/react-native/Animated/animations/Animation';
-import React from 'react';
-import { act, render } from '@testing-library/react';
+import Easing from '../../Easing';
 
 const AnimatedInterpolation = Animated.Interpolation;
 

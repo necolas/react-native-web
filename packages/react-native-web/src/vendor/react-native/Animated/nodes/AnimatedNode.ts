@@ -14,15 +14,15 @@ import NativeAnimatedHelper from '../NativeAnimatedHelper';
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
 import invariant from 'invariant';
 
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type {EventSubscription} from '../../vendor/emitter/EventEmitter';
-import type AnimatedColor from './AnimatedColor';
-import type {ColorListenerCallback} from './AnimatedColor';
-import type AnimatedValueXY from './AnimatedValueXY';
-import type {ValueXYListenerCallback} from './AnimatedValueXY';
 import type { Nullable } from '../../../../types';
+import type { EventSubscription } from '../../vendor/emitter/EventEmitter';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import type AnimatedColor from './AnimatedColor';
+import type { ColorListenerCallback } from './AnimatedColor';
+import type AnimatedValueXY from './AnimatedValueXY';
+import type { ValueXYListenerCallback } from './AnimatedValueXY';
 
-type ValueListenerCallback = (state: {value: number}) => unknown;
+type ValueListenerCallback = (state: { value: number }) => unknown;
 
 type ListenerCallback<T> = T extends AnimatedColor
   ? ColorListenerCallback
@@ -139,12 +139,12 @@ class AnimatedNode {
     this.__nativeAnimatedValueListener =
       NativeAnimatedHelper.nativeEventEmitter.addListener(
         'onAnimatedValueUpdate',
-        data => {
+        (data) => {
           if (data.tag !== this.__getNativeTag()) {
             return;
           }
           this.__onAnimatedValueUpdateReceived(data.value);
-        },
+        }
       );
   }
 
@@ -154,7 +154,9 @@ class AnimatedNode {
 
   __callListeners(value: unknown): void {
     for (const key in this._listeners) {
-      (this._listeners[key] as (state: {value: unknown}) => unknown)({value});
+      (this._listeners[key] as (state: { value: unknown }) => unknown)({
+        value
+      });
     }
   }
 
@@ -172,7 +174,7 @@ class AnimatedNode {
     NativeAnimatedHelper.assertNativeAnimatedModule();
     invariant(
       this.__isNative,
-      'Attempt to get native tag from node not marked as "native"',
+      'Attempt to get native tag from node not marked as "native"'
     );
 
     const nativeTag =
@@ -192,7 +194,7 @@ class AnimatedNode {
   }
   __getNativeConfig(): Record<string, unknown> {
     throw new Error(
-      'This JS animated node type cannot be used as native animated node',
+      'This JS animated node type cannot be used as native animated node'
     );
   }
   toJSON(): unknown {

@@ -1,8 +1,9 @@
 {
-  "private": true,
   "name": "react-native-web-docs",
   "version": "0.21.4",
+  "private": true,
   "description": "Documentation website for React Native for Web",
+  "homepage": "https://github.com/necolas/react-native-web",
   "type": "module",
   "scripts": {
     "build:examples": "BASE_PATH=/react-native-web/examples npm run export -w react-native-web-examples",
@@ -10,7 +11,6 @@
     "build": "npm run build:examples && ELEVENTY_PRODUCTION=true eleventy",
     "debug": "DEBUG=* eleventy"
   },
-  "homepage": "https://github.com/necolas/react-native-web",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.8",
     "@11ty/eleventy-navigation": "^1.0.5",

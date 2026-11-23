@@ -1,6 +1,7 @@
 import React from 'react';
-import View from './View';
 import { StyleSheet } from 'react-native-web';
+
+import View from './View';
 
 const Box = ({
   color,

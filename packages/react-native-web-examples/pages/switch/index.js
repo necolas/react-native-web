@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
+
 import Example from '../../shared/example';
 
 function Divider() {

@@ -9,24 +9,21 @@
 
 'use strict';
 
-import type {EndResult} from './animations/Animation';
-
-import {AnimatedEvent, attachNativeEvent} from './AnimatedEvent';
+import type { Nullable } from '../../../types';
+import { AnimatedEvent, attachNativeEvent } from './AnimatedEvent';
 import AnimatedImplementation from './AnimatedImplementation';
+import type { Numeric as AnimatedNumeric } from './AnimatedImplementation';
+import type { EndResult } from './animations/Animation';
+import type { EndCallback } from './animations/Animation';
+import type { DecayAnimationConfig } from './animations/DecayAnimation';
+import type { SpringAnimationConfig } from './animations/SpringAnimation';
+import type { TimingAnimationConfig } from './animations/TimingAnimation';
+import createAnimatedComponent from './createAnimatedComponent';
+import AnimatedColor from './nodes/AnimatedColor';
 import AnimatedInterpolation from './nodes/AnimatedInterpolation';
 import AnimatedNode from './nodes/AnimatedNode';
 import AnimatedValue from './nodes/AnimatedValue';
 import AnimatedValueXY from './nodes/AnimatedValueXY';
-
-import createAnimatedComponent from './createAnimatedComponent';
-
-import type {EndCallback} from './animations/Animation';
-import type {TimingAnimationConfig} from './animations/TimingAnimation';
-import type {DecayAnimationConfig} from './animations/DecayAnimation';
-import type {SpringAnimationConfig} from './animations/SpringAnimation';
-import type {Numeric as AnimatedNumeric} from './AnimatedImplementation';
-import AnimatedColor from './nodes/AnimatedColor';
-import type { Nullable } from '../../../types';
 
 /**
  * Animations are a source of flakiness in snapshot testing. This mock replaces
@@ -39,16 +36,16 @@ import type { Nullable } from '../../../types';
 // callback, which may trigger another animation
 let inAnimationCallback = false;
 function mockAnimationStart(
-  start: (callback?: Nullable<EndCallback>) => void,
+  start: (callback?: Nullable<EndCallback>) => void
 ): (callback?: Nullable<EndCallback>) => void {
-  return callback => {
+  return (callback) => {
     const guardedCallback =
       callback == null
         ? callback
         : (...args: [EndResult]) => {
             if (inAnimationCallback) {
               console.warn(
-                'Ignoring recursive animation callback when running mock animations',
+                'Ignoring recursive animation callback when running mock animations'
               );
               return;
             }
@@ -64,11 +61,11 @@ function mockAnimationStart(
 }
 
 export type CompositeAnimation = {
-  start: (callback?: Nullable<EndCallback>) => void,
-  stop: () => void,
-  reset: () => void,
-  _startNativeLoop: (iterations?: number) => void,
-  _isUsingNativeDriver: () => boolean,
+  start: (callback?: Nullable<EndCallback>) => void;
+  stop: () => void;
+  reset: () => void;
+  _startNativeLoop: (iterations?: number) => void;
+  _isUsingNativeDriver: () => boolean;
 };
 
 const emptyAnimation = {
@@ -78,64 +75,68 @@ const emptyAnimation = {
   _startNativeLoop: () => {},
   _isUsingNativeDriver: () => {
     return false;
-  },
+  }
 };
 
 const mockCompositeAnimation = (
-  animations: Array<CompositeAnimation>,
+  animations: Array<CompositeAnimation>
 ): CompositeAnimation => ({
   ...emptyAnimation,
   start: mockAnimationStart((callback?: Nullable<EndCallback>): void => {
-    animations.forEach(animation => animation.start());
-    callback?.({finished: true});
-  }),
+    animations.forEach((animation) => animation.start());
+    callback?.({ finished: true });
+  })
 });
 
 const spring = function (
   value: AnimatedValue | AnimatedValueXY | AnimatedColor,
-  config: SpringAnimationConfig,
+  config: SpringAnimationConfig
 ): CompositeAnimation {
-  const anyValue = value as {setValue(value: SpringAnimationConfig['toValue']): void};
+  const anyValue = value as {
+    setValue(value: SpringAnimationConfig['toValue']): void;
+  };
   return {
     ...emptyAnimation,
     start: mockAnimationStart((callback?: Nullable<EndCallback>): void => {
       anyValue.setValue(config.toValue);
-      callback?.({finished: true});
-    }),
+      callback?.({ finished: true });
+    })
   };
 };
 
 const timing = function (
   value: AnimatedValue | AnimatedValueXY | AnimatedColor,
-  config: TimingAnimationConfig,
+  config: TimingAnimationConfig
 ): CompositeAnimation {
-  const anyValue = value as {setValue(value: TimingAnimationConfig['toValue']): void};
+  const anyValue = value as {
+    setValue(value: TimingAnimationConfig['toValue']): void;
+  };
   return {
     ...emptyAnimation,
     start: mockAnimationStart((callback?: Nullable<EndCallback>): void => {
       anyValue.setValue(config.toValue);
-      callback?.({finished: true});
-    }),
+      callback?.({ finished: true });
+    })
   };
 };
 
 const decay = function (
   value: AnimatedValue | AnimatedValueXY | AnimatedColor,
-  config: DecayAnimationConfig,
+  config: DecayAnimationConfig
 ): CompositeAnimation {
   return emptyAnimation;
 };
 
 const sequence = function (
-  animations: Array<CompositeAnimation>,
+  animations: Array<CompositeAnimation>
 ): CompositeAnimation {
   return mockCompositeAnimation(animations);
 };
 
-type ParallelConfig = {stopTogether?: boolean};
+type ParallelConfig = { stopTogether?: boolean };
 const parallel = function (
   animations: Array<CompositeAnimation>,
-  config?: Nullable<ParallelConfig>,
+  config?: Nullable<ParallelConfig>
 ): CompositeAnimation {
   return mockCompositeAnimation(animations);
 };
@@ -146,24 +147,24 @@ const delay = function (time: number): CompositeAnimation {
 
 const stagger = function (
   time: number,
-  animations: Array<CompositeAnimation>,
+  animations: Array<CompositeAnimation>
 ): CompositeAnimation {
   return mockCompositeAnimation(animations);
 };
 
 type LoopAnimationConfig = {
-  iterations?: number,
-  resetBeforeIteration?: boolean,
+  iterations?: number;
+  resetBeforeIteration?: boolean;
 };
 
 const loop = function (
   animation: CompositeAnimation,
-  {iterations = -1}: LoopAnimationConfig = {},
+  { iterations = -1 }: LoopAnimationConfig = {}
 ): CompositeAnimation {
   return emptyAnimation;
 };
 
-export type {AnimatedNumeric as Numeric};
+export type { AnimatedNumeric as Numeric };
 
 export default {
   Value: AnimatedValue,
@@ -190,5 +191,5 @@ export default {
   attachNativeEvent,
   forkEvent: AnimatedImplementation.forkEvent,
   unforkEvent: AnimatedImplementation.unforkEvent,
-  Event: AnimatedEvent,
+  Event: AnimatedEvent
 };

@@ -13,7 +13,12 @@ export type ColorValue = null | string;
 export type DimensionValue = null | number | string;
 
 export type GenericStyleProp<T> =
-  null | void | Readonly<T> | false | '' | ReadonlyArray<GenericStyleProp<T>>;
+  | null
+  | void
+  | Readonly<T>
+  | false
+  | ''
+  | ReadonlyArray<GenericStyleProp<T>>;
 
 export type LayoutValue = {
   x: number;

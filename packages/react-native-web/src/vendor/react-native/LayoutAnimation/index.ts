@@ -25,30 +25,30 @@ type Type =
 type Property = 'opacity' | 'scaleX' | 'scaleY' | 'scaleXY';
 
 type AnimationConfig = Readonly<{
-  duration?: number,
-  delay?: number,
-  springDamping?: number,
-  initialVelocity?: number,
-  type?: Type,
-  property?: Property,
+  duration?: number;
+  delay?: number;
+  springDamping?: number;
+  initialVelocity?: number;
+  type?: Type;
+  property?: Property;
 }>;
 
 type LayoutAnimationConfig = Readonly<{
-  duration: number,
-  create?: AnimationConfig,
-  update?: AnimationConfig,
-  delete?: AnimationConfig,
+  duration: number;
+  create?: AnimationConfig;
+  update?: AnimationConfig;
+  delete?: AnimationConfig;
 }>;
 
 function configureNext(
   config: LayoutAnimationConfig,
-  onAnimationDidEnd?: () => void,
+  onAnimationDidEnd?: () => void
 ) {
   if (!Platform.isTesting) {
     UIManager.configureNextLayoutAnimation(
       config,
-      onAnimationDidEnd ?? function() {},
-      function() {} /* unused onError */,
+      onAnimationDidEnd ?? function () {},
+      function () {} /* unused onError */
     );
   }
 }
@@ -56,20 +56,20 @@ function configureNext(
 function create(
   duration: number,
   type: Type,
-  property: Property,
+  property: Property
 ): LayoutAnimationConfig {
   return {
     duration,
-    create: {type, property},
-    update: {type},
-    delete: {type, property},
+    create: { type, property },
+    update: { type },
+    delete: { type, property }
   };
 }
 
 const Presets: {
-  easeInEaseOut: LayoutAnimationConfig,
-  linear: LayoutAnimationConfig,
-  spring: LayoutAnimationConfig,
+  easeInEaseOut: LayoutAnimationConfig;
+  linear: LayoutAnimationConfig;
+  spring: LayoutAnimationConfig;
 } = {
   easeInEaseOut: create(300, 'easeInEaseOut', 'opacity'),
   linear: create(500, 'linear', 'opacity'),
@@ -77,17 +77,17 @@ const Presets: {
     duration: 700,
     create: {
       type: 'linear',
-      property: 'opacity',
+      property: 'opacity'
     },
     update: {
       type: 'spring',
-      springDamping: 0.4,
+      springDamping: 0.4
     },
     delete: {
       type: 'linear',
-      property: 'opacity',
-    },
-  },
+      property: 'opacity'
+    }
+  }
 };
 
 /**
@@ -125,13 +125,13 @@ const LayoutAnimation = {
     easeInEaseOut: 'easeInEaseOut',
     easeIn: 'easeIn',
     easeOut: 'easeOut',
-    keyboard: 'keyboard',
+    keyboard: 'keyboard'
   }),
   Properties: Object.freeze({
     opacity: 'opacity',
     scaleX: 'scaleX',
     scaleY: 'scaleY',
-    scaleXY: 'scaleXY',
+    scaleXY: 'scaleXY'
   }),
   checkConfig(...args: Array<unknown>) {
     console.error('LayoutAnimation.checkConfig(...) has been disabled.');
@@ -139,7 +139,7 @@ const LayoutAnimation = {
   Presets,
   easeInEaseOut: configureNext.bind(null, Presets.easeInEaseOut),
   linear: configureNext.bind(null, Presets.linear),
-  spring: configureNext.bind(null, Presets.spring),
+  spring: configureNext.bind(null, Presets.spring)
 };
 
 export default LayoutAnimation;

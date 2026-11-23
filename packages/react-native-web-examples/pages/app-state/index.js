@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppState, Text } from 'react-native';
+
 import Example from '../../shared/example';
 
 export default function AppStatePage() {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dimensions, Text } from 'react-native';
+
 import Example from '../../shared/example';
 
 export default function DimensionsPage() {

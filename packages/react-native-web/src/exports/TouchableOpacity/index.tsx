@@ -9,16 +9,16 @@
 
 'use client';
 
-import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
-import type { PressEvent } from '../../modules/usePressEvents/PressResponder';
-import type { ViewProps } from '../View';
-
 import * as React from 'react';
 import { useCallback, useMemo, useState } from 'react';
+
 import usePressEvents from '../../modules/usePressEvents';
-import StyleSheet from '../StyleSheet';
-import View from '../View';
+import type { PressEvent } from '../../modules/usePressEvents/PressResponder';
 import type { Nullable } from '../../types';
+import StyleSheet from '../StyleSheet';
+import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
+import type { ViewProps } from '../View';
+import View from '../View';
 
 type ViewStyle = ViewProps['style'];
 

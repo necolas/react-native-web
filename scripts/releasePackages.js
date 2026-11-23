@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { stdin, stdout } from 'node:process';
 import { createInterface } from 'node:readline/promises';
+
 import packageJson from '../package.json' with { type: 'json' };
 
 try {

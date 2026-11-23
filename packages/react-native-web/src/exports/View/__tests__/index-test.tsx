@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-import View from '../';
-import { createEventTarget } from 'dom-event-testing-library';
 import { act, render, type RenderResult } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
+
+import View from '../';
 import type { HostNode } from '../../../types';
 
 describe('components/View', () => {

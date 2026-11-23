@@ -7,6 +7,7 @@
 
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
+
 import { addEventListener } from '..';
 
 describe('addEventListener', () => {

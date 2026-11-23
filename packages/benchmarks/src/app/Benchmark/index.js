@@ -4,9 +4,10 @@
  * https://github.com/paularmstrong/react-component-benchmark
  */
 
-import * as Timing from './timing';
 import React, { Component } from 'react';
+
 import { getMean, getMedian, getStdDev } from './math';
+import * as Timing from './timing';
 
 /**
  * @typedef {Object} BenchResultsType
@@ -202,7 +203,7 @@ export default class Benchmark extends Component {
       if (forceLayout) {
         this._samples[cycle].layoutStart = Timing.now();
         if (document.body) {
-          document.body.offsetWidth;
+          void document.body.offsetWidth;
         }
         this._samples[cycle].layoutEnd = Timing.now();
       }

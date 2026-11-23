@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { act, render } from '@testing-library/react';
 import * as React from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
-import { act, render } from '@testing-library/react';
+
 import useWindowDimensions from '..';
 
 function Component() {

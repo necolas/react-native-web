@@ -9,25 +9,25 @@
 
 'use strict';
 
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type AnimatedValue from '../nodes/AnimatedValue';
 import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import type AnimatedValue from '../nodes/AnimatedValue';
 
-export type EndResult = {finished: boolean};
+export type EndResult = { finished: boolean };
 export type EndCallback = (result: EndResult) => void;
 
 export type NativeAnimationConfig = {
-  readonly [key: string]: unknown,
-  readonly platformConfig?: Nullable<PlatformConfig>,
+  readonly [key: string]: unknown;
+  readonly platformConfig?: Nullable<PlatformConfig>;
 };
 
 export type AnimationConfig = {
-  isInteraction?: boolean,
-  useNativeDriver: boolean,
-  platformConfig?: PlatformConfig,
-  onComplete?: Nullable<EndCallback>,
-  iterations?: number,
+  isInteraction?: boolean;
+  useNativeDriver: boolean;
+  platformConfig?: PlatformConfig;
+  onComplete?: Nullable<EndCallback>;
+  iterations?: number;
 };
 
 let startNativeAnimationNextId = 1;
@@ -46,7 +46,7 @@ class Animation {
     onUpdate: (value: number) => void,
     onEnd: Nullable<EndCallback>,
     previousAnimation: Nullable<Animation>,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {}
   stop(): void {
     if (this.__nativeId) {
@@ -68,7 +68,7 @@ class Animation {
     const startNativeAnimationWaitId = `${startNativeAnimationNextId}:startAnimation`;
     startNativeAnimationNextId += 1;
     NativeAnimatedHelper.API.setWaitingForIdentifier(
-      startNativeAnimationWaitId,
+      startNativeAnimationWaitId
     );
     try {
       const config = this.__getNativeAnimationConfig();
@@ -78,13 +78,13 @@ class Animation {
         this.__nativeId,
         animatedValue.__getNativeTag(),
         config,
-        this.__debouncedOnEnd.bind(this),
+        this.__debouncedOnEnd.bind(this)
       );
     } catch (e) {
       throw e;
     } finally {
       NativeAnimatedHelper.API.unsetWaitingForIdentifier(
-        startNativeAnimationWaitId,
+        startNativeAnimationWaitId
       );
     }
   }

@@ -12,10 +12,10 @@
 /*
  * @returns {bool} true if different, false if equal
  */
-const deepDiffer = function(
+const deepDiffer = function (
   one: unknown,
   two: unknown,
-  maxDepth: number = -1,
+  maxDepth: number = -1
 ): boolean {
   if (maxDepth === 0) {
     return true;
@@ -60,7 +60,7 @@ const deepDiffer = function(
         deepDiffer(
           (one as Record<string, unknown>)[key],
           (two as Record<string, unknown>)[key],
-          maxDepth - 1,
+          maxDepth - 1
         )
       ) {
         return true;

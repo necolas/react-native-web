@@ -186,7 +186,7 @@ function insertRuleAt(
   try {
     root.insertRule(cssText, position);
     return true;
-  } catch (e) {
+  } catch {
     // JSDOM doesn't support `CSSSMediaRule#insertRule`.
     // Also ignore errors that occur from attempting to insert vendor-prefixed selectors.
     return false;

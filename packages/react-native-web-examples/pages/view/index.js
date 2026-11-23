@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, Pressable, View } from 'react-native';
+
 import Example from '../../shared/example';
 
 const log = (...msg) => {

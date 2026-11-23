@@ -6,8 +6,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import TaskQueue from './TaskQueue';
 import requestIdleCallback from '../requestIdleCallback';
+import TaskQueue from './TaskQueue';
 
 /**
  * Removed from React Native. Kept for internal use only.

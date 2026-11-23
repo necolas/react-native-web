@@ -7,6 +7,7 @@
  */
 
 import invariant from 'invariant';
+
 import canUseDOM from '../../modules/canUseDom';
 import type { Nullable } from '../../types';
 

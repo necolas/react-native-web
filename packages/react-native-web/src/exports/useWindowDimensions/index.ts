@@ -9,11 +9,11 @@
 
 'use client';
 
-import type { DisplayMetrics } from '../Dimensions';
-
-import Dimensions from '../Dimensions';
-import canUseDOM from '../../modules/canUseDom';
 import { useSyncExternalStore } from 'react';
+
+import canUseDOM from '../../modules/canUseDom';
+import type { DisplayMetrics } from '../Dimensions';
+import Dimensions from '../Dimensions';
 
 // Matches the server render when `Dimensions.set` is not called
 const hydrationWindow: DisplayMetrics = {

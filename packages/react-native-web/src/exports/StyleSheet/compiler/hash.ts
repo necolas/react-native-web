@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* oxlint-disable */
 
 /**
  * JS Implementation of MurmurHash2

@@ -1,11 +1,26 @@
 {
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "name": "react-native-web",
   "version": "0.21.4",
   "description": "React Native for Web",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-native",
+    "web"
+  ],
+  "license": "MIT",
+  "author": "Nicolas Gallagher",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/necolas/react-native-web.git"
+  },
+  "files": [
+    "dist",
+    "types",
+    "!**/__tests__"
+  ],
   "type": "module",
+  "sideEffects": false,
   "main": "dist/index.js",
   "types": "types/react-native-web.d.ts",
   "exports": {
@@ -21,12 +36,9 @@
     "./dist/*": "./dist/*/index.js",
     "./package.json": "./package.json"
   },
-  "sideEffects": false,
-  "files": [
-    "dist",
-    "types",
-    "!**/__tests__"
-  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
     "clean": "del-cli ./dist",
     "build": "npm run clean && babel src --root-mode upward --extensions .ts,.tsx --out-dir dist --ignore \"**/__tests__\" && npm run minify",
@@ -62,19 +74,7 @@
       "optional": true
     }
   },
-  "author": "Nicolas Gallagher",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/necolas/react-native-web.git"
-  },
   "tags": [
     "react"
-  ],
-  "keywords": [
-    "react",
-    "react-component",
-    "react-native",
-    "web"
   ]
 }

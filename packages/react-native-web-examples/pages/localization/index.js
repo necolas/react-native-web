@@ -6,8 +6,6 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-/* eslint-disable no-use-before-define */
-
 import React from 'react';
 import {
   Image,
@@ -19,6 +17,7 @@ import {
   Switch,
   View
 } from 'react-native';
+
 import Example from '../../shared/example';
 
 const SCALE = PixelRatio.get();

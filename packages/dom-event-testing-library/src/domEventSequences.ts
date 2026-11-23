@@ -14,13 +14,13 @@ import {
   defaultPointerSize,
   defaultBrowserChromeSize
 } from './constants';
+import { platform } from './domEnvironment';
 import * as domEvents from './domEvents';
 import type {
   FocusEventPayload,
   PointerEventPayload,
   PointerType
 } from './domEvents';
-import { platform } from './domEnvironment';
 import * as touchStore from './touchStore';
 import type { TouchData } from './touchStore';
 
@@ -124,7 +124,7 @@ export function contextmenu(
 
   const {
     ctrlKey,
-    // eslint-disable-next-line
+    // oxlint-disable-next-line no-unused-vars
     pointerType: _,
     ...restPayload
   } = defaultPayload;

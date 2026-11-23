@@ -10,9 +10,9 @@
 import invariant from 'invariant';
 
 export type CellRegion = {
-  first: number,
-  last: number,
-  isSpacer: boolean,
+  first: number;
+  last: number;
+  isSpacer: boolean;
 };
 
 export class CellRenderMask {
@@ -22,7 +22,7 @@ export class CellRenderMask {
   constructor(numCells: number) {
     invariant(
       numCells >= 0,
-      'CellRenderMask must contain a non-negative number os cells',
+      'CellRenderMask must contain a non-negative number os cells'
     );
 
     this._numCells = numCells;
@@ -34,8 +34,8 @@ export class CellRenderMask {
         {
           first: 0,
           last: numCells - 1,
-          isSpacer: true,
-        },
+          isSpacer: true
+        }
       ];
     }
   }
@@ -44,14 +44,14 @@ export class CellRenderMask {
     return this._regions;
   }
 
-  addCells(cells: {first: number, last: number}): void {
+  addCells(cells: { first: number; last: number }): void {
     invariant(
       cells.first >= 0 &&
         cells.first < this._numCells &&
         cells.last >= -1 &&
         cells.last < this._numCells &&
         cells.last >= cells.first - 1,
-      'CellRenderMask.addCells called with invalid cell range',
+      'CellRenderMask.addCells called with invalid cell range'
     );
 
     // VirtualizedList uses inclusive ranges, where zero-count states are
@@ -75,7 +75,7 @@ export class CellRenderMask {
     const newTailRegion: Array<CellRegion> = [];
     const newMainRegion: CellRegion = {
       ...cells,
-      isSpacer: false,
+      isSpacer: false
     };
 
     if (firstIntersect.first < newMainRegion.first) {
@@ -83,7 +83,7 @@ export class CellRenderMask {
         newLeadRegion.push({
           first: firstIntersect.first,
           last: newMainRegion.first - 1,
-          isSpacer: true,
+          isSpacer: true
         });
       } else {
         newMainRegion.first = firstIntersect.first;
@@ -95,7 +95,7 @@ export class CellRenderMask {
         newTailRegion.push({
           first: newMainRegion.last + 1,
           last: lastIntersect.last,
-          isSpacer: true,
+          isSpacer: true
         });
       } else {
         newMainRegion.last = lastIntersect.last;
@@ -105,13 +105,13 @@ export class CellRenderMask {
     const replacementRegions: Array<CellRegion> = [
       ...newLeadRegion,
       newMainRegion,
-      ...newTailRegion,
+      ...newTailRegion
     ];
     const numRegionsToDelete = lastIntersectIdx - firstIntersectIdx + 1;
     this._regions.splice(
       firstIntersectIdx,
       numRegionsToDelete,
-      ...replacementRegions,
+      ...replacementRegions
     );
   }
 
@@ -127,7 +127,7 @@ export class CellRenderMask {
         (region, i) =>
           region.first === other._regions[i].first &&
           region.last === other._regions[i].last &&
-          region.isSpacer === other._regions[i].isSpacer,
+          region.isSpacer === other._regions[i].isSpacer
       )
     );
   }

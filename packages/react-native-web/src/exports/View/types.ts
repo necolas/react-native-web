@@ -16,6 +16,7 @@ import type {
   UIEvent,
   WheelEvent
 } from 'react';
+
 import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
 import type {
   ColorValue,
@@ -23,7 +24,6 @@ import type {
   LayoutEvent,
   Nullable
 } from '../../types';
-
 import type {
   AnimationStyles,
   BorderStyles,

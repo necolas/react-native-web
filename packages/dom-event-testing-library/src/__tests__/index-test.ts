@@ -8,7 +8,6 @@
 'use strict';
 
 import { defaultBrowserChromeSize } from '../constants';
-
 import {
   clearPointers,
   createEventTarget,

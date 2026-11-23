@@ -9,14 +9,12 @@
 
 'use strict';
 
-import type {AnimatedNumericNode} from './AnimatedNode';
-
-import AnimatedInterpolation from './AnimatedInterpolation';
-import AnimatedWithChildren from './AnimatedWithChildren';
-
-import type {InterpolationConfigType} from './AnimatedInterpolation';
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
 import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import AnimatedInterpolation from './AnimatedInterpolation';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type { AnimatedNumericNode } from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
 
 class AnimatedModulo extends AnimatedWithChildren {
   _a: AnimatedNumericNode;
@@ -40,7 +38,7 @@ class AnimatedModulo extends AnimatedWithChildren {
   }
 
   interpolate<OutputT extends number | string>(
-    config: InterpolationConfigType<OutputT>,
+    config: InterpolationConfigType<OutputT>
   ): AnimatedInterpolation<OutputT> {
     return new AnimatedInterpolation(this, config);
   }
@@ -58,7 +56,7 @@ class AnimatedModulo extends AnimatedWithChildren {
     return {
       type: 'modulus',
       input: this._a.__getNativeTag(),
-      modulus: this._modulus,
+      modulus: this._modulus
     };
   }
 }

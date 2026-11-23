@@ -1,7 +1,8 @@
-import React from 'react';
-import ScrollView from '../';
-import { createEventTarget } from 'dom-event-testing-library';
 import { act, render, type RenderResult } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
+
+import ScrollView from '../';
 import type { ScrollViewNode } from '../';
 
 describe('components/ScrollView', () => {

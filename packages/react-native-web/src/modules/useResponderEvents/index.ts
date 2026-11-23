@@ -15,12 +15,12 @@
  *   }
  */
 
-import type { ResponderConfig } from './ResponderSystem';
-import type { ResponderNode } from './utils';
-
 import * as React from 'react';
-import * as ResponderSystem from './ResponderSystem';
+
 import type { Nullable } from '../../types';
+import type { ResponderConfig } from './ResponderSystem';
+import * as ResponderSystem from './ResponderSystem';
+import type { ResponderNode } from './utils';
 
 const emptyObject: ResponderConfig = {};
 let idCounter = 0;

@@ -6,8 +6,8 @@
  */
 
 import isUnitlessNumber from '../../../modules/isUnitlessNumber';
-import normalizeColor from './normalizeColor';
 import type { Nullable } from '../../../types';
+import normalizeColor from './normalizeColor';
 
 export type StyleValue =
   | number

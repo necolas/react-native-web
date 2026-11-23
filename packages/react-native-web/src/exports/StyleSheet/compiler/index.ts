@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import type { Nullable } from '../../../types';
+import { PROPERTIES_STANDARD } from '../preprocess';
 import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
 import normalizeValueWithProperty, {
   type StyleValue
 } from './normalizeValueWithProperty';
-import { PROPERTIES_STANDARD } from '../preprocess';
-import type { Nullable } from '../../../types';
 
 export type Style = Readonly<Record<string, Nullable<StyleValue>>>;
 type Keyframes = Readonly<Record<string, Style>>;

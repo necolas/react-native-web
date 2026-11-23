@@ -9,21 +9,22 @@
 
 'use strict';
 
-import type {AnimatedNumericNode} from './AnimatedNode';
-
+import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
 import AnimatedInterpolation from './AnimatedInterpolation';
+import type { InterpolationConfigType } from './AnimatedInterpolation';
+import type { AnimatedNumericNode } from './AnimatedNode';
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
-
-import type {InterpolationConfigType} from './AnimatedInterpolation';
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type { Nullable } from '../../../../types';
 
 class AnimatedMultiplication extends AnimatedWithChildren {
   _a: AnimatedNumericNode;
   _b: AnimatedNumericNode;
 
-  constructor(a: AnimatedNumericNode | number, b: AnimatedNumericNode | number) {
+  constructor(
+    a: AnimatedNumericNode | number,
+    b: AnimatedNumericNode | number
+  ) {
     super();
     this._a = typeof a === 'number' ? new AnimatedValue(a) : a;
     this._b = typeof b === 'number' ? new AnimatedValue(b) : b;
@@ -40,7 +41,7 @@ class AnimatedMultiplication extends AnimatedWithChildren {
   }
 
   interpolate<OutputT extends number | string>(
-    config: InterpolationConfigType<OutputT>,
+    config: InterpolationConfigType<OutputT>
   ): AnimatedInterpolation<OutputT> {
     return new AnimatedInterpolation(this, config);
   }
@@ -58,7 +59,7 @@ class AnimatedMultiplication extends AnimatedWithChildren {
   __getNativeConfig(): Record<string, unknown> {
     return {
       type: 'multiplication',
-      input: [this._a.__getNativeTag(), this._b.__getNativeTag()],
+      input: [this._a.__getNativeTag(), this._b.__getNativeTag()]
     };
   }
 }

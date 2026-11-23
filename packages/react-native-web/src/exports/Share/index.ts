@@ -6,8 +6,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ColorValue } from '../../types';
 import invariant from 'invariant';
+
+import type { ColorValue } from '../../types';
 
 type Content =
   | { title?: string; message?: string; url: string }

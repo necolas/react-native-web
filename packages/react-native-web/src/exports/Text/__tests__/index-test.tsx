@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/* eslint-disable react/jsx-no-bind */
-
-import React from 'react';
-import Text from '../';
-import { createEventTarget } from 'dom-event-testing-library';
 import { act, render, type RenderResult } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
+
+import Text from '../';
 import type { HostNode } from '../../../types';
 
 describe('components/Text', () => {
