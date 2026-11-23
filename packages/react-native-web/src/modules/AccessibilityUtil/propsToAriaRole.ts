@@ -28,7 +28,7 @@ const propsToAriaRole = ({
 }: {
   readonly accessibilityRole?: Nullable<string>;
   readonly role?: Nullable<string>;
-}): string | void => {
+}): string | undefined => {
   const _role = role || accessibilityRole;
   if (_role) {
     const inferredRole = accessibilityRoleToWebRole[_role];

@@ -2,46 +2,42 @@ import Linking from '..';
 
 describe('apis/Linking', () => {
   describe('openURL', () => {
-    test('calls open with a url and target', (done) => {
-      jest.spyOn(window, 'open').mockImplementationOnce(((
-        url,
-        target,
-        opener
-      ) => {
-        expect(url).toBe('http://foo.com/');
-        expect(target).toBe('_self');
-        expect(opener).toBe('noopener');
-        done();
-      }) as typeof window.open);
-      Linking.openURL('http://foo.com', '_self');
+    test('calls open with a url and target', async () => {
+      const open = jest
+        .spyOn(window, 'open')
+        .mockImplementationOnce(() => null);
+
+      await Linking.openURL('http://foo.com', '_self');
+
+      expect(open).toHaveBeenCalledWith('http://foo.com/', '_self', 'noopener');
     });
 
-    test('defaults target to _blank if not provided', (done) => {
-      jest.spyOn(window, 'open').mockImplementationOnce(((
-        url,
-        target,
-        opener
-      ) => {
-        expect(url).toBe('http://foo.com/');
-        expect(target).toBe('_blank');
-        expect(opener).toBe('noopener');
-        done();
-      }) as typeof window.open);
-      Linking.openURL('http://foo.com');
+    test('defaults target to _blank if not provided', async () => {
+      const open = jest
+        .spyOn(window, 'open')
+        .mockImplementationOnce(() => null);
+
+      await Linking.openURL('http://foo.com');
+
+      expect(open).toHaveBeenCalledWith(
+        'http://foo.com/',
+        '_blank',
+        'noopener'
+      );
     });
 
-    test('accepts undefined as a target', (done) => {
-      jest.spyOn(window, 'open').mockImplementationOnce(((
-        url,
-        target,
-        opener
-      ) => {
-        expect(url).toBe('http://foo.com/');
-        expect(target).toBe(undefined);
-        expect(opener).toBe('noopener');
-        done();
-      }) as typeof window.open);
-      Linking.openURL('http://foo.com', undefined);
+    test('accepts undefined as a target', async () => {
+      const open = jest
+        .spyOn(window, 'open')
+        .mockImplementationOnce(() => null);
+
+      await Linking.openURL('http://foo.com', undefined);
+
+      expect(open).toHaveBeenCalledWith(
+        'http://foo.com/',
+        undefined,
+        'noopener'
+      );
     });
   });
 

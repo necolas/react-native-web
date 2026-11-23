@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ElementType } from 'react';
+import type { ComponentType } from 'react';
 import type { Styles } from 'styleq';
 
 import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
@@ -64,7 +64,7 @@ const pointerEventsStyles: Readonly<
 });
 
 const createDOMProps = (
-  elementType: ElementType | string | null,
+  elementType: ComponentType | string | null,
   props: Nullable<ElementProps>,
   options?: Nullable<StyleSheetOptions>
 ): DOMProps => {
@@ -254,7 +254,7 @@ const createDOMProps = (
     ...options
   };
 
-  let [className, inlineStyle] = StyleSheet(
+  let [className, inlineStyle] = StyleSheet.resolve(
     [style, pointerEvents && pointerEventsStyles[pointerEvents]],
     styleSheetOptions
   );
@@ -267,7 +267,7 @@ const createDOMProps = (
     inlinePointerEvents === 'box-none' ||
     inlinePointerEvents === 'box-only'
   ) {
-    [className, inlineStyle] = StyleSheet(
+    [className, inlineStyle] = StyleSheet.resolve(
       [style, pointerEventsStyles[inlinePointerEvents]],
       styleSheetOptions
     );

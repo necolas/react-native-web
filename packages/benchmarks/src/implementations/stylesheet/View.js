@@ -2,7 +2,11 @@ import React from 'react';
 import { StyleSheet } from 'react-native-web';
 
 function View(props) {
-  const [className, inlineStyle] = StyleSheet([styles.root$raw, props.style]);
+  const [className, inlineStyle] = StyleSheet.resolve([
+    styles.root$raw,
+    props.style
+  ]);
+
   return <div {...props} className={className} style={inlineStyle} />;
 }
 

@@ -8,13 +8,15 @@ export default function PressablePage() {
   const [eventLog, updateEventLog] = React.useState([]);
   const [disabled, setDisabled] = React.useState(false);
   const [delay, setDelay] = React.useState(0);
+  const nextEventId = React.useRef(0);
 
-  const handleEvent = (eventName) => {
+  const handleEvent = (name) => {
     return () => {
       const limit = 10;
+      const id = nextEventId.current++;
       updateEventLog((state) => {
         const nextState = state.slice(0, limit - 1);
-        nextState.unshift(eventName);
+        nextState.unshift({ id, name });
         return nextState;
       });
     };
@@ -64,8 +66,8 @@ export default function PressablePage() {
         </View>
 
         <ScrollView style={styles.eventLogBox}>
-          {eventLog.map((e, i) => (
-            <Text key={i}>{e}</Text>
+          {eventLog.map((e) => (
+            <Text key={e.id}>{e.name}</Text>
           ))}
         </ScrollView>
       </View>

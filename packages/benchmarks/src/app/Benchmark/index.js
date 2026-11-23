@@ -51,11 +51,13 @@ export const BenchmarkType = {
 
 /** @typedef {typeof BenchmarkType[keyof typeof BenchmarkType]} BenchmarkTypeValue */
 
+/** @typedef {Record<string, unknown>} ComponentPropsType */
+
 /**
  * @typedef {Object} BenchmarkPropsType
- * @property {React.ComponentType<any>} component
+ * @property {React.ComponentType<ComponentPropsType>} component
  * @property {boolean} [forceLayout]
- * @property {(x: { cycle: number }) => Object} getComponentProps
+ * @property {(x: { cycle: number }) => ComponentPropsType} getComponentProps
  * @property {(x: BenchResultsType) => void} onComplete
  * @property {number} sampleCount
  * @property {number} timeout
@@ -64,7 +66,7 @@ export const BenchmarkType = {
 
 /**
  * @typedef {Object} BenchmarkStateType
- * @property {Object} componentProps
+ * @property {ComponentPropsType} componentProps
  * @property {number} cycle
  * @property {boolean} running
  */

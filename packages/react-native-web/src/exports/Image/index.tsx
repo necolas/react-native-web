@@ -48,7 +48,7 @@ function createTintColorSVG(
     >
       <defs>
         <filter id={`tint-${id}`} suppressHydrationWarning={true}>
-          <feFlood floodColor={`${tintColor}`} key={tintColor} />
+          <feFlood floodColor={tintColor} key={tintColor} />
           <feComposite in2="SourceAlpha" operator="in" />
         </filter>
       </defs>
@@ -387,7 +387,7 @@ Image.getSize = function (
   uri: string,
   success?: (width: number, height: number) => void,
   failure?: (error: unknown) => void
-): void | Promise<ImageSize> {
+): Promise<ImageSize> | undefined {
   return ImageLoader.getSize(uri, success, failure);
 };
 

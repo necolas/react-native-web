@@ -871,13 +871,13 @@ describe('components/Modal with reduced motion', () => {
 
     const root = createRoot(document.createElement('div'));
 
-    await act(() => root.render(modal(true)));
+    await act(async () => root.render(modal(true)));
     expect(onShow).toHaveBeenCalledTimes(1);
 
-    await act(() => root.render(modal(false)));
+    await act(async () => root.render(modal(false)));
     expect(onDismiss).toHaveBeenCalledTimes(1);
     expect(document.querySelector('[data-testid="inside"]')).toBeNull();
 
-    await act(() => root.unmount());
+    await act(async () => root.unmount());
   });
 });

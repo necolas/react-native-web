@@ -21,7 +21,7 @@ class Tree extends Component {
               components={components}
               depth={depth - 1}
               id={i}
-              key={i}
+              key={i} // oxlint-disable-line react/no-array-index-key
               wrap={wrap}
             />
           ))}

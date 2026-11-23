@@ -202,7 +202,7 @@ export default function createResponderEvent(
   // Using getters and functions serves two purposes:
   // 1) The value of `currentTarget` is not initially available.
   // 2) Measuring the clientRect may cause layout jank and should only be done on-demand.
-  function locationX(x: number): number | void {
+  function locationX(x: number): number | undefined {
     const currentTarget = responderEvent.currentTarget;
     rect = rect || getBoundingClientRect(currentTarget);
     if (rect && currentTarget != null) {
@@ -210,7 +210,7 @@ export default function createResponderEvent(
       return (x - rect.left) / getScale(rect.width, offsetWidth);
     }
   }
-  function locationY(y: number): number | void {
+  function locationY(y: number): number | undefined {
     const currentTarget = responderEvent.currentTarget;
     rect = rect || getBoundingClientRect(currentTarget);
     if (rect && currentTarget != null) {

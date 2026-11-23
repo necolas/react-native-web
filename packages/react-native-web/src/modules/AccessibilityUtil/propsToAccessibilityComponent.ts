@@ -33,7 +33,7 @@ const emptyObject = {};
 
 const propsToAccessibilityComponent = (
   props: Readonly<Record<string, unknown>> = emptyObject
-): void | string => {
+): string | undefined => {
   const roleProp = props.role || props.accessibilityRole;
   // special-case for "label" role which doesn't map to an ARIA role
   if (roleProp === 'label') {

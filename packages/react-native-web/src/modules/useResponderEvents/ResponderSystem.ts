@@ -179,7 +179,7 @@ type ResponderInstance = ActiveResponderInstance | EmptyResponderInstance;
 export type ResponderConfig = {
   // Direct responder events dispatched directly to responder. Do not bubble.
   onResponderEnd?: Nullable<(e: ResponderEvent) => void>;
-  onResponderGrant?: Nullable<(e: ResponderEvent) => void | boolean>;
+  onResponderGrant?: Nullable<(e: ResponderEvent) => void>;
   onResponderMove?: Nullable<(e: ResponderEvent) => void>;
   onResponderRelease?: Nullable<(e: ResponderEvent) => void>;
   onResponderReject?: Nullable<(e: ResponderEvent) => void>;

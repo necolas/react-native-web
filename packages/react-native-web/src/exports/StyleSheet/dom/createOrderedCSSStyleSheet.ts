@@ -108,9 +108,7 @@ export default function createOrderedCSSStyleSheet(
     /**
      * Insert a rule into the style sheet
      */
-    insert(cssText: string, groupValue: number) {
-      const group = Number(groupValue);
-
+    insert(cssText: string, group: number) {
       // Create a new group.
       if (groups[group] == null) {
         const markerRule = encodeGroupRule(group);

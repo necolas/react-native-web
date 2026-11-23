@@ -92,7 +92,7 @@ describe('modules/ImageLoader', () => {
       throw error;
     });
     const failure = jest.fn();
-    ImageLoader.getSize(uri, success, failure);
+    void ImageLoader.getSize(uri, success, failure);
     loadImage({ width: 100, height: 50 });
     await flushPromises();
     expect(success).toHaveBeenCalledWith(100, 50);

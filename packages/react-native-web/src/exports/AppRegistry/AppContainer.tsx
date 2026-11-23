@@ -18,11 +18,10 @@ type Props = {
   >;
   children?: React.ReactNode;
   ref?: React.Ref<HostNode>;
-  rootTag: HTMLElement | {};
+  rootTag: unknown;
 };
 
-const RootTagContext: React.Context<HTMLElement | {} | null> =
-  React.createContext<HTMLElement | {} | null>(null);
+const RootTagContext = React.createContext<unknown>(null);
 
 const AppContainer = (props: Props): React.ReactNode => {
   const { children, ref, WrapperComponent } = props;

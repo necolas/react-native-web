@@ -6,7 +6,7 @@
  */
 
 import type { ReactNode } from 'react';
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 
 import type { Nullable } from '../../types';
 import { isLocaleRTL } from './isLocaleRTL';
@@ -40,14 +40,16 @@ export function LocaleProvider(props: ProviderProps): ReactNode {
   const { direction, locale, children } = props;
   const needsContext = direction || locale;
 
+  const value = useMemo(
+    () => ({
+      direction: locale ? getLocaleDirection(locale) : direction,
+      locale
+    }),
+    [direction, locale]
+  );
+
   return needsContext ? (
-    <LocaleContext.Provider
-      children={children}
-      value={{
-        direction: locale ? getLocaleDirection(locale) : direction,
-        locale
-      }}
-    />
+    <LocaleContext.Provider children={children} value={value} />
   ) : (
     children
   );

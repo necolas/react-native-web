@@ -55,7 +55,7 @@ export default function useHover(
   const addEnterListener = useEvent<PointerEvent>('pointerenter', opts);
   const addLeaveListener = useEvent<PointerEvent>('pointerleave', opts);
   // These custom events end the hover of ancestors while a descendant is hovered.
-  const addLockListener = useEvent<Event>(lockEventType, opts);
+  const addLockListener = useEvent(lockEventType, opts);
   const addUnlockListener = useEvent<CustomEvent>(unlockEventType, opts);
 
   useLayoutEffect(() => {

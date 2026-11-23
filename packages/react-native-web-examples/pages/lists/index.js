@@ -262,7 +262,7 @@ class SingleColumnExample extends React.PureComponent {
   }
 
   render() {
-    const filterRegex = new RegExp(String(this.state.filterText), 'i');
+    const filterRegex = new RegExp(this.state.filterText, 'i');
     const filter = (item) =>
       filterRegex.test(item.text) || filterRegex.test(item.title);
     const filteredData = this.state.data.filter(filter);

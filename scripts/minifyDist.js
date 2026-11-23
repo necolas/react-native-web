@@ -2,15 +2,15 @@
  * Minifies the JS files in a directory in place. Used by CI to measure the
  * compressed size of the build. Does nothing unless MINIFY=true.
  */
-import fs from 'node:fs';
+import { glob, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import { minify } from 'terser';
 
-async function minifyDir(dir) {
-  for (const file of fs.globSync('**/*.js', { cwd: dir })) {
+async function main(dir) {
+  for await (const file of glob('**/*.js', { cwd: dir })) {
     const filePath = path.join(dir, file);
-    const code = fs.readFileSync(filePath, 'utf-8');
+    const code = await readFile(filePath, 'utf-8');
 
     const result = await minify(code, {
       compress: {
@@ -20,10 +20,10 @@ async function minifyDir(dir) {
       module: true
     });
 
-    fs.writeFileSync(filePath, result.code);
+    await writeFile(filePath, result.code);
   }
 }
 
 if (process.env.MINIFY === 'true') {
-  minifyDir(path.resolve(process.argv[2]));
+  await main(path.resolve(process.argv[2]));
 }

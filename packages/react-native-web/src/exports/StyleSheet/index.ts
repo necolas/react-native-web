@@ -189,10 +189,7 @@ export type StyleSheetOptions = {
   writingDirection?: 'auto' | 'ltr' | 'rtl';
 };
 
-function StyleSheet(
-  styles: Styles,
-  options: StyleSheetOptions = {}
-): StyleProps {
+function resolve(styles?: Styles, options: StyleSheetOptions = {}): StyleProps {
   const isRTL = options.writingDirection === 'rtl';
   const styleProps: StyleProps = customStyleq(styles, options);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
@@ -201,11 +198,17 @@ function StyleSheet(
   return styleProps;
 }
 
+// Only kept for backward compatibility. Use `StyleSheet.resolve` instead.
+function StyleSheet(styles?: Styles, options?: StyleSheetOptions): StyleProps {
+  return resolve(styles, options);
+}
+
 StyleSheet.absoluteFill = absoluteFill;
 StyleSheet.create = create;
 StyleSheet.compose = compose;
 StyleSheet.flatten = flatten;
 StyleSheet.getSheet = getSheet;
+StyleSheet.resolve = resolve;
 // `hairlineWidth` is not implemented using screen density as browsers may
 // round sub-pixel values down to `0`, causing the line not to be rendered.
 StyleSheet.hairlineWidth = 1;
@@ -223,13 +226,14 @@ if (devToolsHook) {
 }
 
 export type IStyleSheet = {
-  (styles: Styles, options?: StyleSheetOptions): StyleProps;
+  (styles?: Styles, options?: StyleSheetOptions): StyleProps;
   absoluteFill: AbsoluteFillStyle;
   create: typeof create;
   compose: typeof compose;
   flatten: typeof flatten;
   getSheet: typeof getSheet;
   hairlineWidth: number;
+  resolve: typeof resolve;
 };
 
 const stylesheet: IStyleSheet = StyleSheet;

@@ -46,15 +46,14 @@ function AnimatedModalStack() {
 
 const WIGGLE_ROOM = 128;
 
+const getRandomOffset = () => ({
+  top: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2,
+  left: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2
+});
+
 function Modalception({ depth = 1 }) {
   const [isVisible, setIsVisible] = useState(false);
-
-  const offset = useMemo(() => {
-    return {
-      top: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2,
-      left: Math.random() * WIGGLE_ROOM - WIGGLE_ROOM / 2
-    };
-  }, []);
+  const offset = useMemo(() => getRandomOffset(), []);
 
   return (
     <>

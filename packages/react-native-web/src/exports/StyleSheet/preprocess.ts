@@ -48,7 +48,9 @@ type TransformStyle = Readonly<
   Record<string, number | string | ReadonlyArray<number>>
 >;
 
-export const createBoxShadowValue = (style: ShadowStyle): void | string => {
+export const createBoxShadowValue = (
+  style: ShadowStyle
+): string | undefined => {
   const { shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
   const { height, width } = shadowOffset || defaultOffset;
   const offsetX = normalizeValueWithProperty(width);
@@ -67,7 +69,7 @@ export const createBoxShadowValue = (style: ShadowStyle): void | string => {
 
 export const createTextShadowValue = (
   style: TextShadowStyle
-): void | string => {
+): string | undefined => {
   const { textShadowColor, textShadowOffset, textShadowRadius } = style;
   const { height, width } = textShadowOffset || defaultOffset;
   const radius = textShadowRadius || 0;

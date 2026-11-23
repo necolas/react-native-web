@@ -108,7 +108,7 @@ const ImageLoader = {
     uri: string,
     success?: (width: number, height: number) => void,
     failure?: (error: unknown) => void
-  ): void | Promise<ImageSize> {
+  ): Promise<ImageSize> | undefined {
     const requestId = ImageLoader.generateRequestId();
     const request = ImageLoader.load(uri, requestId);
     const image = requests[`${requestId}`];

@@ -20,7 +20,7 @@ const AnimatedInterpolation = Animated.Interpolation;
 
 function createMockAnimation() {
   return {
-    start: jest.fn<void, [callback?: EndCallback | null]>(),
+    start: jest.fn<undefined, [callback?: EndCallback | null]>(),
     stop: jest.fn(),
     reset: jest.fn(),
     _startNativeLoop: jest.fn(),

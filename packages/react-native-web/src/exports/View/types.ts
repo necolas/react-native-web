@@ -140,7 +140,7 @@ export type EventProps = {
   onPointerOver?: PointerHandler;
   onPointerUp?: PointerHandler;
   onResponderEnd?: ResponderHandler;
-  onResponderGrant?: (e: ResponderEvent) => void | boolean;
+  onResponderGrant?: (e: ResponderEvent) => void;
   onResponderMove?: ResponderHandler;
   onResponderReject?: ResponderHandler;
   onResponderRelease?: ResponderHandler;

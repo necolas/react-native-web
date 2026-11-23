@@ -9,7 +9,7 @@ declare module 'styleq' {
   type EitherStyle = CompiledStyle | InlineStyle;
 
   type StylesArray<T> = T | ReadonlyArray<StylesArray<T>>;
-  type Styles = StylesArray<EitherStyle | false | '' | null | void>;
+  type Styles = StylesArray<EitherStyle | false | '' | null | undefined>;
 
   type StyleqOptions = {
     disableCache?: boolean;

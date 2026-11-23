@@ -84,32 +84,19 @@ export default defineConfig({
     'react/rules-of-hooks': 'error',
     'react/exhaustive-deps': 'warn',
 
+    // typescript
+    'typescript/no-empty-object-type': 'error',
     'typescript/no-explicit-any': 'error',
     'typescript/no-import-type-side-effects': 'error',
+    'typescript/no-invalid-void-type': 'error',
     'typescript/no-wrapper-object-types': 'error',
 
     // temporarily disabled
-    'capitalized-calls': 'off',
-    'no-await-in-loop': 'off',
-
-    'react/jsx-no-constructed-context-values': 'off',
-    'react/no-array-index-key': 'off',
-    'react/purity': 'off',
-
-    'typescript/await-thenable': 'off',
     'typescript/consistent-return': 'off',
     'typescript/no-base-to-string': 'off',
-    'typescript/no-empty-object-type': 'off',
     'typescript/no-extraneous-class': 'off',
-    'typescript/no-floating-promises': 'off',
-    'typescript/no-invalid-void-type': 'off',
-    'typescript/no-misused-spread': 'off',
     'typescript/no-non-null-assertion': 'off',
-    'typescript/no-redundant-type-constituents': 'off',
     'typescript/no-unnecessary-boolean-literal-compare': 'off',
-    'typescript/no-unnecessary-template-expression': 'off',
-    'typescript/no-unnecessary-type-arguments': 'off',
-    'typescript/no-unnecessary-type-conversion': 'off',
     'typescript/no-unsafe-type-assertion': 'off',
     'typescript/unbound-method': 'off',
 

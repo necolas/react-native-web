@@ -9,8 +9,8 @@ export type Touch = {
   force: number;
   identifier: number;
   // The locationX and locationY properties are non-standard additions
-  locationX: number | void;
-  locationY: number | void;
+  locationX: number | undefined;
+  locationY: number | undefined;
   pageX: number;
   pageY: number;
   target: EventTarget | null;
@@ -28,8 +28,8 @@ export type TouchEvent = {
   force: number;
   // React Native adds properties to the "nativeEvent that are usually only found on W3C Touches ‾\_(ツ)_/‾
   identifier: number;
-  locationX: number | void;
-  locationY: number | void;
+  locationX: number | undefined;
+  locationY: number | undefined;
   pageX: number;
   pageY: number;
   target: EventTarget | null;

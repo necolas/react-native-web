@@ -32,7 +32,7 @@ const colorProps = new Set([
 export default function normalizeValueWithProperty<T>(
   value: T,
   property?: Nullable<string>
-): T | string | void {
+): T | string | undefined {
   if (
     typeof value === 'number' &&
     (property == null || !isUnitlessNumber(property))
