@@ -514,7 +514,7 @@ function findWantsResponder(
   domEvent: ResponderDOMEvent,
   responderEvent: ResponderEvent
 ) {
-  const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type]; // for Flow
+  const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type];
 
   if (shouldSetCallbacks != null) {
     const { idPath, nodePath } = eventPaths;

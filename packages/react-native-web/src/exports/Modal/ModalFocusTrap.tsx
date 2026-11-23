@@ -82,8 +82,7 @@ const ModalFocusTrap = ({
   active,
   children
 }: ModalFocusTrapProps): React.ReactNode => {
-  // @ts-expect-error
-  const trapElementRef = React.useRef<HostNode | null>();
+  const trapElementRef = React.useRef<HostNode>(null);
   const focusRef = React.useRef<{
     trapFocusInProgress: boolean;
     lastFocusedElement: Nullable<Element>;

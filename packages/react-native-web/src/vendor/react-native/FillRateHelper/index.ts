@@ -107,8 +107,7 @@ class FillRateHelper {
     if (!this._enabled) {
       return;
     }
-    const start = this._samplesStartTime; // const for flow
-    if (start == null) {
+    if (this._samplesStartTime == null) {
       DEBUG &&
         console.debug('FillRateHelper: bail on deactivate with no start time');
       return;
@@ -118,7 +117,7 @@ class FillRateHelper {
       this._resetData();
       return;
     }
-    const total_time_spent = global.performance.now() - start;
+    const total_time_spent = global.performance.now() - this._samplesStartTime;
     const info = {
       ...this._info,
       total_time_spent,

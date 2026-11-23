@@ -15,7 +15,7 @@ import normalizeColor from '@react-native/normalize-colors';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type { Nullable } from '../../../../types';
+import type {Nullable} from '../../../../types';
 
 type ColorValue = string | number;
 type NativeColorValue = ColorValue;
@@ -89,20 +89,42 @@ function processColor(
   return null;
 }
 
+type RgbaLike = {
+  r: unknown,
+  g: unknown,
+  b: unknown,
+  a: unknown,
+};
+
+function isRgbaLike(value: unknown): value is RgbaLike {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'r' in value &&
+    'g' in value &&
+    'b' in value &&
+    'a' in value
+  );
+}
+
 function isRgbaValue(value: unknown): value is RgbaValue {
-  return (value &&
-    typeof (value as RgbaValue).r === 'number' &&
-    typeof (value as RgbaValue).g === 'number' &&
-    typeof (value as RgbaValue).b === 'number' &&
-    typeof (value as RgbaValue).a === 'number') as boolean;
+  return (
+    isRgbaLike(value) &&
+    typeof value.r === 'number' &&
+    typeof value.g === 'number' &&
+    typeof value.b === 'number' &&
+    typeof value.a === 'number'
+  );
 }
 
 function isRgbaAnimatedValue(value: unknown): value is RgbaAnimatedValue {
-  return (value &&
-    (value as RgbaAnimatedValue).r instanceof AnimatedValue &&
-    (value as RgbaAnimatedValue).g instanceof AnimatedValue &&
-    (value as RgbaAnimatedValue).b instanceof AnimatedValue &&
-    (value as RgbaAnimatedValue).a instanceof AnimatedValue) as boolean;
+  return (
+    isRgbaLike(value) &&
+    value.r instanceof AnimatedValue &&
+    value.g instanceof AnimatedValue &&
+    value.b instanceof AnimatedValue &&
+    value.a instanceof AnimatedValue
+  );
 }
 
 export default class AnimatedColor extends AnimatedWithChildren {

@@ -149,13 +149,12 @@ function useAnimatedPropsLifecycle(node: AnimatedProps): void {
   }, [node]);
 }
 
-type ScrollableInstance = {getScrollableNode: () => unknown};
-
 function getEventTarget(instance: unknown): unknown {
   return typeof instance === 'object' &&
-    typeof (instance as Partial<ScrollableInstance> | null)?.getScrollableNode ===
-      'function'
-    ? (instance as ScrollableInstance).getScrollableNode()
+    instance !== null &&
+    'getScrollableNode' in instance &&
+    typeof instance.getScrollableNode === 'function'
+    ? instance.getScrollableNode()
     : instance;
 }
 

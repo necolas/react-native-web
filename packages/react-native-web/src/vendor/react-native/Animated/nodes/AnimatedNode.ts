@@ -34,8 +34,6 @@ type ListenerCallback<T> = T extends AnimatedColor
 
 let _uniqueId = 1;
 
-// Note(vjeux): this would be better as an interface but flow doesn't
-// support them yet
 class AnimatedNode {
   _listeners: Record<string, unknown>;
   _platformConfig: Nullable<PlatformConfig>;
@@ -47,8 +45,9 @@ class AnimatedNode {
       this.__nativeTag = undefined;
     }
   }
-  __getValue(): unknown;
-  __getValue(): void {}
+  __getValue(): unknown {
+    return undefined;
+  }
   __getAnimatedValue(): unknown {
     return this.__getValue();
   }

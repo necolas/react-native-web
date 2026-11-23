@@ -320,10 +320,10 @@ class VirtualizedSectionList<
       onViewableItemsChanged({
         viewableItems: viewableItems
           .map(this._convertViewable, this)
-          .filter(Boolean) as Array<ViewToken>,
+          .filter(viewable => viewable != null),
         changed: changed
           .map(this._convertViewable, this)
-          .filter(Boolean) as Array<ViewToken>,
+          .filter(viewable => viewable != null),
       });
     }
   };
