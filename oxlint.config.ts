@@ -1,7 +1,7 @@
 import { defineConfig } from 'oxlint';
 
 export default defineConfig({
-  plugins: ['promise', 'react', 'typescript'],
+  plugins: ['node', 'promise', 'react', 'typescript'],
   ignorePatterns: ['packages/**/vendor/*', 'packages/**/types/*'],
   env: {
     browser: true,
@@ -111,7 +111,6 @@ export default defineConfig({
     'typescript/no-unnecessary-type-arguments': 'off',
     'typescript/no-unnecessary-type-conversion': 'off',
     'typescript/no-unsafe-type-assertion': 'off',
-    'typescript/no-unused-vars': 'off',
     'typescript/unbound-method': 'off',
 
     // 'typescript/explicit-function-return-type': 'error',

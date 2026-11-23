@@ -851,7 +851,7 @@ describe('components/Modal with reduced motion', () => {
     jest.resetModules();
 
     // Testing Library can't be imported again, as it registers Jest hooks
-    const { default: React, act } = await import('react');
+    const { act } = await import('react');
     const { createRoot } = await import('react-dom/client');
     const { default: Modal } = await import('..');
 
