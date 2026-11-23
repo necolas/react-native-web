@@ -8,21 +8,21 @@
 
 'use client';
 
+import invariant from 'invariant';
+import React from 'react';
+
+import dismissKeyboard from '../../modules/dismissKeyboard';
+import mergeRefs from '../../modules/mergeRefs';
+import TextInputState from '../../modules/TextInputState';
 import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
 import type { HostNode, LayoutEvent, Nullable } from '../../types';
 import type { ScrollEvent as NativeScrollEvent } from '../../vendor/react-native/Types/CoreEventTypes';
-import type { ViewProps, ViewStyle } from '../View/types';
-
 import Dimensions from '../Dimensions';
-import dismissKeyboard from '../../modules/dismissKeyboard';
-import invariant from 'invariant';
-import mergeRefs from '../../modules/mergeRefs';
-import ScrollViewBase, { type ScrollEvent } from './ScrollViewBase';
 import StyleSheet from '../StyleSheet';
-import TextInputState from '../../modules/TextInputState';
 import UIManager from '../UIManager';
 import View from '../View';
-import React from 'react';
+import type { ViewProps, ViewStyle } from '../View/types';
+import ScrollViewBase, { type ScrollEvent } from './ScrollViewBase';
 
 export type Props = Omit<ViewProps, 'onScroll'> & {
   centerContent?: boolean;
@@ -318,12 +318,12 @@ class ScrollView extends React.Component<ScrollViewProps> {
       refreshControl,
       stickyHeaderIndices,
       pagingEnabled,
-      /* eslint-disable */
+      /* oxlint-disable no-unused-vars */
       forwardedRef,
       keyboardDismissMode,
       onScroll,
       centerContent,
-      /* eslint-enable */
+      /* oxlint-enable no-unused-vars */
       ...rest
     } = this.props;
 

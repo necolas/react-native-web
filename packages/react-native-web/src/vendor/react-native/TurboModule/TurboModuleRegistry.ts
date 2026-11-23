@@ -9,9 +9,10 @@
 
 'use strict';
 
-import type {TurboModule} from './RCTExport';
 import invariant from 'invariant';
+
 import type { Nullable } from '../../../types';
+import type { TurboModule } from './RCTExport';
 
 export function get<T extends TurboModule>(name: string): Nullable<T> {
   return null;
@@ -22,7 +23,7 @@ export function getEnforcing<T extends TurboModule>(name: string): T {
   invariant(
     module != null,
     `TurboModuleRegistry.getEnforcing(...): '${name}' could not be found. ` +
-      'Verify that a module by this name is registered in the native binary.',
+      'Verify that a module by this name is registered in the native binary.'
   );
   return module;
 }

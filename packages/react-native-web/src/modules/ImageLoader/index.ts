@@ -58,7 +58,8 @@ export class ImageUriCache {
     if (imageUris.length + 1 > ImageUriCache._maximumEntries) {
       let leastRecentlyUsedKey;
       let leastRecentlyUsedEntry:
-        { lastUsedTimestamp: number; refCount: number } | undefined;
+        | { lastUsedTimestamp: number; refCount: number }
+        | undefined;
 
       imageUris.forEach((uri) => {
         const entry = entries[uri];

@@ -67,7 +67,12 @@ export type SourceObject = {
 };
 
 export type ResizeMode =
-  'center' | 'contain' | 'cover' | 'none' | 'repeat' | 'stretch';
+  | 'center'
+  | 'contain'
+  | 'cover'
+  | 'none'
+  | 'repeat'
+  | 'stretch';
 
 export type Source = number | string | SourceObject | Array<SourceObject>;
 

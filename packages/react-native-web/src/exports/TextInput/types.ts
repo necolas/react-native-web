@@ -6,6 +6,7 @@
  */
 
 import type { KeyboardEvent, UIEvent } from 'react';
+
 import type { ColorValue, GenericStyleProp, Nullable } from '../../types';
 import type { TextStyle } from '../Text/types';
 import type { ViewProps } from '../View/types';
@@ -34,7 +35,13 @@ export type TextInputProps = Omit<
   dir?: Nullable<'auto' | 'ltr' | 'rtl'>;
   disabled?: Nullable<boolean>;
   enterKeyHint?:
-    'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'search'
+    | 'send';
   inputAccessoryViewID?: Nullable<string>;
   inputMode?:
     | 'decimal'
@@ -97,5 +104,11 @@ export type TextInputProps = Omit<
     | 'web-search';
   numberOfLines?: Nullable<number>;
   returnKeyType?:
-    'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send';
+    | 'enter'
+    | 'done'
+    | 'go'
+    | 'next'
+    | 'previous'
+    | 'search'
+    | 'send';
 };

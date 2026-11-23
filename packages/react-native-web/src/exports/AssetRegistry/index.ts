@@ -8,7 +8,6 @@
 'use client';
 
 import type { PackagerAsset } from '../../modules/AssetRegistry';
-
 import { registerAsset, getAssetByID } from '../../modules/AssetRegistry';
 
 export default {

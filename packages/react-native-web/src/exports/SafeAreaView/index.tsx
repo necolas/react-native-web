@@ -6,10 +6,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ViewProps } from '../View';
-
 import * as React from 'react';
+
 import StyleSheet from '../StyleSheet';
+import type { ViewProps } from '../View';
 import View from '../View';
 
 type SafeAreaViewProps = ViewProps & {

@@ -12,72 +12,76 @@
 import type { Nullable } from '../../../types';
 
 export type SyntheticEvent<T> = Readonly<{
-  bubbles: Nullable<boolean>,
-  cancelable: Nullable<boolean>,
-  currentTarget: HTMLElement,
-  defaultPrevented: Nullable<boolean>,
+  bubbles: Nullable<boolean>;
+  cancelable: Nullable<boolean>;
+  currentTarget: HTMLElement;
+  defaultPrevented: Nullable<boolean>;
   dispatchConfig: Readonly<{
-    registrationName: string,
-  }>,
-  eventPhase: Nullable<number>,
-  preventDefault: () => void,
-  isDefaultPrevented: () => boolean,
-  stopPropagation: () => void,
-  isPropagationStopped: () => boolean,
-  isTrusted: Nullable<boolean>,
-  nativeEvent: T,
-  persist: () => void,
-  target: Nullable<HTMLElement>,
-  timeStamp: number,
-  type: Nullable<string>,
+    registrationName: string;
+  }>;
+  eventPhase: Nullable<number>;
+  preventDefault: () => void;
+  isDefaultPrevented: () => boolean;
+  stopPropagation: () => void;
+  isPropagationStopped: () => boolean;
+  isTrusted: Nullable<boolean>;
+  nativeEvent: T;
+  persist: () => void;
+  target: Nullable<HTMLElement>;
+  timeStamp: number;
+  type: Nullable<string>;
 }>;
 
-export type ResponderSyntheticEvent<T> = Readonly<SyntheticEvent<T> & {
-  touchHistory: Readonly<{
-    indexOfSingleActiveTouch: number,
-    mostRecentTimeStamp: number,
-    numberActiveTouches: number,
-    touchBank: ReadonlyArray<
-      Readonly<{
-        touchActive: boolean,
-        startPageX: number,
-        startPageY: number,
-        startTimeStamp: number,
-        currentPageX: number,
-        currentPageY: number,
-        currentTimeStamp: number,
-        previousPageX: number,
-        previousPageY: number,
-        previousTimeStamp: number,
-      }>
-    >,
-  }>,
-}>;
+export type ResponderSyntheticEvent<T> = Readonly<
+  SyntheticEvent<T> & {
+    touchHistory: Readonly<{
+      indexOfSingleActiveTouch: number;
+      mostRecentTimeStamp: number;
+      numberActiveTouches: number;
+      touchBank: ReadonlyArray<
+        Readonly<{
+          touchActive: boolean;
+          startPageX: number;
+          startPageY: number;
+          startTimeStamp: number;
+          currentPageX: number;
+          currentPageY: number;
+          currentTimeStamp: number;
+          previousPageX: number;
+          previousPageY: number;
+          previousTimeStamp: number;
+        }>
+      >;
+    }>;
+  }
+>;
 
 export type Layout = Readonly<{
-  x: number,
-  y: number,
-  width: number,
-  height: number,
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }>;
 
-export type TextLayout = Readonly<Layout & {
-  ascender: number,
-  capHeight: number,
-  descender: number,
-  text: string,
-  xHeight: number,
-}>;
+export type TextLayout = Readonly<
+  Layout & {
+    ascender: number;
+    capHeight: number;
+    descender: number;
+    text: string;
+    xHeight: number;
+  }
+>;
 
 export type LayoutEvent = SyntheticEvent<
   Readonly<{
-    layout: Layout,
+    layout: Layout;
   }>
 >;
 
 export type TextLayoutEvent = SyntheticEvent<
   Readonly<{
-    lines: Array<TextLayout>,
+    lines: Array<TextLayout>;
   }>
 >;
 
@@ -221,70 +225,70 @@ export type PointerEvent = SyntheticEvent<NativePointerEvent>;
 
 export type PressEvent = ResponderSyntheticEvent<
   Readonly<{
-    changedTouches: ReadonlyArray<PressEvent['nativeEvent']>,
-    force: number,
-    identifier: number,
-    locationX: number,
-    locationY: number,
-    pageX: number,
-    pageY: number,
-    target: Nullable<HTMLElement>,
-    timestamp: number,
-    touches: ReadonlyArray<PressEvent['nativeEvent']>,
+    changedTouches: ReadonlyArray<PressEvent['nativeEvent']>;
+    force: number;
+    identifier: number;
+    locationX: number;
+    locationY: number;
+    pageX: number;
+    pageY: number;
+    target: Nullable<HTMLElement>;
+    timestamp: number;
+    touches: ReadonlyArray<PressEvent['nativeEvent']>;
   }>
 >;
 
 export type ScrollEvent = SyntheticEvent<
   Readonly<{
     contentInset: Readonly<{
-      bottom: number,
-      left: number,
-      right: number,
-      top: number,
-    }>,
+      bottom: number;
+      left: number;
+      right: number;
+      top: number;
+    }>;
     contentOffset: Readonly<{
-      y: number,
-      x: number,
-    }>,
+      y: number;
+      x: number;
+    }>;
     contentSize: Readonly<{
-      height: number,
-      width: number,
-    }>,
+      height: number;
+      width: number;
+    }>;
     layoutMeasurement: Readonly<{
-      height: number,
-      width: number,
-    }>,
+      height: number;
+      width: number;
+    }>;
     targetContentOffset?: Readonly<{
-      y: number,
-      x: number,
-    }>,
+      y: number;
+      x: number;
+    }>;
     velocity?: Readonly<{
-      y: number,
-      x: number,
-    }>,
-    zoomScale?: number,
-    responderIgnoreScroll?: boolean,
+      y: number;
+      x: number;
+    }>;
+    zoomScale?: number;
+    responderIgnoreScroll?: boolean;
   }>
 >;
 
 export type BlurEvent = SyntheticEvent<
   Readonly<{
-    target: number,
+    target: number;
   }>
 >;
 
 export type FocusEvent = SyntheticEvent<
   Readonly<{
-    target: number,
+    target: number;
   }>
 >;
 
 export type MouseEvent = SyntheticEvent<
   Readonly<{
-    clientX: number,
-    clientY: number,
-    pageX: number,
-    pageY: number,
-    timestamp: number,
+    clientX: number;
+    clientY: number;
+    pageX: number;
+    pageY: number;
+    timestamp: number;
   }>
 >;

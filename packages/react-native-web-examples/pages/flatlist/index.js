@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Example from '../../shared/example';
 import { FlatList, Text, Pressable, View } from 'react-native-web';
+
+import Example from '../../shared/example';
 
 const multiSelectData = ['First', 'Second', 'Third'].map((title, id) => ({
   id,

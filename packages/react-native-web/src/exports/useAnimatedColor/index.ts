@@ -9,15 +9,15 @@
 
 'use client';
 
+import { useRef } from 'react';
+
+import type { Nullable } from '../../types';
 import type AnimatedColor from '../../vendor/react-native/Animated/nodes/AnimatedColor';
 import type {
   AnimatedColorConfig,
   InputValue
 } from '../../vendor/react-native/Animated/nodes/AnimatedColor';
-
 import Animated from '../Animated';
-import { useRef } from 'react';
-import type { Nullable } from '../../types';
 
 export default function useAnimatedColor(
   inputValue?: InputValue,

@@ -8,6 +8,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
+
 import canUseDOM from '../../modules/canUseDom';
 import type { Nullable } from '../../types';
 

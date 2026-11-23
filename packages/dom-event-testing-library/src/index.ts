@@ -8,6 +8,8 @@
 'use strict';
 
 import { buttonType, buttonsType } from './constants';
+import type { EventPayload } from './createEvent';
+import { platform } from './domEnvironment';
 import * as domEvents from './domEvents';
 import type {
   FocusEventPayload,
@@ -15,9 +17,7 @@ import type {
   MouseEventPayload,
   PointerEventPayload
 } from './domEvents';
-import type { EventPayload } from './createEvent';
 import * as domEventSequences from './domEventSequences';
-import { platform } from './domEnvironment';
 import { testWithPointerType } from './testHelpers';
 
 const createEventTarget = <T extends Node | Window>(node: T) => ({

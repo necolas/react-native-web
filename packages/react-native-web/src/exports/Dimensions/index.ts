@@ -8,10 +8,11 @@
 
 'use client';
 
-import type { EventSubscription } from '../../vendor/react-native/vendor/emitter/EventEmitter';
 import invariant from 'invariant';
+
 import canUseDOM from '../../modules/canUseDom';
 import type { Nullable } from '../../types';
+import type { EventSubscription } from '../../vendor/react-native/vendor/emitter/EventEmitter';
 
 export type DisplayMetrics = {
   fontScale: number;

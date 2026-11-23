@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { LayoutEvent, Nullable } from '../../types';
-
 import { useLayoutEffect } from 'react';
+
 import UIManager from '../../exports/UIManager';
+import type { LayoutEvent, Nullable } from '../../types';
 import canUseDOM from '../canUseDom';
 
 const DOM_LAYOUT_HANDLER_NAME = '__reactLayoutHandler';

@@ -4,9 +4,10 @@
  * https://github.com/paularmstrong/react-component-benchmark
  */
 
-import * as Timing from './timing';
 import React, { Component } from 'react';
+
 import { getMean, getMedian, getStdDev } from './math';
+import * as Timing from './timing';
 
 /**
  * @typedef {Object} BenchResultsType

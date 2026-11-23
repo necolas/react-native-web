@@ -1,4 +1,5 @@
 import path from 'node:path';
+
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const appDirectory = import.meta.dirname;

@@ -6,6 +6,7 @@
  */
 
 import * as React from 'react';
+
 import type { Nullable } from '../../types';
 
 export default function mergeRefs<T = HTMLElement>(

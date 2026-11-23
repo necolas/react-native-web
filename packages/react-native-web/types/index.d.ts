@@ -49,14 +49,26 @@ interface WebAccessibilityProps {
   'aria-colspan'?: number | undefined;
   'aria-controls'?: string | undefined;
   'aria-current'?:
-    boolean | 'page' | 'step' | 'location' | 'date' | 'time' | undefined;
+    | boolean
+    | 'page'
+    | 'step'
+    | 'location'
+    | 'date'
+    | 'time'
+    | undefined;
   'aria-describedby'?: string | undefined;
   'aria-description'?: string | undefined;
   'aria-details'?: string | undefined;
   'aria-errormessage'?: string | undefined;
   'aria-flowto'?: string | undefined;
   'aria-haspopup'?:
-    'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false | undefined;
+    | 'dialog'
+    | 'grid'
+    | 'listbox'
+    | 'menu'
+    | 'tree'
+    | false
+    | undefined;
   'aria-invalid'?: boolean | undefined;
   'aria-keyshortcuts'?: string | undefined;
   'aria-level'?: number | undefined;
@@ -91,13 +103,17 @@ interface WebEventProps {
   onScroll?: UIEventHandler | undefined;
   onWheel?: WheelEventHandler | undefined;
   onScrollShouldSetResponder?:
-    ((event: GestureResponderEvent) => boolean) | undefined;
+    | ((event: GestureResponderEvent) => boolean)
+    | undefined;
   onScrollShouldSetResponderCapture?:
-    ((event: GestureResponderEvent) => boolean) | undefined;
+    | ((event: GestureResponderEvent) => boolean)
+    | undefined;
   onSelectionChangeShouldSetResponder?:
-    ((event: GestureResponderEvent) => boolean) | undefined;
+    | ((event: GestureResponderEvent) => boolean)
+    | undefined;
   onSelectionChangeShouldSetResponderCapture?:
-    ((event: GestureResponderEvent) => boolean) | undefined;
+    | ((event: GestureResponderEvent) => boolean)
+    | undefined;
 }
 
 interface WebSharedProps extends WebEventProps {
@@ -119,7 +135,10 @@ interface WebSharedProps extends WebEventProps {
 // Styles that react-native does not declare.
 // See src/exports/View/types.js and src/types/styles.js
 type AnimationDirection =
-  'alternate' | 'alternate-reverse' | 'normal' | 'reverse';
+  | 'alternate'
+  | 'alternate-reverse'
+  | 'normal'
+  | 'reverse';
 
 type AnimationFillMode = 'none' | 'forwards' | 'backwards' | 'both';
 type AnimationIterationCount = number | 'infinite';
@@ -185,15 +204,23 @@ type TouchActionValue =
 interface WebViewStyle {
   animationDelay?: string | Array<string> | undefined;
   animationDirection?:
-    AnimationDirection | Array<AnimationDirection> | undefined;
+    | AnimationDirection
+    | Array<AnimationDirection>
+    | undefined;
   animationDuration?: string | Array<string> | undefined;
   animationFillMode?: AnimationFillMode | Array<AnimationFillMode> | undefined;
   animationIterationCount?:
-    AnimationIterationCount | Array<AnimationIterationCount> | undefined;
+    | AnimationIterationCount
+    | Array<AnimationIterationCount>
+    | undefined;
   animationKeyframes?:
-    AnimationKeyframes | Array<AnimationKeyframes> | undefined;
+    | AnimationKeyframes
+    | Array<AnimationKeyframes>
+    | undefined;
   animationPlayState?:
-    AnimationPlayState | Array<AnimationPlayState> | undefined;
+    | AnimationPlayState
+    | Array<AnimationPlayState>
+    | undefined;
   animationTimingFunction?: string | Array<string> | undefined;
   appearance?: string | undefined;
   backdropFilter?: string | undefined;
@@ -461,7 +488,12 @@ declare module 'react-native' {
     paddingTop?: DimensionValue | undefined;
     paddingVertical?: DimensionValue | undefined;
     position?:
-      'absolute' | 'fixed' | 'relative' | 'static' | 'sticky' | undefined;
+      | 'absolute'
+      | 'fixed'
+      | 'relative'
+      | 'static'
+      | 'sticky'
+      | undefined;
     right?: DimensionValue | undefined;
     start?: DimensionValue | undefined;
     top?: DimensionValue | undefined;
@@ -533,7 +565,12 @@ declare module 'react-native' {
     paddingTop?: DimensionValue | undefined;
     paddingVertical?: DimensionValue | undefined;
     position?:
-      'absolute' | 'fixed' | 'relative' | 'static' | 'sticky' | undefined;
+      | 'absolute'
+      | 'fixed'
+      | 'relative'
+      | 'static'
+      | 'sticky'
+      | undefined;
     right?: DimensionValue | undefined;
     start?: DimensionValue | undefined;
     textAlign?:
@@ -613,7 +650,12 @@ declare module 'react-native' {
     paddingTop?: DimensionValue | undefined;
     paddingVertical?: DimensionValue | undefined;
     position?:
-      'absolute' | 'fixed' | 'relative' | 'static' | 'sticky' | undefined;
+      | 'absolute'
+      | 'fixed'
+      | 'relative'
+      | 'static'
+      | 'sticky'
+      | undefined;
     right?: DimensionValue | undefined;
     start?: DimensionValue | undefined;
     top?: DimensionValue | undefined;

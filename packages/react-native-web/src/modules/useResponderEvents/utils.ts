@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { ResponderDOMEvent } from './ResponderEventTypes';
-
 import isSelectionValid from '../../modules/isSelectionValid';
 import type { Nullable } from '../../types';
+import type { ResponderDOMEvent } from './ResponderEventTypes';
 
 const keyName = '__reactResponderId';
 
@@ -162,7 +161,8 @@ export function hasValidSelection(domEvent: ResponderDOMEvent): boolean {
 
   try {
     const { selectionStart, selectionEnd } = domEvent.target as
-      HTMLInputElement | HTMLTextAreaElement;
+      | HTMLInputElement
+      | HTMLTextAreaElement;
 
     if (
       typeof selectionStart === 'number' &&

@@ -7,13 +7,13 @@
 
 'use client';
 
-import type { StyleSheetOptions } from '../StyleSheet';
+import * as React from 'react';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
-import * as React from 'react';
 import { LocaleProvider } from '../../modules/useLocale';
 import type { Nullable } from '../../types';
+import type { StyleSheetOptions } from '../StyleSheet';
 
 const createElement = (
   component: React.ElementType,

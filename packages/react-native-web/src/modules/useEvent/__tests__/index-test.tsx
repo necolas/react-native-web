@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
+import * as React from 'react';
+
 import useEvent from '..';
 
 type ElementEvent = Event & { currentTarget: HTMLElement };

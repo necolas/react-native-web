@@ -1,8 +1,0 @@
-**/dist
-
-node_modules
-coverage
-
-packages/**/*.html
-packages/**/.next
-packages/**/vendor/*

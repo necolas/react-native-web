@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { EventOptions } from '../addEventListener';
-
 import { useLayoutEffect } from 'react';
+
+import type { Nullable } from '../../types';
+import type { EventOptions } from '../addEventListener';
 import { addEventListener } from '../addEventListener';
 import useStable from '../useStable';
-import type { Nullable } from '../../types';
 
 type Callback<E> = null | ((e: E) => void);
 type AddListener<E> = (

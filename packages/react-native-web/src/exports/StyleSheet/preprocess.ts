@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import type { Nullable } from '../../types';
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
-import type { Nullable } from '../../types';
 
 const emptyObject: Readonly<Record<string, never>> = {};
 

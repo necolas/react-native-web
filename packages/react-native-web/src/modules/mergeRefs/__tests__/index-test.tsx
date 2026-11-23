@@ -5,9 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
-import mergeRefs from '..';
 import { render } from '@testing-library/react';
+import * as React from 'react';
+
+import mergeRefs from '..';
 
 describe('modules/mergeRefs', () => {
   test('merges refs of different types', () => {

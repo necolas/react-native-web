@@ -15,11 +15,15 @@ type NumberOrString = number | string;
  */
 
 type AnimationDirection =
-  'alternate' | 'alternate-reverse' | 'normal' | 'reverse';
+  | 'alternate'
+  | 'alternate-reverse'
+  | 'normal'
+  | 'reverse';
 type AnimationFillMode = 'none' | 'forwards' | 'backwards' | 'both';
 type AnimationIterationCount = number | 'infinite';
 type AnimationKeyframes =
-  string | Readonly<Record<string, Readonly<Record<string, StyleValue>>>>;
+  | string
+  | Readonly<Record<string, Readonly<Record<string, StyleValue>>>>;
 type AnimationPlayState = 'paused' | 'running';
 
 export type AnimationStyles = {

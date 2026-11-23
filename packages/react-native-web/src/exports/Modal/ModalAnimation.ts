@@ -7,10 +7,11 @@
  */
 
 import * as React from 'react';
-import StyleSheet from '../StyleSheet';
-import createElement from '../createElement';
+
 import canUseDOM from '../../modules/canUseDom';
 import type { Nullable } from '../../types';
+import createElement from '../createElement';
+import StyleSheet from '../StyleSheet';
 
 const ANIMATION_DURATION = 250;
 

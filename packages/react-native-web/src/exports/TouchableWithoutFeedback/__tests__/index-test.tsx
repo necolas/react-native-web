@@ -1,9 +1,9 @@
-import type { HostNode } from '../../../types';
-
-import React from 'react';
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
+
 import TouchableWithoutFeedback from '../';
+import type { HostNode } from '../../../types';
 import Text from '../../Text';
 import View from '../../View';
 

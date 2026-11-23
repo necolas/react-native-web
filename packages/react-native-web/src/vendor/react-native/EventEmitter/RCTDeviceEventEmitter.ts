@@ -11,11 +11,11 @@ import EventEmitter from '../vendor/emitter/EventEmitter';
 
 // FIXME: use typed events
 type RCTDeviceEventDefinitions = {
-  onNativeAnimatedModuleGetValue: [{tag: number, value: number}],
+  onNativeAnimatedModuleGetValue: [{ tag: number; value: number }];
   onNativeAnimatedModuleAnimationFinished: [
-    {animationId: number, finished: boolean},
-  ],
-  [eventType: string]: Array<unknown>,
+    { animationId: number; finished: boolean }
+  ];
+  [eventType: string]: Array<unknown>;
 };
 
 /**

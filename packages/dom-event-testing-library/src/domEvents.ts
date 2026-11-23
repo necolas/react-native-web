@@ -7,13 +7,13 @@
 
 'use strict';
 
-import createEvent, { type EventPayload } from './createEvent';
 import {
   buttonType,
   buttonsType,
   defaultPointerSize,
   defaultBrowserChromeSize
 } from './constants';
+import createEvent, { type EventPayload } from './createEvent';
 import type { TouchData } from './touchStore';
 
 export type PointerType = 'mouse' | 'pen' | 'touch';

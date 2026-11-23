@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
 import { act, render } from '@testing-library/react';
-import Appearance from '../../Appearance';
+import * as React from 'react';
+
 import useColorScheme from '..';
+import Appearance from '../../Appearance';
 
 describe('useColorScheme', () => {
   afterEach(() => {

@@ -7,12 +7,11 @@
 
 'use client';
 
+import type { ReactNode } from 'react';
 import {
   createRoot as domCreateRoot,
   hydrateRoot as domHydrateRoot
 } from 'react-dom/client';
-
-import type { ReactNode } from 'react';
 
 import { createSheet } from '../StyleSheet/dom';
 

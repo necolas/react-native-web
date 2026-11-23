@@ -13,11 +13,13 @@ export interface EventSubscription {
   remove(): void;
 }
 
-export interface IEventEmitter<TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>> {
+export interface IEventEmitter<
+  TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>
+> {
   addListener<TEvent extends keyof TEventToArgsMap & string>(
     eventType: TEvent,
     listener: (...args: TEventToArgsMap[TEvent]) => unknown,
-    context?: unknown,
+    context?: unknown
   ): EventSubscription;
 
   emit<TEvent extends keyof TEventToArgsMap & string>(
@@ -25,9 +27,13 @@ export interface IEventEmitter<TEventToArgsMap extends Readonly<Record<string, A
     ...args: TEventToArgsMap[TEvent]
   ): void;
 
-  removeAllListeners<TEvent extends keyof TEventToArgsMap & string>(eventType?: Nullable<TEvent>): void;
+  removeAllListeners<TEvent extends keyof TEventToArgsMap & string>(
+    eventType?: Nullable<TEvent>
+  ): void;
 
-  listenerCount<TEvent extends keyof TEventToArgsMap & string>(eventType: TEvent): number;
+  listenerCount<TEvent extends keyof TEventToArgsMap & string>(
+    eventType: TEvent
+  ): number;
 }
 
 interface Registration<TArgs extends Array<unknown>> {
@@ -36,8 +42,12 @@ interface Registration<TArgs extends Array<unknown>> {
   readonly remove: () => void;
 }
 
-type Registry<TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>> = {
-  [TEvent in keyof TEventToArgsMap]?: Set<Registration<TEventToArgsMap[TEvent]>>;
+type Registry<
+  TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>
+> = {
+  [TEvent in keyof TEventToArgsMap]?: Set<
+    Registration<TEventToArgsMap[TEvent]>
+  >;
 };
 
 /**
@@ -60,9 +70,9 @@ type Registry<TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>> 
  *   emitter.emit('error', new Error('Resource not found'));
  *
  */
-export default class EventEmitter<TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>>
-  implements IEventEmitter<TEventToArgsMap>
-{
+export default class EventEmitter<
+  TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>
+> implements IEventEmitter<TEventToArgsMap> {
   _registry: Registry<TEventToArgsMap> = {};
 
   /**
@@ -72,7 +82,7 @@ export default class EventEmitter<TEventToArgsMap extends Readonly<Record<string
   addListener<TEvent extends keyof TEventToArgsMap & string>(
     eventType: TEvent,
     listener: (...args: TEventToArgsMap[TEvent]) => unknown,
-    context?: unknown,
+    context?: unknown
   ): EventSubscription {
     const registrations = allocate(this._registry, eventType);
     const registration: Registration<TEventToArgsMap[TEvent]> = {
@@ -80,7 +90,7 @@ export default class EventEmitter<TEventToArgsMap extends Readonly<Record<string
       listener,
       remove(): void {
         registrations.delete(registration);
-      },
+      }
     };
     registrations.add(registration);
     return registration;
@@ -110,7 +120,7 @@ export default class EventEmitter<TEventToArgsMap extends Readonly<Record<string
    * Removes all registered listeners.
    */
   removeAllListeners<TEvent extends keyof TEventToArgsMap & string>(
-    eventType?: Nullable<TEvent>,
+    eventType?: Nullable<TEvent>
   ): void {
     if (eventType == null) {
       this._registry = {};
@@ -122,20 +132,24 @@ export default class EventEmitter<TEventToArgsMap extends Readonly<Record<string
   /**
    * Returns the number of registered listeners for the supplied event.
    */
-  listenerCount<TEvent extends keyof TEventToArgsMap & string>(eventType: TEvent): number {
-    const registrations: Nullable<Set<Registration<TEventToArgsMap[TEvent]>>> = this._registry[eventType];
+  listenerCount<TEvent extends keyof TEventToArgsMap & string>(
+    eventType: TEvent
+  ): number {
+    const registrations: Nullable<Set<Registration<TEventToArgsMap[TEvent]>>> =
+      this._registry[eventType];
     return registrations == null ? 0 : registrations.size;
   }
 }
 
 function allocate<
   TEventToArgsMap extends Readonly<Record<string, Array<unknown>>>,
-  TEvent extends keyof TEventToArgsMap,
+  TEvent extends keyof TEventToArgsMap
 >(
   registry: Registry<TEventToArgsMap>,
-  eventType: TEvent,
+  eventType: TEvent
 ): Set<Registration<TEventToArgsMap[TEvent]>> {
-  let registrations: Nullable<Set<Registration<TEventToArgsMap[TEvent]>>> = registry[eventType];
+  let registrations: Nullable<Set<Registration<TEventToArgsMap[TEvent]>>> =
+    registry[eventType];
   if (registrations == null) {
     registrations = new Set();
     registry[eventType] = registrations;

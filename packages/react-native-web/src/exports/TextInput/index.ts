@@ -8,20 +8,20 @@
 
 'use client';
 
-import type { PlatformMethods, Nullable } from '../../types';
-import type { SubmitBehavior, TextInputProps } from './types';
-
 import * as React from 'react';
-import createElement from '../createElement';
+
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
-import useElementLayout from '../../modules/useElementLayout';
-import useMergeRefs from '../../modules/useMergeRefs';
 import setPlatformMethods from '../../modules/setPlatformMethods';
-import useResponderEvents from '../../modules/useResponderEvents';
-import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
-import StyleSheet from '../StyleSheet';
 import TextInputState from '../../modules/TextInputState';
+import useElementLayout from '../../modules/useElementLayout';
+import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
+import useMergeRefs from '../../modules/useMergeRefs';
+import useResponderEvents from '../../modules/useResponderEvents';
+import type { PlatformMethods, Nullable } from '../../types';
+import createElement from '../createElement';
+import StyleSheet from '../StyleSheet';
+import type { SubmitBehavior, TextInputProps } from './types';
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing

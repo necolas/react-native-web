@@ -6,8 +6,9 @@
  */
 
 import { useLayoutEffect } from 'react';
-import useEvent from '../useEvent';
+
 import type { Nullable } from '../../types';
+import useEvent from '../useEvent';
 
 /**
  * Types

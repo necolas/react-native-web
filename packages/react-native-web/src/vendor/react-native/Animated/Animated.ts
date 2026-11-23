@@ -10,20 +10,21 @@
 import Platform from '../../../exports/Platform';
 type AnimatedFlatList = typeof import('./components/AnimatedFlatList').default;
 type AnimatedImage = typeof import('./components/AnimatedImage').default;
-type AnimatedScrollView = typeof import('./components/AnimatedScrollView').default;
-type AnimatedSectionList = typeof import('./components/AnimatedSectionList').default;
+type AnimatedScrollView =
+  typeof import('./components/AnimatedScrollView').default;
+type AnimatedSectionList =
+  typeof import('./components/AnimatedSectionList').default;
 type AnimatedText = typeof import('./components/AnimatedText').default;
 type AnimatedView = typeof import('./components/AnimatedView').default;
 
+import AnimatedImplementation from './AnimatedImplementation';
+import AnimatedMock from './AnimatedMock';
 import FlatList from './components/AnimatedFlatList';
 import Image from './components/AnimatedImage';
 import ScrollView from './components/AnimatedScrollView';
 import SectionList from './components/AnimatedSectionList';
 import Text from './components/AnimatedText';
 import View from './components/AnimatedView';
-
-import AnimatedMock from './AnimatedMock';
-import AnimatedImplementation from './AnimatedImplementation';
 
 const Animated = Platform.isTesting ? AnimatedMock : AnimatedImplementation;
 
@@ -34,5 +35,5 @@ export default {
   SectionList,
   Text,
   View,
-  ...Animated,
+  ...Animated
 };

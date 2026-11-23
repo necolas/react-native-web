@@ -5,15 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { styleq, type CompiledStyle, type Styles } from 'styleq';
+
+import canUseDOM from '../../modules/canUseDom';
+import type { GenericStyleProp } from '../../types';
 import { atomic, classic, inline, type Style } from './compiler';
 import { createSheet } from './dom';
 import { localizeStyle, type LocalizedStyle } from './localizeStyle';
 import { preprocess } from './preprocess';
 import type { PreprocessOptions } from './preprocess';
-import { styleq, type CompiledStyle, type Styles } from 'styleq';
 import { validate } from './validate';
-import canUseDOM from '../../modules/canUseDom';
-import type { GenericStyleProp } from '../../types';
 
 const staticStyleMap: WeakMap<object, LocalizedStyle> = new WeakMap();
 const sheet = createSheet();
@@ -129,7 +130,7 @@ function create<
  */
 function compose<T, U>(style1: T, style2: U): [T, U] {
   if (process.env.NODE_ENV !== 'production') {
-    /* eslint-disable prefer-rest-params */
+    /* oxlint-disable prefer-rest-params */
     const len = arguments.length;
     if (len > 2) {
       const readableStyles = [...arguments].map((a) => flatten(a));
@@ -139,7 +140,7 @@ function compose<T, U>(style1: T, style2: U): [T, U] {
         )}`
       );
     }
-    /* eslint-enable prefer-rest-params */
+    /* oxlint-enable prefer-rest-params */
   }
   return [style1, style2];
 }

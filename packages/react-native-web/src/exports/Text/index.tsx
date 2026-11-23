@@ -8,20 +8,20 @@
 
 'use client';
 
-import type { PlatformMethods, Nullable } from '../../types';
-import type { TextProps } from './types';
-
 import * as React from 'react';
-import createElement from '../createElement';
+
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
-import useElementLayout from '../../modules/useElementLayout';
-import useMergeRefs from '../../modules/useMergeRefs';
 import setPlatformMethods from '../../modules/setPlatformMethods';
+import useElementLayout from '../../modules/useElementLayout';
+import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
+import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
+import type { PlatformMethods, Nullable } from '../../types';
+import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
-import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
+import type { TextProps } from './types';
 
 const forwardPropsList = new Set([
   ...forwardedProps.defaultProps,

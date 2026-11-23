@@ -9,27 +9,31 @@
 
 'use strict';
 
-import AnimatedProps from './nodes/AnimatedProps';
-import {AnimatedEvent} from './AnimatedEvent';
-import useRefEffect from '../Utilities/useRefEffect';
-import NativeAnimatedHelper from './NativeAnimatedHelper';
 import {
   useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
   useReducer,
-  useRef,
+  useRef
 } from 'react';
+
 import type { Nullable } from '../../../types';
+import useRefEffect from '../Utilities/useRefEffect';
+import { AnimatedEvent } from './AnimatedEvent';
+import NativeAnimatedHelper from './NativeAnimatedHelper';
+import AnimatedProps from './nodes/AnimatedProps';
 
 type ReducedProps = Readonly<Record<string, unknown>>;
 type CallbackRef<T> = (instance: T) => unknown;
 
 export default function useAnimatedProps<TInstance>(
-  props: Readonly<Record<string, unknown>>,
+  props: Readonly<Record<string, unknown>>
 ): [ReducedProps, CallbackRef<TInstance | null>] {
-  const [, scheduleUpdate] = useReducer<number, []>((count: number) => count + 1, 0);
+  const [, scheduleUpdate] = useReducer<number, []>(
+    (count: number) => count + 1,
+    0
+  );
   const onUpdateRef = useRef<Nullable<() => void>>(null);
 
   // TODO: Only invalidate `node` if animated props or `style` change. In the
@@ -38,7 +42,7 @@ export default function useAnimatedProps<TInstance>(
   // The ordering of other props *should* not matter.
   const node = useMemo(
     () => new AnimatedProps(props, () => onUpdateRef.current?.()),
-    [props],
+    [props]
   );
   useAnimatedPropsLifecycle(node);
 
@@ -88,7 +92,7 @@ export default function useAnimatedProps<TInstance>(
         }
       };
     },
-    [props, node],
+    [props, node]
   );
   const callbackRef = useRefEffect<TInstance>(refEffect);
 
@@ -100,7 +104,7 @@ function reduceAnimatedProps(node: AnimatedProps): ReducedProps {
   // Flattened views cannot be accurately referenced by the native driver.
   return {
     ...node.__getValue(),
-    collapsable: false,
+    collapsable: false
   };
 }
 
@@ -160,10 +164,10 @@ function getEventTarget(instance: unknown): unknown {
 
 type FabricInstance = {
   readonly _internalInstanceHandle?: Nullable<{
-    readonly stateNode?: Nullable<{readonly canonical?: unknown}>,
-  }>,
-  readonly getNativeScrollRef?: () => Nullable<FabricInstance>,
-  readonly getScrollResponder?: () => Nullable<FabricInstance>,
+    readonly stateNode?: Nullable<{ readonly canonical?: unknown }>;
+  }>;
+  readonly getNativeScrollRef?: () => Nullable<FabricInstance>;
+  readonly getScrollResponder?: () => Nullable<FabricInstance>;
 };
 
 function isFabricInstance(instance: Nullable<FabricInstance>): boolean {
@@ -183,6 +187,5 @@ function isFabricInstance(instance: Nullable<FabricInstance>): boolean {
 }
 
 function hasFabricHandle(instance: Nullable<FabricInstance>): boolean {
-  // eslint-disable-next-line dot-notation
   return instance?.['_internalInstanceHandle']?.stateNode?.canonical != null;
 }

@@ -7,12 +7,13 @@
  */
 
 import * as React from 'react';
-import View from '../View';
+
+import canUseDOM from '../../modules/canUseDom';
+import type { HostNode, Nullable } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import UIManager from '../UIManager';
-import canUseDOM from '../../modules/canUseDom';
-import type { HostNode, Nullable } from '../../types';
+import View from '../View';
 
 /**
  * This Component is used to "wrap" the modal we're opening

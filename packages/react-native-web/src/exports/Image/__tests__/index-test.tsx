@@ -5,17 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/* eslint-disable react/jsx-no-bind */
+import { act, render } from '@testing-library/react';
+import React from 'react';
 
+import Image from '../';
 import {
   registerAsset,
   type PackagerAsset
 } from '../../../modules/AssetRegistry';
-import Image from '../';
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
-import React from 'react';
-import { act, render } from '@testing-library/react';
 
 const originalImage = window.Image;
 const originalImageLoaderAbort = ImageLoader.abort;

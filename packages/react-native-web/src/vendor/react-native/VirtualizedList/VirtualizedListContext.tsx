@@ -7,35 +7,33 @@
  * @format
  */
 
-import type VirtualizedList from '../VirtualizedList';
-
 import * as React from 'react';
-import {useContext, useMemo} from 'react';
+import { useContext, useMemo } from 'react';
+
 import type { Nullable } from '../../../types';
+import type VirtualizedList from '../VirtualizedList';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
 type Context = Readonly<{
-  cellKey: Nullable<string>,
+  cellKey: Nullable<string>;
   getScrollMetrics: () => {
-    contentLength: number,
-    dOffset: number,
-    dt: number,
-    offset: number,
-    timestamp: number,
-    velocity: number,
-    visibleLength: number,
-    zoomScale: number | undefined,
-  },
-  horizontal: Nullable<boolean>,
-  getOutermostParentListRef: () => VirtualizedList,
+    contentLength: number;
+    dOffset: number;
+    dt: number;
+    offset: number;
+    timestamp: number;
+    velocity: number;
+    visibleLength: number;
+    zoomScale: number | undefined;
+  };
+  horizontal: Nullable<boolean>;
+  getOutermostParentListRef: () => VirtualizedList;
   registerAsNestedChild: (childList: {
-    cellKey: string,
-    ref: VirtualizedList,
-  }) => void,
-  unregisterAsNestedChild: (childList: {
-    ref: VirtualizedList,
-  }) => void,
+    cellKey: string;
+    ref: VirtualizedList;
+  }) => void;
+  unregisterAsNestedChild: (childList: { ref: VirtualizedList }) => void;
 }>;
 
 export const VirtualizedListContext: React.Context<Nullable<Context>> =
@@ -48,9 +46,9 @@ if (__DEV__) {
  * Resets the context. Intended for use by portal-like components (e.g. Modal).
  */
 export function VirtualizedListContextResetter({
-  children,
+  children
 }: {
-  children: React.ReactNode,
+  children: React.ReactNode;
 }): React.ReactNode {
   return (
     <VirtualizedListContext.Provider value={null}>
@@ -64,10 +62,10 @@ export function VirtualizedListContextResetter({
  */
 export function VirtualizedListContextProvider({
   children,
-  value,
+  value
 }: {
-  children: React.ReactNode,
-  value: Context,
+  children: React.ReactNode;
+  value: Context;
 }): React.ReactNode {
   // Avoid setting a newly created context object if the values are identical.
   const context = useMemo(
@@ -77,15 +75,15 @@ export function VirtualizedListContextProvider({
       horizontal: value.horizontal,
       getOutermostParentListRef: value.getOutermostParentListRef,
       registerAsNestedChild: value.registerAsNestedChild,
-      unregisterAsNestedChild: value.unregisterAsNestedChild,
+      unregisterAsNestedChild: value.unregisterAsNestedChild
     }),
     [
       value.getScrollMetrics,
       value.horizontal,
       value.getOutermostParentListRef,
       value.registerAsNestedChild,
-      value.unregisterAsNestedChild,
-    ],
+      value.unregisterAsNestedChild
+    ]
   );
   return (
     <VirtualizedListContext.Provider value={context}>
@@ -99,16 +97,16 @@ export function VirtualizedListContextProvider({
  */
 export function VirtualizedListCellContextProvider({
   cellKey,
-  children,
+  children
 }: {
-  cellKey: string,
-  children: React.ReactNode,
+  cellKey: string;
+  children: React.ReactNode;
 }): React.ReactNode {
   // Avoid setting a newly created context object if the values are identical.
   const currContext = useContext(VirtualizedListContext);
   const context = useMemo(
-    () => (currContext == null ? null : {...currContext, cellKey}),
-    [currContext, cellKey],
+    () => (currContext == null ? null : { ...currContext, cellKey }),
+    [currContext, cellKey]
   );
   return (
     <VirtualizedListContext.Provider value={context}>

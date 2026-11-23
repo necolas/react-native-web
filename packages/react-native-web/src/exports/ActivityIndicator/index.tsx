@@ -8,12 +8,12 @@
 
 'use client';
 
-import type { ViewProps } from '../View';
-
 import * as React from 'react';
-import StyleSheet from '../StyleSheet';
-import View from '../View';
+
 import type { Nullable } from '../../types';
+import StyleSheet from '../StyleSheet';
+import type { ViewProps } from '../View';
+import View from '../View';
 
 const createSvgCircle = (style: object) => (
   <circle cx="16" cy="16" fill="none" r="14" strokeWidth="4" style={style} />

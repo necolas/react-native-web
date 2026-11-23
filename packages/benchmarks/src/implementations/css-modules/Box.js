@@ -1,6 +1,8 @@
 import classnames from 'classnames';
 import React from 'react';
+
 import View from './View';
+
 import styles from './box-styles.css';
 
 const Box = ({

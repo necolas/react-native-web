@@ -1,5 +1,6 @@
-import { Clipboard, StyleSheet, TextInput, View } from 'react-native';
 import React from 'react';
+import { Clipboard, StyleSheet, TextInput, View } from 'react-native';
+
 import Button from '../../shared/button';
 import Example from '../../shared/example';
 

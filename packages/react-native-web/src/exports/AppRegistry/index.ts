@@ -8,19 +8,19 @@
 
 'use client';
 
+import invariant from 'invariant';
+import type { ComponentType } from 'react';
+
+import type { Nullable } from '../../types';
+import type { Root } from '../render';
+import unmountComponentAtNode from '../unmountComponentAtNode';
 import type {
   AppProps,
   Application,
   ApplicationElement,
   WrapperComponentType
 } from './renderApplication';
-import type { ComponentType } from 'react';
-
-import invariant from 'invariant';
-import type { Root } from '../render';
-import unmountComponentAtNode from '../unmountComponentAtNode';
 import renderApplication, { getApplication } from './renderApplication';
-import type { Nullable } from '../../types';
 
 type PartialAppParameters = {
   readonly callback?: () => void;

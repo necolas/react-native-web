@@ -28,8 +28,8 @@ This also works with composite components defined in your existing component gal
 
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
-import { unstable_createElement, useLocaleContext } from 'react-native-web';
 import { StyleSheet } from 'react-native';
+import { unstable_createElement, useLocaleContext } from 'react-native-web';
 
 const CustomButton = (props) => {
   const { direction } = useLocaleContext();
@@ -56,8 +56,8 @@ The React Native (for Web) building blocks can be used to create higher-level co
 
 ```jsx
 import { createContext, use } from 'react';
-import { unstable_createElement } from 'react-native-web';
 import { StyleSheet, View } from 'react-native';
+import { unstable_createElement } from 'react-native-web';
 
 const ThemeContext = createContext(null);
 

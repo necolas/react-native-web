@@ -1,5 +1,6 @@
-import { Linking, StyleSheet, Text } from 'react-native';
 import React from 'react';
+import { Linking, StyleSheet, Text } from 'react-native';
+
 import Example from '../../shared/example';
 
 const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';

@@ -9,10 +9,10 @@
 
 'use strict';
 
+import type { Nullable } from '../../../../types';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import AnimatedNode from './AnimatedNode';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
-import type { Nullable } from '../../../../types';
 
 type Transform = Readonly<Record<string, AnimatedNode | number | string>>;
 
@@ -25,7 +25,7 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __makeNative() {
-    this._transforms.forEach(transform => {
+    this._transforms.forEach((transform) => {
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -37,7 +37,7 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __getValue(): ReadonlyArray<Record<string, unknown>> {
-    return this._transforms.map(transform => {
+    return this._transforms.map((transform) => {
       const result: Record<string, unknown> = {};
       for (const key in transform) {
         const value = transform[key];
@@ -52,7 +52,7 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __getAnimatedValue(): ReadonlyArray<Record<string, unknown>> {
-    return this._transforms.map(transform => {
+    return this._transforms.map((transform) => {
       const result: Record<string, unknown> = {};
       for (const key in transform) {
         const value = transform[key];
@@ -68,7 +68,7 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __attach(): void {
-    this._transforms.forEach(transform => {
+    this._transforms.forEach((transform) => {
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -79,7 +79,7 @@ class AnimatedTransform extends AnimatedWithChildren {
   }
 
   __detach(): void {
-    this._transforms.forEach(transform => {
+    this._transforms.forEach((transform) => {
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
@@ -92,24 +92,24 @@ class AnimatedTransform extends AnimatedWithChildren {
 
   __getNativeConfig(): Record<string, unknown> {
     const transConfigs: Array<
-      | {type: 'animated', property: string, nodeTag: Nullable<number>}
-      | {type: 'static', property: string, value: number | string}
+      | { type: 'animated'; property: string; nodeTag: Nullable<number> }
+      | { type: 'static'; property: string; value: number | string }
     > = [];
 
-    this._transforms.forEach(transform => {
+    this._transforms.forEach((transform) => {
       for (const key in transform) {
         const value = transform[key];
         if (value instanceof AnimatedNode) {
           transConfigs.push({
             type: 'animated',
             property: key,
-            nodeTag: value.__getNativeTag(),
+            nodeTag: value.__getNativeTag()
           });
         } else {
           transConfigs.push({
             type: 'static',
             property: key,
-            value: NativeAnimatedHelper.transformDataType(value),
+            value: NativeAnimatedHelper.transformDataType(value)
           });
         }
       }
@@ -118,7 +118,7 @@ class AnimatedTransform extends AnimatedWithChildren {
     NativeAnimatedHelper.validateTransform(transConfigs);
     return {
       type: 'transform',
-      transforms: transConfigs,
+      transforms: transConfigs
     };
   }
 }

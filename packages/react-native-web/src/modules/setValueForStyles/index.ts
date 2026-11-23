@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -9,8 +7,8 @@
  * From React 16.3.0
  */
 
-import dangerousStyleValue from './dangerousStyleValue';
 import type { Nullable } from '../../types';
+import dangerousStyleValue from './dangerousStyleValue';
 
 /**
  * Sets the value for multiple styles on a node.  If a value is specified as

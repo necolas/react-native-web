@@ -9,54 +9,53 @@
 
 'use strict';
 
+import normalizeColor from '@react-native/normalize-colors';
+
+import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import AnimatedValue from './AnimatedValue';
 import AnimatedWithChildren from './AnimatedWithChildren';
-import normalizeColor from '@react-native/normalize-colors';
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
-
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
-import type {Nullable} from '../../../../types';
 
 type ColorValue = string | number;
 type NativeColorValue = ColorValue;
 type ProcessedColorValue = number;
 
 export type AnimatedColorConfig = Readonly<{
-  useNativeDriver: boolean,
+  useNativeDriver: boolean;
 }>;
 
 export type ColorListenerCallback = (value: ColorValue) => unknown;
 
 export type RgbaValue = {
-  readonly r: number,
-  readonly g: number,
-  readonly b: number,
-  readonly a: number,
+  readonly r: number;
+  readonly g: number;
+  readonly b: number;
+  readonly a: number;
 };
 
 type RgbaAnimatedValue = {
-  readonly r: AnimatedValue,
-  readonly g: AnimatedValue,
-  readonly b: AnimatedValue,
-  readonly a: AnimatedValue,
+  readonly r: AnimatedValue;
+  readonly g: AnimatedValue;
+  readonly b: AnimatedValue;
+  readonly a: AnimatedValue;
 };
 
 export type InputValue = Nullable<RgbaValue | RgbaAnimatedValue | ColorValue>;
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
 
-const defaultColor: RgbaValue = {r: 0, g: 0, b: 0, a: 1.0};
+const defaultColor: RgbaValue = { r: 0, g: 0, b: 0, a: 1.0 };
 let _uniqueId = 1;
 
 const processColorObject = (
-  color: NativeColorValue,
+  color: NativeColorValue
 ): Nullable<NativeColorValue> => {
   return color;
 };
 
-/* eslint no-bitwise: 0 */
 function processColor(
-  color?: Nullable<ColorValue | RgbaValue>,
+  color?: Nullable<ColorValue | RgbaValue>
 ): Nullable<RgbaValue | NativeColorValue> {
   if (color === undefined || color === null) {
     return null;
@@ -83,17 +82,17 @@ function processColor(
     const b: number = (normalizedColor & 0x0000ff00) >>> 8;
     const a: number = (normalizedColor & 0x000000ff) / 255;
 
-    return {r, g, b, a};
+    return { r, g, b, a };
   }
 
   return null;
 }
 
 type RgbaLike = {
-  r: unknown,
-  g: unknown,
-  b: unknown,
-  a: unknown,
+  r: unknown;
+  g: unknown;
+  b: unknown;
+  a: unknown;
 };
 
 function isRgbaLike(value: unknown): value is RgbaLike {
@@ -133,7 +132,8 @@ export default class AnimatedColor extends AnimatedWithChildren {
   b: AnimatedValue;
   a: AnimatedValue;
   nativeColor: Nullable<NativeColorValue>;
-  _listeners: Record<string, {r: string, g: string, b: string, a: string}> = {};
+  _listeners: Record<string, { r: string; g: string; b: string; a: string }> =
+    {};
 
   constructor(valueIn?: InputValue, config?: Nullable<AnimatedColorConfig>) {
     super();
@@ -201,7 +201,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
       if (shouldUpdateNodeConfig) {
         NativeAnimatedAPI.updateAnimatedNodeConfig(
           nativeTag,
-          this.__getNativeConfig(),
+          this.__getNativeConfig()
         );
       }
       NativeAnimatedAPI.unsetWaitingForIdentifier(nativeTag.toString());
@@ -251,14 +251,14 @@ export default class AnimatedColor extends AnimatedWithChildren {
    */
   addListener(callback: ColorListenerCallback): string {
     const id = String(_uniqueId++);
-    const jointCallback = ({value: number}: {value: number}) => {
+    const jointCallback = ({ value: number }: { value: number }) => {
       callback(this.__getValue());
     };
     this._listeners[id] = {
       r: this.r.addListener(jointCallback),
       g: this.g.addListener(jointCallback),
       b: this.b.addListener(jointCallback),
-      a: this.a.addListener(jointCallback),
+      a: this.a.addListener(jointCallback)
     };
     return id;
   }
@@ -349,7 +349,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
       g: this.g.__getNativeTag(),
       b: this.b.__getNativeTag(),
       a: this.a.__getNativeTag(),
-      nativeColor: this.nativeColor,
+      nativeColor: this.nativeColor
     };
   }
 }

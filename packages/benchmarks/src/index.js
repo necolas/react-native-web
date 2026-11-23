@@ -1,10 +1,10 @@
-import App from './app/App';
-import impl from './impl';
-import Tree from './cases/Tree';
-import SierpinskiTriangle from './cases/SierpinskiTriangle';
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+
+import App from './app/App';
+import SierpinskiTriangle from './cases/SierpinskiTriangle';
+import Tree from './cases/Tree';
+import impl from './impl';
 
 const implementations = impl;
 const packageNames = Object.keys(implementations);

@@ -8,15 +8,15 @@
 
 'use client';
 
+import * as React from 'react';
+
+import type { Nullable } from '../../types';
 import type { ViewProps } from '../View';
 import type View from '../View';
-
-import * as React from 'react';
-import ModalPortal from './ModalPortal';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
-import type { Nullable } from '../../types';
+import ModalPortal from './ModalPortal';
 
 export type ModalProps = ViewProps & {
   animationType?: 'none' | 'slide' | 'fade';

@@ -1,7 +1,8 @@
 {
-  "private": true,
   "name": "react-native-web-examples",
   "version": "0.21.4",
+  "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "export": "next build --webpack",
@@ -14,6 +15,5 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-native-web": "0.21.4"
-  },
-  "license": "MIT"
+  }
 }

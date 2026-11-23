@@ -7,6 +7,7 @@
  */
 
 import type { MouseEvent } from 'react';
+
 import type { ColorValue, GenericStyleProp, Nullable } from '../../types';
 import type { ViewProps, ViewStyle } from '../View/types';
 
@@ -87,7 +88,10 @@ export type TextStyle = ViewStyle & {
     | 'start';
   textDecorationColor?: Nullable<ColorValue>;
   textDecorationLine?:
-    'none' | 'underline' | 'line-through' | 'underline line-through';
+    | 'none'
+    | 'underline'
+    | 'line-through'
+    | 'underline line-through';
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed';
   textEmphasis?: Nullable<string>;
   textEmphasisColor?: Nullable<ColorValue>;
@@ -96,7 +100,10 @@ export type TextStyle = ViewStyle & {
   textIndent?: Nullable<NumberOrString>;
   textOverflow?: Nullable<string>;
   textRendering?:
-    'auto' | 'geometricPrecision' | 'optimizeLegibility' | 'optimizeSpeed';
+    | 'auto'
+    | 'geometricPrecision'
+    | 'optimizeLegibility'
+    | 'optimizeSpeed';
   textShadow?: Nullable<string>;
   textShadowColor?: Nullable<ColorValue>;
   textShadowOffset?: { width?: number; height?: number };

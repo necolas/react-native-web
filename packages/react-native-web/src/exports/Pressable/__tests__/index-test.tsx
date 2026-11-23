@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { HostNode } from '../../../types';
-import type { ViewStyle } from '../../View/types';
-
-import React from 'react';
-import Pressable from '../';
-import TextInput from '../../TextInput';
-import { createEventTarget } from 'dom-event-testing-library';
 import { act, render } from '@testing-library/react';
+import { createEventTarget } from 'dom-event-testing-library';
+import React from 'react';
+
+import Pressable from '../';
+import type { HostNode } from '../../../types';
+import TextInput from '../../TextInput';
+import type { ViewStyle } from '../../View/types';
 
 describe('components/Pressable', () => {
   test('default', () => {

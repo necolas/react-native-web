@@ -1,5 +1,6 @@
-import { BenchmarkType } from '../app/Benchmark';
 import React, { Component } from 'react';
+
+import { BenchmarkType } from '../app/Benchmark';
 
 class Tree extends Component {
   static displayName = 'Tree';

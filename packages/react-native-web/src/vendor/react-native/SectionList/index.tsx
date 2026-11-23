@@ -9,18 +9,19 @@
 
 'use strict';
 
-import Platform from '../../../exports/Platform';
 import * as React from 'react';
+
+import Platform from '../../../exports/Platform';
 import VirtualizedSectionList from '../VirtualizedSectionList';
 
 type ScrollResponderType = unknown;
+import type { Nullable } from '../../../types';
+import type { ScrollableNode, Separators } from '../VirtualizedList';
 import type {
   SectionBase as _SectionBase,
   Props as VirtualizedSectionListProps,
-  ScrollToLocationParamsType,
+  ScrollToLocationParamsType
 } from '../VirtualizedSectionList';
-import type {ScrollableNode, Separators} from '../VirtualizedList';
-import type { Nullable } from '../../../types';
 
 type Item = unknown;
 
@@ -38,7 +39,7 @@ type RequiredProps<SectionT extends SectionBase<Item>> = {
    *       ItemSeparatorComponent?: ?ReactClass<{highlighted: boolean, ...}>,
    *     }>
    */
-  sections: ReadonlyArray<SectionT>,
+  sections: ReadonlyArray<SectionT>;
 };
 
 type OptionalProps<SectionT extends SectionBase<Item>> = {
@@ -46,45 +47,45 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
    * Default renderer for every item in every section. Can be over-ridden on a per-section basis.
    */
   renderItem?: (info: {
-    item: Item,
-    index: number,
-    section: SectionT,
-    separators: Separators,
-  }) => null | React.ReactElement,
+    item: Item;
+    index: number;
+    section: SectionT;
+    separators: Separators;
+  }) => null | React.ReactElement;
   /**
    * A marker property for telling the list to re-render (since it implements `PureComponent`). If
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
    * `data` prop, stick it here and treat it immutably.
    */
-  extraData?: unknown,
+  extraData?: unknown;
   /**
    * How many items to render in the initial batch. This should be enough to fill the screen but not
    * much more. Note these items will never be unmounted as part of the windowed rendering in order
    * to improve perceived performance of scroll-to-top actions.
    */
-  initialNumToRender?: Nullable<number>,
+  initialNumToRender?: Nullable<number>;
   /**
    * Reverses the direction of scroll. Uses scale transforms of -1.
    */
-  inverted?: Nullable<boolean>,
+  inverted?: Nullable<boolean>;
   /**
    * Used to extract a unique key for a given item at the specified index. Key is used for caching
    * and as the react key to track item re-ordering. The default extractor checks item.key, then
    * falls back to using the index, like react does. Note that this sets keys for each item, but
    * each overall section still needs its own key.
    */
-  keyExtractor?: Nullable<(item: Item, index: number) => string>,
+  keyExtractor?: Nullable<(item: Item, index: number) => string>;
   /**
    * Called once when the scroll position gets within `onEndReachedThreshold` of the rendered
    * content.
    */
-  onEndReached?: Nullable<(info: {distanceFromEnd: number}) => void>,
+  onEndReached?: Nullable<(info: { distanceFromEnd: number }) => void>;
   /**
    * Note: may have bugs (missing content) in some circumstances - use at your own risk.
    *
    * This may improve scroll performance for large lists.
    */
-  removeClippedSubviews?: boolean,
+  removeClippedSubviews?: boolean;
 };
 
 export type Props<SectionT extends SectionBase<Item>> = Omit<
@@ -155,7 +156,7 @@ export type Props<SectionT extends SectionBase<Item>> = Omit<
  *
  */
 export default class SectionList<
-  SectionT extends SectionBase<Item>,
+  SectionT extends SectionBase<Item>
 > extends React.PureComponent<Props<SectionT>, {}> {
   props!: Props<SectionT>;
 
@@ -213,7 +214,7 @@ export default class SectionList<
   }
 
   // Not supported on web. Kept so code shared with native doesn't crash.
-  setNativeProps(props: {[key: string]: unknown}) {}
+  setNativeProps(props: { [key: string]: unknown }) {}
 
   render(): React.ReactNode {
     const {

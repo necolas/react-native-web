@@ -1,5 +1,6 @@
 import React from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
+
 import Example from '../../shared/example';
 
 const CIRCLE_SIZE = 80;

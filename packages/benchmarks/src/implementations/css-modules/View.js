@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React from 'react';
+
 import styles from './view-styles.css';
 
 class View extends React.Component {

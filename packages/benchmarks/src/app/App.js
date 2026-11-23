@@ -1,4 +1,4 @@
-import Benchmark from './Benchmark';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -6,12 +6,13 @@ import {
   View,
   unstable_createElement as createElement
 } from 'react-native';
-import React, { Component } from 'react';
+
+import Benchmark from './Benchmark';
 import Button from './Button';
 import { IconClear, IconEye } from './Icons';
+import Layout from './Layout';
 import ReportCard from './ReportCard';
 import Text from './Text';
-import Layout from './Layout';
 import { colors } from './theme';
 
 const Overlay = () => <View style={[StyleSheet.absoluteFill, { zIndex: 2 }]} />;

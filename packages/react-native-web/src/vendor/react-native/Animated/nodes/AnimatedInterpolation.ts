@@ -7,33 +7,30 @@
  * @format
  */
 
-/* eslint no-bitwise: 0 */
-
 'use strict';
 
-import type AnimatedNode from './AnimatedNode';
-
-import AnimatedWithChildren from './AnimatedWithChildren';
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
-
-import invariant from 'invariant';
 import normalizeColor from '@react-native/normalize-colors';
+import invariant from 'invariant';
 
-import type {PlatformConfig} from '../AnimatedPlatformConfig';
 import type { Nullable } from '../../../../types';
+import type { PlatformConfig } from '../AnimatedPlatformConfig';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
+import type AnimatedNode from './AnimatedNode';
+import AnimatedWithChildren from './AnimatedWithChildren';
 
 const __DEV__ = process.env.NODE_ENV !== 'production';
 
 type ExtrapolateType = 'extend' | 'identity' | 'clamp';
 
-export type InterpolationConfigType<OutputT extends number | string> = Readonly<{
-  inputRange: ReadonlyArray<number>,
-  outputRange: ReadonlyArray<OutputT>,
-  easing?: (input: number) => number,
-  extrapolate?: ExtrapolateType,
-  extrapolateLeft?: ExtrapolateType,
-  extrapolateRight?: ExtrapolateType,
-}>;
+export type InterpolationConfigType<OutputT extends number | string> =
+  Readonly<{
+    inputRange: ReadonlyArray<number>;
+    outputRange: ReadonlyArray<OutputT>;
+    easing?: (input: number) => number;
+    extrapolate?: ExtrapolateType;
+    extrapolateLeft?: ExtrapolateType;
+    extrapolateRight?: ExtrapolateType;
+  }>;
 
 const linear = (t: number) => t;
 
@@ -42,14 +39,14 @@ const linear = (t: number) => t;
  * function and custom behavior outside of the ranges.
  */
 function createInterpolation<OutputT extends number | string>(
-  config: InterpolationConfigType<OutputT>,
+  config: InterpolationConfigType<OutputT>
 ): (input: number) => OutputT;
 function createInterpolation(
-  config: InterpolationConfigType<number> | InterpolationConfigType<string>,
+  config: InterpolationConfigType<number> | InterpolationConfigType<string>
 ): ((input: number) => number) | ((input: number) => string) {
   if (config.outputRange && typeof config.outputRange[0] === 'string') {
     return createInterpolationFromStringOutputRange(
-      config as InterpolationConfigType<string>,
+      config as InterpolationConfigType<string>
     );
   }
 
@@ -68,7 +65,7 @@ function createInterpolation(
         inputRange.length +
         ') and outputRange (' +
         outputRange.length +
-        ') must have the same length',
+        ') must have the same length'
     );
   }
 
@@ -88,10 +85,10 @@ function createInterpolation(
     extrapolateRight = config.extrapolate;
   }
 
-  return input => {
+  return (input) => {
     invariant(
       typeof input === 'number',
-      'Cannot interpolation an input which is not a number',
+      'Cannot interpolation an input which is not a number'
     );
 
     const range = findRange(input, inputRange);
@@ -103,7 +100,7 @@ function createInterpolation(
       outputRange[range + 1],
       easing,
       extrapolateLeft,
-      extrapolateRight,
+      extrapolateRight
     );
   };
 }
@@ -116,7 +113,7 @@ function interpolate(
   outputMax: number,
   easing: (input: number) => number,
   extrapolateLeft: ExtrapolateType,
-  extrapolateRight: ExtrapolateType,
+  extrapolateRight: ExtrapolateType
 ) {
   let result = input;
 
@@ -203,7 +200,7 @@ const stringShapeRegex = /[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?/g;
  *   -45deg                  // values with units
  */
 function createInterpolationFromStringOutputRange(
-  config: InterpolationConfigType<string>,
+  config: InterpolationConfigType<string>
 ): (input: number) => string {
   let outputRange: ReadonlyArray<string> = config.outputRange;
   invariant(outputRange.length >= 2, 'Bad output range');
@@ -221,7 +218,7 @@ function createInterpolationFromStringOutputRange(
   const firstOutputMatches = outputRange[0].match(stringShapeRegex);
   invariant(firstOutputMatches != null, 'Bad output range ' + outputRange[0]);
   const outputRanges = firstOutputMatches.map((): Array<number> => []);
-  outputRange.forEach(value => {
+  outputRange.forEach((value) => {
     const valueMatches = value.match(stringShapeRegex);
     invariant(valueMatches != null, 'Bad output range ' + value);
     valueMatches.forEach((number, i) => {
@@ -230,17 +227,17 @@ function createInterpolationFromStringOutputRange(
   });
 
   const interpolations = firstOutputMatches.map((value, i) => {
-      return createInterpolation({
-        ...config,
-        outputRange: outputRanges[i],
-      });
+    return createInterpolation({
+      ...config,
+      outputRange: outputRanges[i]
     });
+  });
 
   // rgba requires that the r,g,b are integers.... so we want to round them, but we *dont* want to
   // round the opacity (4th column).
   const shouldRound = isRgbOrRgba(outputRange[0]);
 
-  return input => {
+  return (input) => {
     let i = 0;
     // 'rgba(0, 100, 200, 0)'
     // ->
@@ -264,7 +261,7 @@ function checkPattern(arr: ReadonlyArray<string>) {
   for (let i = 1; i < arr.length; ++i) {
     invariant(
       pattern === arr[i].replace(stringShapeRegex, ''),
-      'invalid pattern ' + arr[0] + ' and ' + arr[i],
+      'invalid pattern ' + arr[0] + ' and ' + arr[i]
     );
   }
 }
@@ -292,12 +289,12 @@ function checkInfiniteRange(name: string, arr: ReadonlyArray<number>) {
   invariant(arr.length >= 2, name + ' must have at least 2 elements');
   invariant(
     arr.length !== 2 || arr[0] !== -Infinity || arr[1] !== Infinity,
-    name + 'cannot be ]-infinity;+infinity[ ' + String(arr),
+    name + 'cannot be ]-infinity;+infinity[ ' + String(arr)
   );
 }
 
 class AnimatedInterpolation<
-  OutputT extends number | string,
+  OutputT extends number | string
 > extends AnimatedWithChildren {
   // Export for testing.
   static __createInterpolation: typeof createInterpolation =
@@ -323,13 +320,13 @@ class AnimatedInterpolation<
     const parentValue = this._parent.__getValue();
     invariant(
       typeof parentValue === 'number',
-      'Cannot interpolate an input which is not a number.',
+      'Cannot interpolate an input which is not a number.'
     );
     return this._interpolation(parentValue);
   }
 
   interpolate<NewOutputT extends number | string>(
-    config: InterpolationConfigType<NewOutputT>,
+    config: InterpolationConfigType<NewOutputT>
   ): AnimatedInterpolation<NewOutputT> {
     return new AnimatedInterpolation(this, config);
   }
@@ -360,7 +357,7 @@ class AnimatedInterpolation<
         this._config.extrapolateLeft || this._config.extrapolate || 'extend',
       extrapolateRight:
         this._config.extrapolateRight || this._config.extrapolate || 'extend',
-      type: 'interpolation',
+      type: 'interpolation'
     };
   }
 }

@@ -6,15 +6,16 @@
  */
 
 import * as React from 'react';
-import mergeRefs from '../mergeRefs';
+
 import type { Nullable } from '../../types';
+import mergeRefs from '../mergeRefs';
 
 export default function useMergeRefs<T = HTMLElement>(
   ...args: ReadonlyArray<Nullable<React.Ref<T>>>
 ): (node: T | null) => void {
   return React.useMemo(
     () => mergeRefs(...args),
-    // eslint-disable-next-line
+    // oxlint-disable-next-line
     [...args]
   );
 }

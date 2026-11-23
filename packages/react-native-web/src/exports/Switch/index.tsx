@@ -7,15 +7,15 @@
 
 'use client';
 
-import type { ColorValue, HostNode } from '../../types';
-import type { ViewProps } from '../View';
-import type { ViewStyle } from '../View/types';
-
 import * as React from 'react';
-import createElement from '../createElement';
+
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
+import type { ColorValue, HostNode } from '../../types';
+import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
+import type { ViewProps } from '../View';
 import View from '../View';
+import type { ViewStyle } from '../View/types';
 
 type SwitchProps = ViewProps & {
   activeThumbColor?: ColorValue;

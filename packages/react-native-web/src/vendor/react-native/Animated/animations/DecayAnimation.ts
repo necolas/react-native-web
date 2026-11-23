@@ -9,27 +9,25 @@
 
 'use strict';
 
-import Animation from './Animation';
-
-import {shouldUseNativeDriver} from '../NativeAnimatedHelper';
-
-import type AnimatedValue from '../nodes/AnimatedValue';
-import type {AnimationConfig, EndCallback} from './Animation';
 import type { Nullable } from '../../../../types';
+import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
+import type AnimatedValue from '../nodes/AnimatedValue';
+import Animation from './Animation';
+import type { AnimationConfig, EndCallback } from './Animation';
 
 export type DecayAnimationConfig = AnimationConfig & {
   velocity:
     | number
     | {
-        x: number,
-        y: number,
-      },
-  deceleration?: number,
+        x: number;
+        y: number;
+      };
+  deceleration?: number;
 };
 
 export type DecayAnimationConfigSingle = AnimationConfig & {
-  velocity: number,
-  deceleration?: number,
+  velocity: number;
+  deceleration?: number;
 };
 
 class DecayAnimation extends Animation {
@@ -52,16 +50,16 @@ class DecayAnimation extends Animation {
   }
 
   __getNativeAnimationConfig(): {
-    deceleration: number,
-    iterations: number,
-    type: string,
-    velocity: number,
+    deceleration: number;
+    iterations: number;
+    type: string;
+    velocity: number;
   } {
     return {
       type: 'decay',
       deceleration: this._deceleration,
       velocity: this._velocity,
-      iterations: this.__iterations,
+      iterations: this.__iterations
     };
   }
 
@@ -70,7 +68,7 @@ class DecayAnimation extends Animation {
     onUpdate: (value: number) => void,
     onEnd: Nullable<EndCallback>,
     previousAnimation: Nullable<Animation>,
-    animatedValue: AnimatedValue,
+    animatedValue: AnimatedValue
   ): void {
     this.__active = true;
     this._lastValue = fromValue;
@@ -81,9 +79,7 @@ class DecayAnimation extends Animation {
     if (this._useNativeDriver) {
       this.__startNativeAnimation(animatedValue);
     } else {
-      this._animationFrame = requestAnimationFrame(
-        this.onUpdate.bind(this),
-      );
+      this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
     }
   }
 
@@ -98,15 +94,13 @@ class DecayAnimation extends Animation {
     this._onUpdate(value);
 
     if (Math.abs(this._lastValue - value) < 0.1) {
-      this.__debouncedOnEnd({finished: true});
+      this.__debouncedOnEnd({ finished: true });
       return;
     }
 
     this._lastValue = value;
     if (this.__active) {
-      this._animationFrame = requestAnimationFrame(
-        this.onUpdate.bind(this),
-      );
+      this._animationFrame = requestAnimationFrame(this.onUpdate.bind(this));
     }
   }
 
@@ -114,7 +108,7 @@ class DecayAnimation extends Animation {
     super.stop();
     this.__active = false;
     global.cancelAnimationFrame(this._animationFrame);
-    this.__debouncedOnEnd({finished: false});
+    this.__debouncedOnEnd({ finished: false });
   }
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet, Switch, Text, View } from 'react-native';
+
 import Example from '../../shared/example';
 
 const rows = Array.from({ length: 20 }, (_, i) => ({ key: String(i) }));

@@ -5,8 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
 import { act, render, type RenderResult } from '@testing-library/react';
+import * as React from 'react';
+
 import useMergeRefs from '..';
 import type { Nullable } from '../../../types';
 

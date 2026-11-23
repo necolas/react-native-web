@@ -9,13 +9,13 @@
 
 'use strict';
 
-import {AnimatedEvent} from '../AnimatedEvent';
+import invariant from 'invariant';
+
+import type { Nullable } from '../../../../types';
+import { AnimatedEvent } from '../AnimatedEvent';
+import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import AnimatedNode from './AnimatedNode';
 import AnimatedStyle from './AnimatedStyle';
-import NativeAnimatedHelper from '../NativeAnimatedHelper';
-
-import invariant from 'invariant';
-import type { Nullable } from '../../../../types';
 
 class AnimatedProps extends AnimatedNode {
   _props: Record<string, unknown>;
@@ -27,7 +27,7 @@ class AnimatedProps extends AnimatedNode {
     if (props.style) {
       props = {
         ...props,
-        style: new AnimatedStyle(props.style),
+        style: new AnimatedStyle(props.style)
       };
     }
     this._props = props;
@@ -121,11 +121,11 @@ class AnimatedProps extends AnimatedNode {
     const nativeViewTag = this._animatedView as Nullable<number>;
     invariant(
       nativeViewTag != null,
-      'Unable to locate attached view in the native tree',
+      'Unable to locate attached view in the native tree'
     );
     NativeAnimatedHelper.API.connectAnimatedNodeToView(
       this.__getNativeTag(),
-      nativeViewTag,
+      nativeViewTag
     );
   }
 
@@ -134,11 +134,11 @@ class AnimatedProps extends AnimatedNode {
     const nativeViewTag = this._animatedView as Nullable<number>;
     invariant(
       nativeViewTag != null,
-      'Unable to locate attached view in the native tree',
+      'Unable to locate attached view in the native tree'
     );
     NativeAnimatedHelper.API.disconnectAnimatedNodeFromView(
       this.__getNativeTag(),
-      nativeViewTag,
+      nativeViewTag
     );
   }
 
@@ -163,7 +163,7 @@ class AnimatedProps extends AnimatedNode {
     }
     return {
       type: 'props',
-      props: propsConfig,
+      props: propsConfig
     };
   }
 }

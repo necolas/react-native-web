@@ -7,17 +7,17 @@
 
 'use client';
 
-import type { HoverEventsConfig } from '../../modules/useHover';
-import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { PlatformMethods, Nullable } from '../../types';
-import type { ViewProps } from '../View';
-
 import * as React from 'react';
 import { memo, useMemo, useState, useRef } from 'react';
-import useMergeRefs from '../../modules/useMergeRefs';
+
+import type { HoverEventsConfig } from '../../modules/useHover';
 import useHover from '../../modules/useHover';
+import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
+import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
+import type { PlatformMethods, Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
+import type { ViewProps } from '../View';
 import View from '../View';
 
 export type StateCallbackType = Readonly<{
