@@ -330,6 +330,27 @@ describe('StyleSheet/preprocess', () => {
         });
       });
     });
+
+    describe('transitionProperty', () => {
+      test('string', () => {
+        const transitionProperty = 'opacity, transform';
+        const style = { transitionProperty };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({ transitionProperty });
+      });
+
+      test('array', () => {
+        const style = {
+          transitionProperty: ['opacity', 'transform']
+        };
+        const resolved = preprocess(style);
+
+        expect(resolved).toEqual({
+          transitionProperty: 'opacity, transform'
+        });
+      });
+    });
   });
 
   describe('preprocesses multiple shadow styles into a single declaration', () => {
