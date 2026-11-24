@@ -9,7 +9,7 @@ import Dimensions from '..';
 
 describe('apis/Dimensions', () => {
   test('get', () => {
-    const handler = jest.fn();
+    const handler = vi.fn();
     Dimensions.addEventListener('change', handler);
     expect(Dimensions.get('screen')).toMatchInlineSnapshot(`
      {
@@ -36,7 +36,7 @@ describe('apis/Dimensions', () => {
   });
 
   test('addEventListener', () => {
-    const handler = jest.fn();
+    const handler = vi.fn();
     const subscription = Dimensions.addEventListener('change', handler);
     window.dispatchEvent(new Event('resize'));
     expect(handler).toHaveBeenCalledTimes(1);
@@ -50,7 +50,7 @@ describe('apis/Dimensions', () => {
   });
 
   test('removeEventListener', () => {
-    const handler = jest.fn();
+    const handler = vi.fn();
     Dimensions.removeEventListener('change', handler);
     window.dispatchEvent(new Event('resize'));
     expect(handler).toHaveBeenCalledTimes(0);

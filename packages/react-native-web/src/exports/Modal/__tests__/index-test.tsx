@@ -152,31 +152,31 @@ describe('components/Modal', () => {
   });
 
   test('executes onShow callback when initially showing', () => {
-    const onShowCallback = jest.fn();
+    const onShowCallback = vi.fn();
     render(<Modal onShow={onShowCallback} visible={true} />);
     expect(onShowCallback).toHaveBeenCalledTimes(1);
   });
 
   test('does not execute onShow callback when initially hidden', () => {
-    const onShowCallback = jest.fn();
+    const onShowCallback = vi.fn();
     render(<Modal onShow={onShowCallback} visible={false} />);
     expect(onShowCallback).toHaveBeenCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially hidden', () => {
-    const onDismissCallback = jest.fn();
+    const onDismissCallback = vi.fn();
     render(<Modal onDismiss={onDismissCallback} visible={false} />);
     expect(onDismissCallback).toHaveBeenCalledTimes(0);
   });
 
   test('does not execute onDismiss callback when initially showing', () => {
-    const onDismissCallback = jest.fn();
+    const onDismissCallback = vi.fn();
     render(<Modal onDismiss={onDismissCallback} visible={true} />);
     expect(onDismissCallback).toHaveBeenCalledTimes(0);
   });
 
   test('executes onShow callback when visibility changes', () => {
-    const onShowCallback = jest.fn();
+    const onShowCallback = vi.fn();
     const { rerender } = render(
       <Modal onShow={onShowCallback} visible={false} />
     );
@@ -186,7 +186,7 @@ describe('components/Modal', () => {
   });
 
   test('executes onDismiss callback when visibility changes', () => {
-    const onDismissCallback = jest.fn();
+    const onDismissCallback = vi.fn();
     const { rerender } = render(
       <Modal onDismiss={onDismissCallback} visible={true} />
     );
@@ -223,15 +223,15 @@ describe('components/Modal', () => {
     const { rerender, baseElement } = render(
       <Modal animationType="none" visible={true} />
     );
-    const animationNoneElement = baseElement.lastChild!
-      .lastChild as HTMLElement;
+    const animationNoneElement = baseElement.lastChild
+      ?.lastChild as HTMLElement;
     const animationNoneStyle = window.getComputedStyle(
       animationNoneElement,
       null
     );
     rerender(<Modal visible={true} />);
-    const animationMissingElement = baseElement.lastChild!
-      .lastChild as HTMLElement;
+    const animationMissingElement = baseElement.lastChild
+      ?.lastChild as HTMLElement;
     const animationMissingStyle = window.getComputedStyle(
       animationMissingElement,
       null
@@ -259,10 +259,10 @@ describe('components/Modal', () => {
     );
     const dialogElement = (baseElement.lastChild as HTMLElement).querySelector(
       '[role="dialog"]'
-    )!;
+    );
     expect(dialogElement).not.toBeNull();
-    expect(dialogElement.getAttribute('role')).toBe('dialog');
-    expect(dialogElement.getAttribute('aria-modal')).toBe('true');
+    expect(dialogElement?.getAttribute('role')).toBe('dialog');
+    expect(dialogElement?.getAttribute('aria-modal')).toBe('true');
   });
 
   test('focus is trapped by default', () => {
@@ -300,7 +300,7 @@ describe('components/Modal', () => {
     const outsideElement = document.querySelector(
       '[data-testid="outside"]'
     ) as HTMLElement;
-    const onDismissCallback = jest.fn(() => outsideElement.focus());
+    const onDismissCallback = vi.fn(() => outsideElement.focus());
 
     rerender(
       <>
@@ -453,9 +453,8 @@ describe('components/Modal', () => {
     getByTestId('trigger').focus();
     rerender(modals(true, false));
 
-    const animationA =
-      getByTestId('a').parentElement!.parentElement!.parentElement!
-        .parentElement!;
+    const animationA = getByTestId('a').parentElement?.parentElement
+      ?.parentElement?.parentElement as HTMLElement;
     fireEvent.animationEnd(animationA);
 
     rerender(modals(false, true));
@@ -519,9 +518,8 @@ describe('components/Modal', () => {
     rerender(modals(true));
     expect(document.activeElement).toBe(getByTestId('b'));
 
-    const animationB =
-      getByTestId('b').parentElement!.parentElement!.parentElement!
-        .parentElement!;
+    const animationB = getByTestId('b').parentElement?.parentElement
+      ?.parentElement?.parentElement as HTMLElement;
     fireEvent.animationEnd(animationB);
     rerender(modals(false));
     fireEvent.animationEnd(animationB);
@@ -553,8 +551,8 @@ describe('components/Modal', () => {
       '[data-testid="inside-c"]'
     ) as HTMLElement;
     // This is ugly - perhaps there's a better way?
-    const focusBracket = insideEndElement.parentNode!.parentNode!.parentNode!
-      .nextSibling as HTMLElement;
+    const focusBracket = insideEndElement.parentNode?.parentNode?.parentNode
+      ?.nextSibling as HTMLElement;
     insideEndElement.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(insideStartElement);
@@ -584,8 +582,8 @@ describe('components/Modal', () => {
       '[data-testid="inside-c"]'
     ) as HTMLElement;
     // This is ugly - perhaps there's a better way?
-    const focusBracket = insideEndElement.parentNode!.parentNode!.parentNode!
-      .previousSibling as HTMLElement;
+    const focusBracket = insideEndElement.parentNode?.parentNode?.parentNode
+      ?.previousSibling as HTMLElement;
     insideStartElement.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(insideEndElement);
@@ -602,8 +600,8 @@ describe('components/Modal', () => {
     );
 
     const first = getByTestId('first');
-    const focusBracket = first.parentNode!.parentNode!.parentNode!
-      .previousSibling as HTMLElement;
+    const focusBracket = first.parentNode?.parentNode?.parentNode
+      ?.previousSibling as HTMLElement;
     first.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(getByTestId('last'));
@@ -620,8 +618,8 @@ describe('components/Modal', () => {
     );
 
     const last = getByTestId('last');
-    const focusBracket = last.parentNode!.parentNode!.parentNode!
-      .nextSibling as HTMLElement;
+    const focusBracket = last.parentNode?.parentNode?.parentNode
+      ?.nextSibling as HTMLElement;
     last.focus();
     focusBracket.focus();
     expect(document.activeElement).toBe(getByTestId('first'));
@@ -679,7 +677,7 @@ describe('components/Modal', () => {
     expect(helloAnchor).not.toBeNull();
     expect(baseElement.firstChild).toBe(container);
     expect(
-      baseElement.lastChild!.firstChild!.contains(helloAnchor)
+      baseElement.lastChild?.firstChild?.contains(helloAnchor)
     ).toBeTruthy();
   });
 
@@ -695,7 +693,7 @@ describe('components/Modal', () => {
   });
 
   test('ref must be set before `mount` hook', () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     function TestComponent() {
       React.useEffect(() => spy('mount'), []);
@@ -713,7 +711,7 @@ describe('components/Modal', () => {
   });
 
   test('escape key fires onRequestClose', () => {
-    const spy = jest.fn();
+    const spy = vi.fn();
 
     render(<Modal onRequestClose={spy} visible={true} />);
 
@@ -723,8 +721,8 @@ describe('components/Modal', () => {
   });
 
   test('escape key fires onRequestClose for top modal only', () => {
-    const spyA = jest.fn();
-    const spyB = jest.fn();
+    const spyA = vi.fn();
+    const spyB = vi.fn();
 
     render(
       <>
@@ -740,8 +738,8 @@ describe('components/Modal', () => {
   });
 
   test('escape key fires onRequestClose for top modal only with animation', () => {
-    const spyA = jest.fn();
-    const spyB = jest.fn();
+    const spyA = vi.fn();
+    const spyB = vi.fn();
 
     const { getByTestId, rerender } = render(
       <>
@@ -768,12 +766,10 @@ describe('components/Modal', () => {
     );
 
     // This is kind of ugly but I can't find a better way to target just the animation div
-    const animationAElement =
-      getByTestId('a').parentElement!.parentElement!.parentElement!
-        .parentElement!;
-    const animationBElement =
-      getByTestId('b').parentElement!.parentElement!.parentElement!
-        .parentElement!;
+    const animationAElement = getByTestId('a').parentElement?.parentElement
+      ?.parentElement?.parentElement as HTMLElement;
+    const animationBElement = getByTestId('b').parentElement?.parentElement
+      ?.parentElement?.parentElement as HTMLElement;
 
     fireEvent.animationEnd(animationAElement);
     fireEvent.animationEnd(animationBElement);
@@ -785,8 +781,8 @@ describe('components/Modal', () => {
   });
 
   test('escape key fires onRequestClose for a modal opening over another before its animation ends', () => {
-    const spyA = jest.fn();
-    const spyB = jest.fn();
+    const spyA = vi.fn();
+    const spyB = vi.fn();
 
     const modals = (b: boolean) => (
       <>
@@ -805,8 +801,8 @@ describe('components/Modal', () => {
   });
 
   test('escape key closes one modal per key press when the app handles it', () => {
-    const spyA = jest.fn();
-    const spyB = jest.fn();
+    const spyA = vi.fn();
+    const spyB = vi.fn();
 
     function TestComponent() {
       const [visibleB, setVisibleB] = React.useState(true);
@@ -840,23 +836,21 @@ describe('components/Modal', () => {
 });
 
 describe('components/Modal with reduced motion', () => {
-  const originalMatchMedia = window.matchMedia;
-
   afterEach(() => {
-    window.matchMedia = originalMatchMedia;
+    vi.unstubAllGlobals();
   });
 
   test('executes onShow and onDismiss callbacks without animation', async () => {
-    window.matchMedia = jest.fn(() => ({ matches: true }) as MediaQueryList);
-    jest.resetModules();
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => ({ matches: true }) as MediaQueryList)
+    );
 
-    // Testing Library can't be imported again, as it registers Jest hooks
-    const { act } = await import('react');
-    const { createRoot } = await import('react-dom/client');
+    vi.resetModules();
     const { default: Modal } = await import('..');
 
-    const onShow = jest.fn();
-    const onDismiss = jest.fn();
+    const onShow = vi.fn();
+    const onDismiss = vi.fn();
 
     const modal = (visible: boolean) => (
       <Modal
@@ -869,15 +863,11 @@ describe('components/Modal with reduced motion', () => {
       </Modal>
     );
 
-    const root = createRoot(document.createElement('div'));
-
-    await act(async () => root.render(modal(true)));
+    const { queryByTestId, rerender } = render(modal(true));
     expect(onShow).toHaveBeenCalledTimes(1);
 
-    await act(async () => root.render(modal(false)));
+    rerender(modal(false));
     expect(onDismiss).toHaveBeenCalledTimes(1);
-    expect(document.querySelector('[data-testid="inside"]')).toBeNull();
-
-    await act(async () => root.unmount());
+    expect(queryByTestId('inside')).toBeNull();
   });
 });

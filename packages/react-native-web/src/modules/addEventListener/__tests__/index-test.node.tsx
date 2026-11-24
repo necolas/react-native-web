@@ -7,17 +7,19 @@
 
 import * as React from 'react';
 import * as ReactDOMServer from 'react-dom/server';
+import { assert } from 'vitest';
 
 import { addEventListener } from '..';
 
 describe('addEventListener', () => {
   test('can render correctly using ReactDOMServer', () => {
-    const listener = jest.fn();
+    const listener = vi.fn();
     const targetRef = React.createRef<HTMLDivElement>();
 
     function Component() {
       React.useEffect(() => {
-        return addEventListener(targetRef.current!, 'click', listener);
+        assert(targetRef.current != null);
+        return addEventListener(targetRef.current, 'click', listener);
       });
       return <div ref={targetRef} />;
     }

@@ -22,18 +22,16 @@ const originalImageLoaderLoad = ImageLoader.load;
 const originalPixelRatioGet = PixelRatio.get;
 
 function mockLoad() {
-  ImageLoader.load = jest.fn(() =>
-    Promise.resolve({} as { nativeEvent: Event })
-  );
+  ImageLoader.load = vi.fn(() => Promise.resolve({} as { nativeEvent: Event }));
 }
 
 function mockPendingLoad() {
   const resolveLoad: Record<string, () => Promise<void>> = {};
   const abortedRequests = new Set();
-  ImageLoader.abort = jest.fn((requestId) => {
+  ImageLoader.abort = vi.fn((requestId) => {
     abortedRequests.add(requestId);
   });
-  ImageLoader.load = jest.fn(
+  ImageLoader.load = vi.fn(
     (uri: string, requestId: number) =>
       new Promise<{ nativeEvent: Event }>((resolve) => {
         resolveLoad[uri] = () => {
@@ -54,13 +52,15 @@ function flushLoad() {
 }
 
 function createLoadHandlers() {
-  return { onLoad: jest.fn(), onLoadEnd: jest.fn(), onLoadStart: jest.fn() };
+  return { onLoad: vi.fn(), onLoadEnd: vi.fn(), onLoadStart: vi.fn() };
 }
 
 describe('components/Image', () => {
   beforeEach(() => {
     ImageUriCache._entries = {};
-    window.Image = jest.fn(() => ({}) as HTMLImageElement);
+    window.Image = vi.fn(function () {
+      return {} as HTMLImageElement;
+    });
   });
 
   afterEach(() => {
@@ -196,8 +196,8 @@ describe('components/Image', () => {
     test('is not restarted on update if only the handler identities change', () => {
       const firstHandlers = createLoadHandlers();
       const secondHandlers = createLoadHandlers();
-      ImageLoader.abort = jest.fn();
-      ImageLoader.load = jest.fn(() => new Promise(() => {}));
+      ImageLoader.abort = vi.fn();
+      ImageLoader.load = vi.fn(() => new Promise<never>(() => {}));
       const { rerender } = render(
         <Image {...firstHandlers} source="https://test.com/img.jpg" />
       );
@@ -257,9 +257,9 @@ describe('components/Image', () => {
       const { container } = render(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
       );
-      expect(container.querySelector('img')!.src).toBe(defaultUri);
+      expect(container.querySelector('img')?.src).toBe(defaultUri);
       await resolveLoad[uri]();
-      expect(container.querySelector('img')!.src).toBe(uri);
+      expect(container.querySelector('img')?.src).toBe(uri);
     });
 
     test('is shown immediately if the image was preloaded', () => {
@@ -271,7 +271,7 @@ describe('components/Image', () => {
         const { container } = render(
           <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
         );
-        expect(container.querySelector('img')!.src).toBe(uri);
+        expect(container.querySelector('img')?.src).toBe(uri);
       });
     });
 
@@ -284,7 +284,7 @@ describe('components/Image', () => {
       const { container } = render(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri }} />
       );
-      expect(container.querySelector('img')!.src).toBe(uri);
+      expect(container.querySelector('img')?.src).toBe(uri);
     });
 
     test('is shown immediately on update if the image has already been loaded', () => {
@@ -297,11 +297,11 @@ describe('components/Image', () => {
       const { container, rerender } = render(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriOne }} />
       );
-      expect(container.querySelector('img')!.src).toBe(uriOne);
+      expect(container.querySelector('img')?.src).toBe(uriOne);
       rerender(
         <Image defaultSource={{ uri: defaultUri }} source={{ uri: uriTwo }} />
       );
-      expect(container.querySelector('img')!.src).toBe(uriTwo);
+      expect(container.querySelector('img')?.src).toBe(uriTwo);
     });
 
     test('is correctly updated when missing in initial render', () => {
@@ -319,15 +319,15 @@ describe('components/Image', () => {
         type: 'png'
       } as PackagerAsset);
 
-      PixelRatio.get = jest.fn(() => 1.0);
+      PixelRatio.get = vi.fn(() => 1.0);
       let { container } = render(<Image source={assetId} />);
-      expect(container.querySelector('img')!.src).toBe(
+      expect(container.querySelector('img')?.src).toBe(
         'http://localhost/static/img.png'
       );
 
-      PixelRatio.get = jest.fn(() => 2.2);
+      PixelRatio.get = vi.fn(() => 2.2);
       ({ container } = render(<Image source={assetId} />));
-      expect(container.querySelector('img')!.src).toBe(
+      expect(container.querySelector('img')?.src).toBe(
         'http://localhost/static/img@2x.png'
       );
     });
@@ -336,7 +336,7 @@ describe('components/Image', () => {
       const src = 'https://example.com/src.png';
       const uri = 'https://example.com/source.png';
       const { container } = render(<Image source={{ uri }} src={src} />);
-      expect(container.querySelector('img')!.src).toBe(src);
+      expect(container.querySelector('img')?.src).toBe(src);
     });
   });
 
@@ -431,7 +431,7 @@ describe('components/Image', () => {
         width: 20
       } as PackagerAsset);
 
-      PixelRatio.get = jest.fn(() => 2);
+      PixelRatio.get = vi.fn(() => 2);
 
       expect(Image.resolveAssetSource(assetId)).toEqual({
         height: 10,
@@ -480,7 +480,7 @@ describe('components/Image', () => {
       );
       await resolveLoad[uriOne]();
       expect(ImageUriCache.has(uriOne)).toBe(false);
-      expect(container.querySelector('img')!.src).toBe(defaultUri);
+      expect(container.querySelector('img')?.src).toBe(defaultUri);
     });
 
     test('holds a reference while showing a cached image', () => {

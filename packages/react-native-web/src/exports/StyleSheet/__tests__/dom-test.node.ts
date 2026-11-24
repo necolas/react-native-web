@@ -10,7 +10,7 @@ import { createSheet } from '../dom';
 describe('createSheet', () => {
   test('creates a sheet on the server', () => {
     const sheet = createSheet();
-    expect(typeof sheet.insert).toBe('function');
+    expect(sheet.insert).toBeTypeOf('function');
     expect(sheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
     expect(sheet.getTextContent()).toMatchInlineSnapshot(`
      "[stylesheet-group="0"]{}

@@ -8,6 +8,7 @@
 import { act, render, type RenderResult } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
 import React from 'react';
+import type { Mock } from 'vitest';
 
 import View from '../';
 import type { HostNode } from '../../../types';
@@ -26,12 +27,12 @@ describe('components/View', () => {
 
   describe('raw text nodes as children', () => {
     beforeEach(() => {
-      jest.spyOn(console, 'error');
-      (console.error as jest.Mock).mockImplementation(() => {});
+      vi.spyOn(console, 'error');
+      (console.error as Mock).mockImplementation(() => {});
     });
 
     afterEach(() => {
-      (console.error as jest.Mock).mockRestore();
+      (console.error as Mock).mockRestore();
     });
 
     test('error logged (single)', () => {
@@ -189,12 +190,12 @@ describe('components/View', () => {
 
   describe('prop "onBlur"', () => {
     test('is called', () => {
-      const onBlur = jest.fn();
+      const onBlur = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<View onBlur={onBlur} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       const body = createEventTarget(document.body);
       act(() => {
         target.focus();
@@ -206,12 +207,12 @@ describe('components/View', () => {
 
   describe('prop "onClick"', () => {
     test('is called', () => {
-      const onClick = jest.fn();
+      const onClick = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<View onClick={onClick} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.click();
       });
@@ -221,12 +222,12 @@ describe('components/View', () => {
 
   describe('prop "onFocus"', () => {
     test('is called', () => {
-      const onFocus = jest.fn();
+      const onFocus = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<View onFocus={onFocus} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.focus();
         target.blur();
@@ -237,12 +238,12 @@ describe('components/View', () => {
 
   describe('prop "onPointerDown"', () => {
     test('is called', () => {
-      const onPointerDown = jest.fn();
+      const onPointerDown = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<View onPointerDown={onPointerDown} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
       });
@@ -252,13 +253,13 @@ describe('components/View', () => {
 
   describe('prop "ref"', () => {
     test('value is set', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<View ref={ref} />);
       expect(ref).toHaveBeenCalled();
     });
 
     test('is not called for prop changes', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       let rerender: RenderResult['rerender'];
       act(() => {
         ({ rerender } = render(
@@ -277,11 +278,11 @@ describe('components/View', () => {
       act(() => {
         render(<View ref={ref} />);
       });
-      const node = ref.current!;
-      expect(typeof node.measure === 'function');
-      expect(typeof node.measureLayout === 'function');
-      expect(typeof node.measureInWindow === 'function');
-      expect(typeof node.setNativeProps === 'function');
+      const node = ref.current;
+      expect(node?.measure).toBeTypeOf('function');
+      expect(node?.measureLayout).toBeTypeOf('function');
+      expect(node?.measureInWindow).toBeTypeOf('function');
+      expect(node?.setNativeProps).toBeTypeOf('function');
     });
   });
 

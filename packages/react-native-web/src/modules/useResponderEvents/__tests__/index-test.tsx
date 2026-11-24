@@ -14,6 +14,7 @@ import {
   testWithPointerType
 } from 'dom-event-testing-library';
 import React, { createRef } from 'react';
+import { assert } from 'vitest';
 
 import useResponderEvents from '..';
 import type { ResponderEvent } from '../createResponderEvent';
@@ -35,14 +36,14 @@ describe('useResponderEvents', () => {
       const targetRef = createRef<HTMLDivElement>();
       const Component = () => {
         useResponderEvents(targetRef, {
-          onStartShouldSetResponder: jest.fn()
+          onStartShouldSetResponder: vi.fn()
         });
         return <div ref={targetRef} />;
       };
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture
       act(() => {
         target.pointerdown({ pointerType });
@@ -56,15 +57,15 @@ describe('useResponderEvents', () => {
     const targetRef = createRef<HTMLDivElement>();
     const Component = () => {
       useResponderEvents(targetRef, {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onStartShouldSetResponder: vi.fn(() => true)
       });
       return <div ref={targetRef} />;
     };
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     const buttons = [1, 2, 3, 4];
     // gesture
     act(() => {
@@ -83,15 +84,15 @@ describe('useResponderEvents', () => {
     const targetRef = createRef<HTMLDivElement>();
     const Component = () => {
       useResponderEvents(targetRef, {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onStartShouldSetResponder: vi.fn(() => true)
       });
       return <div ref={targetRef} />;
     };
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     const acceptedModifierKeys = ['metaKey', 'shiftKey'];
     const ignoredModifierKeys = ['altKey', 'ctrlKey'];
     // gesture
@@ -113,8 +114,8 @@ describe('useResponderEvents', () => {
   test('recognizes mouse interactions after touch interactions', () => {
     const targetRef = createRef<HTMLDivElement>();
     const targetCallbacks = {
-      onStartShouldSetResponder: jest.fn(() => true),
-      onResponderGrant: jest.fn()
+      onStartShouldSetResponder: vi.fn(() => true),
+      onResponderGrant: vi.fn()
     };
     const Component = () => {
       useResponderEvents(targetRef, targetCallbacks);
@@ -123,7 +124,7 @@ describe('useResponderEvents', () => {
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     // touch gesture
     act(() => {
       target.pointerdown({ pointerType: 'touch' });
@@ -159,7 +160,7 @@ describe('useResponderEvents', () => {
     const Component = () => {
       useResponderEvents(targetRef, {
         onStartShouldSetResponder: () => true,
-        onResponderStart: jest.fn((e: ResponderEvent) => {
+        onResponderStart: vi.fn((e: ResponderEvent) => {
           identifier = e.nativeEvent.identifier;
         })
       });
@@ -168,7 +169,7 @@ describe('useResponderEvents', () => {
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     // gesture
     act(() => {
       target.pointerdown({ pointerId: 123456, pointerType: 'touch' });
@@ -196,18 +197,18 @@ describe('useResponderEvents', () => {
       (pointerType) => {
         let grantCurrentTarget: ResponderEvent['currentTarget'];
         const grandParentCallbacks = {
-          onStartShouldSetResponderCapture: jest.fn((e: ResponderEvent) => {
+          onStartShouldSetResponderCapture: vi.fn((e: ResponderEvent) => {
             return true;
           }),
-          onResponderGrant: jest.fn((e: ResponderEvent) => {
+          onResponderGrant: vi.fn((e: ResponderEvent) => {
             grantCurrentTarget = e.currentTarget;
           })
         };
         const parentCallbacks = {
-          onStartShouldSetResponderCapture: jest.fn(() => true)
+          onStartShouldSetResponderCapture: vi.fn(() => true)
         };
         const targetCallbacks = {
-          onStartShouldSetResponderCapture: jest.fn(() => true)
+          onStartShouldSetResponderCapture: vi.fn(() => true)
         };
 
         const Component = () => {
@@ -225,7 +226,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -255,14 +256,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('start grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const targetCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true)
+        onStartShouldSetResponderCapture: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -280,7 +281,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -308,14 +309,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('start grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: vi.fn(() => false)
       };
       const targetCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
 
       const Component = () => {
@@ -333,7 +334,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -377,14 +378,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('start grants responder to child', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const parentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: vi.fn(() => true)
       };
       const grandParentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -402,7 +403,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -428,14 +429,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('start grants responder to parent', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const grandParentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -453,7 +454,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -483,14 +484,14 @@ describe('useResponderEvents', () => {
       'start grants responder to grandParent',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => false)
         };
         const parentCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => false)
         };
         const grandParentCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
 
         const Component = () => {
@@ -508,7 +509,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -555,14 +556,14 @@ describe('useResponderEvents', () => {
       'move grants responder to grandParent',
       (pointerType) => {
         const grandParentCallbacks = {
-          onMoveShouldSetResponderCapture: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onMoveShouldSetResponderCapture: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
         const parentCallbacks = {
-          onMoveShouldSetResponderCapture: jest.fn(() => true)
+          onMoveShouldSetResponderCapture: vi.fn(() => true)
         };
         const targetCallbacks = {
-          onMoveShouldSetResponderCapture: jest.fn(() => true)
+          onMoveShouldSetResponderCapture: vi.fn(() => true)
         };
 
         const Component = () => {
@@ -580,7 +581,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start & move
         act(() => {
           target.pointerdown({ pointerType });
@@ -610,14 +611,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('move grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const targetCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true)
+        onMoveShouldSetResponderCapture: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -635,7 +636,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
@@ -664,14 +665,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('move grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: vi.fn(() => false)
       };
       const targetCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
 
       const Component = () => {
@@ -689,7 +690,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
@@ -734,14 +735,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('move grants responder to child', (pointerType) => {
       const targetCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: vi.fn(() => true)
       };
       const grandParentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -759,7 +760,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
@@ -784,14 +785,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('move grants responder to parent', (pointerType) => {
       const targetCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => false)
+        onMoveShouldSetResponder: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const grandParentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -810,7 +811,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
@@ -837,14 +838,14 @@ describe('useResponderEvents', () => {
       'move grants responder to grandParent',
       (pointerType) => {
         const targetCallbacks = {
-          onMoveShouldSetResponder: jest.fn(() => false)
+          onMoveShouldSetResponder: vi.fn(() => false)
         };
         const parentCallbacks = {
-          onMoveShouldSetResponder: jest.fn(() => false)
+          onMoveShouldSetResponder: vi.fn(() => false)
         };
         const grandParentCallbacks = {
-          onMoveShouldSetResponder: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onMoveShouldSetResponder: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
 
         const Component = () => {
@@ -862,7 +863,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start & move
         act(() => {
           target.pointerdown({ pointerType });
@@ -904,11 +905,11 @@ describe('useResponderEvents', () => {
       'scroll grants responder to parent if a pointer is down',
       (pointerType) => {
         const parentCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onScrollShouldSetResponderCapture: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
         const targetCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => false)
+          onScrollShouldSetResponderCapture: vi.fn(() => false)
         };
 
         const Component = () => {
@@ -923,7 +924,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -946,11 +947,11 @@ describe('useResponderEvents', () => {
       'scroll grants responder to target if a pointer is down',
       (pointerType) => {
         const parentCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => false)
+          onScrollShouldSetResponderCapture: vi.fn(() => false)
         };
         const targetCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onScrollShouldSetResponderCapture: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
 
         const Component = () => {
@@ -965,7 +966,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -1000,7 +1001,7 @@ describe('useResponderEvents', () => {
 
     test('scroll does not bubble to parent', () => {
       const parentCallbacks = {
-        onScrollShouldSetResponder: jest.fn(() => true)
+        onScrollShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -1014,7 +1015,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown();
@@ -1031,9 +1032,9 @@ describe('useResponderEvents', () => {
       'scroll grants responder to target if a pointer is down',
       (pointerType) => {
         const targetCallbacks = {
-          onScrollShouldSetResponder: jest.fn(() => true),
-          onResponderGrant: jest.fn(),
-          onResponderRelease: jest.fn()
+          onScrollShouldSetResponder: vi.fn(() => true),
+          onResponderGrant: vi.fn(),
+          onResponderRelease: vi.fn()
         };
 
         const Component = () => {
@@ -1043,7 +1044,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -1099,8 +1100,8 @@ describe('useResponderEvents', () => {
       'is called after "start" event on the view that became the responder',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderStart: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderStart: vi.fn()
         };
 
         const Component = () => {
@@ -1110,7 +1111,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -1144,8 +1145,8 @@ describe('useResponderEvents', () => {
           `is called after "move" event on responder (${shouldSetResponder})`,
           (pointerType) => {
             const targetCallbacks = {
-              [shouldSetResponder]: jest.fn(() => true),
-              onResponderMove: jest.fn()
+              [shouldSetResponder]: vi.fn(() => true),
+              onResponderMove: vi.fn()
             };
 
             const Component = () => {
@@ -1155,7 +1156,7 @@ describe('useResponderEvents', () => {
 
             // render
             render(<Component />);
-            const target = createEventTarget(targetRef.current!);
+            const target = createEventTarget(targetRef.current);
             // gesture start & move
             act(() => {
               target.pointerdown({ pointerType });
@@ -1189,8 +1190,8 @@ describe('useResponderEvents', () => {
       'is called after "end" event on responder',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderEnd: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderEnd: vi.fn()
         };
 
         const Component = () => {
@@ -1200,7 +1201,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start & end
         act(() => {
           target.pointerdown({ pointerType });
@@ -1232,8 +1233,8 @@ describe('useResponderEvents', () => {
       'is called after all touches with responder end',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderRelease: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderRelease: vi.fn()
         };
 
         const Component = () => {
@@ -1243,7 +1244,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture
         act(() => {
           target.pointerdown({ pointerType, pointerId: 1 });
@@ -1275,10 +1276,10 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('is called if pointer cancels', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderEnd: jest.fn(),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderEnd: vi.fn(),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1288,7 +1289,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & cancel
       act(() => {
         target.pointerdown({ pointerType });
@@ -1308,9 +1309,9 @@ describe('useResponderEvents', () => {
       'is called if input "select" occurs with non-collapsed selection',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn(),
-          onResponderTerminationRequest: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn(),
+          onResponderTerminationRequest: vi.fn(() => false)
         };
 
         const inputRef = createRef<HTMLInputElement>();
@@ -1327,11 +1328,11 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
-        const input = createEventTarget(inputRef.current!);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
         act(() => {
           target.pointerdown({ pointerType });
-          inputRef.current!.setSelectionRange(0, 4);
+          inputRef.current?.setSelectionRange(0, 4);
           input.select({});
         });
         // responder terminates
@@ -1345,9 +1346,9 @@ describe('useResponderEvents', () => {
       'is not called if input "select" occurs with collapsed selection',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn(),
-          onResponderTerminationRequest: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn(),
+          onResponderTerminationRequest: vi.fn(() => false)
         };
 
         const inputRef = createRef<HTMLInputElement>();
@@ -1364,11 +1365,11 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
-        const input = createEventTarget(inputRef.current!);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
         act(() => {
           target.pointerdown({ pointerType });
-          inputRef.current!.setSelectionRange(2, 2);
+          inputRef.current?.setSelectionRange(2, 2);
           input.select({});
         });
         // responder does not terminate
@@ -1382,9 +1383,9 @@ describe('useResponderEvents', () => {
       'is called if "select" occurs on input without numeric selection (e.g. type="email")',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn(),
-          onResponderTerminationRequest: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn(),
+          onResponderTerminationRequest: vi.fn(() => false)
         };
 
         const inputRef = createRef<HTMLInputElement>();
@@ -1401,8 +1402,8 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
-        const input = createEventTarget(inputRef.current!);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
         act(() => {
           target.pointerdown({ pointerType });
           input.select({});
@@ -1418,8 +1419,8 @@ describe('useResponderEvents', () => {
       'is called if "selectionchange" occurs',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn()
         };
 
         const Component = () => {
@@ -1429,21 +1430,12 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         const doc = createEventTarget(document);
-        // getSelection is not supported in jest
-        window.getSelection = jest.fn(() => {
-          const node = targetRef.current;
-          const anchorNode =
-            node != null && node.firstChild != null ? node.firstChild : node;
-          return {
-            anchorNode,
-            toString() {
-              return 'text';
-            }
-          } as Selection;
-        });
+        const text = targetRef.current?.firstChild;
+        assert(text != null);
         act(() => {
+          window.getSelection()?.setBaseAndExtent(text, 0, text, 4);
           target.pointerdown({ pointerType });
           target.pointermove({ pointerType });
           doc.selectionchange({});
@@ -1460,8 +1452,8 @@ describe('useResponderEvents', () => {
       const parentRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1475,8 +1467,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const parent = createEventTarget(parentRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const parent = createEventTarget(parentRef.current);
       // gesture start & scroll
       act(() => {
         target.pointerdown({ pointerType });
@@ -1494,8 +1486,8 @@ describe('useResponderEvents', () => {
       const parentRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1509,7 +1501,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // gesture start & scroll
       act(() => {
@@ -1528,8 +1520,8 @@ describe('useResponderEvents', () => {
       const siblingRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1544,8 +1536,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start & scroll
       act(() => {
         target.pointerdown({ pointerType });
@@ -1561,9 +1553,9 @@ describe('useResponderEvents', () => {
     test('is called if responder blurs', () => {
       const pointerType = 'touch';
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1573,7 +1565,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // gesture start & blur
       act(() => {
@@ -1589,9 +1581,9 @@ describe('useResponderEvents', () => {
     test('is called if window blurs', () => {
       const pointerType = 'touch';
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1601,7 +1593,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const win = createEventTarget(window);
       // gesture start & blur
       act(() => {
@@ -1619,8 +1611,8 @@ describe('useResponderEvents', () => {
       const siblingRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1635,8 +1627,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start & blur
       act(() => {
         target.pointerdown({ pointerType });
@@ -1654,9 +1646,9 @@ describe('useResponderEvents', () => {
       // when using mouse right-click to open a context menu
       const pointerType = 'touch';
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn()
       };
 
       const Component = () => {
@@ -1666,7 +1658,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // contextmenu sequence includes pointerdown "start"
       act(() => {
         target.contextmenu({ pointerType });
@@ -1679,9 +1671,9 @@ describe('useResponderEvents', () => {
 
     test('can be denied for "contextmenu", "scroll", and "selectionchange" events', () => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1699,7 +1691,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // contextmenu
       act(() => {
@@ -1882,7 +1874,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
 
       // gesture start
       act(() => {
@@ -2054,7 +2046,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
 
       // gesture start
       act(() => {
@@ -2217,8 +2209,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const parent = createEventTarget(parentRef.current!);
-      const target = createEventTarget(targetRef.current!);
+      const parent = createEventTarget(parentRef.current);
+      const target = createEventTarget(targetRef.current);
 
       // gesture start on parent
       act(() => {
@@ -2384,8 +2376,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start on target
       act(() => {
         target.pointerdown({ pointerType, pointerId: 1 });
@@ -2518,8 +2510,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start and move on target
       act(() => {
         target.pointerdown({ pointerType });
@@ -2622,7 +2614,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // first touch
       act(() => {
         target.pointerdown({ pointerType });
@@ -2757,8 +2749,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const parent = createEventTarget(parentRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const parent = createEventTarget(parentRef.current);
       // first touch
       act(() => {
         target.pointerdown({ pointerType });
@@ -2858,7 +2850,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       act(() => {
         target.pointerdown({ pointerType });
       });

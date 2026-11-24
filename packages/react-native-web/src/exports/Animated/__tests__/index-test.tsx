@@ -20,11 +20,11 @@ const AnimatedInterpolation = Animated.Interpolation;
 
 function createMockAnimation() {
   return {
-    start: jest.fn<undefined, [callback?: EndCallback | null]>(),
-    stop: jest.fn(),
-    reset: jest.fn(),
-    _startNativeLoop: jest.fn(),
-    _isUsingNativeDriver: jest.fn(() => false)
+    start: vi.fn<(callback?: EndCallback | null) => void>(),
+    stop: vi.fn(),
+    reset: vi.fn(),
+    _startNativeLoop: vi.fn(),
+    _isUsingNativeDriver: vi.fn(() => false)
   } satisfies CompositeAnimation;
 }
 
@@ -352,13 +352,13 @@ describe('Animated', () => {
     it('supports restarting sequence after it was stopped during execution', () => {
       const anim1 = createMockAnimation();
       const anim2 = createMockAnimation();
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       const seq = AnimatedImplementation.sequence([anim1, anim2]);
 
       seq.start(cb);
 
-      anim1.start.mock.calls[0][0]!({ finished: true });
+      anim1.start.mock.calls[0][0]?.({ finished: true });
       seq.stop();
 
       // anim1 should be finished so anim2 should also start
@@ -375,13 +375,13 @@ describe('Animated', () => {
     it('supports restarting sequence after it was finished without a reset', () => {
       const anim1 = createMockAnimation();
       const anim2 = createMockAnimation();
-      const cb = jest.fn();
+      const cb = vi.fn();
 
       const seq = AnimatedImplementation.sequence([anim1, anim2]);
 
       seq.start(cb);
-      anim1.start.mock.calls[0][0]!({ finished: true });
-      anim2.start.mock.calls[0][0]!({ finished: true });
+      anim1.start.mock.calls[0][0]?.({ finished: true });
+      anim2.start.mock.calls[0][0]?.({ finished: true });
 
       // sequence should be finished
       expect(cb).toHaveBeenCalledWith({ finished: true });
@@ -406,11 +406,11 @@ describe('Animated', () => {
 
       expect(anim1.start).toHaveBeenCalledTimes(1);
 
-      anim1.start.mock.calls[0][0]!({ finished: true });
+      anim1.start.mock.calls[0][0]?.({ finished: true });
 
       expect(anim2.start).toHaveBeenCalledTimes(1);
 
-      anim2.start.mock.calls[0][0]!({ finished: true });
+      anim2.start.mock.calls[0][0]?.({ finished: true });
 
       // after anim2 is finished, the sequence is finished,
       // hence the loop iteration is finished, so the next iteration starts

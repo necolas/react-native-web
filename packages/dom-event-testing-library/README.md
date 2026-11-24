@@ -11,6 +11,10 @@ There are number of challenges involved in unit testing modules that work with D
 
 Writing unit tests to cover all these scenarios is tedious and error prone. This event testing library is designed to avoid these issues by allowing developers to more easily dispatch events in unit tests, and to more reliably test interactions while using an API based on `PointerEvent`.
 
+## Requirements
+
+The library runs in [Vitest](https://vitest.dev) with a jsdom environment.
+
 ## Example
 
 ```js
@@ -29,7 +33,7 @@ describe('useTap', () => {
   // test all the supported pointer types
   testWithPointerType('pointer down', (pointerType) => {
     const ref = createRef(null);
-    const onTapStart = jest.fn();
+    const onTapStart = vi.fn();
 
     // component to test
     function Component() {
@@ -119,7 +123,7 @@ The target also has `node` property equal to the node that was used to create th
 
 Touch and pen sequences record their active pointers so that `touches`, `targetTouches`, and `changedTouches` stay consistent across a gesture. Call `clearPointers()` after each test to release any pointers a test left active, e.g., because it failed or ran a partial gesture. Pointers left active leak into later tests, where they are counted as a multi-touch gesture and silently suppress the emulated mouse events.
 
-### Jest helpers
+### Vitest helpers
 
 #### `testWithPointerType`
 

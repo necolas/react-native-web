@@ -22,11 +22,11 @@
     "release:benchmarks": "git checkout gh-pages && rm -rf ./docs/benchmarks && mv packages/benchmarks/dist ./docs/benchmarks && git add -A && git commit -m \"Deploy benchmarks\" && git push origin gh-pages && git checkout -",
     "release:react-native-web-docs": "git checkout gh-pages && rm -rf ./docs && mv packages/react-native-web-docs/dist ./docs && git add ./docs && git commit -m \"Deploy documentation\" && git push origin gh-pages && git checkout -",
     "prepare": "husky",
-    "typecheck": "tsc",
-    "test": "npm run typecheck && npm run format && npm run lint && npm run unit -- --runInBand",
-    "unit": "cross-env NODE_OPTIONS=\"--experimental-vm-modules --disable-warning=ExperimentalWarning\" jest",
-    "unit:dom": "npm run unit -- --selectProjects dom",
-    "unit:node": "npm run unit -- --selectProjects node"
+    "typecheck": "tsc -b",
+    "test": "npm run typecheck && npm run format && npm run lint && npm run unit",
+    "unit": "vitest run",
+    "unit:dom": "vitest run --project dom",
+    "unit:node": "vitest run --project node"
   },
   "devDependencies": {
     "@babel/cli": "^7.29.7",
@@ -35,22 +35,19 @@
     "@babel/preset-react": "^7.29.7",
     "@babel/preset-typescript": "^7.29.7",
     "@testing-library/react": "^16.3.3",
-    "@types/jest": "^30.0.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "babel-jest": "^30.5.2",
     "babel-plugin-fully-specified": "^1.3.1",
-    "cross-env": "^10.1.0",
     "del-cli": "^8.0.1",
     "husky": "^9.1.7",
-    "jest": "^30.5.2",
-    "jest-environment-jsdom": "^30.5.2",
+    "jsdom": "^30.1.3",
     "lint-staged": "^17.6.1",
     "oxfmt": "0.79.0",
     "oxlint": "1.94.0",
     "oxlint-tsgolint": "7.0.2008",
     "terser": "^5.51.2",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.12"
   },
   "lint-staged": {
     "packages/react-native-web/src/{index.ts,exports/*/index.{ts,tsx}}": [
@@ -62,9 +59,7 @@
     ]
   },
   "allowScripts": {
-    "@parcel/watcher": false,
     "core-js": false,
-    "fsevents": false,
-    "unrs-resolver@1.12.2": true
+    "fsevents": false
   }
 }

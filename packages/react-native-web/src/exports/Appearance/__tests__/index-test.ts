@@ -14,10 +14,10 @@ function createMediaQueryList(matches: boolean) {
 
   return {
     matches,
-    addEventListener: jest.fn((type: string, listener: MediaQueryListener) =>
+    addEventListener: vi.fn((type: string, listener: MediaQueryListener) =>
       listeners.add(listener)
     ),
-    removeEventListener: jest.fn((type: string, listener: MediaQueryListener) =>
+    removeEventListener: vi.fn((type: string, listener: MediaQueryListener) =>
       listeners.delete(listener)
     ),
     change(matches: boolean) {
@@ -34,10 +34,10 @@ describe('Appearance', () => {
 
   beforeEach(async () => {
     mediaQueryList = createMediaQueryList(false);
-    window.matchMedia = jest.fn(
+    window.matchMedia = vi.fn(
       () => mediaQueryList as unknown as MediaQueryList
     );
-    jest.resetModules();
+    vi.resetModules();
     Appearance = (await import('../index.js')).default;
   });
 
@@ -86,7 +86,7 @@ describe('Appearance', () => {
 
   describe('addChangeListener', () => {
     test('is called when the system color scheme changes', () => {
-      const listener = jest.fn();
+      const listener = vi.fn();
       Appearance.addChangeListener(listener);
       mediaQueryList.change(true);
       expect(listener).toHaveBeenCalledTimes(1);
@@ -94,7 +94,7 @@ describe('Appearance', () => {
     });
 
     test('is not called for system changes while an override is set', () => {
-      const listener = jest.fn();
+      const listener = vi.fn();
       Appearance.addChangeListener(listener);
       Appearance.setColorScheme('light');
       mediaQueryList.change(true);
@@ -102,7 +102,7 @@ describe('Appearance', () => {
     });
 
     test('is called only when setColorScheme changes the color scheme', () => {
-      const listener = jest.fn();
+      const listener = vi.fn();
       Appearance.addChangeListener(listener);
       Appearance.setColorScheme('light');
       expect(listener).not.toHaveBeenCalled();
@@ -115,7 +115,7 @@ describe('Appearance', () => {
     });
 
     test('is not called after remove', () => {
-      const listener = jest.fn();
+      const listener = vi.fn();
       const { remove } = Appearance.addChangeListener(listener);
       remove();
       Appearance.setColorScheme('dark');
@@ -124,7 +124,7 @@ describe('Appearance', () => {
     });
 
     test('listeners added during a change are not called for that change', () => {
-      const addedListener = jest.fn();
+      const addedListener = vi.fn();
       let calls = 0;
       function listener() {
         calls++;
@@ -148,7 +148,7 @@ describe('Appearance', () => {
           Appearance.setColorScheme('light');
         }
       });
-      const listener = jest.fn();
+      const listener = vi.fn();
       Appearance.addChangeListener(listener);
       Appearance.setColorScheme('dark');
       expect(Appearance.getColorScheme()).toBe('light');

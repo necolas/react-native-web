@@ -41,7 +41,7 @@ describe('PlatformColor', () => {
   });
 
   test('ignores invalid options objects', () => {
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     expect(PlatformColor({ fallback: 'red' }, 'foo')).toBeUndefined();
     // @ts-expect-error
     expect(PlatformColor('foo', { fallback: 1 })).toBeUndefined();

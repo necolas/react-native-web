@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     // Modules
-    "types": ["jest"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
@@ -40,5 +39,10 @@
     // "noUncheckedIndexedAccess": true,
     // "noUnusedLocals": true
     // "noUnusedParameters": true,
-  }
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.lib.json" },
+    { "path": "./tsconfig.test.json" }
+  ]
 }

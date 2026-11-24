@@ -8,12 +8,13 @@
 import { act, render } from '@testing-library/react';
 import { clearPointers, createEventTarget } from 'dom-event-testing-library';
 import * as React from 'react';
+import type { Mock } from 'vitest';
 
 import useHover from '..';
 
 type DivRef = React.RefObject<HTMLDivElement | null>;
-type HoverMock = jest.Mock<(e: PointerEvent) => void>;
-type HoverChangeMock = jest.Mock<(isHovered: boolean) => void>;
+type HoverMock = Mock<(e: PointerEvent) => void>;
+type HoverChangeMock = Mock<(isHovered: boolean) => void>;
 
 describe('useHover', () => {
   afterEach(() => {
@@ -29,9 +30,9 @@ describe('useHover', () => {
       childRef: DivRef;
 
     const componentInit = () => {
-      onHoverChange = jest.fn();
-      onHoverStart = jest.fn();
-      onHoverEnd = jest.fn();
+      onHoverChange = vi.fn();
+      onHoverStart = vi.fn();
+      onHoverEnd = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       childRef = React.createRef<HTMLDivElement>();
       const Component = () => {
@@ -52,8 +53,8 @@ describe('useHover', () => {
 
     test('contains the hover gesture', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
-      const child = createEventTarget(childRef.current!);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
       act(() => {
         target.pointerover();
         target.pointerout();
@@ -68,8 +69,8 @@ describe('useHover', () => {
 
     test('does not restart the hover gesture when leaving the target and child together', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
-      const child = createEventTarget(childRef.current!);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
       act(() => {
         target.pointerover();
         target.pointerout({ relatedTarget: child.node });
@@ -81,8 +82,8 @@ describe('useHover', () => {
     });
 
     test('only changes the nearest ancestor', () => {
-      onHoverStart = jest.fn();
-      onHoverEnd = jest.fn();
+      onHoverStart = vi.fn();
+      onHoverEnd = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       childRef = React.createRef<HTMLDivElement>();
       const grandchildRef = React.createRef<HTMLDivElement>();
@@ -99,9 +100,9 @@ describe('useHover', () => {
         );
       };
       render(<Component />);
-      const target = createEventTarget(ref.current!);
-      const child = createEventTarget(childRef.current!);
-      const grandchild = createEventTarget(grandchildRef.current!);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
+      const grandchild = createEventTarget(grandchildRef.current);
       act(() => {
         target.pointerover();
         target.pointerout({ relatedTarget: child.node });
@@ -122,9 +123,9 @@ describe('useHover', () => {
       ref: DivRef;
 
     const componentInit = () => {
-      onHoverChange = jest.fn();
-      onHoverStart = jest.fn();
-      onHoverEnd = jest.fn();
+      onHoverChange = vi.fn();
+      onHoverStart = vi.fn();
+      onHoverEnd = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, {
@@ -140,7 +141,7 @@ describe('useHover', () => {
 
     test('does not call callbacks', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerover();
         target.pointerout();
@@ -155,7 +156,7 @@ describe('useHover', () => {
     let onHoverStart: HoverMock, ref: DivRef;
 
     const componentInit = () => {
-      onHoverStart = jest.fn();
+      onHoverStart = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, { onHoverStart });
@@ -166,7 +167,7 @@ describe('useHover', () => {
 
     test('is called for mouse pointers', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerover({ pointerType: 'mouse' });
       });
@@ -175,7 +176,7 @@ describe('useHover', () => {
 
     test('is not called for touch pointers', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
@@ -185,7 +186,7 @@ describe('useHover', () => {
 
     test('is called if a mouse pointer is used after a touch pointer', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
@@ -199,7 +200,7 @@ describe('useHover', () => {
     let onHoverChange: HoverChangeMock, ref: DivRef;
 
     const componentInit = () => {
-      onHoverChange = jest.fn();
+      onHoverChange = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, { onHoverChange });
@@ -210,7 +211,7 @@ describe('useHover', () => {
 
     test('is called for mouse pointers', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerover();
       });
@@ -225,7 +226,7 @@ describe('useHover', () => {
 
     test('is not called for touch pointers', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
@@ -238,7 +239,7 @@ describe('useHover', () => {
     let onHoverEnd: HoverMock, ref: DivRef, childRef: DivRef;
 
     const componentInit = () => {
-      onHoverEnd = jest.fn();
+      onHoverEnd = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       childRef = React.createRef<HTMLDivElement>();
       const Component = () => {
@@ -254,7 +255,7 @@ describe('useHover', () => {
 
     test('is called for mouse pointers', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerover();
         target.pointerout();
@@ -264,7 +265,7 @@ describe('useHover', () => {
 
     test('is not called for touch pointers', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
         target.pointerup({ pointerType: 'touch' });
@@ -274,8 +275,8 @@ describe('useHover', () => {
 
     test('is not called when entering children of the target', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
-      const child = createEventTarget(childRef.current!);
+      const target = createEventTarget(ref.current);
+      const child = createEventTarget(childRef.current);
       act(() => {
         target.pointerover();
         target.pointerout({ relatedTarget: childRef.current });
@@ -292,9 +293,9 @@ describe('useHover', () => {
       ref: DivRef;
 
     const componentInit = () => {
-      onHoverChange = jest.fn();
-      onHoverStart = jest.fn();
-      onHoverEnd = jest.fn();
+      onHoverChange = vi.fn();
+      onHoverStart = vi.fn();
+      onHoverEnd = vi.fn();
       ref = React.createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, {
@@ -309,7 +310,7 @@ describe('useHover', () => {
 
     test('callbacks are called each time', () => {
       componentInit();
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerover();
         target.pointerout();

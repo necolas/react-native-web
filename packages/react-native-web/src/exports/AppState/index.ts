@@ -42,7 +42,7 @@ export default class AppState {
   static addEventListener(
     type: string,
     handler: (state: AppStateStatus) => unknown
-  ): Nullable<EventSubscription> {
+  ): EventSubscription {
     if (isAvailable) {
       invariant(
         EVENT_TYPES.indexOf(type) !== -1,
@@ -63,9 +63,10 @@ export default class AppState {
           );
         }
 
-        // TODO: Remove `?.` after the TypeScript migration
-        return changeEmitter?.addListener('change', handler);
+        return changeEmitter.addListener('change', handler);
       }
     }
+
+    return { remove() {} };
   }
 }

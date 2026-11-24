@@ -5,9 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import type { Mock } from 'vitest';
+
 import type TaskQueueType from '../TaskQueue';
 
-function expectToHaveBeenCalledOnce(fn: jest.Mock) {
+function expectToHaveBeenCalledOnce(fn: Mock) {
   expect(fn.mock.calls.length).toBe(1);
 }
 
@@ -22,13 +24,13 @@ describe('TaskQueue', () => {
   let sequenceId: number;
 
   function createSequenceTask(expectedSequenceId: number) {
-    return jest.fn(() => {
+    return vi.fn(() => {
       expect(++sequenceId).toBe(expectedSequenceId);
     });
   }
 
   beforeEach(async () => {
-    jest.resetModules();
+    vi.resetModules();
     const TaskQueue = (await import('../TaskQueue.js')).default;
     taskQueue = new TaskQueue();
     sequenceId = 0;
@@ -43,7 +45,7 @@ describe('TaskQueue', () => {
   });
 
   it('should handle nested tasks', () => {
-    const task1 = jest.fn(() => {
+    const task1 = vi.fn(() => {
       expect(++sequenceId).toBe(1);
       taskQueue.enqueue(task3);
     });
@@ -60,9 +62,9 @@ describe('TaskQueue', () => {
   });
 
   it('should be able to cancel tasks', () => {
-    const task1 = jest.fn();
+    const task1 = vi.fn();
     const task2 = createSequenceTask(1);
-    const task3 = jest.fn();
+    const task3 = vi.fn();
     const task4 = createSequenceTask(2);
     taskQueue.enqueue(task1);
     taskQueue.enqueue(task2);
@@ -78,7 +80,7 @@ describe('TaskQueue', () => {
   });
 
   it('should not crash when last task is cancelled', () => {
-    const task1 = jest.fn();
+    const task1 = vi.fn();
     taskQueue.enqueue(task1);
     taskQueue.cancelTasks([task1]);
     clearTaskQueue(taskQueue);

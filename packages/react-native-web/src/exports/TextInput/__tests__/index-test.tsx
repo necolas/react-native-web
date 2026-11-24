@@ -336,12 +336,12 @@ describe('components/TextInput', () => {
   });
 
   test('prop "onBlur"', () => {
-    const onBlur = jest.fn();
+    const onBlur = vi.fn();
     const ref = React.createRef<TextInputNode>();
     act(() => {
       render(<TextInput onBlur={onBlur} ref={ref} />);
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     const body = createEventTarget(document.body);
     act(() => {
       target.focus();
@@ -352,7 +352,7 @@ describe('components/TextInput', () => {
   });
 
   test.skip('prop "onChange"', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const { container } = render(<TextInput onChange={onChange} />);
     const input = findInput(container);
     // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
@@ -361,7 +361,7 @@ describe('components/TextInput', () => {
   });
 
   test.skip('prop "onChangeText"', () => {
-    const onChangeText = jest.fn();
+    const onChangeText = vi.fn();
     const { container } = render(<TextInput onChangeText={onChangeText} />);
     const input = findInput(container);
     // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
@@ -372,12 +372,12 @@ describe('components/TextInput', () => {
   });
 
   test('prop "onFocus"', () => {
-    const onFocus = jest.fn();
+    const onFocus = vi.fn();
     const ref = React.createRef<TextInputNode>();
     act(() => {
       render(<TextInput onFocus={onFocus} ref={ref} />);
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     act(() => {
       target.focus();
     });
@@ -387,7 +387,7 @@ describe('components/TextInput', () => {
   });
 
   test('keydown events bubble to ancestors', () => {
-    const onKeyDown = jest.fn();
+    const onKeyDown = vi.fn();
     const { container } = render(
       <View onKeyDown={onKeyDown}>
         <TextInput />
@@ -401,7 +401,7 @@ describe('components/TextInput', () => {
 
   describe('prop "onKeyPress"', () => {
     test('arrow key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -423,7 +423,7 @@ describe('components/TextInput', () => {
     });
 
     test('backspace key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -445,7 +445,7 @@ describe('components/TextInput', () => {
     });
 
     test('enter key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -467,7 +467,7 @@ describe('components/TextInput', () => {
     });
 
     test('escape key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -489,7 +489,7 @@ describe('components/TextInput', () => {
     });
 
     test('space key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -511,7 +511,7 @@ describe('components/TextInput', () => {
     });
 
     test('tab key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -533,7 +533,7 @@ describe('components/TextInput', () => {
     });
 
     test('text key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -555,7 +555,7 @@ describe('components/TextInput', () => {
     });
 
     test('modifier keys are included', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -585,7 +585,7 @@ describe('components/TextInput', () => {
     });
 
     test('meta key + Enter calls "onKeyPress"', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -620,7 +620,7 @@ describe('components/TextInput', () => {
     });
 
     test.skip('is called on change', () => {
-      const onSelectionChange = jest.fn();
+      const onSelectionChange = vi.fn();
       const { container } = render(
         <TextInput onSelectionChange={onSelectionChange} />
       );
@@ -632,23 +632,23 @@ describe('components/TextInput', () => {
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', (done) => {
+    test('single-line input', () => {
+      const onSubmitEditing = vi.fn(
+        (e: { nativeEvent: { target?: unknown; text: string } }) => {
+          expect(e.nativeEvent.target).toBeDefined();
+          expect(e.nativeEvent.text).toBe('12345');
+        }
+      );
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Enter' }));
-      function onSubmitEditing(e: {
-        nativeEvent: { target?: unknown; text: string };
-      }) {
-        expect(e.nativeEvent.target).toBeDefined();
-        expect(e.nativeEvent.text).toBe('12345');
-        done();
-      }
+      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
     });
 
     test('single-line input while composing', () => {
-      const onSubmitEditing = jest.fn();
+      const onSubmitEditing = vi.fn();
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );
@@ -663,9 +663,9 @@ describe('components/TextInput', () => {
     });
 
     test('multi-line input', () => {
-      jest.useFakeTimers();
-      const onSubmitEditing = jest.fn();
-      const preventDefault = jest.fn();
+      vi.useFakeTimers();
+      const onSubmitEditing = vi.fn();
+      const preventDefault = vi.fn();
       const { container } = render(
         <TextInput
           defaultValue="12345"
@@ -674,20 +674,20 @@ describe('components/TextInput', () => {
         />
       );
       const textarea = findTextArea(container);
-      const blur = jest.spyOn(textarea, 'blur');
+      const blur = vi.spyOn(textarea, 'blur');
       textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
       act(() => {
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
       expect(onSubmitEditing).not.toHaveBeenCalled();
       expect(preventDefault).not.toHaveBeenCalled();
       expect(blur).not.toHaveBeenCalled();
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     test('multi-line input with "blurOnSubmit" triggers "onSubmitEditing"', () => {
-      const onSubmitEditing = jest.fn();
-      const preventDefault = jest.fn();
+      const onSubmitEditing = vi.fn();
+      const preventDefault = vi.fn();
 
       const { container } = render(
         <TextInput
@@ -713,16 +713,16 @@ describe('components/TextInput', () => {
 
   describe('prop "submitBehavior"', () => {
     beforeEach(() => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
     });
 
     afterEach(() => {
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     function renderAndSubmit(props: React.ComponentProps<typeof TextInput>) {
-      const onSubmitEditing = jest.fn();
-      const preventDefault = jest.fn();
+      const onSubmitEditing = vi.fn();
+      const preventDefault = vi.fn();
 
       const { container } = render(
         <TextInput onSubmitEditing={onSubmitEditing} {...props} />
@@ -732,11 +732,11 @@ describe('components/TextInput', () => {
         ? findTextArea(container)
         : findInput(container);
 
-      const blur = jest.spyOn(node, 'blur');
+      const blur = vi.spyOn(node, 'blur');
       node.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
 
       act(() => {
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
 
       return { blur, onSubmitEditing, preventDefault };
@@ -938,13 +938,13 @@ describe('components/TextInput', () => {
     test('node.clear()', () => {
       const ref = React.createRef<TextInputNode>();
       render(<TextInput ref={ref} />);
-      expect(typeof ref.current!.clear).toBe('function');
+      expect(ref.current?.clear).toBeTypeOf('function');
     });
 
     test('node.isFocused()', () => {
       const ref = React.createRef<TextInputNode>();
       render(<TextInput ref={ref} />);
-      expect(typeof ref.current!.isFocused).toBe('function');
+      expect(ref.current?.isFocused).toBeTypeOf('function');
     });
   });
 });

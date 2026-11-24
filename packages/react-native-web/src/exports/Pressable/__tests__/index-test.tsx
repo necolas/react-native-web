@@ -12,7 +12,6 @@ import React from 'react';
 import Pressable from '../';
 import type { HostNode } from '../../../types';
 import TextInput from '../../TextInput';
-import type { ViewStyle } from '../../View/types';
 
 describe('components/Pressable', () => {
   test('default', () => {
@@ -85,8 +84,8 @@ describe('components/Pressable', () => {
 
   test('focus interaction', () => {
     let container!: HTMLElement;
-    const onBlur = jest.fn();
-    const onFocus = jest.fn();
+    const onBlur = vi.fn();
+    const onFocus = vi.fn();
     const ref = React.createRef<HostNode>();
     act(() => {
       ({ container } = render(
@@ -97,13 +96,11 @@ describe('components/Pressable', () => {
           onBlur={onBlur}
           onFocus={onFocus}
           ref={ref}
-          style={({ focused }) => [
-            focused && ({ outline: 'focus-ring' } as ViewStyle)
-          ]}
+          style={({ focused }) => [focused && { outlineColor: 'red' }]}
         />
       ));
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     const body = createEventTarget(document.body);
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
@@ -119,8 +116,8 @@ describe('components/Pressable', () => {
   });
 
   test('focus interaction (disabled)', () => {
-    const onBlur = jest.fn();
-    const onFocus = jest.fn();
+    const onBlur = vi.fn();
+    const onFocus = vi.fn();
     const ref = React.createRef<HostNode>();
     act(() => {
       render(
@@ -132,7 +129,7 @@ describe('components/Pressable', () => {
         />
       );
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     const body = createEventTarget(document.body);
     act(() => {
       target.focus();
@@ -146,8 +143,8 @@ describe('components/Pressable', () => {
 
   test('hover interaction', () => {
     let container!: HTMLElement;
-    const onHoverIn = jest.fn();
-    const onHoverOut = jest.fn();
+    const onHoverIn = vi.fn();
+    const onHoverOut = vi.fn();
     const ref = React.createRef<HostNode>();
     act(() => {
       ({ container } = render(
@@ -158,13 +155,11 @@ describe('components/Pressable', () => {
           onHoverIn={onHoverIn}
           onHoverOut={onHoverOut}
           ref={ref}
-          style={({ hovered }) => [
-            hovered && ({ outline: 'hover-ring' } as ViewStyle)
-          ]}
+          style={({ hovered }) => [hovered && { outlineColor: 'green' }]}
         />
       ));
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerover();
@@ -179,9 +174,9 @@ describe('components/Pressable', () => {
   });
 
   test('hover interaction (no state callback)', () => {
-    const onHoverIn = jest.fn();
-    const onHoverOut = jest.fn();
-    const onRender = jest.fn();
+    const onHoverIn = vi.fn();
+    const onHoverOut = vi.fn();
+    const onRender = vi.fn();
     const ref = React.createRef<HostNode>();
 
     act(() => {
@@ -192,7 +187,7 @@ describe('components/Pressable', () => {
       );
     });
 
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     onRender.mockClear();
 
     act(() => {
@@ -209,10 +204,10 @@ describe('components/Pressable', () => {
 
   test('press interaction (pointer)', () => {
     let container!: HTMLElement;
-    const onContextMenu = jest.fn();
-    const onPress = jest.fn();
-    const onPressIn = jest.fn();
-    const onPressOut = jest.fn();
+    const onContextMenu = vi.fn();
+    const onPress = vi.fn();
+    const onPressIn = vi.fn();
+    const onPressOut = vi.fn();
     const ref = React.createRef<HostNode>();
     act(() => {
       ({ container } = render(
@@ -225,23 +220,21 @@ describe('components/Pressable', () => {
           onPressIn={onPressIn}
           onPressOut={onPressOut}
           ref={ref}
-          style={({ pressed }) => [
-            pressed && ({ outline: 'press-ring' } as ViewStyle)
-          ]}
+          style={({ pressed }) => [pressed && { outlineColor: 'blue' }]}
         />
       ));
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerdown({ button: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     expect(onPressIn).toHaveBeenCalled();
     expect(container.firstChild).toMatchSnapshot();
     act(() => {
       target.pointerup({ button: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     expect(onPressOut).toHaveBeenCalled();
     expect(onPress).toHaveBeenCalled();
@@ -255,9 +248,9 @@ describe('components/Pressable', () => {
   describe('press interaction (keyboard)', () => {
     test('trigger press when keyup is on the same element', () => {
       let container!: HTMLElement;
-      const onPress = jest.fn();
-      const onPressIn = jest.fn();
-      const onPressOut = jest.fn();
+      const onPress = vi.fn();
+      const onPressIn = vi.fn();
+      const onPressOut = vi.fn();
       const ref = React.createRef<HostNode>();
 
       function TestCase() {
@@ -274,9 +267,7 @@ describe('components/Pressable', () => {
             onPressIn={onPressIn}
             onPressOut={onPressOut}
             ref={ref}
-            style={({ pressed }) => [
-              pressed && ({ outline: 'press-ring' } as ViewStyle)
-            ]}
+            style={({ pressed }) => [pressed && { outlineColor: 'blue' }]}
           />
         ) : null;
       }
@@ -284,17 +275,17 @@ describe('components/Pressable', () => {
       act(() => {
         ({ container } = render(<TestCase />));
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       expect(container.firstChild).toMatchSnapshot();
       act(() => {
         target.keydown({ key: 'Enter' });
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
       expect(onPressIn).toHaveBeenCalled();
       expect(container.firstChild).toMatchSnapshot();
       act(() => {
         target.keyup({ key: 'Enter' });
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
       expect(onPressOut).toHaveBeenCalled();
       expect(onPress).toHaveBeenCalled();
@@ -302,7 +293,7 @@ describe('components/Pressable', () => {
     });
 
     test('ignore press when keyup is on a different element', () => {
-      const onPress = jest.fn();
+      const onPress = vi.fn();
       const firstRef = React.createRef<HostNode>();
 
       function TestCase() {
@@ -319,30 +310,30 @@ describe('components/Pressable', () => {
       act(() => {
         render(<TestCase />);
       });
-      const target = createEventTarget(firstRef.current!);
+      const target = createEventTarget(firstRef.current);
       const body = createEventTarget(document.body);
       act(() => {
         target.keydown({ key: 'Enter' });
         body.keyup({ key: 'Enter' });
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
       expect(onPress).not.toHaveBeenCalled();
     });
 
     test('trigger press when role is "link"', () => {
-      const onPress = jest.fn();
+      const onPress = vi.fn();
       const ref = React.createRef<HostNode>();
 
       act(() => {
         render(<Pressable onPress={onPress} ref={ref} role="link" />);
       });
 
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
 
       act(() => {
         target.keydown({ key: 'Enter' });
         target.keyup({ key: 'Enter' });
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
 
       expect(onPress).toHaveBeenCalledTimes(1);
@@ -350,7 +341,7 @@ describe('components/Pressable', () => {
 
     test('ignore press when role is "link" and href is set', () => {
       // The browser dispatches a native 'click' for anchors
-      const onPress = jest.fn();
+      const onPress = vi.fn();
       const ref = React.createRef<HostNode>();
 
       act(() => {
@@ -364,13 +355,13 @@ describe('components/Pressable', () => {
         );
       });
 
-      expect(ref.current!.tagName).toBe('A');
-      const target = createEventTarget(ref.current!);
+      expect(ref.current?.tagName).toBe('A');
+      const target = createEventTarget(ref.current);
 
       act(() => {
         target.keydown({ key: 'Enter' });
         target.keyup({ key: 'Enter' });
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
 
       expect(onPress).not.toHaveBeenCalled();
@@ -378,8 +369,8 @@ describe('components/Pressable', () => {
   });
 
   test('press interaction as button (keyboard)', () => {
-    const onPress = jest.fn();
-    const preventDefault = jest.fn();
+    const onPress = vi.fn();
+    const preventDefault = vi.fn();
     const ref = React.createRef<HostNode>();
 
     function TestCase() {
@@ -397,19 +388,19 @@ describe('components/Pressable', () => {
     act(() => {
       render(<TestCase />);
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     act(() => {
       target.keydown({ key: ' ', preventDefault });
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     // Calling preventDefault prevents native 'click' event dispatch
     expect(preventDefault).not.toHaveBeenCalled();
   });
 
   test('ignore keyboard press from a nested text input', () => {
-    const onKeyDown = jest.fn();
-    const onPress = jest.fn();
-    const onPressIn = jest.fn();
+    const onKeyDown = vi.fn();
+    const onPress = vi.fn();
+    const onPressIn = vi.fn();
     const inputRef = React.createRef<HostNode>();
     const textAreaRef = React.createRef<HostNode>();
 
@@ -430,8 +421,8 @@ describe('components/Pressable', () => {
       render(<TestCase />);
     });
 
-    const input = createEventTarget(inputRef.current!);
-    const textArea = createEventTarget(textAreaRef.current!);
+    const input = createEventTarget(inputRef.current);
+    const textArea = createEventTarget(textAreaRef.current);
 
     act(() => {
       input.keydown({ key: 'Enter' });
@@ -440,7 +431,7 @@ describe('components/Pressable', () => {
       input.keyup({ key: ' ' });
       textArea.keydown({ key: 'Enter' });
       textArea.keyup({ key: 'Enter' });
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(onKeyDown).toHaveBeenCalledTimes(3);
@@ -450,7 +441,7 @@ describe('components/Pressable', () => {
 
   describe('prop "ref"', () => {
     test('value is set', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<Pressable ref={ref} />);
       expect(ref).toHaveBeenCalled();
     });
@@ -460,11 +451,11 @@ describe('components/Pressable', () => {
       act(() => {
         render(<Pressable ref={ref} />);
       });
-      const node = ref.current!;
-      expect(typeof node.measure === 'function');
-      expect(typeof node.measureLayout === 'function');
-      expect(typeof node.measureInWindow === 'function');
-      expect(typeof node.setNativeProps === 'function');
+      const node = ref.current;
+      expect(node?.measure).toBeTypeOf('function');
+      expect(node?.measureLayout).toBeTypeOf('function');
+      expect(node?.measureInWindow).toBeTypeOf('function');
+      expect(node?.setNativeProps).toBeTypeOf('function');
     });
   });
 

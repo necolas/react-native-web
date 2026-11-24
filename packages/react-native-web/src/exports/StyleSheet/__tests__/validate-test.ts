@@ -5,17 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import type { Mock } from 'vitest';
+
 import { validate } from '../validate';
 
 describe('validate', () => {
   beforeAll(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
   });
   afterAll(() => {
-    (console.error as jest.Mock).mockRestore();
+    (console.error as Mock).mockRestore();
   });
   afterEach(() => {
-    (console.error as jest.Mock).mockClear();
+    (console.error as Mock).mockClear();
   });
 
   test('invalid shortform properties', () => {

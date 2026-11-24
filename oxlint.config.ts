@@ -6,7 +6,7 @@ export default defineConfig({
   env: {
     browser: true,
     node: true,
-    jest: true
+    vitest: true
   },
   options: {
     typeAware: true
@@ -127,13 +127,5 @@ export default defineConfig({
     //     allowString: true
     //   }
     // ]
-  },
-  overrides: [
-    {
-      files: ['**/__tests__/**'],
-      rules: {
-        'typescript/no-non-null-assertion': 'off'
-      }
-    }
-  ]
+  }
 });
