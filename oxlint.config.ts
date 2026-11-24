@@ -89,13 +89,13 @@ export default defineConfig({
     'typescript/no-explicit-any': 'error',
     'typescript/no-import-type-side-effects': 'error',
     'typescript/no-invalid-void-type': 'error',
+    'typescript/no-non-null-assertion': 'error',
     'typescript/no-wrapper-object-types': 'error',
 
     // temporarily disabled
     'typescript/consistent-return': 'off',
     'typescript/no-base-to-string': 'off',
     'typescript/no-extraneous-class': 'off',
-    'typescript/no-non-null-assertion': 'off',
     'typescript/no-unnecessary-boolean-literal-compare': 'off',
     'typescript/no-unsafe-type-assertion': 'off',
     'typescript/unbound-method': 'off',
@@ -127,5 +127,13 @@ export default defineConfig({
     //     allowString: true
     //   }
     // ]
-  }
+  },
+  overrides: [
+    {
+      files: ['**/__tests__/**'],
+      rules: {
+        'typescript/no-non-null-assertion': 'off'
+      }
+    }
+  ]
 });

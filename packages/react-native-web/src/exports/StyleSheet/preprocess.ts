@@ -67,9 +67,7 @@ export const createBoxShadowValue = (
   }
 };
 
-export const createTextShadowValue = (
-  style: TextShadowStyle
-): string | undefined => {
+const createTextShadowValue = (style: TextShadowStyle): string | undefined => {
   const { textShadowColor, textShadowOffset, textShadowRadius } = style;
   const { height, width } = textShadowOffset || defaultOffset;
   const radius = textShadowRadius || 0;
@@ -104,11 +102,6 @@ const mapBoxShadow = (boxShadow: BoxShadow | string): string => {
   const position = boxShadow.inset ? 'inset ' : '';
   return `${position}${offsetX} ${offsetY} ${blurRadius} ${spreadDistance} ${color}`;
 };
-export const createBoxShadowArrayValue = (
-  value: ReadonlyArray<BoxShadow | string>
-): string => {
-  return value.map(mapBoxShadow).join(', ');
-};
 
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
@@ -122,18 +115,6 @@ const mapTransform = (transform: TransformStyle): string => {
     const normalizedValue = normalizeValueWithProperty(value, type);
     return `${type}(${normalizedValue})`;
   }
-};
-export const createTransformValue = (
-  value: ReadonlyArray<TransformStyle>
-): string => {
-  return value.map(mapTransform).join(' ');
-};
-
-// [2, '30%', 10] => '2px 30% 10px'
-export const createTransformOriginValue = (
-  value: Array<number | string>
-): string => {
-  return value.map((v) => normalizeValueWithProperty(v)).join(' ');
 };
 
 const STYLISTIC_SETS: Record<string, string> = {
@@ -277,7 +258,7 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
       nextStyle[prop] = value.toString();
     } else if (prop === 'boxShadow') {
       if (Array.isArray(value)) {
-        value = createBoxShadowArrayValue(value);
+        value = value.map(mapBoxShadow).join(', ');
       }
       const { boxShadow } = nextStyle;
       nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
@@ -325,12 +306,13 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
       }
     } else if (prop === 'transform') {
       if (Array.isArray(value)) {
-        value = createTransformValue(value);
+        value = value.map(mapTransform).join(' ');
       }
       nextStyle.transform = value;
     } else if (prop === 'transformOrigin') {
       if (Array.isArray(value)) {
-        value = createTransformOriginValue(value);
+        // [2, '30%', 10] => '2px 30% 10px'
+        value = value.map((v) => normalizeValueWithProperty(v)).join(' ');
       }
       nextStyle.transformOrigin = value;
     } else {
