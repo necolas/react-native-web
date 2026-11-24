@@ -4,7 +4,7 @@ export default {
   // import paths (e.g. './View/index.js')
   plugins: ['babel-plugin-fully-specified'],
   presets: [
-    ['@babel/preset-react', { useSpread: true }],
+    ['@babel/preset-react', { runtime: 'automatic' }],
     ['@babel/preset-typescript', { onlyRemoveTypeImports: true }],
     [
       '@babel/preset-env',

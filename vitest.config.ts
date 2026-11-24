@@ -1,12 +1,6 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  oxc: {
-    jsx: {
-      runtime: 'classic',
-      development: false
-    }
-  },
   test: {
     globals: true,
     restoreMocks: true,
