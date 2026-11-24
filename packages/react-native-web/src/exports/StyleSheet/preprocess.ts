@@ -315,6 +315,11 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
         value = value.map((v) => normalizeValueWithProperty(v)).join(' ');
       }
       nextStyle.transformOrigin = value;
+    } else if (prop === 'transitionProperty') {
+      if (Array.isArray(value)) {
+        value = value.join(', ');
+      }
+      nextStyle.transitionProperty = value;
     } else {
       nextStyle[prop] = value;
     }
