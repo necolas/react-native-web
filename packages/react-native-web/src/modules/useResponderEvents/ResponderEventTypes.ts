@@ -18,7 +18,7 @@ export type Touch = {
   timestamp: number;
 };
 
-export type TouchEvent = {
+export type NativeTouchEvent = {
   altKey: boolean;
   ctrlKey: boolean;
   metaKey: boolean;
@@ -43,30 +43,6 @@ export type TouchEvent = {
 /**
  * The DOM events handled by the Responder System
  */
-export interface ResponderDOMEvent {
-  readonly altKey?: boolean;
-  readonly button?: number;
-  readonly buttons?: number;
-  readonly changedTouches?: TouchList;
-  readonly clientX?: number;
-  readonly clientY?: number;
-  readonly composedPath: () => Array<EventTarget>;
-  readonly ctrlKey?: boolean;
-  readonly defaultPrevented: boolean;
-  readonly eventPhase?: number;
-  readonly isTrusted?: boolean;
-  readonly metaKey?: boolean;
-  readonly pageX?: number;
-  readonly pageY?: number;
-  readonly preventDefault?: () => void;
-  readonly relatedTarget?: EventTarget | null;
-  readonly shiftKey?: boolean;
-  readonly target: EventTarget | null;
-  readonly timeStamp: number;
-  readonly touches?: TouchList;
-  readonly type: string;
-}
-
 export const MOUSE_DOWN = 'mousedown';
 export const MOUSE_MOVE = 'mousemove';
 export const MOUSE_UP = 'mouseup';
@@ -79,28 +55,40 @@ export const SCROLL = 'scroll';
 export const SELECT = 'select';
 export const SELECTION_CHANGE = 'selectionchange';
 
-export function isStartish(eventType: string): boolean {
-  return eventType === TOUCH_START || eventType === MOUSE_DOWN;
+export function isStartish(event: Event): event is TouchEvent | MouseEvent {
+  return event.type === TOUCH_START || event.type === MOUSE_DOWN;
 }
 
-export function isMoveish(eventType: string): boolean {
-  return eventType === TOUCH_MOVE || eventType === MOUSE_MOVE;
+export function isMoveish(event: Event): event is TouchEvent | MouseEvent {
+  return event.type === TOUCH_MOVE || event.type === MOUSE_MOVE;
 }
 
-export function isEndish(eventType: string): boolean {
+export function isEndish(event: Event): event is TouchEvent | MouseEvent {
   return (
-    eventType === TOUCH_END || eventType === MOUSE_UP || isCancelish(eventType)
+    event.type === TOUCH_END || event.type === MOUSE_UP || isCancelish(event)
   );
 }
 
-export function isCancelish(eventType: string): boolean {
-  return eventType === TOUCH_CANCEL || eventType === MOUSE_CANCEL;
+export function isCancelish(event: Event): event is TouchEvent | DragEvent {
+  return event.type === TOUCH_CANCEL || event.type === MOUSE_CANCEL;
 }
 
-export function isScroll(eventType: string): boolean {
-  return eventType === SCROLL;
+export function isScroll(event: Event): boolean {
+  return event.type === SCROLL;
 }
 
-export function isSelectionChange(eventType: string): boolean {
-  return eventType === SELECT || eventType === SELECTION_CHANGE;
+export function isSelectionChange(event: Event): boolean {
+  return event.type === SELECT || event.type === SELECTION_CHANGE;
+}
+
+export function isBlur(event: Event): event is FocusEvent {
+  return event.type === 'blur';
+}
+
+export function isMouseEvent(event: Event): event is MouseEvent {
+  return 'button' in event;
+}
+
+export function isTouchEvent(event: Event): event is TouchEvent {
+  return 'changedTouches' in event;
 }

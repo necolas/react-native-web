@@ -7,11 +7,8 @@
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 import type { Nullable } from '../../types';
-import type {
-  ResponderDOMEvent,
-  Touch,
-  TouchEvent
-} from './ResponderEventTypes';
+import type { Touch, NativeTouchEvent } from './ResponderEventTypes';
+import { isMouseEvent, isTouchEvent } from './ResponderEventTypes';
 import type {
   ResponderTouchHistoryStore,
   TouchHistory
@@ -36,7 +33,7 @@ export type ResponderEvent = {
   isTrusted: Nullable<boolean>;
   preventDefault: () => void;
   stopPropagation: () => void;
-  nativeEvent: TouchEvent;
+  nativeEvent: NativeTouchEvent;
   persist: () => void;
   target: Nullable<EventTarget>;
   timeStamp: number;
@@ -70,7 +67,7 @@ const getScale = (rectSize: number, offsetSize: number = 0): number =>
  * Mouse events are transformed into fake touch events.
  */
 export default function createResponderEvent(
-  domEvent: ResponderDOMEvent,
+  domEvent: Event,
   responderTouchHistoryStore: ResponderTouchHistoryStore
 ): ResponderEvent {
   let rect: Nullable<{
@@ -79,25 +76,27 @@ export default function createResponderEvent(
     width: number;
     height: number;
   }>;
+
   let propagationWasStopped = false;
   let changedTouches: Array<Touch>;
   let touches: Array<Touch>;
 
-  const domEventChangedTouches = domEvent.changedTouches;
+  const domTouchEvent = isTouchEvent(domEvent) ? domEvent : undefined;
+  const domMouseEvent = isMouseEvent(domEvent) ? domEvent : undefined;
+  const domEventChangedTouches = domTouchEvent?.changedTouches;
+  const domFirstChangedTouch = domEventChangedTouches?.[0];
   const domEventType = domEvent.type;
 
-  const metaKey = domEvent.metaKey === true;
-  const shiftKey = domEvent.shiftKey === true;
-  const force = domEventChangedTouches?.[0].force || 0;
-  const identifier = normalizeIdentifier(
-    domEventChangedTouches?.[0].identifier || 0
-  );
-  const clientX: number =
-    domEventChangedTouches?.[0].clientX || domEvent.clientX!;
-  const clientY: number =
-    domEventChangedTouches?.[0].clientY || domEvent.clientY!;
-  const pageX: number = domEventChangedTouches?.[0].pageX || domEvent.pageX!;
-  const pageY: number = domEventChangedTouches?.[0].pageY || domEvent.pageY!;
+  const metaKey = (domTouchEvent ?? domMouseEvent)?.metaKey === true;
+  const shiftKey = (domTouchEvent ?? domMouseEvent)?.shiftKey === true;
+
+  const force = domFirstChangedTouch?.force || 0;
+  const identifier = normalizeIdentifier(domFirstChangedTouch?.identifier || 0);
+  const clientX = domFirstChangedTouch?.clientX || domMouseEvent?.clientX || 0;
+  const clientY = domFirstChangedTouch?.clientY || domMouseEvent?.clientY || 0;
+  const pageX = domFirstChangedTouch?.pageX || domMouseEvent?.pageX || 0;
+  const pageY = domFirstChangedTouch?.pageY || domMouseEvent?.pageY || 0;
+
   const preventDefault =
     typeof domEvent.preventDefault === 'function'
       ? domEvent.preventDefault.bind(domEvent)
@@ -126,8 +125,8 @@ export default function createResponderEvent(
   if (domEventChangedTouches != null) {
     changedTouches = normalizeTouches(domEventChangedTouches);
     touches =
-      domEvent.touches != null
-        ? normalizeTouches(domEvent.touches)
+      domTouchEvent?.touches != null
+        ? normalizeTouches(domTouchEvent.touches)
         : emptyArray;
   } else {
     const emulatedTouches: Array<Touch> = [

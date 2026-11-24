@@ -7,13 +7,13 @@
 
 import isSelectionValid from '../../modules/isSelectionValid';
 import type { Nullable } from '../../types';
-import type { ResponderDOMEvent } from './ResponderEventTypes';
+import { isMouseEvent } from './ResponderEventTypes';
 
 const keyName = '__reactResponderId';
 
 export type ResponderNode = HTMLElement & { __reactResponderId?: number };
 
-function getEventPath(domEvent: ResponderDOMEvent): Array<ResponderNode> {
+function getEventPath(domEvent: Event): Array<ResponderNode> {
   // The 'selectionchange' event always has the 'document' as the target.
   // Use the anchor node as the initial target to reconstruct a path.
   // (We actually only need the first "responder" node in practice.)
@@ -56,7 +56,7 @@ export function setResponderId(node: Nullable<ResponderNode>, id: number) {
 /**
  * Filter the event path to contain only the nodes attached to the responder system
  */
-export function getResponderPaths(domEvent: ResponderDOMEvent): {
+export function getResponderPaths(domEvent: Event): {
   idPath: Array<number>;
   nodePath: Array<ResponderNode>;
 } {
@@ -151,7 +151,7 @@ export function hasTargetTouches(
  * Ignore 'selectionchange' and 'select' events that don't correspond with a person's intent to
  * select text.
  */
-export function hasValidSelection(domEvent: ResponderDOMEvent): boolean {
+export function hasValidSelection(domEvent: Event): boolean {
   if (domEvent.type === 'selectionchange') {
     return isSelectionValid();
   }
@@ -181,20 +181,19 @@ export function hasValidSelection(domEvent: ResponderDOMEvent): boolean {
 /**
  * Events are only valid if the primary button was used without specific modifier keys.
  */
-export function isPrimaryPointerDown(domEvent: ResponderDOMEvent): boolean {
-  const { altKey, button, buttons, ctrlKey, type } = domEvent;
-  const isTouch = type === 'touchstart' || type === 'touchmove';
+export function isPrimaryPointerDown(event: TouchEvent | MouseEvent): boolean {
+  const { type } = event;
+  if (type === 'touchstart' || type === 'touchmove') {
+    return true;
+  }
+  if (!isMouseEvent(event)) {
+    return false;
+  }
+  const { altKey, button, buttons, ctrlKey } = event;
   const isPrimaryMouseDown =
     type === 'mousedown' && (button === 0 || buttons === 1);
   const isPrimaryMouseMove = type === 'mousemove' && buttons === 1;
   const noModifiers = altKey === false && ctrlKey === false;
 
-  if (
-    isTouch ||
-    (isPrimaryMouseDown && noModifiers) ||
-    (isPrimaryMouseMove && noModifiers)
-  ) {
-    return true;
-  }
-  return false;
+  return (isPrimaryMouseDown || isPrimaryMouseMove) && noModifiers;
 }

@@ -133,14 +133,15 @@ import type { Nullable } from '../../types';
 import canUseDOM from '../canUseDom';
 import type { ResponderEvent } from './createResponderEvent';
 import createResponderEvent from './createResponderEvent';
-import type { ResponderDOMEvent } from './ResponderEventTypes';
 import {
+  isBlur,
   isCancelish,
   isEndish,
   isMoveish,
   isScroll,
   isSelectionChange,
-  isStartish
+  isStartish,
+  isTouchEvent
 } from './ResponderEventTypes';
 import { ResponderTouchHistoryStore } from './ResponderTouchHistoryStore';
 import type { ResponderNode } from './utils';
@@ -284,7 +285,7 @@ function getResponderConfig(id: ResponderId): ResponderConfig {
  * the Responder System has an ID, which is used to look up its associated
  * callbacks.
  */
-function eventListener(domEvent: ResponderDOMEvent) {
+function eventListener(domEvent: Event) {
   const eventType = domEvent.type;
   const eventTarget = domEvent.target;
 
@@ -319,11 +320,11 @@ function eventListener(domEvent: ResponderDOMEvent) {
     return;
   }
 
-  const isStartEvent = isStartish(eventType) && isPrimaryPointerDown(domEvent);
-  const isMoveEvent = isMoveish(eventType);
-  const isEndEvent = isEndish(eventType);
-  const isScrollEvent = isScroll(eventType);
-  const isSelectionChangeEvent = isSelectionChange(eventType);
+  const isStartEvent = isStartish(domEvent) && isPrimaryPointerDown(domEvent);
+  const isMoveEvent = isMoveish(domEvent);
+  const isEndEvent = isEndish(domEvent);
+  const isScrollEvent = isScroll(domEvent);
+  const isSelectionChangeEvent = isSelectionChange(domEvent);
   const responderEvent = createResponderEvent(
     domEvent,
     responderTouchHistoryStore
@@ -334,7 +335,7 @@ function eventListener(domEvent: ResponderDOMEvent) {
    */
 
   if (isStartEvent || isMoveEvent || isEndEvent) {
-    if (domEvent.touches) {
+    if (isTouchEvent(domEvent)) {
       trackedTouchCount = domEvent.touches.length;
     } else {
       if (isStartEvent) {
@@ -344,7 +345,7 @@ function eventListener(domEvent: ResponderDOMEvent) {
       }
     }
     responderTouchHistoryStore.recordTouchTrack(
-      eventType,
+      domEvent,
       responderEvent.nativeEvent
     );
   }
@@ -428,13 +429,13 @@ function eventListener(domEvent: ResponderDOMEvent) {
       }
     } else {
       const isTerminateEvent =
-        isCancelish(eventType) ||
+        isCancelish(domEvent) ||
         // native context menu
         eventType === 'contextmenu' ||
         // window blur
-        (eventType === 'blur' && eventTarget === window) ||
+        (isBlur(domEvent) && eventTarget === window) ||
         // responder (or ancestors) blur
-        (eventType === 'blur' &&
+        (isBlur(domEvent) &&
           (eventTarget as Node).contains(node) &&
           domEvent.relatedTarget !== node) ||
         // native scroll without using a pointer
@@ -449,7 +450,10 @@ function eventListener(domEvent: ResponderDOMEvent) {
       const isReleaseEvent =
         isEndEvent &&
         !isTerminateEvent &&
-        !hasTargetTouches(node, domEvent.touches);
+        !hasTargetTouches(
+          node,
+          isTouchEvent(domEvent) ? domEvent.touches : null
+        );
 
       // End
       if (isEndEvent) {
@@ -510,7 +514,7 @@ function eventListener(domEvent: ResponderDOMEvent) {
  */
 function findWantsResponder(
   eventPaths: EventPaths,
-  domEvent: ResponderDOMEvent,
+  domEvent: Event,
   responderEvent: ResponderEvent
 ) {
   const shouldSetCallbacks = shouldSetResponderEvents[domEvent.type];
@@ -649,7 +653,7 @@ function attemptTransfer(
  * Use native events as ReactDOM doesn't have a non-plugin API to implement
  * this system.
  */
-const documentEventsCapturePhase = ['blur', 'scroll'];
+const documentEventsCapturePhase = ['blur', 'scroll'] as const;
 const documentEventsBubblePhase = [
   // mouse
   'mousedown',
@@ -665,7 +669,7 @@ const documentEventsBubblePhase = [
   'contextmenu',
   'select',
   'selectionchange'
-];
+] as const;
 export function attachListeners() {
   if (canUseDOM && window.__reactResponderSystemActive == null) {
     window.addEventListener('blur', eventListener);
@@ -714,7 +718,7 @@ export function terminateResponder() {
     const { onResponderTerminate } = getResponderConfig(id);
     if (onResponderTerminate != null) {
       const event = createResponderEvent(
-        {} as ResponderDOMEvent,
+        {} as Event,
         responderTouchHistoryStore
       );
       event.currentTarget = node;

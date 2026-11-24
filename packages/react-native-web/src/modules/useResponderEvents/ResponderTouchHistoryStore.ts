@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Touch, TouchEvent } from './ResponderEventTypes';
+import type { Touch, NativeTouchEvent } from './ResponderEventTypes';
 import { isStartish, isMoveish, isEndish } from './ResponderEventTypes';
 
 type TouchRecord = {
@@ -174,13 +174,13 @@ export class ResponderTouchHistoryStore {
     mostRecentTimeStamp: 0
   };
 
-  recordTouchTrack(topLevelType: string, nativeEvent: TouchEvent): void {
+  recordTouchTrack(domEvent: Event, nativeEvent: NativeTouchEvent): void {
     const touchHistory = this._touchHistory;
-    if (isMoveish(topLevelType)) {
+    if (isMoveish(domEvent)) {
       nativeEvent.changedTouches.forEach((touch) =>
         recordTouchMove(touch, touchHistory)
       );
-    } else if (isStartish(topLevelType)) {
+    } else if (isStartish(domEvent)) {
       nativeEvent.changedTouches.forEach((touch) =>
         recordTouchStart(touch, touchHistory)
       );
@@ -189,7 +189,7 @@ export class ResponderTouchHistoryStore {
         touchHistory.indexOfSingleActiveTouch =
           nativeEvent.touches[0].identifier;
       }
-    } else if (isEndish(topLevelType)) {
+    } else if (isEndish(domEvent)) {
       nativeEvent.changedTouches.forEach((touch) =>
         recordTouchEnd(touch, touchHistory)
       );
