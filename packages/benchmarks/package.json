@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "clean": "del-cli ./dist",
-    "build": "NODE_ENV=production npm run dev",
-    "dev": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && webpack-cli --config ./webpack.config.js"
+    "bundle": "npm run clean && mkdir -p dist && cp -f index.html dist/index.html && webpack-cli --config ./webpack.config.js",
+    "dev": "npm run bundle",
+    "build": "NODE_ENV=production npm run bundle"
   },
   "dependencies": {
     "classnames": "^2.5.1",

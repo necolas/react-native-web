@@ -30,8 +30,8 @@ describe('modules/useMergeRefs', () => {
   });
 
   test('merges any number of varying refs', () => {
-    const callbackRef1 = jest.fn();
-    const callbackRef2 = jest.fn();
+    const callbackRef1 = vi.fn();
+    const callbackRef2 = vi.fn();
     const objectRef1 = React.createRef<HTMLDivElement>();
     const objectRef2 = React.createRef<HTMLDivElement>();
     const nullRef = null;
@@ -44,15 +44,15 @@ describe('modules/useMergeRefs', () => {
       );
     });
 
-    expect(callbackRef1).toHaveBeenCalledTimes(1);
-    expect(callbackRef2).toHaveBeenCalledTimes(1);
+    expect(callbackRef1).toHaveBeenCalledOnce();
+    expect(callbackRef2).toHaveBeenCalledOnce();
     expect(objectRef1.current).toBeInstanceOf(HTMLDivElement);
     expect(objectRef2.current).toBeInstanceOf(HTMLDivElement);
   });
 
   test('ref is called when ref changes', () => {
-    const ref = jest.fn();
-    const nextRef = jest.fn();
+    const ref = vi.fn();
+    const nextRef = vi.fn();
     let rerender: RenderResult['rerender'];
 
     act(() => {
@@ -66,30 +66,30 @@ describe('modules/useMergeRefs', () => {
   });
 
   test('ref is not called for each rerender', () => {
-    const ref = jest.fn();
+    const ref = vi.fn();
     let rerender: RenderResult['rerender'];
 
     act(() => {
       ({ rerender } = render(<TestComponent refs={[ref]} />));
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
     act(() => {
       rerender(<TestComponent refs={[ref]} />);
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
   });
 
   test('ref is not called for props changes', () => {
-    const ref = jest.fn();
+    const ref = vi.fn();
     let rerender: RenderResult['rerender'];
 
     act(() => {
       ({ rerender } = render(<TestComponent id="foo" refs={[ref]} />));
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
     act(() => {
       rerender(<TestComponent id="bar" refs={[ref]} />);
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
   });
 });

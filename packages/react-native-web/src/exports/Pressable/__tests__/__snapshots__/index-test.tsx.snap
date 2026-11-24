@@ -1,23 +1,23 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`components/Pressable default 1`] = `
+exports[`components/Pressable > default 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable focus interaction 1`] = `
+exports[`components/Pressable > focus interaction 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable focus interaction 2`] = `
+exports[`components/Pressable > focus interaction 2`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
-  style="outline: focus-ring;"
+  style="outline-color: red;"
   tabindex="0"
 >
   <div
@@ -26,7 +26,7 @@ exports[`components/Pressable focus interaction 2`] = `
 </div>
 `;
 
-exports[`components/Pressable focus interaction 3`] = `
+exports[`components/Pressable > focus interaction 3`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   style=""
@@ -34,17 +34,17 @@ exports[`components/Pressable focus interaction 3`] = `
 />
 `;
 
-exports[`components/Pressable hover interaction 1`] = `
+exports[`components/Pressable > hover interaction 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable hover interaction 2`] = `
+exports[`components/Pressable > hover interaction 2`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
-  style="outline: hover-ring;"
+  style="outline-color: green;"
   tabindex="0"
 >
   <div
@@ -53,7 +53,7 @@ exports[`components/Pressable hover interaction 2`] = `
 </div>
 `;
 
-exports[`components/Pressable hover interaction 3`] = `
+exports[`components/Pressable > hover interaction 3`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   style=""
@@ -61,17 +61,17 @@ exports[`components/Pressable hover interaction 3`] = `
 />
 `;
 
-exports[`components/Pressable press interaction (keyboard) trigger press when keyup is on the same element 1`] = `
+exports[`components/Pressable > press interaction (keyboard) > trigger press when keyup is on the same element 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable press interaction (keyboard) trigger press when keyup is on the same element 2`] = `
+exports[`components/Pressable > press interaction (keyboard) > trigger press when keyup is on the same element 2`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
-  style="outline: press-ring;"
+  style="outline-color: blue;"
   tabindex="0"
 >
   <div
@@ -80,19 +80,19 @@ exports[`components/Pressable press interaction (keyboard) trigger press when ke
 </div>
 `;
 
-exports[`components/Pressable press interaction (keyboard) trigger press when keyup is on the same element 3`] = `null`;
+exports[`components/Pressable > press interaction (keyboard) > trigger press when keyup is on the same element 3`] = `null`;
 
-exports[`components/Pressable press interaction (pointer) 1`] = `
+exports[`components/Pressable > press interaction (pointer) 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable press interaction (pointer) 2`] = `
+exports[`components/Pressable > press interaction (pointer) 2`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
-  style="outline: press-ring;"
+  style="outline-color: blue;"
   tabindex="0"
 >
   <div
@@ -101,7 +101,7 @@ exports[`components/Pressable press interaction (pointer) 2`] = `
 </div>
 `;
 
-exports[`components/Pressable press interaction (pointer) 3`] = `
+exports[`components/Pressable > press interaction (pointer) 3`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   style=""
@@ -109,7 +109,7 @@ exports[`components/Pressable press interaction (pointer) 3`] = `
 />
 `;
 
-exports[`components/Pressable prop "aria-label" value is set 1`] = `
+exports[`components/Pressable > prop "aria-label" > value is set 1`] = `
 <div
   aria-label="label"
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
@@ -117,7 +117,7 @@ exports[`components/Pressable prop "aria-label" value is set 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "aria-live" value is set 1`] = `
+exports[`components/Pressable > prop "aria-live" > value is set 1`] = `
 <div
   aria-live="polite"
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
@@ -125,7 +125,7 @@ exports[`components/Pressable prop "aria-live" value is set 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "disabled" 1`] = `
+exports[`components/Pressable > prop "disabled" 1`] = `
 <div
   aria-disabled="true"
   class="css-view-g5y9jx r-pointerEvents-12vffkv"
@@ -133,7 +133,7 @@ exports[`components/Pressable prop "disabled" 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "href" 1`] = `
+exports[`components/Pressable > prop "href" 1`] = `
 <a
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   href="#href"
@@ -141,7 +141,7 @@ exports[`components/Pressable prop "href" 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "nativeID" value is set 1`] = `
+exports[`components/Pressable > prop "nativeID" > value is set 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   id="nativeID"
@@ -149,14 +149,14 @@ exports[`components/Pressable prop "nativeID" value is set 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "pointerEvents" 1`] = `
+exports[`components/Pressable > prop "pointerEvents" 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73 r-pointerEvents-ah5dr5"
   tabindex="0"
 />
 `;
 
-exports[`components/Pressable prop "role" value alters HTML element 1`] = `
+exports[`components/Pressable > prop "role" > value alters HTML element 1`] = `
 <article
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   role="article"
@@ -164,7 +164,7 @@ exports[`components/Pressable prop "role" value alters HTML element 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "role" value is "button" 1`] = `
+exports[`components/Pressable > prop "role" > value is "button" 1`] = `
 <button
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   role="button"
@@ -173,7 +173,7 @@ exports[`components/Pressable prop "role" value is "button" 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "role" value is set 1`] = `
+exports[`components/Pressable > prop "role" > value is set 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   role="presentation"
@@ -181,7 +181,7 @@ exports[`components/Pressable prop "role" value is set 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "style" value is set 1`] = `
+exports[`components/Pressable > prop "style" > value is set 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   style="border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px;"
@@ -189,7 +189,7 @@ exports[`components/Pressable prop "style" value is set 1`] = `
 />
 `;
 
-exports[`components/Pressable prop "testID" value is set 1`] = `
+exports[`components/Pressable > prop "testID" > value is set 1`] = `
 <div
   class="css-view-g5y9jx r-cursor-1loqt21 r-touchAction-1otgn73"
   data-testid="123"

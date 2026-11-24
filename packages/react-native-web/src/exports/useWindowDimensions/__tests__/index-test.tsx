@@ -46,7 +46,7 @@ describe('useWindowDimensions', () => {
     const container = document.createElement('div');
     container.innerHTML = '<div>0x0</div>';
     document.body.appendChild(container);
-    const onRecoverableError = jest.fn();
+    const onRecoverableError = vi.fn();
 
     let root: Root;
 

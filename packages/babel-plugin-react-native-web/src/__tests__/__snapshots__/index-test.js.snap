@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Rewrite react-native to react-native-web 1. import from "react-native": 1. import from "react-native" 1`] = `
+exports[`Rewrite react-native to react-native-web > 1. import from "react-native" > 1. import from "react-native" 1`] = `
 
 import ReactNative from 'react-native';
 import { View } from 'react-native';
@@ -19,7 +19,7 @@ import * as ReactNativeModules from "react-native-web/dist/index.js";
 
 `;
 
-exports[`Rewrite react-native to react-native-web 2. import from "react-native-web": 2. import from "react-native-web" 1`] = `
+exports[`Rewrite react-native to react-native-web > 2. import from "react-native-web" > 2. import from "react-native-web" 1`] = `
 
 import { unstable_createElement } from 'react-native-web';
 import { StyleSheet, View, Pressable, processColor } from 'react-native-web';
@@ -36,7 +36,7 @@ import * as ReactNativeModules from "react-native-web/dist/index.js";
 
 `;
 
-exports[`Rewrite react-native to react-native-web 3. export from "react-native": 3. export from "react-native" 1`] = `
+exports[`Rewrite react-native to react-native-web > 3. export from "react-native" > 3. export from "react-native" 1`] = `
 
 export { View } from 'react-native';
 export { StyleSheet, Text, unstable_createElement } from 'react-native';
@@ -50,7 +50,7 @@ export { default as unstable_createElement } from "react-native-web/dist/exports
 
 `;
 
-exports[`Rewrite react-native to react-native-web 4. export from "react-native-web": 4. export from "react-native-web" 1`] = `
+exports[`Rewrite react-native to react-native-web > 4. export from "react-native-web" > 4. export from "react-native-web" 1`] = `
 
 export { View } from 'react-native-web';
 export { StyleSheet, Text, unstable_createElement } from 'react-native-web';
@@ -64,7 +64,7 @@ export { default as unstable_createElement } from "react-native-web/dist/exports
 
 `;
 
-exports[`Rewrite react-native to react-native-web 5. require "react-native": 5. require "react-native" 1`] = `
+exports[`Rewrite react-native to react-native-web > 5. require "react-native" > 5. require "react-native" 1`] = `
 
 const ReactNative = require('react-native');
 const { View } = require('react-native');
@@ -79,7 +79,7 @@ const Pressable = require("react-native-web/dist/exports/Pressable").default;
 
 `;
 
-exports[`Rewrite react-native to react-native-web 6. require "react-native-web": 6. require "react-native-web" 1`] = `
+exports[`Rewrite react-native to react-native-web > 6. require "react-native-web" > 6. require "react-native-web" 1`] = `
 
 const ReactNative = require('react-native-web');
 const { unstable_createElement } = require('react-native-web');

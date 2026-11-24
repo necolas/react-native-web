@@ -103,27 +103,27 @@ describe('apis/UIManager', () => {
     };
 
     beforeEach(() => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
     });
 
     afterEach(() => {
-      jest.useRealTimers();
+      vi.useRealTimers();
       document.body.innerHTML = '';
     });
 
     test('ignores the scroll offset of the relative node', () => {
       const { scrollView, content } = createScrollView();
-      const onSuccess = jest.fn();
+      const onSuccess = vi.fn();
       UIManager.measureLayout(content, scrollView, () => {}, onSuccess);
-      jest.runAllTimers();
+      vi.runAllTimers();
       expect(onSuccess).toHaveBeenCalledWith(6, 8, 100, 1000);
     });
 
     test('ignores the scroll offset of an ancestor of the node', () => {
       const { scrollView, node } = createScrollView();
-      const onSuccess = jest.fn();
+      const onSuccess = vi.fn();
       UIManager.measureLayout(node, scrollView, () => {}, onSuccess);
-      jest.runAllTimers();
+      vi.runAllTimers();
       expect(onSuccess).toHaveBeenCalledWith(9, 608, 50, 40);
     });
   });

@@ -9,7 +9,7 @@ import View from '../../View';
 
 describe('components/TouchableWithoutFeedback', () => {
   test('forwards ref', () => {
-    const ref = jest.fn();
+    const ref = vi.fn();
     render(
       <TouchableWithoutFeedback ref={ref}>
         <View />
@@ -19,7 +19,7 @@ describe('components/TouchableWithoutFeedback', () => {
   });
 
   test('forwards ref of child', () => {
-    const ref = jest.fn();
+    const ref = vi.fn();
     render(
       <TouchableWithoutFeedback>
         <View ref={ref} />
@@ -40,7 +40,7 @@ describe('components/TouchableWithoutFeedback', () => {
 
   test('forwards type to a host child', () => {
     // React DOM warns about the responder props cloned onto <button>
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const { container } = render(
       <TouchableWithoutFeedback type="submit">
@@ -48,7 +48,6 @@ describe('components/TouchableWithoutFeedback', () => {
       </TouchableWithoutFeedback>
     );
 
-    spy.mockRestore();
     const element = container.firstChild as HTMLElement;
     expect(element.getAttribute('type')).toBe('submit');
     expect(element.hasAttribute('unstable_type')).toBe(false);
@@ -66,7 +65,7 @@ describe('components/TouchableWithoutFeedback', () => {
   });
 
   test('prop "disabled" disables press', () => {
-    const onPress = jest.fn();
+    const onPress = vi.fn();
     const ref = React.createRef<HostNode>();
     let container!: HTMLElement;
 
@@ -78,15 +77,15 @@ describe('components/TouchableWithoutFeedback', () => {
       ));
     });
 
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
 
     act(() => {
       target.pointerdown({ button: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
     act(() => {
       target.pointerup({ button: 0 });
-      jest.runAllTimers();
+      vi.runAllTimers();
     });
 
     expect(

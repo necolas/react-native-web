@@ -135,14 +135,12 @@ describe('createOrderedCSSStyleSheet', () => {
       element.appendChild(document.createTextNode(textContent));
       const clientSheet = createOrderedCSSStyleSheet(element.sheet);
       expect(clientSheet.getTextContent()).toMatchInlineSnapshot(`
-       "[stylesheet-group="1"] {}
-       .one {width: 10px;}
-       [stylesheet-group="2"] {}
-       .two-1 {height: 20px;}
-       .two-2 {color: red;}
-       @keyframes anim { 
-         0% {opacity: 1;} 
-       }"
+        "[stylesheet-group="1"] { }
+        .one { width: 10px; }
+        [stylesheet-group="2"] { }
+        .two-1 { height: 20px; }
+        .two-2 { color: red; }
+        @keyframes anim { 0% { opacity: 1; } }"
       `);
     });
 
@@ -158,11 +156,11 @@ describe('createOrderedCSSStyleSheet', () => {
       const clientSheet = createOrderedCSSStyleSheet(element.sheet);
       clientSheet.insert('.c { color: red }', 0);
       expect(clientSheet.getTextContent()).toMatchInlineSnapshot(`
-       "[stylesheet-group='0'] {}
-       .a {color: red;}
-       .c { color: red }
-       [stylesheet-group='1'] {}
-       .b {color: red;}"
+        "[stylesheet-group='0'] { }
+        .a { color: red; }
+        .c { color: red }
+        [stylesheet-group='1'] { }
+        .b { color: red; }"
       `);
     });
 
@@ -174,7 +172,7 @@ describe('createOrderedCSSStyleSheet', () => {
       );
       const sheet = createOrderedCSSStyleSheet(element.sheet);
       sheet.insert('@supports (color:mark){:host,:root{--rnw-mark:mark;}}', 0);
-      expect(element.sheet!.cssRules.length).toBe(2);
+      expect(element.sheet?.cssRules).toHaveLength(2);
     });
 
     test('ignores rules before the first group', () => {
@@ -189,23 +187,24 @@ describe('createOrderedCSSStyleSheet', () => {
       sheet.insert('.c { color: red }', 1);
 
       expect(sheet.getTextContent()).toMatchInlineSnapshot(`
-       "[stylesheet-group="0"] {}
-       .a {color: red;}
-       .b { color: red }
-       [stylesheet-group="1"]{}
-       .c { color: red }"
+        "[stylesheet-group="0"] { }
+        .a { color: red; }
+        .b { color: red }
+        [stylesheet-group="1"]{}
+        .c { color: red }"
       `);
 
-      expect(Array.from(element.sheet!.cssRules).map((rule) => rule.cssText))
-        .toMatchInlineSnapshot(`
-       [
-         ".page {color: blue;}",
-         "[stylesheet-group="0"] {}",
-         ".a {color: red;}",
-         ".b {color: red;}",
-         "[stylesheet-group="1"] {}",
-         ".c {color: red;}",
-       ]
+      expect(
+        Array.from(element.sheet?.cssRules ?? []).map((rule) => rule.cssText)
+      ).toMatchInlineSnapshot(`
+        [
+          ".page { color: blue; }",
+          "[stylesheet-group="0"] { }",
+          ".a { color: red; }",
+          ".b { color: red; }",
+          "[stylesheet-group="1"] { }",
+          ".c { color: red; }",
+        ]
       `);
     });
   });

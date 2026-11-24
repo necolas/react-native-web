@@ -181,12 +181,12 @@ describe('components/Text', () => {
 
   describe('prop "onBlur"', () => {
     test('is called', () => {
-      const onBlur = jest.fn();
+      const onBlur = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onBlur={onBlur} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       const body = createEventTarget(document.body);
       act(() => {
         target.focus();
@@ -198,12 +198,12 @@ describe('components/Text', () => {
 
   describe('prop "onClick"', () => {
     test('is called', () => {
-      const onClick = jest.fn();
+      const onClick = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onClick={onClick} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.click();
       });
@@ -211,12 +211,12 @@ describe('components/Text', () => {
     });
 
     test('is still called if "onPress" is provided', () => {
-      const onClick = jest.fn();
+      const onClick = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onClick={onClick} onPress={() => {}} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.click();
       });
@@ -226,12 +226,12 @@ describe('components/Text', () => {
 
   describe('prop "onFocus"', () => {
     test('is called', () => {
-      const onFocus = jest.fn();
+      const onFocus = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onFocus={onFocus} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.focus();
       });
@@ -241,12 +241,12 @@ describe('components/Text', () => {
 
   describe('prop "onPointerDown"', () => {
     test('is called', () => {
-      const onPointerDown = jest.fn();
+      const onPointerDown = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onPointerDown={onPointerDown} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ pointerType: 'touch' });
       });
@@ -256,12 +256,12 @@ describe('components/Text', () => {
 
   describe('prop "onPress"', () => {
     test('is called', () => {
-      const onPress = jest.fn();
+      const onPress = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onPress={onPress} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.pointerdown({ button: 0 });
         target.pointerup({ button: 0 });
@@ -270,12 +270,12 @@ describe('components/Text', () => {
     });
 
     test('is not called if "onClick" is provided', () => {
-      const onPress = jest.fn();
+      const onPress = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<Text onClick={() => {}} onPress={onPress} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.click();
       });
@@ -285,24 +285,24 @@ describe('components/Text', () => {
 
   describe('prop "ref"', () => {
     test('value is set', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<Text ref={ref} />);
       expect(ref).toHaveBeenCalled();
     });
 
     test('is not called for prop changes', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       let rerender: RenderResult['rerender'];
       act(() => {
         ({ rerender } = render(
           <Text nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
       act(() => {
         rerender(<Text nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />);
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
     });
 
     test('node has imperative methods', () => {
@@ -310,11 +310,11 @@ describe('components/Text', () => {
       act(() => {
         render(<Text ref={ref} />);
       });
-      const node = ref.current!;
-      expect(typeof node.measure === 'function');
-      expect(typeof node.measureLayout === 'function');
-      expect(typeof node.measureInWindow === 'function');
-      expect(typeof node.setNativeProps === 'function');
+      const node = ref.current;
+      expect(node?.measure).toBeTypeOf('function');
+      expect(node?.measureLayout).toBeTypeOf('function');
+      expect(node?.measureInWindow).toBeTypeOf('function');
+      expect(node?.setNativeProps).toBeTypeOf('function');
     });
   });
 

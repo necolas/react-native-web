@@ -5,11 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { vi } from 'vitest';
+
 /**
  * Change environment host platform.
  */
 
-const platformGetter = jest.spyOn(global.navigator, 'platform', 'get');
+const platformGetter = vi.spyOn(global.navigator, 'platform', 'get');
 
 export const platform = {
   clear() {

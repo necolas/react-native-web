@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.test.tsbuildinfo",
+    "types": ["vitest/globals"]
+  },
+  "include": [
+    "*.ts",
+    "packages/*/src/**/__tests__",
+    "packages/dom-event-testing-library",
+    "types"
+  ],
+  "references": [{ "path": "./tsconfig.lib.json" }]
+}

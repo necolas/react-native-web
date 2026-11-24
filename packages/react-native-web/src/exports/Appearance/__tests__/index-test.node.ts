@@ -9,7 +9,7 @@ import Appearance from '..';
 
 describe('Appearance', () => {
   test('setColorScheme does nothing on the server', () => {
-    const listener = jest.fn();
+    const listener = vi.fn();
 
     Appearance.addChangeListener(listener);
     Appearance.setColorScheme('dark');

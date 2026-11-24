@@ -7,6 +7,8 @@
 
 'use strict';
 
+import { test } from 'vitest';
+
 import type { PointerType } from './domEvents';
 
 export function testWithPointerType(

@@ -5,14 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { assert } from 'vitest';
+
 import { createSheet } from '../dom';
 
 describe('createSheet', () => {
   test('creates a sheet on the client', () => {
     const sheet = createSheet();
     expect(sheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
-    expect(typeof sheet.getTextContent()).toBe('string');
-    expect(typeof sheet.insert).toBe('function');
+    expect(sheet.getTextContent()).toBeTypeOf('string');
+    expect(sheet.insert).toBeTypeOf('function');
   });
 
   test('supports multiple documents with same styles', () => {
@@ -22,7 +24,8 @@ describe('createSheet', () => {
     // Iframe -----
     const iframe = document.createElement('iframe');
     document.body.appendChild(iframe);
-    const iframeDoc = iframe.contentWindow!.document;
+    const iframeDoc = iframe.contentWindow?.document;
+    assert(iframeDoc != null);
     const iframeRootTag = document.createElement('div');
     iframeDoc.body.appendChild(iframeRootTag);
     const iframeSheet = createSheet(iframeRootTag);
@@ -30,8 +33,8 @@ describe('createSheet', () => {
     // Did we generate a new sheet?
     expect(sheet).not.toBe(iframeSheet);
     expect(iframeSheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
-    expect(typeof iframeSheet.insert).toBe('function');
-    expect(iframeDoc.getElementById('react-native-stylesheet')).not.toBe(null);
+    expect(iframeSheet.insert).toBeTypeOf('function');
+    expect(iframeDoc.getElementById('react-native-stylesheet')).not.toBeNull();
     // Does the content match existing sheets?
     expect(iframeSheet.getTextContent().includes('test-sheet')).toBe(true);
     // Does the content update when other sheets are updated?
@@ -49,7 +52,7 @@ describe('createSheet', () => {
     // Did we generate a new sheet?
     expect(sheet).not.toBe(shadowSheet);
     expect(shadowSheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
-    expect(typeof shadowSheet.insert).toBe('function');
+    expect(shadowSheet.insert).toBeTypeOf('function');
     // Does the content match existing sheets?
     expect(shadowSheet.getTextContent().includes('test-sheet')).toBe(true);
     // Does the content update when other sheets are updated?

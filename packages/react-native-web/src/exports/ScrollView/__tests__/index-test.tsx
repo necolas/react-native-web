@@ -24,14 +24,14 @@ describe('components/ScrollView', () => {
 
   describe('prop "onScroll"', () => {
     test('is called when element scrolls', () => {
-      const onScroll = jest.fn();
+      const onScroll = vi.fn();
       const ref = React.createRef<ScrollViewNode>();
       act(() => {
         render(
           <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
         );
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.scroll();
         target.scroll();
@@ -40,7 +40,7 @@ describe('components/ScrollView', () => {
     });
 
     test('is not called when descendant scrolls', () => {
-      const onScroll = jest.fn();
+      const onScroll = vi.fn();
       const ref = React.createRef<HTMLDivElement>();
       act(() => {
         render(
@@ -49,7 +49,7 @@ describe('components/ScrollView', () => {
           </ScrollView>
         );
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.scroll();
       });
@@ -59,24 +59,24 @@ describe('components/ScrollView', () => {
 
   describe('prop "ref"', () => {
     test('value is set', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<ScrollView ref={ref} />);
       expect(ref).toHaveBeenCalled();
     });
 
     test('is not called for prop changes', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       let rerender: RenderResult['rerender'];
       act(() => {
         ({ rerender } = render(
           <ScrollView id="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
       act(() => {
         rerender(<ScrollView id="1234" ref={ref} style={{ borderWidth: 6 }} />);
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
     });
 
     test('node has imperative methods', () => {
@@ -84,28 +84,28 @@ describe('components/ScrollView', () => {
       act(() => {
         render(<ScrollView ref={ref} />);
       });
-      const node = ref.current!;
+      const node = ref.current;
 
       // Did we get an HTMLElement?
-      expect(node.tagName === 'DIV').toBe(true);
+      expect(node?.tagName === 'DIV').toBe(true);
       // Does it have the "platform" methods?
-      expect(typeof node.measure === 'function').toBe(true);
-      expect(typeof node.measureLayout === 'function').toBe(true);
-      expect(typeof node.measureInWindow === 'function').toBe(true);
-      expect(typeof node.setNativeProps === 'function').toBe(true);
+      expect(node?.measure).toBeTypeOf('function');
+      expect(node?.measureLayout).toBeTypeOf('function');
+      expect(node?.measureInWindow).toBeTypeOf('function');
+      expect(node?.setNativeProps).toBeTypeOf('function');
       // Does it have the scrollview methods?
-      expect(typeof node.getScrollResponder === 'function').toBe(true);
-      expect(typeof node.getScrollableNode === 'function').toBe(true);
-      expect(typeof node.getInnerViewNode === 'function').toBe(true);
-      expect(typeof node.getInnerViewRef === 'function').toBe(true);
-      expect(typeof node.getNativeScrollRef === 'function').toBe(true);
-      expect(typeof node.scrollTo === 'function').toBe(true);
-      expect(typeof node.scrollToEnd === 'function').toBe(true);
-      expect(typeof node.flashScrollIndicators === 'function').toBe(true);
-      expect(typeof node.scrollResponderZoomTo === 'function').toBe(true);
-      expect(
-        typeof node.scrollResponderScrollNativeHandleToKeyboard === 'function'
-      ).toBe(true);
+      expect(node?.getScrollResponder).toBeTypeOf('function');
+      expect(node?.getScrollableNode).toBeTypeOf('function');
+      expect(node?.getInnerViewNode).toBeTypeOf('function');
+      expect(node?.getInnerViewRef).toBeTypeOf('function');
+      expect(node?.getNativeScrollRef).toBeTypeOf('function');
+      expect(node?.scrollTo).toBeTypeOf('function');
+      expect(node?.scrollToEnd).toBeTypeOf('function');
+      expect(node?.flashScrollIndicators).toBeTypeOf('function');
+      expect(node?.scrollResponderZoomTo).toBeTypeOf('function');
+      expect(node?.scrollResponderScrollNativeHandleToKeyboard).toBeTypeOf(
+        'function'
+      );
     });
   });
 

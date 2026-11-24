@@ -218,11 +218,11 @@ describe('modules/createDOMProps', () => {
         selected: true
       }
     });
-    expect(props['aria-busy']).toEqual(true);
+    expect(props['aria-busy']).toBe(true);
     expect(props['aria-checked']).toEqual('mixed');
-    expect(props['aria-disabled']).toEqual(true);
-    expect(props['aria-expanded']).toEqual(false);
-    expect(props['aria-selected']).toEqual(true);
+    expect(props['aria-disabled']).toBe(true);
+    expect(props['aria-expanded']).toBe(false);
+    expect(props['aria-selected']).toBe(true);
     expect(props.accessibilityState).toBeUndefined();
   });
 
@@ -231,7 +231,7 @@ describe('modules/createDOMProps', () => {
       'aria-checked': false,
       accessibilityState: { checked: true }
     });
-    expect(props['aria-checked']).toEqual(false);
+    expect(props['aria-checked']).toBe(false);
   });
 
   test('props "aria-disabled" and "aria-hidden" are omitted when false', () => {

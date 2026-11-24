@@ -147,7 +147,7 @@ describe('StyleSheet', () => {
   });
 
   test('hairlineWidth', () => {
-    expect(Number.isInteger(StyleSheet.hairlineWidth) === true).toBeTruthy();
+    expect(Number.isInteger(StyleSheet.hairlineWidth)).toBe(true);
   });
 
   describe('resolve', () => {
@@ -281,7 +281,7 @@ describe('StyleSheet', () => {
       expect(className2).toBe(
         'display-block backgroundColor-green color-green'
       );
-      expect(inlineStyle2).toEqual(null);
+      expect(inlineStyle2).toBeNull();
     });
 
     test('long form inline style properties take precedence over static shorthand properties', () => {
@@ -320,7 +320,7 @@ describe('StyleSheet', () => {
 
     test('later fontVariant and fontFeatureSettings reset stylistic sets', () => {
       const stylistic = { fontVariant: ['small-caps', 'stylistic-one'] };
-      expect(StyleSheet([stylistic, { fontVariant: null }])[1]).toEqual(null);
+      expect(StyleSheet([stylistic, { fontVariant: null }])[1]).toBeNull();
       expect(
         StyleSheet([stylistic, { fontFeatureSettings: 'normal' }])[1]
       ).toEqual({ fontFeatureSettings: 'normal', fontVariant: 'small-caps' });
@@ -332,7 +332,7 @@ describe('StyleSheet', () => {
           { fontFeatureSettings: "'tnum'" },
           { fontVariant: null }
         ])[1]
-      ).toEqual(null);
+      ).toBeNull();
     });
 
     test('polyfills logical styles', () => {

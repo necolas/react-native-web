@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`components/Modal forwards props 1`] = `
+exports[`components/Modal > forwards props 1`] = `
 <div
   aria-label="label"
   aria-labelledby="labelledby"

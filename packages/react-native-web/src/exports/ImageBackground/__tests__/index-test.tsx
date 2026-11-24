@@ -12,7 +12,7 @@ import ImageBackground from '..';
 import Text from '../../Text';
 
 function findImage(container: HTMLElement) {
-  return container.firstChild!.firstChild as HTMLElement;
+  return container.firstChild?.firstChild as HTMLElement;
 }
 
 describe('components/ImageBackground', () => {
@@ -33,8 +33,8 @@ describe('components/ImageBackground', () => {
       const { container } = render(<ImageBackground imageStyle={imageStyle} />);
       expect(
         findImage(container)
-          .getAttribute('style')!
-          .includes('width: 40px; height: 60px;')
+          .getAttribute('style')
+          ?.includes('width: 40px; height: 60px;')
       ).toBe(true);
     });
   });
@@ -45,7 +45,7 @@ describe('components/ImageBackground', () => {
       const { container } = render(<ImageBackground style={style} />);
       expect(
         (container.firstChild as HTMLElement).getAttribute('style')
-      ).toEqual('margin: 40px 40px 40px 40px;');
+      ).toEqual('margin: 40px;');
     });
   });
 });

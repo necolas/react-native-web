@@ -14,6 +14,7 @@ import {
   testWithPointerType
 } from 'dom-event-testing-library';
 import React, { createRef } from 'react';
+import { assert } from 'vitest';
 
 import useResponderEvents from '..';
 import type { ResponderEvent } from '../createResponderEvent';
@@ -35,20 +36,20 @@ describe('useResponderEvents', () => {
       const targetRef = createRef<HTMLDivElement>();
       const Component = () => {
         useResponderEvents(targetRef, {
-          onStartShouldSetResponder: jest.fn()
+          onStartShouldSetResponder: vi.fn()
         });
         return <div ref={targetRef} />;
       };
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture
       act(() => {
         target.pointerdown({ pointerType });
       });
       // no responder should be active
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     }
   );
 
@@ -56,15 +57,15 @@ describe('useResponderEvents', () => {
     const targetRef = createRef<HTMLDivElement>();
     const Component = () => {
       useResponderEvents(targetRef, {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onStartShouldSetResponder: vi.fn(() => true)
       });
       return <div ref={targetRef} />;
     };
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     const buttons = [1, 2, 3, 4];
     // gesture
     act(() => {
@@ -76,22 +77,22 @@ describe('useResponderEvents', () => {
         });
       });
     });
-    expect(getResponderNode()).toBe(null);
+    expect(getResponderNode()).toBeNull();
   });
 
   test('does nothing for "mousedown" with ignored modifier keys', () => {
     const targetRef = createRef<HTMLDivElement>();
     const Component = () => {
       useResponderEvents(targetRef, {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onStartShouldSetResponder: vi.fn(() => true)
       });
       return <div ref={targetRef} />;
     };
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     const acceptedModifierKeys = ['metaKey', 'shiftKey'];
     const ignoredModifierKeys = ['altKey', 'ctrlKey'];
     // gesture
@@ -100,21 +101,21 @@ describe('useResponderEvents', () => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
-    expect(getResponderNode()).toBe(null);
+    expect(getResponderNode()).toBeNull();
     // gesture
     act(() => {
       acceptedModifierKeys.forEach((modifierKey) => {
         target.pointerdown({ pointerType: 'mouse', [modifierKey]: true });
       });
     });
-    expect(getResponderNode()).not.toBe(null);
+    expect(getResponderNode()).not.toBeNull();
   });
 
   test('recognizes mouse interactions after touch interactions', () => {
     const targetRef = createRef<HTMLDivElement>();
     const targetCallbacks = {
-      onStartShouldSetResponder: jest.fn(() => true),
-      onResponderGrant: jest.fn()
+      onStartShouldSetResponder: vi.fn(() => true),
+      onResponderGrant: vi.fn()
     };
     const Component = () => {
       useResponderEvents(targetRef, targetCallbacks);
@@ -123,13 +124,13 @@ describe('useResponderEvents', () => {
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     // touch gesture
     act(() => {
       target.pointerdown({ pointerType: 'touch' });
       target.pointerup({ pointerType: 'touch' });
     });
-    expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+    expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
     // mouse gesture
     act(() => {
       target.pointerdown({ pointerType: 'mouse' });
@@ -159,7 +160,7 @@ describe('useResponderEvents', () => {
     const Component = () => {
       useResponderEvents(targetRef, {
         onStartShouldSetResponder: () => true,
-        onResponderStart: jest.fn((e: ResponderEvent) => {
+        onResponderStart: vi.fn((e: ResponderEvent) => {
           identifier = e.nativeEvent.identifier;
         })
       });
@@ -168,7 +169,7 @@ describe('useResponderEvents', () => {
 
     // render
     render(<Component />);
-    const target = createEventTarget(targetRef.current!);
+    const target = createEventTarget(targetRef.current);
     // gesture
     act(() => {
       target.pointerdown({ pointerId: 123456, pointerType: 'touch' });
@@ -196,18 +197,18 @@ describe('useResponderEvents', () => {
       (pointerType) => {
         let grantCurrentTarget: ResponderEvent['currentTarget'];
         const grandParentCallbacks = {
-          onStartShouldSetResponderCapture: jest.fn((e: ResponderEvent) => {
+          onStartShouldSetResponderCapture: vi.fn((e: ResponderEvent) => {
             return true;
           }),
-          onResponderGrant: jest.fn((e: ResponderEvent) => {
+          onResponderGrant: vi.fn((e: ResponderEvent) => {
             grantCurrentTarget = e.currentTarget;
           })
         };
         const parentCallbacks = {
-          onStartShouldSetResponderCapture: jest.fn(() => true)
+          onStartShouldSetResponderCapture: vi.fn(() => true)
         };
         const targetCallbacks = {
-          onStartShouldSetResponderCapture: jest.fn(() => true)
+          onStartShouldSetResponderCapture: vi.fn(() => true)
         };
 
         const Component = () => {
@@ -225,7 +226,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -233,7 +234,7 @@ describe('useResponderEvents', () => {
         // responder set (capture phase)
         expect(
           grandParentCallbacks.onStartShouldSetResponderCapture
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         expect(
           parentCallbacks.onStartShouldSetResponderCapture
         ).not.toHaveBeenCalled();
@@ -242,27 +243,27 @@ describe('useResponderEvents', () => {
         ).not.toHaveBeenCalled();
         // responder grant
         expect(getResponderNode()).toBe(grandParentRef.current);
-        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
         expect(grantCurrentTarget).toBe(grandParentRef.current);
         // gesture end
         act(() => {
           target.pointerup({ pointerType });
         });
         // no responder should be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
 
     testWithPointerType('start grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const targetCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true)
+        onStartShouldSetResponderCapture: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -280,7 +281,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -288,34 +289,34 @@ describe('useResponderEvents', () => {
       // responder set (capture phase)
       expect(
         grandParentCallbacks.onStartShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         parentCallbacks.onStartShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         targetCallbacks.onStartShouldSetResponderCapture
       ).not.toHaveBeenCalled();
       // responder grant
       expect(getResponderNode()).toBe(parentRef.current);
-      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType('start grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => false)
+        onStartShouldSetResponderCapture: vi.fn(() => false)
       };
       const targetCallbacks = {
-        onStartShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
 
       const Component = () => {
@@ -333,7 +334,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -341,22 +342,22 @@ describe('useResponderEvents', () => {
       // responder set (capture phase)
       expect(
         grandParentCallbacks.onStartShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         parentCallbacks.onStartShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         targetCallbacks.onStartShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       // responder grant
       expect(getResponderNode()).toBe(targetRef.current);
-      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
   });
 
@@ -377,14 +378,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('start grants responder to child', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const parentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: vi.fn(() => true)
       };
       const grandParentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -402,7 +403,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -417,25 +418,25 @@ describe('useResponderEvents', () => {
       ).not.toHaveBeenCalled();
       // responder grant
       expect(getResponderNode()).toBe(targetRef.current);
-      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType('start grants responder to parent', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const grandParentCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true)
+        onStartShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -453,7 +454,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown({ pointerType });
@@ -470,27 +471,27 @@ describe('useResponderEvents', () => {
       ).not.toHaveBeenCalled();
       // responder grant
       expect(getResponderNode()).toBe(parentRef.current);
-      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType(
       'start grants responder to grandParent',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => false)
         };
         const parentCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => false)
         };
         const grandParentCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
 
         const Component = () => {
@@ -508,7 +509,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -522,16 +523,16 @@ describe('useResponderEvents', () => {
         );
         expect(
           grandParentCallbacks.onStartShouldSetResponder
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         // responder grant
         expect(getResponderNode()).toBe(grandParentRef.current);
-        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
         // gesture end
         act(() => {
           target.pointerup({ pointerType });
         });
         // no responder should be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
   });
@@ -555,14 +556,14 @@ describe('useResponderEvents', () => {
       'move grants responder to grandParent',
       (pointerType) => {
         const grandParentCallbacks = {
-          onMoveShouldSetResponderCapture: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onMoveShouldSetResponderCapture: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
         const parentCallbacks = {
-          onMoveShouldSetResponderCapture: jest.fn(() => true)
+          onMoveShouldSetResponderCapture: vi.fn(() => true)
         };
         const targetCallbacks = {
-          onMoveShouldSetResponderCapture: jest.fn(() => true)
+          onMoveShouldSetResponderCapture: vi.fn(() => true)
         };
 
         const Component = () => {
@@ -580,7 +581,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start & move
         act(() => {
           target.pointerdown({ pointerType });
@@ -589,7 +590,7 @@ describe('useResponderEvents', () => {
         // responder set (capture phase)
         expect(
           grandParentCallbacks.onMoveShouldSetResponderCapture
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         expect(
           parentCallbacks.onMoveShouldSetResponderCapture
         ).not.toHaveBeenCalled();
@@ -598,26 +599,26 @@ describe('useResponderEvents', () => {
         ).not.toHaveBeenCalled();
         // responder grant
         expect(getResponderNode()).toBe(grandParentRef.current);
-        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
         // gesture end
         act(() => {
           target.pointerup({ pointerType });
         });
         // no responder should be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
 
     testWithPointerType('move grants responder to parent', (pointerType) => {
       const grandParentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const targetCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true)
+        onMoveShouldSetResponderCapture: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -635,7 +636,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
@@ -644,34 +645,34 @@ describe('useResponderEvents', () => {
       // responder set (capture phase)
       expect(
         grandParentCallbacks.onMoveShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         parentCallbacks.onMoveShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         targetCallbacks.onMoveShouldSetResponderCapture
       ).not.toHaveBeenCalled();
       // responder grant
       expect(getResponderNode()).toBe(parentRef.current);
-      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType('move grants responder to child', (pointerType) => {
       const grandParentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => false)
+        onMoveShouldSetResponderCapture: vi.fn(() => false)
       };
       const targetCallbacks = {
-        onMoveShouldSetResponderCapture: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponderCapture: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
 
       const Component = () => {
@@ -689,7 +690,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
@@ -698,22 +699,22 @@ describe('useResponderEvents', () => {
       // responder set (capture phase)
       expect(
         grandParentCallbacks.onMoveShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         parentCallbacks.onMoveShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       expect(
         targetCallbacks.onMoveShouldSetResponderCapture
-      ).toHaveBeenCalledTimes(1);
+      ).toHaveBeenCalledOnce();
       // responder grant
       expect(getResponderNode()).toBe(targetRef.current);
-      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
   });
 
@@ -734,14 +735,14 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('move grants responder to child', (pointerType) => {
       const targetCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: vi.fn(() => true)
       };
       const grandParentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -759,39 +760,39 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
         target.pointermove({ pointerType });
       });
       // responder set (bubble phase)
-      expect(targetCallbacks.onMoveShouldSetResponder).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onMoveShouldSetResponder).toHaveBeenCalledOnce();
       expect(parentCallbacks.onMoveShouldSetResponder).not.toHaveBeenCalled();
       expect(
         grandParentCallbacks.onMoveShouldSetResponder
       ).not.toHaveBeenCalled();
       // responder grant
       expect(getResponderNode()).toBe(targetRef.current);
-      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType('move grants responder to parent', (pointerType) => {
       const targetCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => false)
+        onMoveShouldSetResponder: vi.fn(() => false)
       };
       const parentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true),
-        onResponderGrant: jest.fn()
+        onMoveShouldSetResponder: vi.fn(() => true),
+        onResponderGrant: vi.fn()
       };
       const grandParentCallbacks = {
-        onMoveShouldSetResponder: jest.fn(() => true)
+        onMoveShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -810,41 +811,41 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & move
       act(() => {
         target.pointerdown({ pointerType });
         target.pointermove({ pointerType });
       });
       // responder set (bubble phase)
-      expect(targetCallbacks.onMoveShouldSetResponder).toHaveBeenCalledTimes(1);
-      expect(parentCallbacks.onMoveShouldSetResponder).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onMoveShouldSetResponder).toHaveBeenCalledOnce();
+      expect(parentCallbacks.onMoveShouldSetResponder).toHaveBeenCalledOnce();
       expect(
         grandParentCallbacks.onMoveShouldSetResponder
       ).not.toHaveBeenCalled();
       // responder grant
       expect(getResponderNode()).toBe(parentRef.current);
-      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+      expect(parentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       // gesture end
       act(() => {
         target.pointerup({ pointerType });
       });
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType(
       'move grants responder to grandParent',
       (pointerType) => {
         const targetCallbacks = {
-          onMoveShouldSetResponder: jest.fn(() => false)
+          onMoveShouldSetResponder: vi.fn(() => false)
         };
         const parentCallbacks = {
-          onMoveShouldSetResponder: jest.fn(() => false)
+          onMoveShouldSetResponder: vi.fn(() => false)
         };
         const grandParentCallbacks = {
-          onMoveShouldSetResponder: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onMoveShouldSetResponder: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
 
         const Component = () => {
@@ -862,7 +863,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start & move
         act(() => {
           target.pointerdown({ pointerType });
@@ -876,13 +877,13 @@ describe('useResponderEvents', () => {
         ).toHaveBeenCalled();
         // responder grant
         expect(getResponderNode()).toBe(grandParentRef.current);
-        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(grandParentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
         // gesture end
         act(() => {
           target.pointerup({ pointerType });
         });
         // no responder should be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
   });
@@ -904,11 +905,11 @@ describe('useResponderEvents', () => {
       'scroll grants responder to parent if a pointer is down',
       (pointerType) => {
         const parentCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onScrollShouldSetResponderCapture: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
         const targetCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => false)
+          onScrollShouldSetResponderCapture: vi.fn(() => false)
         };
 
         const Component = () => {
@@ -923,7 +924,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -932,13 +933,13 @@ describe('useResponderEvents', () => {
         // responder set (capture phase)
         expect(
           parentCallbacks.onScrollShouldSetResponderCapture
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         expect(
           targetCallbacks.onScrollShouldSetResponderCapture
-        ).toHaveBeenCalledTimes(0);
+        ).not.toHaveBeenCalled();
         // responder grant
         expect(getResponderNode()).toBe(parentRef.current);
-        expect(parentCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(parentCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       }
     );
 
@@ -946,11 +947,11 @@ describe('useResponderEvents', () => {
       'scroll grants responder to target if a pointer is down',
       (pointerType) => {
         const parentCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => false)
+          onScrollShouldSetResponderCapture: vi.fn(() => false)
         };
         const targetCallbacks = {
-          onScrollShouldSetResponderCapture: jest.fn(() => true),
-          onResponderGrant: jest.fn()
+          onScrollShouldSetResponderCapture: vi.fn(() => true),
+          onResponderGrant: vi.fn()
         };
 
         const Component = () => {
@@ -965,7 +966,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -974,13 +975,13 @@ describe('useResponderEvents', () => {
         // responder set (capture phase)
         expect(
           parentCallbacks.onScrollShouldSetResponderCapture
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         expect(
           targetCallbacks.onScrollShouldSetResponderCapture
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         // responder grant
         expect(getResponderNode()).toBe(targetRef.current);
-        expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
       }
     );
   });
@@ -1000,7 +1001,7 @@ describe('useResponderEvents', () => {
 
     test('scroll does not bubble to parent', () => {
       const parentCallbacks = {
-        onScrollShouldSetResponder: jest.fn(() => true)
+        onScrollShouldSetResponder: vi.fn(() => true)
       };
 
       const Component = () => {
@@ -1014,7 +1015,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start
       act(() => {
         target.pointerdown();
@@ -1024,16 +1025,16 @@ describe('useResponderEvents', () => {
       expect(parentCallbacks.onScrollShouldSetResponder).toHaveBeenCalledTimes(
         0
       );
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     testWithPointerType(
       'scroll grants responder to target if a pointer is down',
       (pointerType) => {
         const targetCallbacks = {
-          onScrollShouldSetResponder: jest.fn(() => true),
-          onResponderGrant: jest.fn(),
-          onResponderRelease: jest.fn()
+          onScrollShouldSetResponder: vi.fn(() => true),
+          onResponderGrant: vi.fn(),
+          onResponderRelease: vi.fn()
         };
 
         const Component = () => {
@@ -1043,7 +1044,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
@@ -1053,17 +1054,17 @@ describe('useResponderEvents', () => {
         // responder set (bubble phase)
         expect(
           targetCallbacks.onScrollShouldSetResponder
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledOnce();
         // responder grant
         expect(getResponderNode()).toBe(targetRef.current);
-        expect(targetCallbacks.onResponderGrant).toHaveBeenCalledTimes(1);
+        expect(targetCallbacks.onResponderGrant).toHaveBeenCalledOnce();
         // gesture end
         act(() => {
           target.pointerup({ pointerType });
         });
         // make sure release is called
-        expect(getResponderNode()).toBe(null);
-        expect(targetCallbacks.onResponderRelease).toHaveBeenCalledTimes(1);
+        expect(getResponderNode()).toBeNull();
+        expect(targetCallbacks.onResponderRelease).toHaveBeenCalledOnce();
       }
     );
   });
@@ -1099,8 +1100,8 @@ describe('useResponderEvents', () => {
       'is called after "start" event on the view that became the responder',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderStart: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderStart: vi.fn()
         };
 
         const Component = () => {
@@ -1110,14 +1111,15 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start
         act(() => {
           target.pointerdown({ pointerType });
         });
         // responder start
-        expect(targetCallbacks.onResponderStart).toHaveBeenCalledTimes(1);
-        expect(targetCallbacks.onResponderStart).toHaveBeenCalledWith(
+        expect(
+          targetCallbacks.onResponderStart
+        ).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             currentTarget: targetRef.current
           })
@@ -1144,8 +1146,8 @@ describe('useResponderEvents', () => {
           `is called after "move" event on responder (${shouldSetResponder})`,
           (pointerType) => {
             const targetCallbacks = {
-              [shouldSetResponder]: jest.fn(() => true),
-              onResponderMove: jest.fn()
+              [shouldSetResponder]: vi.fn(() => true),
+              onResponderMove: vi.fn()
             };
 
             const Component = () => {
@@ -1155,15 +1157,16 @@ describe('useResponderEvents', () => {
 
             // render
             render(<Component />);
-            const target = createEventTarget(targetRef.current!);
+            const target = createEventTarget(targetRef.current);
             // gesture start & move
             act(() => {
               target.pointerdown({ pointerType });
               target.pointermove({ pointerType });
             });
             // responder move
-            expect(targetCallbacks.onResponderMove).toHaveBeenCalledTimes(1);
-            expect(targetCallbacks.onResponderMove).toHaveBeenCalledWith(
+            expect(
+              targetCallbacks.onResponderMove
+            ).toHaveBeenCalledExactlyOnceWith(
               expect.objectContaining({
                 currentTarget: targetRef.current
               })
@@ -1189,8 +1192,8 @@ describe('useResponderEvents', () => {
       'is called after "end" event on responder',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderEnd: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderEnd: vi.fn()
         };
 
         const Component = () => {
@@ -1200,15 +1203,14 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture start & end
         act(() => {
           target.pointerdown({ pointerType });
           target.pointerup({ pointerType });
         });
         // responder end
-        expect(targetCallbacks.onResponderEnd).toHaveBeenCalledTimes(1);
-        expect(targetCallbacks.onResponderEnd).toHaveBeenCalledWith(
+        expect(targetCallbacks.onResponderEnd).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             currentTarget: targetRef.current
           })
@@ -1232,8 +1234,8 @@ describe('useResponderEvents', () => {
       'is called after all touches with responder end',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderRelease: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderRelease: vi.fn()
         };
 
         const Component = () => {
@@ -1243,7 +1245,7 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         // gesture
         act(() => {
           target.pointerdown({ pointerType, pointerId: 1 });
@@ -1252,8 +1254,9 @@ describe('useResponderEvents', () => {
           target.pointerup({ pointerType, pointerId: 1 });
         });
         // responder release
-        expect(targetCallbacks.onResponderRelease).toHaveBeenCalledTimes(1);
-        expect(targetCallbacks.onResponderRelease).toHaveBeenCalledWith(
+        expect(
+          targetCallbacks.onResponderRelease
+        ).toHaveBeenCalledExactlyOnceWith(
           expect.objectContaining({
             currentTarget: targetRef.current
           })
@@ -1275,10 +1278,10 @@ describe('useResponderEvents', () => {
 
     testWithPointerType('is called if pointer cancels', (pointerType) => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderEnd: jest.fn(),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderEnd: vi.fn(),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1288,16 +1291,17 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // gesture start & cancel
       act(() => {
         target.pointerdown({ pointerType });
         target.pointercancel({ pointerType });
       });
       // responder terminates
-      expect(targetCallbacks.onResponderEnd).toHaveBeenCalledTimes(1);
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledWith(
+      expect(targetCallbacks.onResponderEnd).toHaveBeenCalledOnce();
+      expect(
+        targetCallbacks.onResponderTerminate
+      ).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           currentTarget: targetRef.current
         })
@@ -1308,9 +1312,9 @@ describe('useResponderEvents', () => {
       'is called if input "select" occurs with non-collapsed selection',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn(),
-          onResponderTerminationRequest: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn(),
+          onResponderTerminationRequest: vi.fn(() => false)
         };
 
         const inputRef = createRef<HTMLInputElement>();
@@ -1327,17 +1331,17 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
-        const input = createEventTarget(inputRef.current!);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
         act(() => {
           target.pointerdown({ pointerType });
-          inputRef.current!.setSelectionRange(0, 4);
+          inputRef.current?.setSelectionRange(0, 4);
           input.select({});
         });
         // responder terminates
-        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
         // responder should not be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
 
@@ -1345,9 +1349,9 @@ describe('useResponderEvents', () => {
       'is not called if input "select" occurs with collapsed selection',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn(),
-          onResponderTerminationRequest: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn(),
+          onResponderTerminationRequest: vi.fn(() => false)
         };
 
         const inputRef = createRef<HTMLInputElement>();
@@ -1364,11 +1368,11 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
-        const input = createEventTarget(inputRef.current!);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
         act(() => {
           target.pointerdown({ pointerType });
-          inputRef.current!.setSelectionRange(2, 2);
+          inputRef.current?.setSelectionRange(2, 2);
           input.select({});
         });
         // responder does not terminate
@@ -1382,9 +1386,9 @@ describe('useResponderEvents', () => {
       'is called if "select" occurs on input without numeric selection (e.g. type="email")',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn(),
-          onResponderTerminationRequest: jest.fn(() => false)
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn(),
+          onResponderTerminationRequest: vi.fn(() => false)
         };
 
         const inputRef = createRef<HTMLInputElement>();
@@ -1401,16 +1405,16 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
-        const input = createEventTarget(inputRef.current!);
+        const target = createEventTarget(targetRef.current);
+        const input = createEventTarget(inputRef.current);
         act(() => {
           target.pointerdown({ pointerType });
           input.select({});
         });
         // responder terminates (fail-open)
-        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
         // responder should not be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
 
@@ -1418,8 +1422,8 @@ describe('useResponderEvents', () => {
       'is called if "selectionchange" occurs',
       (pointerType) => {
         const targetCallbacks = {
-          onStartShouldSetResponder: jest.fn(() => true),
-          onResponderTerminate: jest.fn()
+          onStartShouldSetResponder: vi.fn(() => true),
+          onResponderTerminate: vi.fn()
         };
 
         const Component = () => {
@@ -1429,29 +1433,20 @@ describe('useResponderEvents', () => {
 
         // render
         render(<Component />);
-        const target = createEventTarget(targetRef.current!);
+        const target = createEventTarget(targetRef.current);
         const doc = createEventTarget(document);
-        // getSelection is not supported in jest
-        window.getSelection = jest.fn(() => {
-          const node = targetRef.current;
-          const anchorNode =
-            node != null && node.firstChild != null ? node.firstChild : node;
-          return {
-            anchorNode,
-            toString() {
-              return 'text';
-            }
-          } as Selection;
-        });
+        const text = targetRef.current?.firstChild;
+        assert(text != null);
         act(() => {
+          window.getSelection()?.setBaseAndExtent(text, 0, text, 4);
           target.pointerdown({ pointerType });
           target.pointermove({ pointerType });
           doc.selectionchange({});
         });
         // responder terminates
-        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
         // responder should not be set
-        expect(getResponderNode()).toBe(null);
+        expect(getResponderNode()).toBeNull();
       }
     );
 
@@ -1460,8 +1455,8 @@ describe('useResponderEvents', () => {
       const parentRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1475,8 +1470,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const parent = createEventTarget(parentRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const parent = createEventTarget(parentRef.current);
       // gesture start & scroll
       act(() => {
         target.pointerdown({ pointerType });
@@ -1484,9 +1479,9 @@ describe('useResponderEvents', () => {
         parent.scroll();
       });
       // responder terminates
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     test('is called if document scrolls', () => {
@@ -1494,8 +1489,8 @@ describe('useResponderEvents', () => {
       const parentRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1509,7 +1504,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // gesture start & scroll
       act(() => {
@@ -1518,9 +1513,9 @@ describe('useResponderEvents', () => {
         doc.scroll();
       });
       // responder end
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
       // no responder should be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     test('is not called if sibling scrolls', () => {
@@ -1528,8 +1523,8 @@ describe('useResponderEvents', () => {
       const siblingRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1544,8 +1539,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start & scroll
       act(() => {
         target.pointerdown({ pointerType });
@@ -1561,9 +1556,9 @@ describe('useResponderEvents', () => {
     test('is called if responder blurs', () => {
       const pointerType = 'touch';
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1573,7 +1568,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // gesture start & blur
       act(() => {
@@ -1581,17 +1576,17 @@ describe('useResponderEvents', () => {
         doc.focus({ relatedTarget: target.node });
       });
       // responder terminates
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
       // responder should still be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     test('is called if window blurs', () => {
       const pointerType = 'touch';
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1601,7 +1596,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const win = createEventTarget(window);
       // gesture start & blur
       act(() => {
@@ -1609,9 +1604,9 @@ describe('useResponderEvents', () => {
         win.blur({ relatedTarget: target.node });
       });
       // responder terminates
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
       // responder should not be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     test('is not called if sibling blurs', () => {
@@ -1619,8 +1614,8 @@ describe('useResponderEvents', () => {
       const siblingRef = createRef<HTMLDivElement>();
 
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn()
       };
 
       const Component = () => {
@@ -1635,8 +1630,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start & blur
       act(() => {
         target.pointerdown({ pointerType });
@@ -1654,9 +1649,9 @@ describe('useResponderEvents', () => {
       // when using mouse right-click to open a context menu
       const pointerType = 'touch';
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn()
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn()
       };
 
       const Component = () => {
@@ -1666,22 +1661,22 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // contextmenu sequence includes pointerdown "start"
       act(() => {
         target.contextmenu({ pointerType });
       });
       // responder terminates
-      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(1);
+      expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledOnce();
       // responder should not be set
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
 
     test('can be denied for "contextmenu", "scroll", and "selectionchange" events', () => {
       const targetCallbacks = {
-        onStartShouldSetResponder: jest.fn(() => true),
-        onResponderTerminate: jest.fn(),
-        onResponderTerminationRequest: jest.fn(() => false)
+        onStartShouldSetResponder: vi.fn(() => true),
+        onResponderTerminate: vi.fn(),
+        onResponderTerminationRequest: vi.fn(() => false)
       };
 
       const Component = () => {
@@ -1690,7 +1685,7 @@ describe('useResponderEvents', () => {
       };
 
       function assertAndCleanUp() {
-        expect(targetCallbacks.onResponderTerminate).toHaveBeenCalledTimes(0);
+        expect(targetCallbacks.onResponderTerminate).not.toHaveBeenCalled();
         expect(getResponderNode()).toBe(targetRef.current);
         terminateResponder();
         clearPointers();
@@ -1699,7 +1694,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       const doc = createEventTarget(document);
       // contextmenu
       act(() => {
@@ -1882,7 +1877,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
 
       // gesture start
       act(() => {
@@ -2054,7 +2049,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
 
       // gesture start
       act(() => {
@@ -2123,7 +2118,7 @@ describe('useResponderEvents', () => {
         target.pointerup({ pointerType, pointerId: 2 });
         target.pointerup({ pointerType, pointerId: 1 });
       });
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
       expect(eventLog).toEqual([
         'grandParent: onResponderEnd',
         'grandParent: onResponderEnd',
@@ -2217,15 +2212,15 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const parent = createEventTarget(parentRef.current!);
-      const target = createEventTarget(targetRef.current!);
+      const parent = createEventTarget(parentRef.current);
+      const target = createEventTarget(targetRef.current);
 
       // gesture start on parent
       act(() => {
         parent.pointerdown({ pointerType, pointerId: 1 });
       });
       // initially nothing wants to become the responder
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
       expect(eventLog).toEqual([
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture',
@@ -2290,7 +2285,7 @@ describe('useResponderEvents', () => {
         target.pointerup({ pointerType, pointerId: 2 });
       });
       // responder is released
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
       expect(eventLog).toEqual([
         'target: onResponderEnd',
         'target: onResponderRelease'
@@ -2384,8 +2379,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start on target
       act(() => {
         target.pointerdown({ pointerType, pointerId: 1 });
@@ -2518,8 +2513,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const sibling = createEventTarget(siblingRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const sibling = createEventTarget(siblingRef.current);
       // gesture start and move on target
       act(() => {
         target.pointerdown({ pointerType });
@@ -2622,7 +2617,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       // first touch
       act(() => {
         target.pointerdown({ pointerType });
@@ -2757,8 +2752,8 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
-      const parent = createEventTarget(parentRef.current!);
+      const target = createEventTarget(targetRef.current);
+      const parent = createEventTarget(parentRef.current);
       // first touch
       act(() => {
         target.pointerdown({ pointerType });
@@ -2858,7 +2853,7 @@ describe('useResponderEvents', () => {
 
       // render
       render(<Component />);
-      const target = createEventTarget(targetRef.current!);
+      const target = createEventTarget(targetRef.current);
       act(() => {
         target.pointerdown({ pointerType });
       });
@@ -2866,7 +2861,7 @@ describe('useResponderEvents', () => {
         'grandParent: onStartShouldSetResponderCapture',
         'parent: onStartShouldSetResponderCapture'
       ]);
-      expect(getResponderNode()).toBe(null);
+      expect(getResponderNode()).toBeNull();
     });
   });
 });

@@ -81,12 +81,12 @@ describe('components/ActivityIndicator', () => {
 
   describe('prop "onBlur"', () => {
     test('is called', () => {
-      const onBlur = jest.fn();
+      const onBlur = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<ActivityIndicator onBlur={onBlur} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       const body = createEventTarget(document.body);
       act(() => {
         target.focus();
@@ -98,12 +98,12 @@ describe('components/ActivityIndicator', () => {
 
   describe('prop "onFocus"', () => {
     test('is called', () => {
-      const onFocus = jest.fn();
+      const onFocus = vi.fn();
       const ref = React.createRef<HostNode>();
       act(() => {
         render(<ActivityIndicator onFocus={onFocus} ref={ref} />);
       });
-      const target = createEventTarget(ref.current!);
+      const target = createEventTarget(ref.current);
       act(() => {
         target.focus();
       });
@@ -113,7 +113,7 @@ describe('components/ActivityIndicator', () => {
 
   describe('prop "ref"', () => {
     test('value is set', () => {
-      const ref = jest.fn();
+      const ref = vi.fn();
       render(<ActivityIndicator ref={ref} />);
       expect(ref).toHaveBeenCalled();
     });

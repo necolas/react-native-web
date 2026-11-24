@@ -165,13 +165,13 @@ describe('components/TextInput', () => {
     test('value "false"', () => {
       const { container } = render(<TextInput />);
       const input = findInput(container);
-      expect(input.disabled).toEqual(false);
+      expect(input.disabled).toBe(false);
     });
 
     test('value "true"', () => {
       const { container } = render(<TextInput disabled={true} />);
       const input = findInput(container);
-      expect(input.disabled).toEqual(true);
+      expect(input.disabled).toBe(true);
     });
   });
 
@@ -179,13 +179,13 @@ describe('components/TextInput', () => {
     test('value "true"', () => {
       const { container } = render(<TextInput />);
       const input = findInput(container);
-      expect(input.readOnly).toEqual(false);
+      expect(input.readOnly).toBe(false);
     });
 
     test('value "false"', () => {
       const { container } = render(<TextInput editable={false} />);
       const input = findInput(container);
-      expect(input.readOnly).toEqual(true);
+      expect(input.readOnly).toBe(true);
     });
   });
 
@@ -292,7 +292,7 @@ describe('components/TextInput', () => {
   test('prop "maxLength"', () => {
     let { container } = render(<TextInput />);
     let input = findInput(container);
-    expect(input.getAttribute('maxLength')).toEqual(null);
+    expect(input.getAttribute('maxLength')).toBeNull();
 
     ({ container } = render(<TextInput maxLength={10} />));
     input = findInput(container);
@@ -336,58 +336,57 @@ describe('components/TextInput', () => {
   });
 
   test('prop "onBlur"', () => {
-    const onBlur = jest.fn();
+    const onBlur = vi.fn();
     const ref = React.createRef<TextInputNode>();
     act(() => {
       render(<TextInput onBlur={onBlur} ref={ref} />);
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     const body = createEventTarget(document.body);
     act(() => {
       target.focus();
       body.focus({ relatedTarget: target.node });
     });
-    expect(onBlur).toHaveBeenCalledTimes(1);
-    expect(TextInput.State.currentlyFocusedField()).toBe(null);
+    expect(onBlur).toHaveBeenCalledOnce();
+    expect(TextInput.State.currentlyFocusedField()).toBeNull();
   });
 
   test.skip('prop "onChange"', () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const { container } = render(<TextInput onChange={onChange} />);
     const input = findInput(container);
     // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
     input.dispatchEvent(new window.Event('change', { bubbles: true }));
-    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledOnce();
   });
 
   test.skip('prop "onChangeText"', () => {
-    const onChangeText = jest.fn();
+    const onChangeText = vi.fn();
     const { container } = render(<TextInput onChangeText={onChangeText} />);
     const input = findInput(container);
     // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
     input.dispatchEvent(keydown({ key: 'a' }));
     input.dispatchEvent(new window.Event('change', { bubbles: true }));
-    expect(onChangeText).toHaveBeenCalledTimes(1);
-    expect(onChangeText).toHaveBeenCalledWith('a');
+    expect(onChangeText).toHaveBeenCalledExactlyOnceWith('a');
   });
 
   test('prop "onFocus"', () => {
-    const onFocus = jest.fn();
+    const onFocus = vi.fn();
     const ref = React.createRef<TextInputNode>();
     act(() => {
       render(<TextInput onFocus={onFocus} ref={ref} />);
     });
-    const target = createEventTarget(ref.current!);
+    const target = createEventTarget(ref.current);
     act(() => {
       target.focus();
     });
-    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(onFocus).toHaveBeenCalledOnce();
     target.node.focus();
     expect(TextInput.State.currentlyFocusedField()).toBe(target.node);
   });
 
   test('keydown events bubble to ancestors', () => {
-    const onKeyDown = jest.fn();
+    const onKeyDown = vi.fn();
     const { container } = render(
       <View onKeyDown={onKeyDown}>
         <TextInput />
@@ -401,14 +400,13 @@ describe('components/TextInput', () => {
 
   describe('prop "onKeyPress"', () => {
     test('arrow key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'ArrowLeft' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -423,14 +421,13 @@ describe('components/TextInput', () => {
     });
 
     test('backspace key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Backspace' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -445,14 +442,13 @@ describe('components/TextInput', () => {
     });
 
     test('enter key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Enter' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -467,14 +463,13 @@ describe('components/TextInput', () => {
     });
 
     test('escape key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Escape' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -489,14 +484,13 @@ describe('components/TextInput', () => {
     });
 
     test('space key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: ' ' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -511,14 +505,13 @@ describe('components/TextInput', () => {
     });
 
     test('tab key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Tab' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -533,14 +526,13 @@ describe('components/TextInput', () => {
     });
 
     test('text key', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'a' }));
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: false,
@@ -555,7 +547,7 @@ describe('components/TextInput', () => {
     });
 
     test('modifier keys are included', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -569,8 +561,7 @@ describe('components/TextInput', () => {
           key: ' '
         })
       );
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
-      expect(onKeyPress).toHaveBeenCalledWith(
+      expect(onKeyPress).toHaveBeenCalledExactlyOnceWith(
         expect.objectContaining({
           nativeEvent: expect.objectContaining({
             altKey: true,
@@ -585,7 +576,7 @@ describe('components/TextInput', () => {
     });
 
     test('meta key + Enter calls "onKeyPress"', () => {
-      const onKeyPress = jest.fn((e) => {
+      const onKeyPress = vi.fn((e) => {
         e.persist();
       });
       const { container } = render(<TextInput onKeyPress={onKeyPress} />);
@@ -596,7 +587,7 @@ describe('components/TextInput', () => {
           key: 'Enter'
         })
       );
-      expect(onKeyPress).toHaveBeenCalledTimes(1);
+      expect(onKeyPress).toHaveBeenCalledOnce();
     });
   });
 
@@ -620,35 +611,35 @@ describe('components/TextInput', () => {
     });
 
     test.skip('is called on change', () => {
-      const onSelectionChange = jest.fn();
+      const onSelectionChange = vi.fn();
       const { container } = render(
         <TextInput onSelectionChange={onSelectionChange} />
       );
       const input = findInput(container);
       // This doesn't cause ReactDOM to trigger 'change' event... ¯\_(ツ)_/¯
       input.dispatchEvent(new window.Event('input', { bubbles: true }));
-      expect(onSelectionChange).toHaveBeenCalledTimes(1);
+      expect(onSelectionChange).toHaveBeenCalledOnce();
     });
   });
 
   describe('prop "onSubmitEditing"', () => {
-    test('single-line input', (done) => {
+    test('single-line input', () => {
+      const onSubmitEditing = vi.fn(
+        (e: { nativeEvent: { target?: unknown; text: string } }) => {
+          expect(e.nativeEvent.target).toBeDefined();
+          expect(e.nativeEvent.text).toBe('12345');
+        }
+      );
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );
       const input = findInput(container);
       input.dispatchEvent(keydown({ key: 'Enter' }));
-      function onSubmitEditing(e: {
-        nativeEvent: { target?: unknown; text: string };
-      }) {
-        expect(e.nativeEvent.target).toBeDefined();
-        expect(e.nativeEvent.text).toBe('12345');
-        done();
-      }
+      expect(onSubmitEditing).toHaveBeenCalledOnce();
     });
 
     test('single-line input while composing', () => {
-      const onSubmitEditing = jest.fn();
+      const onSubmitEditing = vi.fn();
       const { container } = render(
         <TextInput defaultValue="12345" onSubmitEditing={onSubmitEditing} />
       );
@@ -663,9 +654,9 @@ describe('components/TextInput', () => {
     });
 
     test('multi-line input', () => {
-      jest.useFakeTimers();
-      const onSubmitEditing = jest.fn();
-      const preventDefault = jest.fn();
+      vi.useFakeTimers();
+      const onSubmitEditing = vi.fn();
+      const preventDefault = vi.fn();
       const { container } = render(
         <TextInput
           defaultValue="12345"
@@ -674,20 +665,20 @@ describe('components/TextInput', () => {
         />
       );
       const textarea = findTextArea(container);
-      const blur = jest.spyOn(textarea, 'blur');
+      const blur = vi.spyOn(textarea, 'blur');
       textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
       act(() => {
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
       expect(onSubmitEditing).not.toHaveBeenCalled();
       expect(preventDefault).not.toHaveBeenCalled();
       expect(blur).not.toHaveBeenCalled();
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     test('multi-line input with "blurOnSubmit" triggers "onSubmitEditing"', () => {
-      const onSubmitEditing = jest.fn();
-      const preventDefault = jest.fn();
+      const onSubmitEditing = vi.fn();
+      const preventDefault = vi.fn();
 
       const { container } = render(
         <TextInput
@@ -699,8 +690,8 @@ describe('components/TextInput', () => {
       );
       const textarea = findTextArea(container);
       textarea.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
-      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
-      expect(preventDefault).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).toHaveBeenCalledOnce();
+      expect(preventDefault).toHaveBeenCalledOnce();
 
       // shift+enter also submits, as in React Native
       textarea.dispatchEvent(
@@ -713,16 +704,16 @@ describe('components/TextInput', () => {
 
   describe('prop "submitBehavior"', () => {
     beforeEach(() => {
-      jest.useFakeTimers();
+      vi.useFakeTimers();
     });
 
     afterEach(() => {
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     function renderAndSubmit(props: React.ComponentProps<typeof TextInput>) {
-      const onSubmitEditing = jest.fn();
-      const preventDefault = jest.fn();
+      const onSubmitEditing = vi.fn();
+      const preventDefault = vi.fn();
 
       const { container } = render(
         <TextInput onSubmitEditing={onSubmitEditing} {...props} />
@@ -732,11 +723,11 @@ describe('components/TextInput', () => {
         ? findTextArea(container)
         : findInput(container);
 
-      const blur = jest.spyOn(node, 'blur');
+      const blur = vi.spyOn(node, 'blur');
       node.dispatchEvent(keydown({ key: 'Enter', preventDefault }));
 
       act(() => {
-        jest.runAllTimers();
+        vi.runAllTimers();
       });
 
       return { blur, onSubmitEditing, preventDefault };
@@ -748,8 +739,8 @@ describe('components/TextInput', () => {
           multiline,
           submitBehavior: 'submit'
         });
-        expect(onSubmitEditing).toHaveBeenCalledTimes(1);
-        expect(preventDefault).toHaveBeenCalledTimes(1);
+        expect(onSubmitEditing).toHaveBeenCalledOnce();
+        expect(preventDefault).toHaveBeenCalledOnce();
         expect(blur).not.toHaveBeenCalled();
       });
     });
@@ -760,9 +751,9 @@ describe('components/TextInput', () => {
           multiline,
           submitBehavior: 'blurAndSubmit'
         });
-        expect(onSubmitEditing).toHaveBeenCalledTimes(1);
-        expect(preventDefault).toHaveBeenCalledTimes(1);
-        expect(blur).toHaveBeenCalledTimes(1);
+        expect(onSubmitEditing).toHaveBeenCalledOnce();
+        expect(preventDefault).toHaveBeenCalledOnce();
+        expect(blur).toHaveBeenCalledOnce();
       });
     });
 
@@ -770,9 +761,9 @@ describe('components/TextInput', () => {
       const { blur, onSubmitEditing, preventDefault } = renderAndSubmit({
         submitBehavior: 'newline'
       });
-      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
-      expect(preventDefault).toHaveBeenCalledTimes(1);
-      expect(blur).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).toHaveBeenCalledOnce();
+      expect(preventDefault).toHaveBeenCalledOnce();
+      expect(blur).toHaveBeenCalledOnce();
     });
 
     test('takes precedence over "blurOnSubmit"', () => {
@@ -780,7 +771,7 @@ describe('components/TextInput', () => {
         blurOnSubmit: true,
         submitBehavior: 'submit'
       });
-      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).toHaveBeenCalledOnce();
       expect(blur).not.toHaveBeenCalled();
     });
 
@@ -788,7 +779,7 @@ describe('components/TextInput', () => {
       const { blur, onSubmitEditing } = renderAndSubmit({
         blurOnSubmit: false
       });
-      expect(onSubmitEditing).toHaveBeenCalledTimes(1);
+      expect(onSubmitEditing).toHaveBeenCalledOnce();
       expect(blur).not.toHaveBeenCalled();
     });
 
@@ -798,8 +789,8 @@ describe('components/TextInput', () => {
         onSubmitEditing: undefined,
         submitBehavior: 'blurAndSubmit'
       });
-      expect(preventDefault).toHaveBeenCalledTimes(1);
-      expect(blur).toHaveBeenCalledTimes(1);
+      expect(preventDefault).toHaveBeenCalledOnce();
+      expect(blur).toHaveBeenCalledOnce();
     });
 
     test('single-line without "onSubmitEditing" does not prevent form submit', () => {
@@ -825,7 +816,7 @@ describe('components/TextInput', () => {
     // ignored for multiline
     ({ container } = render(<TextInput multiline secureTextEntry />));
     const textarea = findTextArea(container);
-    expect(textarea.getAttribute('type')).toEqual(null);
+    expect(textarea.getAttribute('type')).toBeNull();
   });
 
   describe('prop "selectTextOnFocus"', () => {
@@ -938,13 +929,13 @@ describe('components/TextInput', () => {
     test('node.clear()', () => {
       const ref = React.createRef<TextInputNode>();
       render(<TextInput ref={ref} />);
-      expect(typeof ref.current!.clear).toBe('function');
+      expect(ref.current?.clear).toBeTypeOf('function');
     });
 
     test('node.isFocused()', () => {
       const ref = React.createRef<TextInputNode>();
       render(<TextInput ref={ref} />);
-      expect(typeof ref.current!.isFocused).toBe('function');
+      expect(ref.current?.isFocused).toBeTypeOf('function');
     });
   });
 });

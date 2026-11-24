@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
+exports[`components/ActivityIndicator > prop "animating" > is "false" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -21,7 +21,7 @@ exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -29,14 +29,14 @@ exports[`components/ActivityIndicator prop "animating" is "false" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
+exports[`components/ActivityIndicator > prop "animating" > is "true" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -57,7 +57,7 @@ exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -65,14 +65,14 @@ exports[`components/ActivityIndicator prop "animating" is "true" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "aria-label" value is set 1`] = `
+exports[`components/ActivityIndicator > prop "aria-label" > value is set 1`] = `
 <div
   aria-label="accessibility label"
   aria-valuemax="1"
@@ -94,7 +94,7 @@ exports[`components/ActivityIndicator prop "aria-label" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -102,14 +102,14 @@ exports[`components/ActivityIndicator prop "aria-label" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "aria-live" value is set 1`] = `
+exports[`components/ActivityIndicator > prop "aria-live" > value is set 1`] = `
 <div
   aria-live="polite"
   aria-valuemax="1"
@@ -131,7 +131,7 @@ exports[`components/ActivityIndicator prop "aria-live" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -139,14 +139,14 @@ exports[`components/ActivityIndicator prop "aria-live" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "color" 1`] = `
+exports[`components/ActivityIndicator > prop "color" 1`] = `
 <svg
   height="100%"
   viewBox="0 0 32 32"
@@ -171,7 +171,7 @@ exports[`components/ActivityIndicator prop "color" 1`] = `
 </svg>
 `;
 
-exports[`components/ActivityIndicator prop "dataSet" value is set 1`] = `
+exports[`components/ActivityIndicator > prop "dataSet" > value is set 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -194,7 +194,7 @@ exports[`components/ActivityIndicator prop "dataSet" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -202,14 +202,14 @@ exports[`components/ActivityIndicator prop "dataSet" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
+exports[`components/ActivityIndicator > prop "hidesWhenStopped" > is "false" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -230,7 +230,7 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -238,14 +238,14 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "false" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
+exports[`components/ActivityIndicator > prop "hidesWhenStopped" > is "true" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -266,7 +266,7 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -274,14 +274,14 @@ exports[`components/ActivityIndicator prop "hidesWhenStopped" is "true" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "nativeID" value is set 1`] = `
+exports[`components/ActivityIndicator > prop "nativeID" > value is set 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -303,7 +303,7 @@ exports[`components/ActivityIndicator prop "nativeID" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -311,14 +311,14 @@ exports[`components/ActivityIndicator prop "nativeID" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
+exports[`components/ActivityIndicator > prop "size" > is "large" 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -339,7 +339,7 @@ exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -347,14 +347,14 @@ exports[`components/ActivityIndicator prop "size" is "large" 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "size" is a number 1`] = `
+exports[`components/ActivityIndicator > prop "size" > is a number 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -376,7 +376,7 @@ exports[`components/ActivityIndicator prop "size" is a number 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -384,14 +384,14 @@ exports[`components/ActivityIndicator prop "size" is a number 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "style" value is set 1`] = `
+exports[`components/ActivityIndicator > prop "style" > value is set 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -413,7 +413,7 @@ exports[`components/ActivityIndicator prop "style" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -421,14 +421,14 @@ exports[`components/ActivityIndicator prop "style" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>
 </div>
 `;
 
-exports[`components/ActivityIndicator prop "testID" value is set 1`] = `
+exports[`components/ActivityIndicator > prop "testID" > value is set 1`] = `
 <div
   aria-valuemax="1"
   aria-valuemin="0"
@@ -450,7 +450,7 @@ exports[`components/ActivityIndicator prop "testID" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; opacity: 0.2;"
+        style="stroke: rgb(25, 118, 210); opacity: 0.2;"
       />
       <circle
         cx="16"
@@ -458,7 +458,7 @@ exports[`components/ActivityIndicator prop "testID" value is set 1`] = `
         fill="none"
         r="14"
         stroke-width="4"
-        style="stroke: #1976D2; stroke-dasharray: 80; stroke-dashoffset: 60;"
+        style="stroke: rgb(25, 118, 210); stroke-dasharray: 80; stroke-dashoffset: 60;"
       />
     </svg>
   </div>

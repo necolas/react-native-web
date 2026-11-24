@@ -350,7 +350,7 @@ describe('StyleSheet/preprocess', () => {
     });
 
     test('shadowColor system color', () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
       expect(preprocess({ shadowColor: 'CanvasText' }, options)).toEqual({
         boxShadow: '0px 0px 0px CanvasText'
@@ -385,7 +385,6 @@ describe('StyleSheet/preprocess', () => {
       });
 
       expect(spy).toHaveBeenCalledTimes(2);
-      spy.mockRestore();
     });
 
     test('shadowOffset only', () => {

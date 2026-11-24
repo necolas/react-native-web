@@ -13,13 +13,12 @@ import Appearance from '../../Appearance';
 
 describe('useColorScheme', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
     Appearance.setColorScheme('auto');
   });
 
   test('keeps its subscription active across rerenders', () => {
-    const remove = jest.fn();
-    const addChangeListener = jest
+    const remove = vi.fn();
+    const addChangeListener = vi
       .spyOn(Appearance, 'addChangeListener')
       .mockReturnValue({ remove });
 
@@ -29,15 +28,15 @@ describe('useColorScheme', () => {
     }
 
     const { rerender, unmount } = render(<Component label="first" />);
-    expect(addChangeListener).toHaveBeenCalledTimes(1);
+    expect(addChangeListener).toHaveBeenCalledOnce();
     expect(remove).not.toHaveBeenCalled();
 
     rerender(<Component label="second" />);
-    expect(addChangeListener).toHaveBeenCalledTimes(1);
+    expect(addChangeListener).toHaveBeenCalledOnce();
     expect(remove).not.toHaveBeenCalled();
 
     unmount();
-    expect(remove).toHaveBeenCalledTimes(1);
+    expect(remove).toHaveBeenCalledOnce();
   });
 
   test('returns the color scheme set by a child mount effect', () => {

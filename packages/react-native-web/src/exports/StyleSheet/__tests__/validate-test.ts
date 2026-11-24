@@ -8,14 +8,8 @@
 import { validate } from '../validate';
 
 describe('validate', () => {
-  beforeAll(() => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-  });
-  afterAll(() => {
-    (console.error as jest.Mock).mockRestore();
-  });
-  afterEach(() => {
-    (console.error as jest.Mock).mockClear();
+  beforeEach(() => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   test('invalid shortform properties', () => {

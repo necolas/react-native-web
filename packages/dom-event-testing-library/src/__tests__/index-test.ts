@@ -100,7 +100,7 @@ describe('createEventTarget', () => {
         expect(e.clientY).toEqual(0);
         expect(e.ctrlKey).toEqual(false);
         expect(e.detail).toEqual(1);
-        expect(typeof e.getModifierState).toEqual('function');
+        expect(e.getModifierState).toBeTypeOf('function');
         expect(e.metaKey).toEqual(false);
         expect(e.movementX).toEqual(0);
         expect(e.movementY).toEqual(0);
@@ -108,11 +108,11 @@ describe('createEventTarget', () => {
         expect(e.offsetY).toEqual(0);
         expect(e.pageX).toEqual(0);
         expect(e.pageY).toEqual(0);
-        expect(typeof e.preventDefault).toEqual('function');
+        expect(e.preventDefault).toBeTypeOf('function');
         expect(e.screenX).toEqual(0);
         expect(e.screenY).toEqual(defaultBrowserChromeSize);
         expect(e.shiftKey).toEqual(false);
-        expect(typeof e.timeStamp).toEqual('number');
+        expect(e.timeStamp).toBeTypeOf('number');
       });
       target.click();
     });
@@ -181,12 +181,12 @@ describe('createEventTarget', () => {
       node.addEventListener('keydown', (e) => {
         expect(e.altKey).toEqual(false);
         expect(e.ctrlKey).toEqual(false);
-        expect(typeof e.getModifierState).toEqual('function');
+        expect(e.getModifierState).toBeTypeOf('function');
         expect(e.key).toEqual('');
         expect(e.metaKey).toEqual(false);
-        expect(typeof e.preventDefault).toEqual('function');
+        expect(e.preventDefault).toBeTypeOf('function');
         expect(e.shiftKey).toEqual(false);
-        expect(typeof e.timeStamp).toEqual('number');
+        expect(e.timeStamp).toBeTypeOf('number');
       });
       target.keydown();
     });
@@ -218,12 +218,12 @@ describe('createEventTarget', () => {
       node.addEventListener('keyup', (e) => {
         expect(e.altKey).toEqual(false);
         expect(e.ctrlKey).toEqual(false);
-        expect(typeof e.getModifierState).toEqual('function');
+        expect(e.getModifierState).toBeTypeOf('function');
         expect(e.key).toEqual('');
         expect(e.metaKey).toEqual(false);
-        expect(typeof e.preventDefault).toEqual('function');
+        expect(e.preventDefault).toBeTypeOf('function');
         expect(e.shiftKey).toEqual(false);
-        expect(typeof e.timeStamp).toEqual('number');
+        expect(e.timeStamp).toBeTypeOf('number');
       });
       target.keydown();
     });
@@ -270,7 +270,7 @@ describe('createEventTarget', () => {
         expect(e.clientY).toEqual(0);
         expect(e.ctrlKey).toEqual(false);
         expect(e.detail).toEqual(0);
-        expect(typeof e.getModifierState).toEqual('function');
+        expect(e.getModifierState).toBeTypeOf('function');
         expect(e.metaKey).toEqual(false);
         expect(e.movementX).toEqual(0);
         expect(e.movementY).toEqual(0);
@@ -278,11 +278,11 @@ describe('createEventTarget', () => {
         expect(e.offsetY).toEqual(0);
         expect(e.pageX).toEqual(0);
         expect(e.pageY).toEqual(0);
-        expect(typeof e.preventDefault).toEqual('function');
+        expect(e.preventDefault).toBeTypeOf('function');
         expect(e.screenX).toEqual(0);
         expect(e.screenY).toEqual(0);
         expect(e.shiftKey).toEqual(false);
-        expect(typeof e.timeStamp).toEqual('number');
+        expect(e.timeStamp).toBeTypeOf('number');
       });
       target.virtualclick();
     });

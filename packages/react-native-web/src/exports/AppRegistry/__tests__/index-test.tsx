@@ -28,7 +28,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
     });
 
     test('callback after render', () => {
-      const callback = jest.fn();
+      const callback = vi.fn();
       AppRegistry.registerComponent('App', () => NoopComponent);
       act(() => {
         AppRegistry.runApplication('App', {
@@ -38,11 +38,11 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
           mode
         });
       });
-      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledOnce();
     });
 
     test('unmount ran application', () => {
-      const setMountedState = jest.fn();
+      const setMountedState = vi.fn();
       const MountedStateComponent = () => {
         React.useEffect(() => {
           setMountedState(true);
@@ -62,7 +62,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
           mode
         });
       });
-      expect(setMountedState).toHaveBeenCalledTimes(1);
+      expect(setMountedState).toHaveBeenCalledOnce();
       expect(setMountedState).toHaveBeenLastCalledWith(true);
       act(() => {
         application.unmount();
@@ -82,7 +82,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
 
       const iframeRootTag = document.createElement('div');
       iframeRootTag.id = 'react-iframe-root';
-      iframe.contentWindow!.document.body.appendChild(iframeRootTag);
+      iframe.contentWindow?.document.body.appendChild(iframeRootTag);
 
       // Run in iframe
       AppRegistry.registerComponent('App', () => NoopComponent);
@@ -95,7 +95,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
       });
 
       const iframedoc = iframeRootTag.ownerDocument;
-      expect(iframedoc).toBe(iframe.contentWindow!.document);
+      expect(iframedoc).toBe(iframe.contentWindow?.document);
       expect(iframedoc).not.toBe(document);
 
       const cssText = Array.prototype.slice
@@ -104,7 +104,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
             iframedoc.getElementById(
               'react-native-stylesheet'
             ) as HTMLStyleElement
-          ).sheet!.cssRules
+          ).sheet?.cssRules
         )
         .map((cssRule: CSSRule) => cssRule.cssText);
 

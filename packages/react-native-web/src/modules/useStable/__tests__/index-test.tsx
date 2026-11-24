@@ -67,8 +67,8 @@ describe('useStable', () => {
     const { rerender } = render(
       <TestComponent initialValueCallback={initialValueCallback} />
     );
-    expect(spy.value).toBe(null);
+    expect(spy.value).toBeNull();
     rerender(<TestComponent initialValueCallback={initialValueCallback} />);
-    expect(spy.value).toBe(null);
+    expect(spy.value).toBeNull();
   });
 });
