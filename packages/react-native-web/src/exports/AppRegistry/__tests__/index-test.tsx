@@ -38,7 +38,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
           mode
         });
       });
-      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledOnce();
     });
 
     test('unmount ran application', () => {
@@ -62,7 +62,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
           mode
         });
       });
-      expect(setMountedState).toHaveBeenCalledTimes(1);
+      expect(setMountedState).toHaveBeenCalledOnce();
       expect(setMountedState).toHaveBeenLastCalledWith(true);
       act(() => {
         application.unmount();

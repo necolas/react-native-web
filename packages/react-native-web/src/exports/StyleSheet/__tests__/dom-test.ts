@@ -34,7 +34,7 @@ describe('createSheet', () => {
     expect(sheet).not.toBe(iframeSheet);
     expect(iframeSheet.id).toMatchInlineSnapshot(`"react-native-stylesheet"`);
     expect(iframeSheet.insert).toBeTypeOf('function');
-    expect(iframeDoc.getElementById('react-native-stylesheet')).not.toBe(null);
+    expect(iframeDoc.getElementById('react-native-stylesheet')).not.toBeNull();
     // Does the content match existing sheets?
     expect(iframeSheet.getTextContent().includes('test-sheet')).toBe(true);
     // Does the content update when other sheets are updated?

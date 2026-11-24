@@ -72,11 +72,11 @@ describe('components/ScrollView', () => {
           <ScrollView id="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
       act(() => {
         rerender(<ScrollView id="1234" ref={ref} style={{ borderWidth: 6 }} />);
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
     });
 
     test('node has imperative methods', () => {

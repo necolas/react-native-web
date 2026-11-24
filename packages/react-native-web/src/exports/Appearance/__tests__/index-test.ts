@@ -28,21 +28,20 @@ function createMediaQueryList(matches: boolean) {
 }
 
 describe('Appearance', () => {
-  const originalMatchMedia = window.matchMedia;
   let Appearance: typeof AppearanceType;
   let mediaQueryList: ReturnType<typeof createMediaQueryList>;
 
   beforeEach(async () => {
     mediaQueryList = createMediaQueryList(false);
-    window.matchMedia = vi.fn(
-      () => mediaQueryList as unknown as MediaQueryList
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mediaQueryList as unknown as MediaQueryList)
     );
     vi.resetModules();
     Appearance = (await import('../index.js')).default;
   });
 
   afterEach(() => {
-    window.matchMedia = originalMatchMedia;
     document.documentElement.style.colorScheme = '';
   });
 
@@ -89,7 +88,7 @@ describe('Appearance', () => {
       const listener = vi.fn();
       Appearance.addChangeListener(listener);
       mediaQueryList.change(true);
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
       expect(listener).toHaveBeenLastCalledWith({ colorScheme: 'dark' });
     });
 
@@ -107,7 +106,7 @@ describe('Appearance', () => {
       Appearance.setColorScheme('light');
       expect(listener).not.toHaveBeenCalled();
       Appearance.setColorScheme('dark');
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
       expect(listener).toHaveBeenLastCalledWith({ colorScheme: 'dark' });
       Appearance.setColorScheme('auto');
       expect(listener).toHaveBeenCalledTimes(2);

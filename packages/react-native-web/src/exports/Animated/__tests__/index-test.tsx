@@ -362,13 +362,13 @@ describe('Animated', () => {
       seq.stop();
 
       // anim1 should be finished so anim2 should also start
-      expect(anim1.start).toHaveBeenCalledTimes(1);
-      expect(anim2.start).toHaveBeenCalledTimes(1);
+      expect(anim1.start).toHaveBeenCalledOnce();
+      expect(anim2.start).toHaveBeenCalledOnce();
 
       seq.start(cb);
 
       // after restart the sequence should resume from the anim2
-      expect(anim1.start).toHaveBeenCalledTimes(1);
+      expect(anim1.start).toHaveBeenCalledOnce();
       expect(anim2.start).toHaveBeenCalledTimes(2);
     });
 
@@ -390,7 +390,7 @@ describe('Animated', () => {
 
       // sequence should successfully restart from the anim1
       expect(anim1.start).toHaveBeenCalledTimes(2);
-      expect(anim2.start).toHaveBeenCalledTimes(1);
+      expect(anim2.start).toHaveBeenCalledOnce();
     });
 
     it('restarts sequence normally in a loop if resetBeforeIteration is false', () => {
@@ -404,11 +404,11 @@ describe('Animated', () => {
 
       loop.start();
 
-      expect(anim1.start).toHaveBeenCalledTimes(1);
+      expect(anim1.start).toHaveBeenCalledOnce();
 
       anim1.start.mock.calls[0][0]?.({ finished: true });
 
-      expect(anim2.start).toHaveBeenCalledTimes(1);
+      expect(anim2.start).toHaveBeenCalledOnce();
 
       anim2.start.mock.calls[0][0]?.({ finished: true });
 

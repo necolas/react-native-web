@@ -44,8 +44,8 @@ describe('modules/useMergeRefs', () => {
       );
     });
 
-    expect(callbackRef1).toHaveBeenCalledTimes(1);
-    expect(callbackRef2).toHaveBeenCalledTimes(1);
+    expect(callbackRef1).toHaveBeenCalledOnce();
+    expect(callbackRef2).toHaveBeenCalledOnce();
     expect(objectRef1.current).toBeInstanceOf(HTMLDivElement);
     expect(objectRef2.current).toBeInstanceOf(HTMLDivElement);
   });
@@ -72,11 +72,11 @@ describe('modules/useMergeRefs', () => {
     act(() => {
       ({ rerender } = render(<TestComponent refs={[ref]} />));
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
     act(() => {
       rerender(<TestComponent refs={[ref]} />);
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
   });
 
   test('ref is not called for props changes', () => {
@@ -86,10 +86,10 @@ describe('modules/useMergeRefs', () => {
     act(() => {
       ({ rerender } = render(<TestComponent id="foo" refs={[ref]} />));
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
     act(() => {
       rerender(<TestComponent id="bar" refs={[ref]} />);
     });
-    expect(ref).toHaveBeenCalledTimes(1);
+    expect(ref).toHaveBeenCalledOnce();
   });
 });

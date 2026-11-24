@@ -39,7 +39,7 @@ describe('components/Modal', () => {
         </a>
       </Modal>
     );
-    expect(container.children.length).toBe(0);
+    expect(container.children).toHaveLength(0);
   });
 
   test('invisible modals will not be the active modal', () => {
@@ -59,7 +59,7 @@ describe('components/Modal', () => {
     );
     const insideElement = getByTestId('inside-a');
     const dialogElements = document.body.querySelectorAll('[role=dialog]');
-    expect(dialogElements.length).toBe(1);
+    expect(dialogElements).toHaveLength(1);
     expect(dialogElements[0].contains(insideElement)).toBeTruthy();
   });
 
@@ -80,7 +80,7 @@ describe('components/Modal', () => {
     );
     const insideElement = getByTestId('inside-b');
     const dialogElements = document.body.querySelectorAll('[role=dialog]');
-    expect(dialogElements.length).toBe(1);
+    expect(dialogElements).toHaveLength(1);
     expect(dialogElements[0].contains(insideElement)).toBeTruthy();
   });
 
@@ -117,7 +117,7 @@ describe('components/Modal', () => {
 
     const insideElement = getByTestId('inside-b');
     const dialogElements = document.body.querySelectorAll('[role=dialog]');
-    expect(dialogElements.length).toBe(1);
+    expect(dialogElements).toHaveLength(1);
     expect(dialogElements[0].contains(insideElement)).toBeTruthy();
   });
 
@@ -147,32 +147,32 @@ describe('components/Modal', () => {
 
     const insideElement = getByTestId('inside-a');
     const dialogElements = document.body.querySelectorAll('[role=dialog]');
-    expect(dialogElements.length).toBe(1);
+    expect(dialogElements).toHaveLength(1);
     expect(dialogElements[0].contains(insideElement)).toBeTruthy();
   });
 
   test('executes onShow callback when initially showing', () => {
     const onShowCallback = vi.fn();
     render(<Modal onShow={onShowCallback} visible={true} />);
-    expect(onShowCallback).toHaveBeenCalledTimes(1);
+    expect(onShowCallback).toHaveBeenCalledOnce();
   });
 
   test('does not execute onShow callback when initially hidden', () => {
     const onShowCallback = vi.fn();
     render(<Modal onShow={onShowCallback} visible={false} />);
-    expect(onShowCallback).toHaveBeenCalledTimes(0);
+    expect(onShowCallback).not.toHaveBeenCalled();
   });
 
   test('does not execute onDismiss callback when initially hidden', () => {
     const onDismissCallback = vi.fn();
     render(<Modal onDismiss={onDismissCallback} visible={false} />);
-    expect(onDismissCallback).toHaveBeenCalledTimes(0);
+    expect(onDismissCallback).not.toHaveBeenCalled();
   });
 
   test('does not execute onDismiss callback when initially showing', () => {
     const onDismissCallback = vi.fn();
     render(<Modal onDismiss={onDismissCallback} visible={true} />);
-    expect(onDismissCallback).toHaveBeenCalledTimes(0);
+    expect(onDismissCallback).not.toHaveBeenCalled();
   });
 
   test('executes onShow callback when visibility changes', () => {
@@ -180,9 +180,9 @@ describe('components/Modal', () => {
     const { rerender } = render(
       <Modal onShow={onShowCallback} visible={false} />
     );
-    expect(onShowCallback).toHaveBeenCalledTimes(0);
+    expect(onShowCallback).not.toHaveBeenCalled();
     rerender(<Modal onShow={onShowCallback} visible={true} />);
-    expect(onShowCallback).toHaveBeenCalledTimes(1);
+    expect(onShowCallback).toHaveBeenCalledOnce();
   });
 
   test('executes onDismiss callback when visibility changes', () => {
@@ -190,9 +190,9 @@ describe('components/Modal', () => {
     const { rerender } = render(
       <Modal onDismiss={onDismissCallback} visible={true} />
     );
-    expect(onDismissCallback).toHaveBeenCalledTimes(0);
+    expect(onDismissCallback).not.toHaveBeenCalled();
     rerender(<Modal onDismiss={onDismissCallback} visible={false} />);
-    expect(onDismissCallback).toHaveBeenCalledTimes(1);
+    expect(onDismissCallback).toHaveBeenCalledOnce();
   });
 
   test('a modal shown again in the update that dismisses it is active', () => {
@@ -216,7 +216,7 @@ describe('components/Modal', () => {
     const { getByTestId } = render(<TestComponent />);
     fireEvent.click(getByTestId('close'));
 
-    expect(document.body.querySelectorAll('[role=dialog]').length).toBe(1);
+    expect(document.body.querySelectorAll('[role=dialog]')).toHaveLength(1);
   });
 
   test('animationTypes none is the same as omitting', () => {
@@ -311,7 +311,7 @@ describe('components/Modal', () => {
       </>
     );
 
-    expect(onDismissCallback).toHaveBeenCalledTimes(1);
+    expect(onDismissCallback).toHaveBeenCalledOnce();
     expect(document.activeElement).toBe(outsideElement);
   });
 
@@ -472,7 +472,7 @@ describe('components/Modal', () => {
     );
 
     const dialogElements = document.body.querySelectorAll('[role=dialog]');
-    expect(dialogElements.length).toBe(1);
+    expect(dialogElements).toHaveLength(1);
     expect(dialogElements[0].contains(getByTestId('inside'))).toBe(true);
     expect(document.activeElement).toBe(getByTestId('inside'));
   });
@@ -673,7 +673,7 @@ describe('components/Modal', () => {
       </Modal>
     );
     const helloAnchor = document.querySelector('[data-testid="hello"]');
-    expect(container.children.length).toBe(0);
+    expect(container.children).toHaveLength(0);
     expect(helloAnchor).not.toBeNull();
     expect(baseElement.firstChild).toBe(container);
     expect(
@@ -717,7 +717,7 @@ describe('components/Modal', () => {
 
     fireEvent.keyDown(document, { key: 'Escape' });
 
-    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledOnce();
   });
 
   test('escape key fires onRequestClose for top modal only', () => {
@@ -733,8 +733,8 @@ describe('components/Modal', () => {
 
     fireEvent.keyDown(document, { key: 'Escape' });
 
-    expect(spyA).toHaveBeenCalledTimes(0);
-    expect(spyB).toHaveBeenCalledTimes(1);
+    expect(spyA).not.toHaveBeenCalled();
+    expect(spyB).toHaveBeenCalledOnce();
   });
 
   test('escape key fires onRequestClose for top modal only with animation', () => {
@@ -776,8 +776,8 @@ describe('components/Modal', () => {
 
     fireEvent.keyDown(document, { key: 'Escape' });
 
-    expect(spyA).toHaveBeenCalledTimes(0);
-    expect(spyB).toHaveBeenCalledTimes(1);
+    expect(spyA).not.toHaveBeenCalled();
+    expect(spyB).toHaveBeenCalledOnce();
   });
 
   test('escape key fires onRequestClose for a modal opening over another before its animation ends', () => {
@@ -796,8 +796,8 @@ describe('components/Modal', () => {
 
     fireEvent.keyDown(document, { key: 'Escape' });
 
-    expect(spyA).toHaveBeenCalledTimes(0);
-    expect(spyB).toHaveBeenCalledTimes(1);
+    expect(spyA).not.toHaveBeenCalled();
+    expect(spyB).toHaveBeenCalledOnce();
   });
 
   test('escape key closes one modal per key press when the app handles it', () => {
@@ -830,16 +830,12 @@ describe('components/Modal', () => {
     fireEvent.keyDown(getByTestId('b'), { key: 'Escape' });
     fireEvent.keyUp(document, { key: 'Escape' });
 
-    expect(spyA).toHaveBeenCalledTimes(0);
-    expect(spyB).toHaveBeenCalledTimes(0);
+    expect(spyA).not.toHaveBeenCalled();
+    expect(spyB).not.toHaveBeenCalled();
   });
 });
 
 describe('components/Modal with reduced motion', () => {
-  afterEach(() => {
-    vi.unstubAllGlobals();
-  });
-
   test('executes onShow and onDismiss callbacks without animation', async () => {
     vi.stubGlobal(
       'matchMedia',
@@ -864,10 +860,10 @@ describe('components/Modal with reduced motion', () => {
     );
 
     const { queryByTestId, rerender } = render(modal(true));
-    expect(onShow).toHaveBeenCalledTimes(1);
+    expect(onShow).toHaveBeenCalledOnce();
 
     rerender(modal(false));
-    expect(onDismiss).toHaveBeenCalledTimes(1);
+    expect(onDismiss).toHaveBeenCalledOnce();
     expect(queryByTestId('inside')).toBeNull();
   });
 });

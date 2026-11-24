@@ -37,7 +37,7 @@ describe('use-event', () => {
         target.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('event dispatched on parent', () => {
@@ -70,8 +70,8 @@ describe('use-event', () => {
         parent.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(0);
-      expect(listenerCapture).toHaveBeenCalledTimes(0);
+      expect(listener).not.toHaveBeenCalled();
+      expect(listenerCapture).not.toHaveBeenCalled();
     });
 
     test('event dispatched on child', () => {
@@ -109,8 +109,8 @@ describe('use-event', () => {
         child.click();
       });
 
-      expect(listenerCapture).toHaveBeenCalledTimes(1);
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listenerCapture).toHaveBeenCalledOnce();
+      expect(listener).toHaveBeenCalledOnce();
       expect(log).toEqual(['capture', 'bubble']);
     });
 
@@ -140,7 +140,7 @@ describe('use-event', () => {
         text.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listener can be attached to document ', () => {
@@ -162,7 +162,7 @@ describe('use-event', () => {
         target.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listener can be attached to window ', () => {
@@ -184,7 +184,7 @@ describe('use-event', () => {
         target.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listener is replaceable', () => {
@@ -207,15 +207,15 @@ describe('use-event', () => {
       act(() => {
         target.click();
       });
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
 
       rerender(<Component onClick={listenerAlt} />);
 
       act(() => {
         target.click();
       });
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(listenerAlt).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
+      expect(listenerAlt).toHaveBeenCalledOnce();
     });
 
     test('listener is removed when value is null', () => {
@@ -237,7 +237,7 @@ describe('use-event', () => {
       act(() => {
         target.click();
       });
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
 
       // this should unset the listener
       unmount();
@@ -246,7 +246,7 @@ describe('use-event', () => {
       act(() => {
         target.click();
       });
-      expect(listener).toHaveBeenCalledTimes(0);
+      expect(listener).not.toHaveBeenCalled();
     });
 
     test('custom event dispatched on target', () => {
@@ -269,7 +269,7 @@ describe('use-event', () => {
         targetRef.current?.dispatchEvent(event);
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listeners can be set on multiple targets simultaneously', () => {
@@ -371,10 +371,10 @@ describe('use-event', () => {
         child.click();
       });
 
-      expect(listenerCapture).toHaveBeenCalledTimes(1);
-      expect(listenerCaptureAlt).toHaveBeenCalledTimes(1);
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(listenerAlt).toHaveBeenCalledTimes(1);
+      expect(listenerCapture).toHaveBeenCalledOnce();
+      expect(listenerCaptureAlt).toHaveBeenCalledOnce();
+      expect(listener).toHaveBeenCalledOnce();
+      expect(listenerAlt).toHaveBeenCalledOnce();
       expect(log).toEqual([
         ['capture', 'target'],
         ['capture', 'target-alt'],
@@ -404,7 +404,7 @@ describe('use-event', () => {
         target.click();
       });
 
-      expect(clickListener).toHaveBeenCalledTimes(0);
+      expect(clickListener).not.toHaveBeenCalled();
     });
   });
 
@@ -440,8 +440,8 @@ describe('use-event', () => {
         child.click();
       });
 
-      expect(childListener).toHaveBeenCalledTimes(1);
-      expect(targetListener).toHaveBeenCalledTimes(0);
+      expect(childListener).toHaveBeenCalledOnce();
+      expect(targetListener).not.toHaveBeenCalled();
     });
 
     test('stopImmediatePropagation works as expected', () => {
@@ -470,8 +470,8 @@ describe('use-event', () => {
         target.click();
       });
 
-      expect(firstListener).toHaveBeenCalledTimes(1);
-      expect(secondListener).toHaveBeenCalledTimes(0);
+      expect(firstListener).toHaveBeenCalledOnce();
+      expect(secondListener).not.toHaveBeenCalled();
     });
   });
 });

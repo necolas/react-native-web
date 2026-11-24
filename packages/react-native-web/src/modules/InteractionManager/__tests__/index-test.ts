@@ -10,7 +10,7 @@ import type { Mock } from 'vitest';
 import type InteractionManagerType from '..';
 
 function expectToHaveBeenCalledOnce(fn: Mock) {
-  expect(fn.mock.calls.length).toBe(1);
+  expect(fn).toHaveBeenCalledOnce();
 }
 
 describe('InteractionManager', () => {

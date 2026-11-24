@@ -16,22 +16,19 @@ import {
 import ImageLoader, { ImageUriCache } from '../../../modules/ImageLoader';
 import PixelRatio from '../../PixelRatio';
 
-const originalImage = window.Image;
-const originalImageLoaderAbort = ImageLoader.abort;
-const originalImageLoaderLoad = ImageLoader.load;
-const originalPixelRatioGet = PixelRatio.get;
-
 function mockLoad() {
-  ImageLoader.load = vi.fn(() => Promise.resolve({} as { nativeEvent: Event }));
+  vi.spyOn(ImageLoader, 'load').mockImplementation(() =>
+    Promise.resolve({} as { nativeEvent: Event })
+  );
 }
 
 function mockPendingLoad() {
   const resolveLoad: Record<string, () => Promise<void>> = {};
   const abortedRequests = new Set();
-  ImageLoader.abort = vi.fn((requestId) => {
+  vi.spyOn(ImageLoader, 'abort').mockImplementation((requestId) => {
     abortedRequests.add(requestId);
   });
-  ImageLoader.load = vi.fn(
+  vi.spyOn(ImageLoader, 'load').mockImplementation(
     (uri: string, requestId: number) =>
       new Promise<{ nativeEvent: Event }>((resolve) => {
         resolveLoad[uri] = () => {
@@ -58,16 +55,12 @@ function createLoadHandlers() {
 describe('components/Image', () => {
   beforeEach(() => {
     ImageUriCache._entries = {};
-    window.Image = vi.fn(function () {
-      return {} as HTMLImageElement;
-    });
-  });
-
-  afterEach(() => {
-    window.Image = originalImage;
-    ImageLoader.abort = originalImageLoaderAbort;
-    ImageLoader.load = originalImageLoaderLoad;
-    PixelRatio.get = originalPixelRatioGet;
+    vi.stubGlobal(
+      'Image',
+      vi.fn(function () {
+        return {} as HTMLImageElement;
+      })
+    );
   });
 
   test('prop "aria-label"', () => {
@@ -156,8 +149,8 @@ describe('components/Image', () => {
         }
         render(<Image {...handlers} source={uri} />);
         await flushLoad();
-        expect(handlers.onLoad).toHaveBeenCalledTimes(1);
-        expect(handlers.onLoadEnd).toHaveBeenCalledTimes(1);
+        expect(handlers.onLoad).toHaveBeenCalledOnce();
+        expect(handlers.onLoadEnd).toHaveBeenCalledOnce();
       }
     );
 
@@ -189,22 +182,24 @@ describe('components/Image', () => {
         />
       );
       await flushLoad();
-      expect(handlers.onLoad).toHaveBeenCalledTimes(1);
-      expect(handlers.onLoadEnd).toHaveBeenCalledTimes(1);
+      expect(handlers.onLoad).toHaveBeenCalledOnce();
+      expect(handlers.onLoadEnd).toHaveBeenCalledOnce();
     });
 
     test('is not restarted on update if only the handler identities change', () => {
       const firstHandlers = createLoadHandlers();
       const secondHandlers = createLoadHandlers();
-      ImageLoader.abort = vi.fn();
-      ImageLoader.load = vi.fn(() => new Promise<never>(() => {}));
+      vi.spyOn(ImageLoader, 'abort').mockImplementation(() => {});
+      vi.spyOn(ImageLoader, 'load').mockImplementation(
+        () => new Promise<never>(() => {})
+      );
       const { rerender } = render(
         <Image {...firstHandlers} source="https://test.com/img.jpg" />
       );
       rerender(<Image {...secondHandlers} source="https://test.com/img.jpg" />);
-      expect(ImageLoader.load).toHaveBeenCalledTimes(1);
+      expect(ImageLoader.load).toHaveBeenCalledOnce();
       expect(ImageLoader.abort).not.toHaveBeenCalled();
-      expect(firstHandlers.onLoadStart).toHaveBeenCalledTimes(1);
+      expect(firstHandlers.onLoadStart).toHaveBeenCalledOnce();
       expect(secondHandlers.onLoadStart).not.toHaveBeenCalled();
     });
 
@@ -217,8 +212,8 @@ describe('components/Image', () => {
       rerender(<Image {...secondHandlers} source={uri} />);
       await resolveLoad[uri]();
       expect(firstHandlers.onLoad).not.toHaveBeenCalled();
-      expect(secondHandlers.onLoad).toHaveBeenCalledTimes(1);
-      expect(secondHandlers.onLoadEnd).toHaveBeenCalledTimes(1);
+      expect(secondHandlers.onLoad).toHaveBeenCalledOnce();
+      expect(secondHandlers.onLoadEnd).toHaveBeenCalledOnce();
     });
   });
 
@@ -319,13 +314,13 @@ describe('components/Image', () => {
         type: 'png'
       } as PackagerAsset);
 
-      PixelRatio.get = vi.fn(() => 1.0);
+      vi.spyOn(PixelRatio, 'get').mockReturnValue(1.0);
       let { container } = render(<Image source={assetId} />);
       expect(container.querySelector('img')?.src).toBe(
         'http://localhost/static/img.png'
       );
 
-      PixelRatio.get = vi.fn(() => 2.2);
+      vi.spyOn(PixelRatio, 'get').mockReturnValue(2.2);
       ({ container } = render(<Image source={assetId} />));
       expect(container.querySelector('img')?.src).toBe(
         'http://localhost/static/img@2x.png'
@@ -402,8 +397,8 @@ describe('components/Image', () => {
 
   describe('resolveAssetSource', () => {
     test('returns null and undefined as-is', () => {
-      expect(Image.resolveAssetSource(null)).toBe(null);
-      expect(Image.resolveAssetSource(undefined)).toBe(undefined);
+      expect(Image.resolveAssetSource(null)).toBeNull();
+      expect(Image.resolveAssetSource(undefined)).toBeUndefined();
     });
 
     test('returns object and array sources as-is', () => {
@@ -431,7 +426,7 @@ describe('components/Image', () => {
         width: 20
       } as PackagerAsset);
 
-      PixelRatio.get = vi.fn(() => 2);
+      vi.spyOn(PixelRatio, 'get').mockReturnValue(2);
 
       expect(Image.resolveAssetSource(assetId)).toEqual({
         height: 10,
@@ -442,7 +437,7 @@ describe('components/Image', () => {
     });
 
     test('returns null for unknown packager assets', () => {
-      expect(Image.resolveAssetSource(99999)).toBe(null);
+      expect(Image.resolveAssetSource(99999)).toBeNull();
     });
   });
 

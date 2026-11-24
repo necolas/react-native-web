@@ -385,7 +385,6 @@ describe('StyleSheet/preprocess', () => {
       });
 
       expect(spy).toHaveBeenCalledTimes(2);
-      spy.mockRestore();
     });
 
     test('shadowOffset only', () => {

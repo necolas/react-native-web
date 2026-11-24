@@ -5,19 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import type { Mock } from 'vitest';
-
 import { validate } from '../validate';
 
 describe('validate', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
-  });
-  afterAll(() => {
-    (console.error as Mock).mockRestore();
-  });
-  afterEach(() => {
-    (console.error as Mock).mockClear();
   });
 
   test('invalid shortform properties', () => {

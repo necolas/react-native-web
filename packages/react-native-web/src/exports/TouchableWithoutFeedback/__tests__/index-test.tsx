@@ -40,7 +40,7 @@ describe('components/TouchableWithoutFeedback', () => {
 
   test('forwards type to a host child', () => {
     // React DOM warns about the responder props cloned onto <button>
-    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const { container } = render(
       <TouchableWithoutFeedback type="submit">
@@ -48,7 +48,6 @@ describe('components/TouchableWithoutFeedback', () => {
       </TouchableWithoutFeedback>
     );
 
-    spy.mockRestore();
     const element = container.firstChild as HTMLElement;
     expect(element.getAttribute('type')).toBe('submit');
     expect(element.hasAttribute('unstable_type')).toBe(false);

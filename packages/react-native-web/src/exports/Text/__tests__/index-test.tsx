@@ -298,11 +298,11 @@ describe('components/Text', () => {
           <Text nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
       act(() => {
         rerender(<Text nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />);
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
     });
 
     test('node has imperative methods', () => {

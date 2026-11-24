@@ -77,8 +77,8 @@ describe('useHover', () => {
         child.pointerover();
         child.pointerout({ relatedTarget: document.body });
       });
-      expect(onHoverStart).toHaveBeenCalledTimes(1);
-      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledOnce();
+      expect(onHoverEnd).toHaveBeenCalledOnce();
     });
 
     test('only changes the nearest ancestor', () => {
@@ -111,8 +111,8 @@ describe('useHover', () => {
         grandchild.pointerover();
         grandchild.pointerout({ relatedTarget: child.node });
       });
-      expect(onHoverStart).toHaveBeenCalledTimes(1);
-      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledOnce();
+      expect(onHoverEnd).toHaveBeenCalledOnce();
     });
   });
 
@@ -171,7 +171,7 @@ describe('useHover', () => {
       act(() => {
         target.pointerover({ pointerType: 'mouse' });
       });
-      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledOnce();
     });
 
     test('is not called for touch pointers', () => {
@@ -192,7 +192,7 @@ describe('useHover', () => {
         target.pointerup({ pointerType: 'touch' });
         target.pointerover({ pointerType: 'mouse' });
       });
-      expect(onHoverStart).toHaveBeenCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledOnce();
     });
   });
 
@@ -215,8 +215,7 @@ describe('useHover', () => {
       act(() => {
         target.pointerover();
       });
-      expect(onHoverChange).toHaveBeenCalledTimes(1);
-      expect(onHoverChange).toHaveBeenCalledWith(true);
+      expect(onHoverChange).toHaveBeenCalledExactlyOnceWith(true);
       act(() => {
         target.pointerout();
       });
@@ -260,7 +259,7 @@ describe('useHover', () => {
         target.pointerover();
         target.pointerout();
       });
-      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+      expect(onHoverEnd).toHaveBeenCalledOnce();
     });
 
     test('is not called for touch pointers', () => {
@@ -315,8 +314,8 @@ describe('useHover', () => {
         target.pointerover();
         target.pointerout();
       });
-      expect(onHoverStart).toHaveBeenCalledTimes(1);
-      expect(onHoverEnd).toHaveBeenCalledTimes(1);
+      expect(onHoverStart).toHaveBeenCalledOnce();
+      expect(onHoverEnd).toHaveBeenCalledOnce();
       expect(onHoverChange).toHaveBeenCalledTimes(2);
       act(() => {
         target.pointerover();

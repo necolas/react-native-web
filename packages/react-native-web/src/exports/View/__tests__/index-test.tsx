@@ -8,7 +8,6 @@
 import { act, render, type RenderResult } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
 import React from 'react';
-import type { Mock } from 'vitest';
 
 import View from '../';
 import type { HostNode } from '../../../types';
@@ -27,12 +26,7 @@ describe('components/View', () => {
 
   describe('raw text nodes as children', () => {
     beforeEach(() => {
-      vi.spyOn(console, 'error');
-      (console.error as Mock).mockImplementation(() => {});
-    });
-
-    afterEach(() => {
-      (console.error as Mock).mockRestore();
+      vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     test('error logged (single)', () => {
@@ -266,11 +260,11 @@ describe('components/View', () => {
           <View nativeID="123" ref={ref} style={{ borderWidth: 5 }} />
         ));
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
       act(() => {
         rerender(<View nativeID="1234" ref={ref} style={{ borderWidth: 6 }} />);
       });
-      expect(ref).toHaveBeenCalledTimes(1);
+      expect(ref).toHaveBeenCalledOnce();
     });
 
     test('node has imperative methods', () => {

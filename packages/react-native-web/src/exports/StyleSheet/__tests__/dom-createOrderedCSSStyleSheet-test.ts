@@ -172,7 +172,7 @@ describe('createOrderedCSSStyleSheet', () => {
       );
       const sheet = createOrderedCSSStyleSheet(element.sheet);
       sheet.insert('@supports (color:mark){:host,:root{--rnw-mark:mark;}}', 0);
-      expect(element.sheet?.cssRules.length).toBe(2);
+      expect(element.sheet?.cssRules).toHaveLength(2);
     });
 
     test('ignores rules before the first group', () => {

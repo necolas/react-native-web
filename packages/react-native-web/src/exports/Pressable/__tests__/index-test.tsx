@@ -336,7 +336,7 @@ describe('components/Pressable', () => {
         vi.runAllTimers();
       });
 
-      expect(onPress).toHaveBeenCalledTimes(1);
+      expect(onPress).toHaveBeenCalledOnce();
     });
 
     test('ignore press when role is "link" and href is set', () => {

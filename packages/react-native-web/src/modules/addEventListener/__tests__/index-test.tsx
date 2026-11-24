@@ -34,7 +34,7 @@ describe('addEventListener', () => {
         target.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('event dispatched on parent', () => {
@@ -77,8 +77,8 @@ describe('addEventListener', () => {
         parent.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(0);
-      expect(listenerCapture).toHaveBeenCalledTimes(0);
+      expect(listener).not.toHaveBeenCalled();
+      expect(listenerCapture).not.toHaveBeenCalled();
     });
 
     test('event dispatched on child', () => {
@@ -126,8 +126,8 @@ describe('addEventListener', () => {
         child.click();
       });
 
-      expect(listenerCapture).toHaveBeenCalledTimes(1);
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listenerCapture).toHaveBeenCalledOnce();
+      expect(listener).toHaveBeenCalledOnce();
       expect(log).toEqual(['capture', 'bubble']);
     });
 
@@ -156,7 +156,7 @@ describe('addEventListener', () => {
         text.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listener can be attached to document', () => {
@@ -177,7 +177,7 @@ describe('addEventListener', () => {
         target.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listener can be attached to window ', () => {
@@ -198,7 +198,7 @@ describe('addEventListener', () => {
         target.click();
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('custom event dispatched on target', () => {
@@ -220,7 +220,7 @@ describe('addEventListener', () => {
         targetRef.current?.dispatchEvent(event);
       });
 
-      expect(listener).toHaveBeenCalledTimes(1);
+      expect(listener).toHaveBeenCalledOnce();
     });
 
     test('listeners can be set on multiple targets simultaneously', () => {
@@ -323,10 +323,10 @@ describe('addEventListener', () => {
         child.click();
       });
 
-      expect(listenerCapture).toHaveBeenCalledTimes(1);
-      expect(listenerCaptureAlt).toHaveBeenCalledTimes(1);
-      expect(listener).toHaveBeenCalledTimes(1);
-      expect(listenerAlt).toHaveBeenCalledTimes(1);
+      expect(listenerCapture).toHaveBeenCalledOnce();
+      expect(listenerCaptureAlt).toHaveBeenCalledOnce();
+      expect(listener).toHaveBeenCalledOnce();
+      expect(listenerAlt).toHaveBeenCalledOnce();
       expect(log).toEqual([
         ['capture', 'target'],
         ['capture', 'target-alt'],
@@ -367,8 +367,8 @@ describe('addEventListener', () => {
         child.click();
       });
 
-      expect(childListener).toHaveBeenCalledTimes(1);
-      expect(targetListener).toHaveBeenCalledTimes(0);
+      expect(childListener).toHaveBeenCalledOnce();
+      expect(targetListener).not.toHaveBeenCalled();
     });
 
     test('stopImmediatePropagation works as expected', () => {
@@ -395,8 +395,8 @@ describe('addEventListener', () => {
         target.click();
       });
 
-      expect(firstListener).toHaveBeenCalledTimes(1);
-      expect(secondListener).toHaveBeenCalledTimes(0);
+      expect(firstListener).toHaveBeenCalledOnce();
+      expect(secondListener).not.toHaveBeenCalled();
     });
   });
 });

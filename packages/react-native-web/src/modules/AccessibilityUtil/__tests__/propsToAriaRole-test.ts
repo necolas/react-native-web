@@ -29,7 +29,7 @@ describe('modules/AccessibilityUtil/propsToAriaRole', () => {
   });
 
   test('when "role" is "label" (non-standard)', () => {
-    expect(propsToAriaRole({ role: 'label' })).toEqual(undefined);
+    expect(propsToAriaRole({ role: 'label' })).toBeUndefined();
   });
 
   // @deprecated
@@ -41,6 +41,6 @@ describe('modules/AccessibilityUtil/propsToAriaRole', () => {
       undefined
     );
     // not really native-only, but used to allow Web to render <label> around TextInput
-    expect(propsToAriaRole({ accessibilityRole: 'label' })).toEqual(undefined);
+    expect(propsToAriaRole({ accessibilityRole: 'label' })).toBeUndefined();
   });
 });

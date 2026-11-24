@@ -9,7 +9,6 @@ import { setImmediate } from 'node:timers';
 
 import ImageLoader from '..';
 
-const originalImage = window.Image;
 const uri = 'https://test.com/img.jpg';
 
 const flushPromises = () => new Promise((resolve) => setImmediate(resolve));
@@ -35,15 +34,14 @@ describe('modules/ImageLoader', () => {
 
   beforeEach(() => {
     images = [];
-    window.Image = vi.fn(function () {
-      const image: FakeImage = { decode: () => Promise.resolve() };
-      images.push(image);
-      return image as unknown as HTMLImageElement;
-    });
-  });
-
-  afterEach(() => {
-    window.Image = originalImage;
+    vi.stubGlobal(
+      'Image',
+      vi.fn(function () {
+        const image: FakeImage = { decode: () => Promise.resolve() };
+        images.push(image);
+        return image as unknown as HTMLImageElement;
+      })
+    );
   });
 
   test('load resolves and releases the image', async () => {

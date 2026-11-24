@@ -10,7 +10,7 @@ import type { Mock } from 'vitest';
 import type TaskQueueType from '../TaskQueue';
 
 function expectToHaveBeenCalledOnce(fn: Mock) {
-  expect(fn.mock.calls.length).toBe(1);
+  expect(fn).toHaveBeenCalledOnce();
 }
 
 function clearTaskQueue(taskQueue: TaskQueueType) {

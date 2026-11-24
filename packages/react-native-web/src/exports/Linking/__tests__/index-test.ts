@@ -39,7 +39,6 @@ describe('apis/Linking', () => {
     afterEach(() => {
       Linking.removeAllListeners('onOpen');
       Linking.removeAllListeners('other');
-      vi.restoreAllMocks();
     });
 
     test('registers each subscription once and removes only itself', async () => {
@@ -59,9 +58,8 @@ describe('apis/Linking', () => {
       expect(Linking.listenerCount('onOpen')).toBe(2);
 
       await Linking.openURL('https://example.com');
-      expect(first).toHaveBeenCalledTimes(1);
-      expect(second).toHaveBeenCalledTimes(1);
-      expect(second).toHaveBeenCalledWith('https://example.com');
+      expect(first).toHaveBeenCalledOnce();
+      expect(second).toHaveBeenCalledExactlyOnceWith('https://example.com');
     });
 
     test('emit calls only the listeners present when it starts', () => {
@@ -78,12 +76,12 @@ describe('apis/Linking', () => {
       const secondSubscription = Linking.addListener('onOpen', second);
 
       Linking.emit('onOpen');
-      expect(first).toHaveBeenCalledTimes(1);
-      expect(second).toHaveBeenCalledTimes(1);
+      expect(first).toHaveBeenCalledOnce();
+      expect(second).toHaveBeenCalledOnce();
 
       Linking.emit('onOpen');
       expect(first).toHaveBeenCalledTimes(3);
-      expect(second).toHaveBeenCalledTimes(1);
+      expect(second).toHaveBeenCalledOnce();
     });
 
     test('removeAllListeners clears one event type and requires a type', () => {
@@ -97,7 +95,7 @@ describe('apis/Linking', () => {
       Linking.emit('other');
 
       expect(first).not.toHaveBeenCalled();
-      expect(other).toHaveBeenCalledTimes(1);
+      expect(other).toHaveBeenCalledOnce();
       expect(() => Linking.removeAllListeners()).toThrow();
     });
   });

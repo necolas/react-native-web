@@ -27,7 +27,7 @@ describe('apis/Dimensions', () => {
        "width": 1024,
      }
     `);
-    expect(handler).toHaveBeenCalledTimes(0);
+    expect(handler).not.toHaveBeenCalled();
   });
 
   test('set', () => {
@@ -39,20 +39,20 @@ describe('apis/Dimensions', () => {
     const handler = vi.fn();
     const subscription = Dimensions.addEventListener('change', handler);
     window.dispatchEvent(new Event('resize'));
-    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledOnce();
     expect(handler).toHaveBeenLastCalledWith({
       window: Dimensions.get('window'),
       screen: Dimensions.get('screen')
     });
     subscription.remove();
     window.dispatchEvent(new Event('resize'));
-    expect(handler).toHaveBeenCalledTimes(1);
+    expect(handler).toHaveBeenCalledOnce();
   });
 
   test('removeEventListener', () => {
     const handler = vi.fn();
     Dimensions.removeEventListener('change', handler);
     window.dispatchEvent(new Event('resize'));
-    expect(handler).toHaveBeenCalledTimes(0);
+    expect(handler).not.toHaveBeenCalled();
   });
 });
