@@ -46,7 +46,7 @@
     "oxlint": "1.94.0",
     "oxlint-tsgolint": "7.0.2008",
     "terser": "^5.51.2",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.12"
   },
   "lint-staged": {

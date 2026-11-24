@@ -20,11 +20,9 @@
     "verbatimModuleSyntax": true,
 
     // Language and Environment
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": ["DOM", "ESNext"],
     "target": "esnext",
-    // Babel removes type-only class fields
-    "useDefineForClassFields": false,
 
     // Completeness
     "skipLibCheck": true,
@@ -32,13 +30,16 @@
     // Type Checking
     "strict": true,
     "allowUnreachableCode": false,
-    "allowUnusedLabels": false
+    "allowUnusedLabels": false,
     // "exactOptionalPropertyTypes": true,
     // "noImplicitOverride": true,
     // "noImplicitReturns": true,
     // "noUncheckedIndexedAccess": true,
     // "noUnusedLocals": true
     // "noUnusedParameters": true,
+
+    // Babel removes type-only class fields
+    "useDefineForClassFields": false
   },
   "files": [],
   "references": [
