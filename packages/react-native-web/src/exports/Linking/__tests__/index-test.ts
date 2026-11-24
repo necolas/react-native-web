@@ -4,7 +4,6 @@ describe('apis/Linking', () => {
   describe('openURL', () => {
     test('calls open with a url and target', async () => {
       const open = vi.spyOn(window, 'open').mockImplementationOnce(() => null);
-
       await Linking.openURL('http://foo.com', '_self');
 
       expect(open).toHaveBeenCalledWith('http://foo.com/', '_self', 'noopener');
@@ -12,7 +11,6 @@ describe('apis/Linking', () => {
 
     test('defaults target to _blank if not provided', async () => {
       const open = vi.spyOn(window, 'open').mockImplementationOnce(() => null);
-
       await Linking.openURL('http://foo.com');
 
       expect(open).toHaveBeenCalledWith(
@@ -24,7 +22,6 @@ describe('apis/Linking', () => {
 
     test('accepts undefined as a target', async () => {
       const open = vi.spyOn(window, 'open').mockImplementationOnce(() => null);
-
       await Linking.openURL('http://foo.com', undefined);
 
       expect(open).toHaveBeenCalledWith(
