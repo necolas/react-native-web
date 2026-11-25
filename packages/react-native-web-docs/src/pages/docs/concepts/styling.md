@@ -62,7 +62,7 @@ You have greater control over how styles are composed when compared to using cla
 
 ### Direction
 
-{% call macro.prop('direction', '?("inherit" | "ltr" | "rtl")') %}
+{% call macro.prop('direction', '?("ltr" | "rtl")') %}
 Equivalent to [direction](https://developer.mozilla.org/en-US/docs/Web/CSS/direction). Sets the writing direction of a component and its subtree. Logical properties (e.g., `marginInlineStart`) follow it.
 {% endcall %}
 
