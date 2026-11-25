@@ -237,18 +237,6 @@ describe('StyleSheet', () => {
       );
     });
 
-    test('localizes compiled objects', () => {
-      const compiledStyle = {
-        $$css: true,
-        $$css$localize: true,
-        marginStart: ['marginLeft-10', 'marginRight-10']
-      };
-      expect(StyleSheet([compiledStyle])[0]).toBe('marginLeft-10');
-      expect(StyleSheet([compiledStyle], { writingDirection: 'rtl' })[0]).toBe(
-        'marginRight-10'
-      );
-    });
-
     test('dedupes class names and inline styles', () => {
       const styleACompiled = {
         $$css: true,
@@ -335,7 +323,7 @@ describe('StyleSheet', () => {
       ).toBeNull();
     });
 
-    test('polyfills logical styles', () => {
+    test('keeps logical styles', () => {
       const inlineA = { start: '12.34%' };
       const inlineB = { textAlign: 'start' };
       const inlineC = { marginEnd: 10 };
@@ -343,127 +331,50 @@ describe('StyleSheet', () => {
       const a = StyleSheet.create({ x: { ...inlineA } }).x;
       const b = StyleSheet.create({ x: { ...inlineB } }).x;
       const c = StyleSheet.create({ x: { ...inlineC } }).x;
-      const writingDirection = 'rtl';
 
       // inline styles
       const inlineStyle = [inlineA, inlineB, inlineC];
       expect(StyleSheet(inlineStyle)).toMatchInlineSnapshot(`
-       [
-         "",
-         {
-           "left": "12.34%",
-           "marginRight": "10px",
-           "textAlign": "left",
-         },
-         "",
-       ]
+        [
+          "",
+          {
+            "insetInlineStart": "12.34%",
+            "marginInlineEnd": "10px",
+            "textAlign": "start",
+          },
+          "",
+        ]
       `);
-      expect(StyleSheet(inlineStyle, { writingDirection }))
+      expect(StyleSheet([inlineStyle, { marginEnd: null, marginLeft: 11 }]))
         .toMatchInlineSnapshot(`
-       [
-         "",
-         {
-           "marginLeft": "10px",
-           "right": "12.34%",
-           "textAlign": "right",
-         },
-         "",
-       ]
-      `);
-      expect(
-        StyleSheet(
-          [
-            inlineStyle,
-            { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
-          ],
-
-          { writingDirection }
-        )
-      ).toMatchInlineSnapshot(`
-       [
-         "",
-         {
-           "marginLeft": "1px",
-           "marginRight": "11px",
-           "right": "12.34%",
-           "textAlign": "right",
-         },
-         "",
-       ]
-      `);
-      expect(
-        StyleSheet([inlineStyle, { marginEnd: null, marginLeft: 11 }], {
-          writingDirection
-        })
-      ).toMatchInlineSnapshot(`
-       [
-         "",
-         {
-           "marginLeft": "11px",
-           "right": "12.34%",
-           "textAlign": "right",
-         },
-         "",
-       ]
+        [
+          "",
+          {
+            "insetInlineStart": "12.34%",
+            "marginLeft": "11px",
+            "textAlign": "start",
+          },
+          "",
+        ]
       `);
 
       // static styles
       const staticStyle = [a, b, c];
       expect(StyleSheet(staticStyle)).toMatchInlineSnapshot(`
-       [
-         "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf",
-         null,
-         "",
-       ]
-      `);
-      expect(StyleSheet(staticStyle, { writingDirection }))
-        .toMatchInlineSnapshot(`
-       [
-         "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t r-marginInlineEnd-t1sew1",
-         null,
-         "",
-       ]
-      `);
-      const z = StyleSheet.create({ x: { marginRight: 33 } }).x;
-      expect(StyleSheet([staticStyle, z])).toMatchInlineSnapshot(`
-       [
-         "r-insetInlineStart-1xn1m1p r-textAlign-fdjqy7 r-marginInlineEnd-1l8l4mf r-marginRight-j4vy6k",
-         null,
-         "",
-       ]
-      `);
-      expect(
-        StyleSheet(
-          [
-            staticStyle,
-            { marginLeft: 1, marginEnd: 0, marginStart: 0, marginRight: 11 }
-          ],
-
-          {
-            writingDirection
-          }
-        )
-      ).toMatchInlineSnapshot(`
-       [
-         "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t",
-         {
-           "marginLeft": "1px",
-           "marginRight": "11px",
-         },
-         "",
-       ]
+        [
+          "r-insetInlineStart-1a9qabf r-textAlign-14537ki r-marginInlineEnd-j2y3bo",
+          null,
+          "",
+        ]
       `);
       // logical can be nulled
-      expect(
-        StyleSheet([staticStyle, { marginEnd: null }], {
-          writingDirection
-        })
-      ).toMatchInlineSnapshot(`
-       [
-         "r-insetInlineStart-1y2vi53 r-textAlign-1ff274t",
-         null,
-         "",
-       ]
+      expect(StyleSheet([staticStyle, { marginEnd: null }]))
+        .toMatchInlineSnapshot(`
+        [
+          "r-insetInlineStart-1a9qabf r-textAlign-14537ki",
+          null,
+          "",
+        ]
       `);
     });
   });

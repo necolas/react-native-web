@@ -38,20 +38,6 @@ exports[`components/View > prop "aria-live" > value is set 1`] = `
 />
 `;
 
-exports[`components/View > prop "dir" > value is "ltr" 1`] = `
-<div
-  class="css-view-g5y9jx"
-  dir="ltr"
-/>
-`;
-
-exports[`components/View > prop "dir" > value is "rtl" 1`] = `
-<div
-  class="css-view-g5y9jx"
-  dir="rtl"
-/>
-`;
-
 exports[`components/View > prop "href" > href with role 1`] = `
 <a
   class="css-view-g5y9jx"
@@ -95,36 +81,6 @@ exports[`components/View > prop "hrefAttrs" > value is set 1`] = `
   href="https://example.com"
   rel="nofollow"
   target="_blank"
-/>
-`;
-
-exports[`components/View > prop "lang" > ar 1`] = `
-<div
-  class="css-view-g5y9jx"
-  dir="rtl"
-  lang="ar"
-/>
-`;
-
-exports[`components/View > prop "lang" > fr 1`] = `
-<div
-  class="css-view-g5y9jx"
-  dir="ltr"
-  lang="fr"
-/>
-`;
-
-exports[`components/View > prop "lang" > undefined 1`] = `
-<div
-  class="css-view-g5y9jx"
-/>
-`;
-
-exports[`components/View > prop "lang" > with dir 1`] = `
-<div
-  class="css-view-g5y9jx"
-  dir="ltr"
-  lang="ar"
 />
 `;
 

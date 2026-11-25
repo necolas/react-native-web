@@ -17,8 +17,14 @@ export type StyleValue =
 
 const colorProps = new Set([
   'backgroundColor',
+  'borderBlockColor',
+  'borderBlockEndColor',
+  'borderBlockStartColor',
   'borderBottomColor',
   'borderColor',
+  'borderInlineColor',
+  'borderInlineEndColor',
+  'borderInlineStartColor',
   'borderLeftColor',
   'borderRightColor',
   'borderTopColor',

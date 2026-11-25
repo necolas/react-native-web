@@ -17,7 +17,7 @@ A guide to producing localized layout for different locales.
 
 ## Localization styles
 
-The non-standard [direction-independent style properties and values]({{ '/docs/styling/#non-standard-properties' | url }}) (e.g., `marginStart`) should be used as much as possible. {{ site.name }} will automatically flip the direction of these properties within subtrees based on the writing direction of the ancestor tree.
+The non-standard [direction-independent style properties and values]({{ '/docs/styling/#non-standard-properties' | url }}) (e.g., `marginStart`) should be used as much as possible. They are output as CSS logical properties (e.g., `margin-inline-start`), so the browser resolves them from the writing direction of the element.
 
 ```jsx
 // "start" is "left" for LTR and "right" for RTL
@@ -25,30 +25,10 @@ const style = { paddingInlineStart: 10, marginInlineStart: 10 };
 return <View style={style} />;
 ```
 
-## Localization props
+## Writing direction
 
-To automatically flip the layout of a component and its subtree, you can either:
-
-1. Set the `dir` prop to the desired writing direction (e.g., `"rtl"`).
-2. Set the `lang` prop to the locale of the content.
+To flip the layout of a component and its subtree, set the `direction` style to the desired writing direction (e.g., `"rtl"`).
 
 ```jsx
-<View dir="ltr">...</View>
-<Text lang="ar">...</Text>
-```
-
-By default, the native writing direction of `Text` and `TextInput` components is set to `"auto"`. This uses the browser's built-in writing direction algorithm to detect whether the text should be displayed left-to-right or right-to-left.
-
-## Localization hook
-
-The `useLocaleContext` API can be used for fine-grained control of layout, e.g., flipping images or transforms.
-
-```jsx
-const { direction, locale } = useLocaleContext();
-
-const isRTL = direction === 'rtl';
-const style = { scaleX: isRTL ? -1 : 1 };
-
-<Image source="forward.svg" style={style} />
-<Image source={isRTL ? 'back.svg' : 'forward.svg'} />
+<View style={{ direction: 'rtl' }}>...</View>
 ```

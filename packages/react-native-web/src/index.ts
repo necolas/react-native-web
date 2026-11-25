@@ -65,5 +65,4 @@ export { default as useAnimatedColor } from './exports/useAnimatedColor';
 export { default as useAnimatedValue } from './exports/useAnimatedValue';
 export { default as useAnimatedValueXY } from './exports/useAnimatedValueXY';
 export { default as useColorScheme } from './exports/useColorScheme';
-export { default as useLocaleContext } from './exports/useLocaleContext';
 export { default as useWindowDimensions } from './exports/useWindowDimensions';

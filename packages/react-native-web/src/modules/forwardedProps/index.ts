@@ -8,7 +8,6 @@
 export const defaultProps: string[] = [
   'children',
   'dataSet',
-  'dir',
   'id',
   'ref',
   'suppressHydrationWarning',

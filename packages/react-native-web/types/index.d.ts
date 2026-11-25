@@ -118,7 +118,6 @@ interface WebEventProps {
 
 interface WebSharedProps extends WebEventProps {
   dataSet?: Record<string, unknown> | undefined;
-  lang?: string | undefined;
   title?: string | undefined;
   /** @unstable */
   href?: string | undefined;
@@ -345,9 +344,7 @@ declare module 'react-native' {
     role?: Role | WebRole | undefined;
   }
 
-  interface ViewProps extends WebSharedProps {
-    dir?: 'ltr' | 'rtl' | undefined;
-  }
+  interface ViewProps extends WebSharedProps {}
 
   interface TextProps
     extends
@@ -383,14 +380,11 @@ declare module 'react-native' {
         | 'onTouchStart'
         | 'onTouchStartCapture'
         | 'tabIndex'
-      > {
-    dir?: 'auto' | 'ltr' | 'rtl' | undefined;
-  }
+      > {}
 
   interface TextInputProps {
     /** @deprecated Use `autoComplete`. */
     autoCompleteType?: string | undefined;
-    dir?: 'auto' | 'ltr' | 'rtl' | undefined;
     disabled?: boolean | undefined;
   }
 

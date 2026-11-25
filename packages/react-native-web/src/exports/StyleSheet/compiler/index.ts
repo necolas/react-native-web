@@ -6,7 +6,6 @@
  */
 
 import type { Nullable } from '../../../types';
-import { PROPERTIES_STANDARD } from '../preprocess';
 import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
@@ -23,15 +22,15 @@ type Rules = Array<Rule>;
 type RulesData = [Rules, number];
 type CompiledStyle = {
   $$css: true;
-  [key: string]: string | Array<string> | boolean;
+  [key: string]: string | boolean;
 };
 type CompilerOutput = [CompiledStyle, Array<RulesData>];
 
 const cache = new Map<string, [string, RulesData]>();
-const emptyObject = {};
 
 const classicGroup = 1;
 const atomicGroup = 3;
+
 const customGroup: Record<string, number> = {
   borderColor: 2,
   borderRadius: 2,
@@ -39,152 +38,66 @@ const customGroup: Record<string, number> = {
   borderWidth: 2,
   display: 2,
   flex: 2,
+  gap: 2,
   inset: 2,
   margin: 2,
   overflow: 2,
   overscrollBehavior: 2,
   padding: 2,
+
+  borderBlockColor: 2.1,
+  borderBlockStyle: 2.1,
+  borderBlockWidth: 2.1,
+  borderInlineColor: 2.1,
+  borderInlineStyle: 2.1,
+  borderInlineWidth: 2.1,
   insetBlock: 2.1,
   insetInline: 2.1,
-  marginInline: 2.1,
   marginBlock: 2.1,
-  paddingInline: 2.1,
+  marginInline: 2.1,
   paddingBlock: 2.1,
-  borderBlockStartColor: 2.2,
-  borderBlockStartStyle: 2.2,
-  borderBlockStartWidth: 2.2,
+  paddingInline: 2.1,
+
   borderBlockEndColor: 2.2,
   borderBlockEndStyle: 2.2,
   borderBlockEndWidth: 2.2,
-  borderInlineStartColor: 2.2,
-  borderInlineStartStyle: 2.2,
-  borderInlineStartWidth: 2.2,
+  borderBlockStartColor: 2.2,
+  borderBlockStartStyle: 2.2,
+  borderBlockStartWidth: 2.2,
+  borderEndEndRadius: 2.2,
+  borderEndStartRadius: 2.2,
   borderInlineEndColor: 2.2,
   borderInlineEndStyle: 2.2,
   borderInlineEndWidth: 2.2,
-  borderEndStartRadius: 2.2,
-  borderEndEndRadius: 2.2,
-  borderStartStartRadius: 2.2,
+  borderInlineStartColor: 2.2,
+  borderInlineStartStyle: 2.2,
+  borderInlineStartWidth: 2.2,
   borderStartEndRadius: 2.2,
+  borderStartStartRadius: 2.2,
   insetBlockEnd: 2.2,
   insetBlockStart: 2.2,
   insetInlineEnd: 2.2,
   insetInlineStart: 2.2,
-  marginBlockStart: 2.2,
   marginBlockEnd: 2.2,
-  marginInlineStart: 2.2,
+  marginBlockStart: 2.2,
   marginInlineEnd: 2.2,
-  paddingBlockStart: 2.2,
+  marginInlineStart: 2.2,
   paddingBlockEnd: 2.2,
+  paddingBlockStart: 2.2,
+  paddingInlineEnd: 2.2,
   paddingInlineStart: 2.2,
-  paddingInlineEnd: 2.2
+
+  marginHorizontal: 2.3,
+  marginVertical: 2.3,
+  paddingHorizontal: 2.3,
+  paddingVertical: 2.3
 };
-
-const borderTopLeftRadius = 'borderTopLeftRadius';
-const borderTopRightRadius = 'borderTopRightRadius';
-const borderBottomLeftRadius = 'borderBottomLeftRadius';
-const borderBottomRightRadius = 'borderBottomRightRadius';
-const borderLeftColor = 'borderLeftColor';
-const borderLeftStyle = 'borderLeftStyle';
-const borderLeftWidth = 'borderLeftWidth';
-const borderRightColor = 'borderRightColor';
-const borderRightStyle = 'borderRightStyle';
-const borderRightWidth = 'borderRightWidth';
-const right = 'right';
-const marginLeft = 'marginLeft';
-const marginRight = 'marginRight';
-const paddingLeft = 'paddingLeft';
-const paddingRight = 'paddingRight';
-const left = 'left';
-
-// Map of LTR property names to their BiDi equivalent.
-const PROPERTIES_FLIP: Record<string, string> = {
-  [borderTopLeftRadius]: borderTopRightRadius,
-  [borderTopRightRadius]: borderTopLeftRadius,
-  [borderBottomLeftRadius]: borderBottomRightRadius,
-  [borderBottomRightRadius]: borderBottomLeftRadius,
-  [borderLeftColor]: borderRightColor,
-  [borderLeftStyle]: borderRightStyle,
-  [borderLeftWidth]: borderRightWidth,
-  [borderRightColor]: borderLeftColor,
-  [borderRightStyle]: borderLeftStyle,
-  [borderRightWidth]: borderLeftWidth,
-  [left]: right,
-  [marginLeft]: marginRight,
-  [marginRight]: marginLeft,
-  [paddingLeft]: paddingRight,
-  [paddingRight]: paddingLeft,
-  [right]: left
-};
-
-// Map of I18N property names to their LTR equivalent.
-const PROPERTIES_I18N: Record<string, string> = {
-  borderStartStartRadius: borderTopLeftRadius,
-  borderStartEndRadius: borderTopRightRadius,
-  borderEndStartRadius: borderBottomLeftRadius,
-  borderEndEndRadius: borderBottomRightRadius,
-  borderInlineStartColor: borderLeftColor,
-  borderInlineStartStyle: borderLeftStyle,
-  borderInlineStartWidth: borderLeftWidth,
-  borderInlineEndColor: borderRightColor,
-  borderInlineEndStyle: borderRightStyle,
-  borderInlineEndWidth: borderRightWidth,
-  insetInlineEnd: right,
-  insetInlineStart: left,
-  marginInlineStart: marginLeft,
-  marginInlineEnd: marginRight,
-  paddingInlineStart: paddingLeft,
-  paddingInlineEnd: paddingRight
-};
-
-const PROPERTIES_VALUE = new Set(['clear', 'float', 'textAlign']);
-
-// Maps of I18N property names and React Native aliases to their hyphenated
-// LTR and RTL equivalent, for transitionProperty values.
-const TRANSITION_PROPERTIES_LTR: Record<string, string> = {};
-const TRANSITION_PROPERTIES_RTL: Record<string, string> = {};
-
-for (const prop of [
-  ...Object.keys(PROPERTIES_I18N),
-  ...Object.keys(PROPERTIES_STANDARD)
-]) {
-  const ltrProp = PROPERTIES_I18N[PROPERTIES_STANDARD[prop] ?? prop];
-
-  if (ltrProp != null) {
-    const ltrName = hyphenateStyleName(ltrProp);
-    const rtlName = hyphenateStyleName(PROPERTIES_FLIP[ltrProp]);
-
-    [prop, hyphenateStyleName(prop)].forEach((name) => {
-      TRANSITION_PROPERTIES_LTR[name] = ltrName;
-      TRANSITION_PROPERTIES_RTL[name] = rtlName;
-    });
-  }
-}
-
-function localizeTransitionProperty(
-  value: StyleValue,
-  isRTL?: boolean
-): string {
-  const map = isRTL ? TRANSITION_PROPERTIES_RTL : TRANSITION_PROPERTIES_LTR;
-
-  return (Array.isArray(value) ? value.join(', ') : String(value))
-    .split(',')
-    .map((name) => {
-      const trimmedName = name.trim();
-      return map[trimmedName] ?? trimmedName;
-    })
-    .join(', ');
-}
 
 export function atomic(style: Style): CompilerOutput {
   const compiledStyle: CompiledStyle = { $$css: true };
   const compiledRules: Array<RulesData> = [];
 
-  function atomicCompile(
-    srcProp: string,
-    prop: string,
-    value: StyleValue
-  ): string {
+  function atomicCompile(prop: string, value: StyleValue): string {
     const valueString = stringifyValueWithProperty(value, prop);
     const cacheKey = prop + valueString;
     const cachedResult = cache.get(cacheKey);
@@ -193,9 +106,8 @@ export function atomic(style: Style): CompilerOutput {
       identifier = cachedResult[0];
       compiledRules.push(cachedResult[1]);
     } else {
-      const v = srcProp !== prop ? cacheKey : valueString;
-      identifier = createIdentifier('r', srcProp, v);
-      const order = customGroup[srcProp] || atomicGroup;
+      identifier = createIdentifier('r', prop, valueString);
+      const order = customGroup[prop] || atomicGroup;
       const rules = createAtomicRules(identifier, prop, value);
       const orderedRules: RulesData = [rules, order];
       compiledRules.push(orderedRules);
@@ -209,46 +121,7 @@ export function atomic(style: Style): CompilerOutput {
     .forEach((srcProp) => {
       const value = style[srcProp];
       if (value != null) {
-        let localizeableValue: string | Array<string> | undefined;
-        // BiDi flip values
-        if (PROPERTIES_VALUE.has(srcProp)) {
-          const left = atomicCompile(srcProp, srcProp, 'left');
-          const right = atomicCompile(srcProp, srcProp, 'right');
-          if (value === 'start') {
-            localizeableValue = [left, right];
-          } else if (value === 'end') {
-            localizeableValue = [right, left];
-          }
-        }
-        // BiDi flip properties
-        const propPolyfill = PROPERTIES_I18N[srcProp];
-        if (propPolyfill != null) {
-          const ltr = atomicCompile(srcProp, propPolyfill, value);
-          const rtl = atomicCompile(
-            srcProp,
-            PROPERTIES_FLIP[propPolyfill],
-            value
-          );
-          localizeableValue = [ltr, rtl];
-        }
-        // BiDi flip transitionProperty value
-        if (srcProp === 'transitionProperty') {
-          const ltrValue = localizeTransitionProperty(value, false);
-          const rtlValue = localizeTransitionProperty(value, true);
-          if (ltrValue !== rtlValue) {
-            const ltr = atomicCompile(srcProp, srcProp, ltrValue);
-            const rtl = atomicCompile(srcProp, srcProp, rtlValue);
-            localizeableValue = [ltr, rtl];
-          }
-        }
-
-        if (localizeableValue == null) {
-          localizeableValue = atomicCompile(srcProp, srcProp, value);
-        } else {
-          compiledStyle['$$css$localize'] = true;
-        }
-
-        compiledStyle[srcProp] = localizeableValue;
+        compiledStyle[srcProp] = atomicCompile(srcProp, value);
       }
     });
 
@@ -279,61 +152,6 @@ export function classic(style: Style, name: string): CompilerOutput {
 
   compiledStyle[identifier] = identifier;
   return [compiledStyle, [[compiledRules, classicGroup]]];
-}
-
-/**
- * Compile simple style object to inline DOM styles.
- * No support for 'animationKeyframes', 'placeholderTextColor', 'scrollbarWidth', or 'pointerEvents'.
- */
-export function inline(
-  originalStyle: Readonly<Record<string, unknown>>,
-  isRTL?: boolean
-): Record<string, unknown> {
-  const style = originalStyle || emptyObject;
-  const frozenProps: Record<string, boolean> = {};
-  const nextStyle: Record<string, unknown> = {};
-
-  for (const originalProp in style) {
-    const originalValue = style[originalProp];
-    let prop = originalProp;
-    let value = originalValue;
-
-    if (
-      !Object.prototype.hasOwnProperty.call(style, originalProp) ||
-      originalValue == null
-    ) {
-      continue;
-    }
-
-    // BiDi flip values
-    if (PROPERTIES_VALUE.has(originalProp)) {
-      if (originalValue === 'start') {
-        value = isRTL ? 'right' : 'left';
-      } else if (originalValue === 'end') {
-        value = isRTL ? 'left' : 'right';
-      }
-    }
-    // BiDi flip properties
-    const propPolyfill = PROPERTIES_I18N[originalProp];
-    if (propPolyfill != null) {
-      prop = isRTL ? PROPERTIES_FLIP[propPolyfill] : propPolyfill;
-    }
-    // BiDi flip transitionProperty value
-    if (originalProp === 'transitionProperty') {
-      value = localizeTransitionProperty(originalValue as StyleValue, isRTL);
-    }
-
-    // Create finalized style
-    if (!frozenProps[prop]) {
-      nextStyle[prop] = value;
-    }
-
-    if (prop === originalProp) {
-      frozenProps[prop] = true;
-    }
-  }
-
-  return createReactDOMStyle(nextStyle, true);
 }
 
 /**

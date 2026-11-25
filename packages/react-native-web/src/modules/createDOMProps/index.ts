@@ -8,7 +8,7 @@
 import type { ComponentType } from 'react';
 import type { Styles } from 'styleq';
 
-import StyleSheet, { type StyleSheetOptions } from '../../exports/StyleSheet';
+import StyleSheet from '../../exports/StyleSheet';
 import type { AccessibilityProps } from '../../exports/View/types';
 import type { Nullable } from '../../types';
 import AccessibilityUtil from '../AccessibilityUtil';
@@ -18,17 +18,9 @@ export type ElementProps = {
   accessibilityState?: AccessibilityProps['accessibilityState'];
   accessibilityValue?: AccessibilityProps['accessibilityValue'];
   dataSet?: Nullable<Readonly<Record<string, unknown>>>;
-  dir?: Nullable<'auto' | 'ltr' | 'rtl'>;
-  lang?: Nullable<string>;
   pointerEvents?: Nullable<string>;
   role?: Nullable<string>;
   style?: Styles;
-  [key: string]: unknown;
-};
-
-export type DOMProps = {
-  dir?: Nullable<'auto' | 'ltr' | 'rtl'>;
-  lang?: Nullable<string>;
   [key: string]: unknown;
 };
 
@@ -65,9 +57,8 @@ const pointerEventsStyles: Readonly<
 
 const createDOMProps = (
   elementType: ComponentType | string | null,
-  props: Nullable<ElementProps>,
-  options?: Nullable<StyleSheetOptions>
-): DOMProps => {
+  props: Nullable<ElementProps>
+): Record<string, unknown> => {
   if (!props) {
     props = emptyObject;
   }
@@ -249,15 +240,10 @@ const createDOMProps = (
   }
 
   // Resolve styles
-  const styleSheetOptions: StyleSheetOptions = {
-    writingDirection: 'ltr',
-    ...options
-  };
-
-  let [className, inlineStyle] = StyleSheet.resolve(
-    [style, pointerEvents && pointerEventsStyles[pointerEvents]],
-    styleSheetOptions
-  );
+  let [className, inlineStyle] = StyleSheet.resolve([
+    style,
+    pointerEvents && pointerEventsStyles[pointerEvents]
+  ]);
 
   // Inline "pointerEvents" can't style children (needed by "box-none" and
   // "box-only"), so resolve again with the class. Rare, so cheap.
@@ -267,10 +253,10 @@ const createDOMProps = (
     inlinePointerEvents === 'box-none' ||
     inlinePointerEvents === 'box-only'
   ) {
-    [className, inlineStyle] = StyleSheet.resolve(
-      [style, pointerEventsStyles[inlinePointerEvents]],
-      styleSheetOptions
-    );
+    [className, inlineStyle] = StyleSheet.resolve([
+      style,
+      pointerEventsStyles[inlinePointerEvents]
+    ]);
   }
 
   if (className) {

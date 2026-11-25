@@ -34,14 +34,12 @@ describe('exports/createElement', () => {
 
   test('renders variadic children', () => {
     let { container } = render(
-      createElement('div', null, undefined, createElement('span'), 'text')
+      createElement('div', null, createElement('span'), 'text')
     );
     expect((container.firstChild as HTMLElement).innerHTML).toBe(
       '<span></span>text'
     );
-    ({ container } = render(
-      createElement('div', { children: 'prop' }, undefined, 'arg')
-    ));
+    ({ container } = render(createElement('div', { children: 'prop' }, 'arg')));
     expect((container.firstChild as HTMLElement).innerHTML).toBe('arg');
   });
 

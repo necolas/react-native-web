@@ -17,6 +17,12 @@ The following APIs are unstable and subject to breaking changes. Use at your own
 
 React Native for Web exports a web-specific module called `unstable_createElement`, which can be used to wrap React DOM components. This allows you to use React Native's accessibility and style optimizations. Since this is a web-specific export it should always be imported from the `react-native-web` package.
 
+It has the same signature as `React.createElement`:
+
+```js
+unstable_createElement(component, props, ...children);
+```
+
 In the example below, `Video` will now accept common React Native props such as `aria-label`, `accessible`, `style`, and even the Responder event props.
 
 ```js
@@ -29,17 +35,13 @@ This also works with composite components defined in your existing component gal
 ```js
 import RaisedButton from 'material-ui/RaisedButton';
 import { StyleSheet } from 'react-native';
-import { unstable_createElement, useLocaleContext } from 'react-native-web';
+import { unstable_createElement } from 'react-native-web';
 
-const CustomButton = (props) => {
-  const { direction } = useLocaleContext();
-
-  return unstable_createElement(
-    RaisedButton,
-    { ...props, style: [styles.button, props.style] },
-    { writingDirection: direction }
-  );
-};
+const CustomButton = (props) =>
+  unstable_createElement(RaisedButton, {
+    ...props,
+    style: [styles.button, props.style]
+  });
 
 const styles = StyleSheet.create({
   button: {

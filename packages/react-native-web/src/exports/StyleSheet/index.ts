@@ -9,53 +9,25 @@ import { styleq, type CompiledStyle, type Styles } from 'styleq';
 
 import canUseDOM from '../../modules/canUseDom';
 import type { GenericStyleProp } from '../../types';
-import { atomic, classic, inline, type Style } from './compiler';
+import { atomic, classic, type Style } from './compiler';
+import createReactDOMStyle from './compiler/createReactDOMStyle';
 import { createSheet } from './dom';
-import { localizeStyle, type LocalizedStyle } from './localizeStyle';
 import { preprocess } from './preprocess';
-import type { PreprocessOptions } from './preprocess';
 import { validate } from './validate';
 
-const staticStyleMap: WeakMap<object, LocalizedStyle> = new WeakMap();
+const staticStyleMap: WeakMap<object, CompiledStyle> = new WeakMap();
 const sheet = createSheet();
 
-const defaultPreprocessOptions: PreprocessOptions = {
-  shadow: true,
-  textShadow: true
-};
+const customStyleq = styleq.factory({
+  transform(style) {
+    // Don't preprocess compiled objects: it rewrites keys and breaks styleq's cache
+    const compiledStyle =
+      staticStyleMap.get(style) ??
+      (style.$$css === true ? (style as CompiledStyle) : null);
 
-function createStyleq(isRTL: boolean, preprocessOptions: PreprocessOptions) {
-  return styleq.factory({
-    transform(style) {
-      // Don't preprocess compiled objects: it rewrites keys and breaks styleq's cache
-      const compiledStyle =
-        staticStyleMap.get(style) ??
-        (style.$$css === true ? (style as CompiledStyle) : null);
-
-      return compiledStyle != null
-        ? localizeStyle(compiledStyle, isRTL)
-        : preprocess(style, preprocessOptions);
-    }
-  });
-}
-
-const styleqLTR = createStyleq(false, defaultPreprocessOptions);
-const styleqRTL = createStyleq(true, defaultPreprocessOptions);
-
-function customStyleq(styles: Styles, options: StyleSheetOptions = {}) {
-  if (!('shadow' in options) && !('textShadow' in options)) {
-    return options.writingDirection === 'rtl'
-      ? styleqRTL(styles)
-      : styleqLTR(styles);
+    return compiledStyle ?? preprocess(style);
   }
-
-  const { writingDirection, ...preprocessOptions } = options;
-
-  return createStyleq(writingDirection === 'rtl', {
-    ...defaultPreprocessOptions,
-    ...preprocessOptions
-  })(styles);
-}
+});
 
 function insertRules(compiledOrderedRules: Array<[Array<string>, number]>) {
   compiledOrderedRules.forEach(([rules, order]) => {
@@ -68,9 +40,7 @@ function insertRules(compiledOrderedRules: Array<[Array<string>, number]>) {
 }
 
 function compileAndInsertAtomic(style: Style) {
-  const [compiledStyle, compiledOrderedRules] = atomic(
-    preprocess(style, defaultPreprocessOptions)
-  );
+  const [compiledStyle, compiledOrderedRules] = atomic(preprocess(style));
   insertRules(compiledOrderedRules);
   return compiledStyle;
 }
@@ -183,24 +153,17 @@ function getSheet(): { id: string; textContent: string } {
  */
 type StyleProps = [string, Record<string, unknown> | null, string];
 
-export type StyleSheetOptions = {
-  shadow?: boolean;
-  textShadow?: boolean;
-  writingDirection?: 'auto' | 'ltr' | 'rtl';
-};
-
-function resolve(styles?: Styles, options: StyleSheetOptions = {}): StyleProps {
-  const isRTL = options.writingDirection === 'rtl';
-  const styleProps: StyleProps = customStyleq(styles, options);
+function resolve(styles?: Styles): StyleProps {
+  const styleProps: StyleProps = customStyleq(styles);
   if (Array.isArray(styleProps) && styleProps[1] != null) {
-    styleProps[1] = inline(styleProps[1], isRTL);
+    styleProps[1] = createReactDOMStyle(styleProps[1], true);
   }
   return styleProps;
 }
 
 // Only kept for backward compatibility. Use `StyleSheet.resolve` instead.
-function StyleSheet(styles?: Styles, options?: StyleSheetOptions): StyleProps {
-  return resolve(styles, options);
+function StyleSheet(styles?: Styles): StyleProps {
+  return resolve(styles);
 }
 
 StyleSheet.absoluteFill = absoluteFill;
@@ -226,7 +189,7 @@ if (devToolsHook) {
 }
 
 export type IStyleSheet = {
-  (styles?: Styles, options?: StyleSheetOptions): StyleProps;
+  (styles?: Styles): StyleProps;
   absoluteFill: AbsoluteFillStyle;
   create: typeof create;
   compose: typeof compose;

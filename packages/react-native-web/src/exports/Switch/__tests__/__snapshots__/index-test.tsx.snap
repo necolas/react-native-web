@@ -9,8 +9,8 @@ exports[`components/Switch > disabled > when "true" and value="false", a disable
 
 exports[`components/Switch > disabled > when "true" and value="false", a disabled checkbox is rendered with provided thumbColor 1`] = `
 <div
-  class="css-view-g5y9jx r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-insetInlineStart-10s2tm5 r-transform-agouwx r-transitionDuration-13tjlyg"
-  style="background-color: rgb(255, 255, 255); height: 20px; margin-left: 0px; width: 20px;"
+  class="css-view-g5y9jx r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-insetInlineStart-18kf4is r-transform-agouwx r-transitionDuration-13tjlyg"
+  style="background-color: rgb(255, 255, 255); height: 20px; margin-inline-start: 0px; width: 20px;"
 />
 `;
 
@@ -23,8 +23,8 @@ exports[`components/Switch > disabled > when "true" and value="false", a disable
 
 exports[`components/Switch > disabled > when "true" and value="true", a disabled checkbox is rendered with provided activeThumbColor 1`] = `
 <div
-  class="css-view-g5y9jx r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-transform-agouwx r-transitionDuration-13tjlyg r-insetInlineStart-rci37q"
-  style="background-color: rgb(255, 255, 255); height: 20px; margin-left: -20px; width: 20px;"
+  class="css-view-g5y9jx r-alignSelf-k200y r-borderRadius-1j16mh1 r-boxShadow-1ewcgjf r-forcedColorAdjust-1c6unfx r-transform-agouwx r-transitionDuration-13tjlyg r-insetInlineStart-1butt3e"
+  style="background-color: rgb(255, 255, 255); height: 20px; margin-inline-start: -20px; width: 20px;"
 />
 `;
 

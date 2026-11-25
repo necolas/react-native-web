@@ -31,6 +31,7 @@ describe('validate', () => {
     validate({ flex: '1 1 25%' });
     validate({ margin: '10px 20px' });
     validate({ margin: 'calc(10 * 1px) var(--test)' });
-    expect(console.error).toHaveBeenCalledTimes(3);
+    validate({ gap: '10px 20px' });
+    expect(console.error).toHaveBeenCalledTimes(4);
   });
 });

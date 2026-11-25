@@ -14,24 +14,16 @@ describe('StyleSheet/preprocess', () => {
         preprocess({
           end: 1,
           marginEnd: 1,
-          marginHorizontal: 1,
           marginStart: 1,
-          marginVertical: 1,
           paddingEnd: 1,
-          paddingHorizontal: 1,
           paddingStart: 1,
-          paddingVertical: 1,
           start: 1
         })
       ).toEqual({
         insetInlineEnd: 1,
         insetInlineStart: 1,
-        marginBlock: 1,
-        marginInline: 1,
         marginInlineEnd: 1,
         marginInlineStart: 1,
-        paddingBlock: 1,
-        paddingInline: 1,
         paddingInlineEnd: 1,
         paddingInlineStart: 1
       });
@@ -42,13 +34,9 @@ describe('StyleSheet/preprocess', () => {
         preprocess({
           end: 1,
           marginEnd: 1,
-          marginHorizontal: 1,
           marginStart: 1,
-          marginVertical: 1,
           paddingEnd: 1,
-          paddingHorizontal: 1,
           paddingStart: 1,
-          paddingVertical: 1,
           start: 1,
           // standard
           insetInlineEnd: 2,
@@ -350,22 +338,36 @@ describe('StyleSheet/preprocess', () => {
           transitionProperty: 'opacity, transform'
         });
       });
+
+      test('logical properties', () => {
+        expect(
+          preprocess({
+            transitionProperty: 'marginStart, paddingInlineEnd,opacity'
+          })
+        ).toEqual({
+          transitionProperty: 'margin-inline-start, padding-inline-end,opacity'
+        });
+
+        expect(
+          preprocess({
+            transitionProperty: ['borderTopStartRadius', 'inset-inline-start']
+          })
+        ).toEqual({
+          transitionProperty: 'border-start-start-radius, inset-inline-start'
+        });
+      });
     });
   });
 
   describe('preprocesses multiple shadow styles into a single declaration', () => {
-    const options = { shadow: true };
-
     test('shadowColor only', () => {
-      expect(preprocess({ shadowColor: 'red' }, options)).toEqual({
+      expect(preprocess({ shadowColor: 'red' })).toEqual({
         boxShadow: '0px 0px 0px rgba(255,0,0,1.00)'
       });
     });
 
     test('shadowColor and shadowOpacity only', () => {
-      expect(
-        preprocess({ shadowColor: 'red', shadowOpacity: 0.5 }, options)
-      ).toEqual({
+      expect(preprocess({ shadowColor: 'red', shadowOpacity: 0.5 })).toEqual({
         boxShadow: '0px 0px 0px rgba(255,0,0,0.50)'
       });
     });
@@ -373,34 +375,28 @@ describe('StyleSheet/preprocess', () => {
     test('shadowColor system color', () => {
       const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
 
-      expect(preprocess({ shadowColor: 'CanvasText' }, options)).toEqual({
+      expect(preprocess({ shadowColor: 'CanvasText' })).toEqual({
         boxShadow: '0px 0px 0px CanvasText'
       });
-      expect(preprocess({ shadowColor: 'Mark' }, options)).toEqual({
+      expect(preprocess({ shadowColor: 'Mark' })).toEqual({
         boxShadow: '0px 0px 0px var(--rnw-mark)'
       });
 
       // Opacity is ignored for system and web colors
       expect(
-        preprocess({ shadowColor: 'CanvasText', shadowOpacity: 0.5 }, options)
+        preprocess({ shadowColor: 'CanvasText', shadowOpacity: 0.5 })
       ).toEqual({
         boxShadow: '0px 0px 0px CanvasText'
       });
       expect(
-        preprocess(
-          { shadowColor: 'var(--rnw-mark, red)', shadowOpacity: 0.5 },
-          options
-        )
+        preprocess({ shadowColor: 'var(--rnw-mark, red)', shadowOpacity: 0.5 })
       ).toEqual({
         boxShadow: '0px 0px 0px var(--rnw-mark, red)'
       });
 
       // No warning for other web colors
       expect(
-        preprocess(
-          { shadowColor: 'var(--shadow)', shadowOpacity: 0.5 },
-          options
-        )
+        preprocess({ shadowColor: 'var(--shadow)', shadowOpacity: 0.5 })
       ).toEqual({
         boxShadow: '0px 0px 0px var(--shadow)'
       });
@@ -409,30 +405,25 @@ describe('StyleSheet/preprocess', () => {
     });
 
     test('shadowOffset only', () => {
-      expect(
-        preprocess({ shadowOffset: { width: 1, height: 2 } }, options)
-      ).toEqual({
+      expect(preprocess({ shadowOffset: { width: 1, height: 2 } })).toEqual({
         boxShadow: '1px 2px 0px rgba(0,0,0,1.00)'
       });
     });
 
     test('shadowRadius only', () => {
-      expect(preprocess({ shadowRadius: 5 }, options)).toEqual({
+      expect(preprocess({ shadowRadius: 5 })).toEqual({
         boxShadow: '0px 0px 5px rgba(0,0,0,1.00)'
       });
     });
 
     test('shadowOffset, shadowRadius, shadowColor', () => {
       expect(
-        preprocess(
-          {
-            shadowColor: 'rgba(50,60,70,0.5)',
-            shadowOffset: { width: 1, height: 2 },
-            shadowOpacity: 0.5,
-            shadowRadius: 3
-          },
-          options
-        )
+        preprocess({
+          shadowColor: 'rgba(50,60,70,0.5)',
+          shadowOffset: { width: 1, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 3
+        })
       ).toEqual({
         boxShadow: '1px 2px 3px rgba(50,60,70,0.25)'
       });
@@ -440,16 +431,13 @@ describe('StyleSheet/preprocess', () => {
 
     test('shadow styles and string boxShadow together', () => {
       expect(
-        preprocess(
-          {
-            shadowColor: 'rgba(50,60,70,0.5)',
-            shadowOffset: { width: 1, height: 2 },
-            shadowOpacity: 0.5,
-            shadowRadius: 3,
-            boxShadow: '4px 5px 6px black'
-          },
-          options
-        )
+        preprocess({
+          shadowColor: 'rgba(50,60,70,0.5)',
+          shadowOffset: { width: 1, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 3,
+          boxShadow: '4px 5px 6px black'
+        })
       ).toEqual({
         boxShadow: '4px 5px 6px black, 1px 2px 3px rgba(50,60,70,0.25)'
       });
@@ -457,24 +445,21 @@ describe('StyleSheet/preprocess', () => {
 
     test('shadow styles and array boxShadow together', () => {
       expect(
-        preprocess(
-          {
-            shadowColor: 'rgba(50,60,70,0.5)',
-            shadowOffset: { width: 1, height: 2 },
-            shadowOpacity: 0.5,
-            shadowRadius: 3,
-            boxShadow: [
-              {
-                offsetX: 2,
-                offsetY: 3,
-                spreadDistance: 5,
-                color: 'rgba(10,20,30,0.45)',
-                inset: true
-              }
-            ]
-          },
-          options
-        )
+        preprocess({
+          shadowColor: 'rgba(50,60,70,0.5)',
+          shadowOffset: { width: 1, height: 2 },
+          shadowOpacity: 0.5,
+          shadowRadius: 3,
+          boxShadow: [
+            {
+              offsetX: 2,
+              offsetY: 3,
+              spreadDistance: 5,
+              color: 'rgba(10,20,30,0.45)',
+              inset: true
+            }
+          ]
+        })
       ).toEqual({
         boxShadow:
           'inset 2px 3px 0 5px rgba(10,20,30,0.45), 1px 2px 3px rgba(50,60,70,0.25)'
@@ -483,51 +468,40 @@ describe('StyleSheet/preprocess', () => {
   });
 
   describe('preprocesses multiple textShadow styles into a single declaration', () => {
-    const options = { textShadow: true };
-
     test('textShadowColor only', () => {
-      expect(preprocess({ textShadowColor: 'red' }, options)).toEqual({});
+      expect(preprocess({ textShadowColor: 'red' })).toEqual({});
     });
 
     test('textShadowOffset only', () => {
-      expect(
-        preprocess({ textShadowOffset: { width: 1, height: 2 } }, options)
-      ).toEqual({});
+      expect(preprocess({ textShadowOffset: { width: 1, height: 2 } })).toEqual(
+        {}
+      );
     });
 
     test('textShadowRadius only', () => {
-      expect(preprocess({ textShadowRadius: 5 }, options)).toEqual({});
+      expect(preprocess({ textShadowRadius: 5 })).toEqual({});
     });
 
     test('textShadowColor and textShadowOffset only', () => {
       expect(
-        preprocess(
-          {
-            textShadowColor: 'red',
-            textShadowOffset: { width: 0, height: 0 }
-          },
-          options
-        )
+        preprocess({
+          textShadowColor: 'red',
+          textShadowOffset: { width: 0, height: 0 }
+        })
       ).toEqual({});
       expect(
-        preprocess(
-          {
-            textShadowColor: 'red',
-            textShadowOffset: { width: -1, height: 0 }
-          },
-          options
-        )
+        preprocess({
+          textShadowColor: 'red',
+          textShadowOffset: { width: -1, height: 0 }
+        })
       ).toEqual({
         textShadow: '-1px 0px 0px rgba(255,0,0,1.00)'
       });
       expect(
-        preprocess(
-          {
-            textShadowColor: 'red',
-            textShadowOffset: { width: 1, height: 2 }
-          },
-          options
-        )
+        preprocess({
+          textShadowColor: 'red',
+          textShadowOffset: { width: 1, height: 2 }
+        })
       ).toEqual({
         textShadow: '1px 2px 0px rgba(255,0,0,1.00)'
       });
@@ -535,10 +509,10 @@ describe('StyleSheet/preprocess', () => {
 
     test('textShadowColor and textShadowRadius only', () => {
       expect(
-        preprocess({ textShadowColor: 'red', textShadowRadius: 0 }, options)
+        preprocess({ textShadowColor: 'red', textShadowRadius: 0 })
       ).toEqual({});
       expect(
-        preprocess({ textShadowColor: 'red', textShadowRadius: 5 }, options)
+        preprocess({ textShadowColor: 'red', textShadowRadius: 5 })
       ).toEqual({
         textShadow: '0px 0px 5px rgba(255,0,0,1.00)'
       });
@@ -546,42 +520,14 @@ describe('StyleSheet/preprocess', () => {
 
     test('textShadowColor, textShadowOffset, textShadowRadius', () => {
       expect(
-        preprocess(
-          {
-            textShadowColor: 'rgba(50,60,70,0.50)',
-            textShadowOffset: { width: 5, height: 10 },
-            textShadowRadius: 15
-          },
-          options
-        )
+        preprocess({
+          textShadowColor: 'rgba(50,60,70,0.50)',
+          textShadowOffset: { width: 5, height: 10 },
+          textShadowRadius: 15
+        })
       ).toEqual({
         textShadow: '5px 10px 15px rgba(50,60,70,0.50)'
       });
-    });
-  });
-
-  describe('shadow conversion options', () => {
-    test('shadow styles are not converted when options.shadow is not true', () => {
-      expect(preprocess({ shadowColor: 'red' })).toEqual({});
-      expect(preprocess({ shadowColor: 'red' }, { shadow: false })).toEqual({});
-    });
-
-    test('textShadow styles are not converted when options.textShadow is not true', () => {
-      expect(
-        preprocess({
-          textShadowColor: 'red',
-          textShadowOffset: { width: 1, height: 2 }
-        })
-      ).toEqual({});
-      expect(
-        preprocess(
-          {
-            textShadowColor: 'red',
-            textShadowOffset: { width: 1, height: 2 }
-          },
-          { textShadow: false }
-        )
-      ).toEqual({});
     });
   });
 });

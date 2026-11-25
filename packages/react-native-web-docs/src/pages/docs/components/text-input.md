@@ -76,10 +76,6 @@ Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web
 The initial value of the input. Useful for simple use-cases where you don't want to deal with listening to events and updating the value prop to keep the controlled state in sync.
 {% endcall %}
 
-{% call macro.prop('dir', '?("auto" | "ltr" | "rtl") = "auto"') %}
-Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir).
-{% endcall %}
-
 {% call macro.prop('disabled', '?boolean = false') %}
 Equivalent to [HTMLElement.disabled](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled)
 {% endcall %}
@@ -94,10 +90,6 @@ Equivalent to [HTMLElement.id](https://developer.mozilla.org/en-US/docs/Web/HTML
 
 {% call macro.prop('inputMode', '?string') %}
 Hints at the type of data that might be entered by the user while editing the element or its contents. Equivalent to [HTMLElement.inputMode](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode). Safari iOS requires an ancestral `<form action>` element to display the search keyboard. (Not available when multiline is true.)
-{% endcall %}
-
-{% call macro.prop('lang', '?string') %}
-Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
 {% call macro.prop('maxLength', '?number') %}
