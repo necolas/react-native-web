@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import { useDebugValue, useEffect, useRef } from 'react';
 
 import type { Nullable } from '../../types';

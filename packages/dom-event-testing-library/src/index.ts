@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
-
 import { buttonType, buttonsType } from './constants';
 import type { EventPayload } from './createEvent';
 import { platform } from './domEnvironment';

@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 /**
  * NOTE: This is React Native specific export type.
  *

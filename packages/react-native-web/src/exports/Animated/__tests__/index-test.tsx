@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
-
 import { act, render } from '@testing-library/react';
 import React from 'react';
 

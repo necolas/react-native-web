@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import Platform from '../../../exports/Platform';
 import UIManager from '../../../exports/UIManager';
 

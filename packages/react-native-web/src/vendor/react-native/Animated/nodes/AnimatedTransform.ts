@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { Nullable } from '../../../../types';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 import AnimatedNode from './AnimatedNode';

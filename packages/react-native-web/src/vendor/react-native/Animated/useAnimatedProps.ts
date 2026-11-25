@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import {
   useCallback,
   useEffect,

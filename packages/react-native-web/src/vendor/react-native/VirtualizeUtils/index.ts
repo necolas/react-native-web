@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { FrameMetricProps } from '../VirtualizedList/VirtualizedListProps';
 
 /**

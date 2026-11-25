@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { Nullable } from '../../../../types';
 import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
 import type AnimatedValue from '../nodes/AnimatedValue';

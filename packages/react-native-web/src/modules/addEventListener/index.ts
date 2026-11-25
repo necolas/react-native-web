@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
-
 import type { Nullable } from '../../types';
 
 type Listener<E> = (e: E) => void;

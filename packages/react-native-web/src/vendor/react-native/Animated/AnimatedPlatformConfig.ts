@@ -7,6 +7,4 @@
  * @format
  */
 
-'use strict';
-
 export type PlatformConfig = {};

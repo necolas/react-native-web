@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { Nullable } from '../../../../types';
 import type { PlatformConfig } from '../AnimatedPlatformConfig';
 import type { InterpolationConfigType } from './AnimatedInterpolation';

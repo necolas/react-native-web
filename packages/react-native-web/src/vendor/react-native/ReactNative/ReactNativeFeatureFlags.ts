@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 export type FeatureFlags = {
   /**
    * Function used to enable / disabled Layout Animations in React Native.

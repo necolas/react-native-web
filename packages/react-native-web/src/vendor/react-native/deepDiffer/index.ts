@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 /*
  * @returns {bool} true if different, false if equal
  */

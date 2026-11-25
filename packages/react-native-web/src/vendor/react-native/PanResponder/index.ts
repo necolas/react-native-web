@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { MouseEvent } from 'react';
 
 import InteractionManager from '../../../modules/InteractionManager';

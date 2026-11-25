@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { Nullable } from '../../../types';
 import { AnimatedEvent, attachNativeEvent } from './AnimatedEvent';
 import type {

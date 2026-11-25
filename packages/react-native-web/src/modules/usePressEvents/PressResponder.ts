@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type {
   KeyboardEvent as ReactKeyboardEvent,
   MouseEvent as ReactMouseEvent

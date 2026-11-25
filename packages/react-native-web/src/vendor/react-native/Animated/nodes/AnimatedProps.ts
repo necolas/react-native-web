@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import invariant from 'invariant';
 
 import type { Nullable } from '../../../../types';

@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import invariant from 'invariant';
 
 import Platform from '../../../exports/Platform';

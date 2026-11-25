@@ -13,8 +13,6 @@
  * @copyright 2014-2026 Gaëtan Renaudeau. MIT License.
  */
 
-'use strict';
-
 // Solves x(t) = ((2a * t + 3b) * t + 3c) * t = x for t, with x in (0, 1):
 // u = 1/t is the largest real root of x·u³ − 3c·u² − 3b·u − 2a = 0
 function solveTForX(x: number, a: number, b: number, c: number): number {

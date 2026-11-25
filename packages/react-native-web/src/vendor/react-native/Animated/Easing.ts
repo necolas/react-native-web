@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { Nullable } from '../../../types';
 import _bezier from './bezier';
 

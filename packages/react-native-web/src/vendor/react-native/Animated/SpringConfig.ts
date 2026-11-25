@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 type SpringConfigType = {
   stiffness: number;
   damping: number;

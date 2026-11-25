@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import * as React from 'react';
 
 import Platform from '../../../exports/Platform';

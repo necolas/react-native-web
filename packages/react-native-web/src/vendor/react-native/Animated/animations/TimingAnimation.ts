@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import Easing from '../../../../exports/Easing';
 import type { Nullable } from '../../../../types';
 import type { PlatformConfig } from '../AnimatedPlatformConfig';

@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import type { Nullable } from '../../../types';
 
 export type SyntheticEvent<T> = Readonly<{

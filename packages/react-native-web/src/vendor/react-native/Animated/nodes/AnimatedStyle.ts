@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import StyleSheet from '../../../../exports/StyleSheet';
 import type { Nullable } from '../../../../types';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';

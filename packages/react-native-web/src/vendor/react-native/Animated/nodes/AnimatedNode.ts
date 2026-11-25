@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;

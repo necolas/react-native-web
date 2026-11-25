@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import normalizeColor from '@react-native/normalize-colors';
 
 import type { Nullable } from '../../../../types';

@@ -7,8 +7,6 @@
  * @format
  */
 
-'use strict';
-
 import InteractionManager from '../../../modules/InteractionManager';
 import type { Nullable } from '../../../types';
 
