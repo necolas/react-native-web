@@ -30,5 +30,7 @@ return <View style={style} />;
 To flip the layout of a component and its subtree, set the `direction` style to the desired writing direction (e.g., `"rtl"`).
 
 ```jsx
-<View style={{ direction: 'rtl' }}>...</View>
+const styles = StyleSheet.create({ root: { direction: 'rtl' } });
+
+<View style={styles.root}>...</View>
 ```
