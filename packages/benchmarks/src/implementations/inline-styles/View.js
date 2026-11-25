@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 const compose = (s1, s2) => {
   if (s1 && s2) {
@@ -8,7 +8,7 @@ const compose = (s1, s2) => {
   }
 };
 
-class View extends React.Component {
+class View extends Component {
   render() {
     const { style, ...rest } = this.props;
     return <div {...rest} style={compose(viewStyle, style)} />;

@@ -8,7 +8,19 @@
 
 'use client';
 
-import * as React from 'react';
+import {
+  type ChangeEvent,
+  type FocusEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type ReactNode,
+  type Ref,
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef
+} from 'react';
 
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
@@ -18,7 +30,7 @@ import useElementLayout from '../../modules/useElementLayout';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
-import type { PlatformMethods, Nullable } from '../../types';
+import type { Nullable, PlatformMethods } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import type { SubmitBehavior, TextInputProps } from './types';
@@ -105,9 +117,9 @@ let focusTimeout: Nullable<number> = null;
 
 const TextInput = (
   props: TextInputProps & {
-    ref?: React.Ref<HTMLElement & PlatformMethods>;
+    ref?: Ref<HTMLElement & PlatformMethods>;
   }
-): React.ReactNode => {
+): ReactNode => {
   const {
     autoCapitalize = 'sentences',
     autoComplete,
@@ -217,25 +229,25 @@ const TextInput = (
     type = 'password';
   }
 
-  const dimensions = React.useRef<{
+  const dimensions = useRef<{
     height: Nullable<number>;
     width: Nullable<number>;
   }>({
     height: null,
     width: null
   });
-  const hostRef = React.useRef<TextInputNode | null>(null);
-  const prevSelection = React.useRef<Nullable<Selection>>(null);
-  const prevSecureTextEntry = React.useRef<Nullable<boolean>>(false);
+  const hostRef = useRef<TextInputNode | null>(null);
+  const prevSelection = useRef<Nullable<Selection>>(null);
+  const prevSecureTextEntry = useRef<Nullable<boolean>>(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (hostRef.current && prevSelection.current) {
       setSelection(hostRef.current, prevSelection.current);
     }
     prevSecureTextEntry.current = secureTextEntry;
   }, [secureTextEntry]);
 
-  const handleContentSizeChange = React.useCallback(
+  const handleContentSizeChange = useCallback(
     (hostNode: Nullable<TextInputElement>) => {
       if (multiline && onContentSizeChange && hostNode != null) {
         const newHeight = hostNode.scrollHeight;
@@ -260,7 +272,7 @@ const TextInput = (
     [multiline, onContentSizeChange]
   );
 
-  const imperativeRef = React.useMemo(
+  const imperativeRef = useMemo(
     () => (hostNode: TextInputNode | null) => {
       // TextInput needs to add more methods to the hostNode in addition to those
       // added by `setPlatformMethods`. This is temporarily until an API like
@@ -283,7 +295,7 @@ const TextInput = (
     [handleContentSizeChange]
   );
 
-  function handleBlur(e: React.FocusEvent<TextInputElement> & NativeTextEvent) {
+  function handleBlur(e: FocusEvent<TextInputElement> & NativeTextEvent) {
     TextInputState._currentlyFocusedNode = null;
     if (onBlur) {
       e.nativeEvent.text = e.target.value;
@@ -291,9 +303,7 @@ const TextInput = (
     }
   }
 
-  function handleChange(
-    e: React.ChangeEvent<TextInputElement> & NativeTextEvent
-  ) {
+  function handleChange(e: ChangeEvent<TextInputElement> & NativeTextEvent) {
     const hostNode = e.target;
     const text = hostNode.value;
     e.nativeEvent.text = text;
@@ -306,9 +316,7 @@ const TextInput = (
     }
   }
 
-  function handleFocus(
-    e: React.FocusEvent<TextInputElement> & NativeTextEvent
-  ) {
+  function handleFocus(e: FocusEvent<TextInputElement> & NativeTextEvent) {
     const hostNode = e.target;
     if (onFocus) {
       e.nativeEvent.text = hostNode.value;
@@ -336,7 +344,7 @@ const TextInput = (
   }
 
   function handleKeyDown(
-    e: React.KeyboardEvent<TextInputElement> & NativeTextEvent
+    e: ReactKeyboardEvent<TextInputElement> & NativeTextEvent
   ) {
     const hostNode = e.target;
     const nativeEvent = e.nativeEvent;
@@ -370,9 +378,7 @@ const TextInput = (
   }
 
   function handleSelectionChange(
-    e: React.SyntheticEvent<TextInputElement> &
-      NativeTextEvent &
-      NativeSelectionEvent
+    e: SyntheticEvent<TextInputElement> & NativeTextEvent & NativeSelectionEvent
   ) {
     try {
       const { selectionStart, selectionEnd } = e.target;
@@ -391,7 +397,7 @@ const TextInput = (
     } catch {}
   }
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     const node = hostRef.current;
     if (node != null && selection != null) {
       setSelection(node, selection);

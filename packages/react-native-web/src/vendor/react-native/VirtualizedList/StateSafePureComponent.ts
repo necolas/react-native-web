@@ -8,7 +8,7 @@
  */
 
 import invariant from 'invariant';
-import * as React from 'react';
+import { PureComponent } from 'react';
 
 /**
  * `setState` is called asynchronously, and should not rely on the value of
@@ -22,7 +22,7 @@ import * as React from 'react';
 export default class StateSafePureComponent<
   Props,
   State extends object
-> extends React.PureComponent<Props, State> {
+> extends PureComponent<Props, State> {
   _inAsyncStateUpdate = false;
 
   constructor(props: Props) {

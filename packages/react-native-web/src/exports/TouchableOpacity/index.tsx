@@ -9,16 +9,21 @@
 
 'use client';
 
-import * as React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import {
+  type FunctionComponent,
+  type ReactNode,
+  memo,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 
 import usePressEvents from '../../modules/usePressEvents';
 import type { PressEvent } from '../../modules/usePressEvents/PressResponder';
 import type { Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 type ViewStyle = ViewProps['style'];
 
@@ -33,7 +38,7 @@ type Props = Readonly<
  * A wrapper for making views respond properly to touches.
  * On press down, the opacity of the wrapped view is decreased, dimming it.
  */
-function TouchableOpacity(props: Props): React.ReactNode {
+function TouchableOpacity(props: Props): ReactNode {
   const {
     activeOpacity,
     delayPressIn,
@@ -152,8 +157,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableOpacity: React.FunctionComponent<Props> =
-  React.memo(TouchableOpacity);
+const MemoedTouchableOpacity: FunctionComponent<Props> = memo(TouchableOpacity);
 MemoedTouchableOpacity.displayName = 'TouchableOpacity';
 
 export default MemoedTouchableOpacity;

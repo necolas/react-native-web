@@ -5,13 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import {
+  type ComponentRef,
+  type ReactNode,
+  type Ref,
+  type UIEvent,
+  useRef
+} from 'react';
 
 import useMergeRefs from '../../modules/useMergeRefs';
 import type { Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 export type ScrollEvent = {
   readonly nativeEvent: {
@@ -32,7 +37,7 @@ type Props = Omit<ViewProps, 'onScroll'> & {
   onScroll?: (e: ScrollEvent) => void;
   onTouchMove?: ViewProps['onTouchMove'];
   onWheel?: ViewProps['onWheel'];
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
   scrollEnabled?: boolean;
   scrollEventThrottle?: number;
   showsHorizontalScrollIndicator?: boolean;
@@ -81,7 +86,7 @@ function shouldEmitScrollEvent(lastTick: number, eventThrottle: number) {
 /**
  * Encapsulates the Web-specific scroll throttling and disabling logic
  */
-const ScrollViewBase = (props: Props): React.ReactNode => {
+const ScrollViewBase = (props: Props): ReactNode => {
   const {
     onScroll,
     onTouchMove,
@@ -95,9 +100,9 @@ const ScrollViewBase = (props: Props): React.ReactNode => {
     ...rest
   } = props;
 
-  const scrollState = React.useRef({ isScrolling: false, scrollLastTick: 0 });
-  const scrollTimeout = React.useRef<Nullable<number>>(null);
-  const scrollRef = React.useRef<Nullable<HTMLElement>>(null);
+  const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
+  const scrollTimeout = useRef<Nullable<number>>(null);
+  const scrollRef = useRef<Nullable<HTMLElement>>(null);
 
   function createPreventableScrollHandler<T>(
     handler: Nullable<(e: T) => void>
@@ -111,7 +116,7 @@ const ScrollViewBase = (props: Props): React.ReactNode => {
     };
   }
 
-  function handleScroll(e: React.UIEvent<HTMLElement>) {
+  function handleScroll(e: UIEvent<HTMLElement>) {
     e.stopPropagation();
     if (e.target === scrollRef.current) {
       // A scroll happened, so the scroll resets the scrollend timeout.
@@ -138,19 +143,19 @@ const ScrollViewBase = (props: Props): React.ReactNode => {
     }
   }
 
-  function handleScrollStart(e: React.UIEvent<HTMLElement>) {
+  function handleScrollStart(e: UIEvent<HTMLElement>) {
     scrollState.current.isScrolling = true;
     handleScrollTick(e);
   }
 
-  function handleScrollTick(e: React.UIEvent<HTMLElement>) {
+  function handleScrollTick(e: UIEvent<HTMLElement>) {
     scrollState.current.scrollLastTick = Date.now();
     if (onScroll) {
       onScroll(normalizeScrollEvent(e as typeof e & { target: HTMLElement }));
     }
   }
 
-  function handleScrollEnd(e: React.UIEvent<HTMLElement>) {
+  function handleScrollEnd(e: UIEvent<HTMLElement>) {
     scrollState.current.isScrolling = false;
     if (onScroll) {
       onScroll(normalizeScrollEvent(e as typeof e & { target: HTMLElement }));

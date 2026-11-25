@@ -7,14 +7,19 @@
 
 'use client';
 
-import * as React from 'react';
+import {
+  type ComponentRef,
+  type FocusEvent,
+  type ReactNode,
+  type Ref,
+  useRef
+} from 'react';
 
 import multiplyStyleLengthValue from '../../modules/multiplyStyleLengthValue';
 import type { ColorValue, HostNode } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 import type { ViewStyle } from '../View/types';
 
 type SwitchProps = ViewProps & {
@@ -22,7 +27,7 @@ type SwitchProps = ViewProps & {
   activeTrackColor?: ColorValue;
   disabled?: boolean;
   onValueChange?: (value: boolean) => void;
-  ref?: React.Ref<HostNode>;
+  ref?: Ref<HostNode>;
   thumbColor?: ColorValue;
   trackColor?: ColorValue | { false: ColorValue; true: ColorValue };
   value?: boolean;
@@ -40,7 +45,7 @@ const defaultActiveThumbColor = '#009688';
 const defaultThumbColor = '#FAFAFA';
 const defaultDisabledThumbColor = '#BDBDBD';
 
-const Switch = (props: SwitchProps): React.ReactNode => {
+const Switch = (props: SwitchProps): ReactNode => {
   const {
     'aria-label': ariaLabel,
     accessibilityLabel,
@@ -56,7 +61,7 @@ const Switch = (props: SwitchProps): React.ReactNode => {
     ...rest
   } = props;
 
-  const thumbRef = React.useRef<React.ComponentRef<typeof View> | null>(null);
+  const thumbRef = useRef<ComponentRef<typeof View> | null>(null);
 
   function handleChange(event: {
     readonly nativeEvent: { readonly target: HTMLInputElement };
@@ -66,7 +71,7 @@ const Switch = (props: SwitchProps): React.ReactNode => {
     }
   }
 
-  function handleFocusState(event: React.FocusEvent<HTMLInputElement>) {
+  function handleFocusState(event: FocusEvent<HTMLInputElement>) {
     const isFocused = event.nativeEvent.type === 'focus';
     const boxShadow = isFocused ? thumbFocusedBoxShadow : thumbDefaultBoxShadow;
     if (thumbRef.current != null) {

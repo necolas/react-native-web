@@ -7,8 +7,12 @@
 
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 import type { Nullable } from '../../types';
-import type { Touch, NativeTouchEvent } from './ResponderEventTypes';
-import { isMouseEvent, isTouchEvent } from './ResponderEventTypes';
+import {
+  type NativeTouchEvent,
+  type Touch,
+  isMouseEvent,
+  isTouchEvent
+} from './ResponderEventTypes';
 import type {
   ResponderTouchHistoryStore,
   TouchHistory

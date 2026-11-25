@@ -14,13 +14,13 @@ import type { ComponentType } from 'react';
 import type { Nullable } from '../../types';
 import type { Root } from '../render';
 import unmountComponentAtNode from '../unmountComponentAtNode';
-import type {
-  AppProps,
-  Application,
-  ApplicationElement,
-  WrapperComponentType
+import renderApplication, {
+  type AppProps,
+  type Application,
+  type ApplicationElement,
+  type WrapperComponentType,
+  getApplication
 } from './renderApplication';
-import renderApplication, { getApplication } from './renderApplication';
 
 type PartialAppParameters = {
   readonly callback?: () => void;

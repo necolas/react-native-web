@@ -6,7 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import {
+  type AnimationEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 
 import canUseDOM from '../../modules/canUseDom';
 import type { Nullable } from '../../types';
@@ -35,18 +42,18 @@ function getAnimationStyle(
 
 export type ModalAnimationProps = {
   animationType?: Nullable<'none' | 'slide' | 'fade'>;
-  children?: React.ReactNode;
+  children?: ReactNode;
   onDismiss?: Nullable<() => void>;
   onShow?: Nullable<() => void>;
   visible?: Nullable<boolean>;
 };
 
-function ModalAnimation(props: ModalAnimationProps): React.ReactNode {
+function ModalAnimation(props: ModalAnimationProps): ReactNode {
   const { children, onDismiss, onShow, visible } = props;
 
-  const [isRendering, setIsRendering] = React.useState(false);
-  const wasVisible = React.useRef<Nullable<boolean>>(false);
-  const wasRendering = React.useRef(false);
+  const [isRendering, setIsRendering] = useState(false);
+  const wasVisible = useRef<Nullable<boolean>>(false);
+  const wasRendering = useRef(false);
 
   // Reduced motion CSS resets often use "animation: none", and then browsers
   // don't fire the "animationend" event that shows and dismisses the modal
@@ -55,8 +62,8 @@ function ModalAnimation(props: ModalAnimationProps): React.ReactNode {
 
   const isAnimated = animationType && animationType !== 'none';
 
-  const animationEndCallback = React.useCallback(
-    (e?: React.AnimationEvent<HTMLElement>) => {
+  const animationEndCallback = useCallback(
+    (e?: AnimationEvent<HTMLElement>) => {
       if (e && e.currentTarget !== e.target) {
         // If the event was generated for something NOT this element we
         // should ignore it as it's not relevant to us
@@ -74,14 +81,14 @@ function ModalAnimation(props: ModalAnimationProps): React.ReactNode {
     [onShow, visible]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (wasRendering.current && !isRendering && onDismiss) {
       onDismiss();
     }
     wasRendering.current = isRendering;
   }, [isRendering, onDismiss]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (visible) {
       setIsRendering(true);
     }

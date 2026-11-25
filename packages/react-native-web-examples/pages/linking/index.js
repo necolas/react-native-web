@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Linking, StyleSheet, Text } from 'react-native';
 
 import Example from '../../shared/example';
@@ -6,9 +6,9 @@ import Example from '../../shared/example';
 const url = 'https://mathiasbynens.github.io/rel-noopener/malicious.html';
 
 export default function LinkingPage(props) {
-  const [, setCount] = React.useState(0);
+  const [, setCount] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('adding listener');
     const listener = Linking.addEventListener('onOpen', () => {
       console.log('onOpen event');

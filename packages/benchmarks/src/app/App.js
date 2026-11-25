@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import { Component, Fragment } from 'react';
 import {
-  StyleSheet,
-  ScrollView,
   Pressable,
+  ScrollView,
+  StyleSheet,
   View,
   unstable_createElement as createElement
 } from 'react-native';
@@ -141,7 +141,7 @@ export default class App extends Component {
 
             <Provider>
               {status === 'running' ? (
-                <React.Fragment>
+                <Fragment>
                   <View ref={this._setBenchWrapperRef}>
                     <Benchmark
                       component={Component}
@@ -158,7 +158,7 @@ export default class App extends Component {
                       type={Component.benchmarkType}
                     />
                   </View>
-                </React.Fragment>
+                </Fragment>
               ) : (
                 <Component {...getComponentProps({ cycle: 10 })} />
               )}

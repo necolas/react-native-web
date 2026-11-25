@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import { type ReactNode, useEffect, useLayoutEffect, useRef } from 'react';
 
 import canUseDOM from '../../modules/canUseDom';
 import type { HostNode, Nullable } from '../../types';
@@ -76,15 +76,15 @@ function focusLastDescendant(element: Node): boolean {
 
 export type ModalFocusTrapProps = {
   active?: boolean;
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
 
 const ModalFocusTrap = ({
   active,
   children
-}: ModalFocusTrapProps): React.ReactNode => {
-  const trapElementRef = React.useRef<HostNode>(null);
-  const focusRef = React.useRef<{
+}: ModalFocusTrapProps): ReactNode => {
+  const trapElementRef = useRef<HostNode>(null);
+  const focusRef = useRef<{
     trapFocusInProgress: boolean;
     lastFocusedElement: Nullable<Element>;
   }>({
@@ -92,7 +92,7 @@ const ModalFocusTrap = ({
     lastFocusedElement: null
   });
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (canUseDOM && active) {
       const trapFocus = (preventScroll: boolean) => {
         // We should not trap focus if:
@@ -158,7 +158,7 @@ const ModalFocusTrap = ({
 
   // To be fully compliant with WCAG we need to refocus element that triggered opening modal
   // after closing it
-  React.useEffect(function () {
+  useEffect(function () {
     if (canUseDOM) {
       const lastFocusedElementOutsideTrap = document.activeElement;
       return function () {

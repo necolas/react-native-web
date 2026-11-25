@@ -6,7 +6,7 @@
  */
 
 import { render } from '@testing-library/react';
-import * as React from 'react';
+import type { ReactNode } from 'react';
 
 import useStable from '..';
 
@@ -17,7 +17,7 @@ describe('useStable', () => {
     initialValueCallback
   }: {
     initialValueCallback: () => number | null;
-  }): React.ReactNode => {
+  }): ReactNode => {
     const value = useStable(initialValueCallback);
     spy.value = value;
     return null;

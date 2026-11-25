@@ -7,7 +7,7 @@
  * @format
  */
 
-import * as React from 'react';
+import type { ComponentProps, ComponentRef } from 'react';
 
 import FlatList from '../../../../exports/FlatList';
 import createAnimatedComponent from '../createAnimatedComponent';
@@ -15,11 +15,11 @@ import createAnimatedComponent from '../createAnimatedComponent';
 /**
  * @see https://github.com/facebook/react-native/commit/b8c8562
  */
-const FlatListWithEventThrottle = (
-  props: React.ComponentProps<typeof FlatList>
-) => <FlatList scrollEventThrottle={0.0001} {...props} />;
+const FlatListWithEventThrottle = (props: ComponentProps<typeof FlatList>) => (
+  <FlatList scrollEventThrottle={0.0001} {...props} />
+);
 
 export default createAnimatedComponent<
-  Omit<React.ComponentProps<typeof FlatList>, 'ref'>,
-  React.ComponentRef<typeof FlatList>
+  Omit<ComponentProps<typeof FlatList>, 'ref'>,
+  ComponentRef<typeof FlatList>
 >(FlatListWithEventThrottle);

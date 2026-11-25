@@ -6,7 +6,7 @@
  */
 
 import { act, render } from '@testing-library/react';
-import * as React from 'react';
+import { type ReactNode, useEffect } from 'react';
 
 import useColorScheme from '..';
 import Appearance from '../../Appearance';
@@ -22,7 +22,7 @@ describe('useColorScheme', () => {
       .spyOn(Appearance, 'addChangeListener')
       .mockReturnValue({ remove });
 
-    function Component({ label }: { label: string }): React.ReactNode {
+    function Component({ label }: { label: string }): ReactNode {
       const colorScheme = useColorScheme();
       return <div>{`${label}:${colorScheme}`}</div>;
     }
@@ -40,14 +40,14 @@ describe('useColorScheme', () => {
   });
 
   test('returns the color scheme set by a child mount effect', () => {
-    function Child(): React.ReactNode {
-      React.useEffect(() => {
+    function Child(): ReactNode {
+      useEffect(() => {
         Appearance.setColorScheme('dark');
       }, []);
       return null;
     }
 
-    function Parent(): React.ReactNode {
+    function Parent(): ReactNode {
       const colorScheme = useColorScheme();
       return (
         <div>

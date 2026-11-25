@@ -8,9 +8,9 @@
 import getBoundingClientRect from '../../modules/getBoundingClientRect';
 import setValueForStyles from '../../modules/setValueForStyles';
 import type {
-  MeasureOnSuccessCallback,
   MeasureInWindowOnSuccessCallback,
   MeasureLayoutOnSuccessCallback,
+  MeasureOnSuccessCallback,
   Nullable
 } from '../../types';
 

@@ -1,9 +1,9 @@
 export { default as unstable_createElement } from './exports/createElement';
 export { default as findNodeHandle } from './exports/findNodeHandle';
+export { default as NativeModules } from './exports/NativeModules';
 export { default as processColor } from './exports/processColor';
 export { default as render } from './exports/render';
 export { default as unmountComponentAtNode } from './exports/unmountComponentAtNode';
-export { default as NativeModules } from './exports/NativeModules';
 
 // APIs
 export { default as AccessibilityInfo } from './exports/AccessibilityInfo';
@@ -39,6 +39,7 @@ export { default as Image } from './exports/Image';
 export { default as ImageBackground } from './exports/ImageBackground';
 export { default as InputAccessoryView } from './exports/InputAccessoryView';
 export { default as KeyboardAvoidingView } from './exports/KeyboardAvoidingView';
+export { default as LogBox } from './exports/LogBox';
 export { default as Modal } from './exports/Modal';
 export { default as Pressable } from './exports/Pressable';
 export { default as RefreshControl } from './exports/RefreshControl';
@@ -55,7 +56,6 @@ export { default as TouchableOpacity } from './exports/TouchableOpacity';
 export { default as TouchableWithoutFeedback } from './exports/TouchableWithoutFeedback';
 export { default as View } from './exports/View';
 export { default as VirtualizedList } from './exports/VirtualizedList';
-export { default as LogBox } from './exports/LogBox';
 
 // plugins
 export { default as DeviceEventEmitter } from './exports/DeviceEventEmitter';

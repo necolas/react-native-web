@@ -1,4 +1,3 @@
-import React from 'react';
 import { Clipboard, StyleSheet, TextInput, View } from 'react-native';
 
 import Button from '../../shared/button';

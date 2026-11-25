@@ -13,8 +13,8 @@ import type {
   EndCallback
 } from '../animations/Animation';
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
-import AnimatedInterpolation from './AnimatedInterpolation';
 import type { InterpolationConfigType } from './AnimatedInterpolation';
+import AnimatedInterpolation from './AnimatedInterpolation';
 import type AnimatedNode from './AnimatedNode';
 import type AnimatedTracking from './AnimatedTracking';
 import AnimatedWithChildren from './AnimatedWithChildren';

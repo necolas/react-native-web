@@ -6,7 +6,7 @@
  */
 
 import { act, render, type RenderResult } from '@testing-library/react';
-import * as React from 'react';
+import { createRef, type Ref } from 'react';
 
 import useMergeRefs from '..';
 import type { Nullable } from '../../../types';
@@ -16,7 +16,7 @@ describe('modules/useMergeRefs', () => {
     refs,
     ...rest
   }: {
-    refs: ReadonlyArray<Nullable<React.Ref<HTMLDivElement>>>;
+    refs: ReadonlyArray<Nullable<Ref<HTMLDivElement>>>;
     id?: string;
   }) {
     const mergedRef = useMergeRefs(...refs);
@@ -32,8 +32,8 @@ describe('modules/useMergeRefs', () => {
   test('merges any number of varying refs', () => {
     const callbackRef1 = vi.fn();
     const callbackRef2 = vi.fn();
-    const objectRef1 = React.createRef<HTMLDivElement>();
-    const objectRef2 = React.createRef<HTMLDivElement>();
+    const objectRef1 = createRef<HTMLDivElement>();
+    const objectRef2 = createRef<HTMLDivElement>();
     const nullRef = null;
 
     act(() => {

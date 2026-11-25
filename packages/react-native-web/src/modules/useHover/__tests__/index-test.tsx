@@ -7,12 +7,12 @@
 
 import { act, render } from '@testing-library/react';
 import { clearPointers, createEventTarget } from 'dom-event-testing-library';
-import * as React from 'react';
+import { type RefObject, createRef } from 'react';
 import type { Mock } from 'vitest';
 
 import useHover from '..';
 
-type DivRef = React.RefObject<HTMLDivElement | null>;
+type DivRef = RefObject<HTMLDivElement | null>;
 type HoverMock = Mock<(e: PointerEvent) => void>;
 type HoverChangeMock = Mock<(isHovered: boolean) => void>;
 
@@ -33,8 +33,8 @@ describe('useHover', () => {
       onHoverChange = vi.fn();
       onHoverStart = vi.fn();
       onHoverEnd = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
-      childRef = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
+      childRef = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, {
           onHoverChange,
@@ -84,9 +84,9 @@ describe('useHover', () => {
     test('only changes the nearest ancestor', () => {
       onHoverStart = vi.fn();
       onHoverEnd = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
-      childRef = React.createRef<HTMLDivElement>();
-      const grandchildRef = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
+      childRef = createRef<HTMLDivElement>();
+      const grandchildRef = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, { onHoverStart, onHoverEnd });
         useHover(childRef, {});
@@ -126,7 +126,7 @@ describe('useHover', () => {
       onHoverChange = vi.fn();
       onHoverStart = vi.fn();
       onHoverEnd = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, {
           disabled: true,
@@ -157,7 +157,7 @@ describe('useHover', () => {
 
     const componentInit = () => {
       onHoverStart = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, { onHoverStart });
         return <div ref={ref} />;
@@ -201,7 +201,7 @@ describe('useHover', () => {
 
     const componentInit = () => {
       onHoverChange = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, { onHoverChange });
         return <div ref={ref} />;
@@ -239,8 +239,8 @@ describe('useHover', () => {
 
     const componentInit = () => {
       onHoverEnd = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
-      childRef = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
+      childRef = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, { onHoverEnd });
         return (
@@ -295,7 +295,7 @@ describe('useHover', () => {
       onHoverChange = vi.fn();
       onHoverStart = vi.fn();
       onHoverEnd = vi.fn();
-      ref = React.createRef<HTMLDivElement>();
+      ref = createRef<HTMLDivElement>();
       const Component = () => {
         useHover(ref, {
           onHoverChange,

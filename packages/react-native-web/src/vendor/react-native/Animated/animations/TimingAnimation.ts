@@ -16,12 +16,12 @@ import AnimatedColor from '../nodes/AnimatedColor';
 import AnimatedInterpolation from '../nodes/AnimatedInterpolation';
 import AnimatedValue from '../nodes/AnimatedValue';
 import AnimatedValueXY from '../nodes/AnimatedValueXY';
-import Animation from './Animation';
 import type {
   AnimationConfig,
   EndCallback,
   NativeAnimationConfig
 } from './Animation';
+import Animation from './Animation';
 
 export type TimingAnimationConfig = Readonly<
   AnimationConfig & {

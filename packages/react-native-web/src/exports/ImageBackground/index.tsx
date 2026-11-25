@@ -5,18 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import type { ComponentRef, ReactNode, Ref } from 'react';
 
-import type { ImageProps } from '../Image';
-import Image from '../Image';
+import Image, { type ImageProps } from '../Image';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 import type { ViewProps, ViewStyle } from '../View/types';
 
 type ImageBackgroundProps = Omit<ImageProps, 'style'> & {
-  imageRef?: React.Ref<React.ComponentRef<typeof View>>;
+  imageRef?: Ref<ComponentRef<typeof View>>;
   imageStyle?: ImageProps['style'];
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
   style?: ViewProps['style'];
 };
 
@@ -25,7 +24,7 @@ const emptyObject: ViewStyle = {};
 /**
  * Very simple drop-in replacement for <Image> which supports nesting views.
  */
-const ImageBackground = (props: ImageBackgroundProps): React.ReactNode => {
+const ImageBackground = (props: ImageBackgroundProps): ReactNode => {
   const {
     children,
     style = emptyObject,

@@ -6,24 +6,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import {
+  type ComponentType,
+  type ReactNode,
+  type Ref,
+  createContext
+} from 'react';
 
 import type { HostNode, Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
 import View from '../View';
 
 type Props = {
-  WrapperComponent?: Nullable<
-    React.ComponentType<{ children: React.ReactNode }>
-  >;
-  children?: React.ReactNode;
-  ref?: React.Ref<HostNode>;
+  WrapperComponent?: Nullable<ComponentType<{ children: ReactNode }>>;
+  children?: ReactNode;
+  ref?: Ref<HostNode>;
   rootTag: unknown;
 };
 
-const RootTagContext = React.createContext<unknown>(null);
+const RootTagContext = createContext<unknown>(null);
 
-const AppContainer = (props: Props): React.ReactNode => {
+const AppContainer = (props: Props): ReactNode => {
   const { children, ref, WrapperComponent } = props;
 
   let innerView = (

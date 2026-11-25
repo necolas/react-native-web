@@ -7,7 +7,11 @@
 
 'use client';
 
-import * as React from 'react';
+import {
+  type ElementType,
+  type ReactNode,
+  createElement as reactCreateElement
+} from 'react';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
@@ -16,11 +20,11 @@ import type { Nullable } from '../../types';
 import type { StyleSheetOptions } from '../StyleSheet';
 
 const createElement = (
-  component: React.ElementType,
+  component: ElementType,
   props?: Nullable<Record<string, unknown>>,
   options?: Nullable<StyleSheetOptions>,
-  ...children: ReadonlyArray<React.ReactNode>
-): React.ReactNode => {
+  ...children: ReadonlyArray<ReactNode>
+): ReactNode => {
   // Use equivalent platform elements where possible.
   let accessibilityComponent;
   if (props != null && component?.constructor === String) {
@@ -29,8 +33,7 @@ const createElement = (
   }
   const Component = accessibilityComponent || component;
   const domProps = createDOMProps(Component, props, options);
-
-  const element = React.createElement(Component, domProps, ...children);
+  const element = reactCreateElement(Component, domProps, ...children);
 
   // Update locale context if element's writing direction prop changes
   const elementWithLocaleProvider = domProps.dir ? (

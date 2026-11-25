@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Switch, View } from 'react-native';
 
 import Example from '../../shared/example';
@@ -8,9 +8,9 @@ function Divider() {
 }
 
 export default function SwitchPage() {
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setChecked(!checked);
     }, 2500);

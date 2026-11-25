@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Modal, View, Text, StyleSheet } from 'react-native';
+import { useMemo, useState } from 'react';
+import { Modal, StyleSheet, Text, View } from 'react-native';
 
 import Button from '../../shared/button';
 import Example from '../../shared/example';

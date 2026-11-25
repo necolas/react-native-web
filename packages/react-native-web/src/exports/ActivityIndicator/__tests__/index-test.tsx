@@ -7,7 +7,7 @@
 
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { createRef } from 'react';
 
 import ActivityIndicator from '..';
 import type { HostNode } from '../../../types';
@@ -82,7 +82,7 @@ describe('components/ActivityIndicator', () => {
   describe('prop "onBlur"', () => {
     test('is called', () => {
       const onBlur = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<ActivityIndicator onBlur={onBlur} ref={ref} />);
       });
@@ -99,7 +99,7 @@ describe('components/ActivityIndicator', () => {
   describe('prop "onFocus"', () => {
     test('is called', () => {
       const onFocus = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<ActivityIndicator onFocus={onFocus} ref={ref} />);
       });

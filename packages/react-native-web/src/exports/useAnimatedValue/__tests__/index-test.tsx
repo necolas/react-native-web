@@ -6,7 +6,7 @@
  */
 
 import { render } from '@testing-library/react';
-import * as React from 'react';
+import type { ReactNode } from 'react';
 
 import useAnimatedValue from '..';
 import Animated from '../../Animated';
@@ -15,7 +15,7 @@ describe('useAnimatedValue', () => {
   test('returns an Animated.Value with the initial value', () => {
     let value: ReturnType<typeof useAnimatedValue> | undefined;
 
-    function Component(): React.ReactNode {
+    function Component(): ReactNode {
       value = useAnimatedValue(5);
       return null;
     }
@@ -32,7 +32,7 @@ describe('useAnimatedValue', () => {
       initialValue
     }: {
       initialValue: Parameters<typeof useAnimatedValue>[0];
-    }): React.ReactNode {
+    }): ReactNode {
       values.push(useAnimatedValue(initialValue));
       return null;
     }

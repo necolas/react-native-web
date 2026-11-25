@@ -7,14 +7,17 @@
 
 'use client';
 
-import type { PackagerAsset } from '../../modules/AssetRegistry';
-import { registerAsset, getAssetByID } from '../../modules/AssetRegistry';
+import {
+  type PackagerAsset,
+  getAssetByID,
+  registerAsset
+} from '../../modules/AssetRegistry';
 
 export default {
   registerAsset,
   getAssetByID
 };
 
-export { registerAsset, getAssetByID };
+export { getAssetByID, registerAsset };
 
 export type { PackagerAsset };

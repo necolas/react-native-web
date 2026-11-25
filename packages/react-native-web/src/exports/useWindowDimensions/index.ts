@@ -12,8 +12,7 @@
 import { useSyncExternalStore } from 'react';
 
 import canUseDOM from '../../modules/canUseDom';
-import type { DisplayMetrics } from '../Dimensions';
-import Dimensions from '../Dimensions';
+import Dimensions, { type DisplayMetrics } from '../Dimensions';
 
 // Matches the server render when `Dimensions.set` is not called
 const hydrationWindow: DisplayMetrics = {

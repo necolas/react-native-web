@@ -6,20 +6,20 @@
  */
 
 import { render } from '@testing-library/react';
-import * as React from 'react';
+import { type RefObject, createRef, useRef } from 'react';
 
 import mergeRefs from '..';
 
 describe('modules/mergeRefs', () => {
   test('merges refs of different types', () => {
-    const ref = React.createRef<HTMLDivElement>();
+    const ref = createRef<HTMLDivElement>();
     let functionRefValue: HTMLDivElement | null = null;
-    let hookRef!: React.RefObject<HTMLDivElement | null>;
+    let hookRef!: RefObject<HTMLDivElement | null>;
     function Component() {
       const functionRef = (x: HTMLDivElement | null) => {
         functionRefValue = x;
       };
-      hookRef = React.useRef<HTMLDivElement>(null);
+      hookRef = useRef<HTMLDivElement>(null);
       return <div ref={mergeRefs(ref, hookRef, functionRef)} />;
     }
 

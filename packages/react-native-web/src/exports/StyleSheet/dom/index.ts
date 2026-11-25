@@ -8,8 +8,9 @@
 import canUseDOM from '../../../modules/canUseDom';
 import { systemColorRules } from '../../../modules/systemColors';
 import createCSSStyleSheet from './createCSSStyleSheet';
-import type { OrderedCSSStyleSheet } from './createOrderedCSSStyleSheet';
-import createOrderedCSSStyleSheet from './createOrderedCSSStyleSheet';
+import createOrderedCSSStyleSheet, {
+  type OrderedCSSStyleSheet
+} from './createOrderedCSSStyleSheet';
 
 type Sheet = OrderedCSSStyleSheet & {
   id: string;

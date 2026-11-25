@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { FlatList, StyleSheet, Switch, Text, View } from 'react-native';
 
 import Example from '../../shared/example';
@@ -16,9 +16,9 @@ function Option({ label, value, onValueChange }) {
 }
 
 export default function NestedListsPage() {
-  const [innerInverted, setInnerInverted] = React.useState(false);
-  const [outerInverted, setOuterInverted] = React.useState(true);
-  const [outerScrollEnabled, setOuterScrollEnabled] = React.useState(true);
+  const [innerInverted, setInnerInverted] = useState(false);
+  const [outerInverted, setOuterInverted] = useState(true);
+  const [outerScrollEnabled, setOuterScrollEnabled] = useState(true);
 
   const renderRow = ({ item: row }) => {
     if (Number(row.key) % 3 !== 0) {

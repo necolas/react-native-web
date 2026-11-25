@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, Pressable, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import Example from '../../shared/example';
 
@@ -31,10 +31,10 @@ function Box({ pointerEvents }) {
 }
 
 export default function ViewPage() {
-  const [layoutInfo, setLayoutInfo] = React.useState({});
-  const [layoutStyle, setLayoutStyle] = React.useState(l1);
+  const [layoutInfo, setLayoutInfo] = useState({});
+  const [layoutStyle, setLayoutStyle] = useState(l1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setLayoutStyle((l) => (l.width === '100%' ? l2 : l1));
     }, 2500);

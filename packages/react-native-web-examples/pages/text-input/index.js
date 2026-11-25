@@ -1,10 +1,10 @@
-import React from 'react';
+import { useRef } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import Example from '../../shared/example';
 
 export default function TextInputPage() {
-  const nextFocus = React.useRef(null);
+  const nextFocus = useRef(null);
 
   const focusNextField = () => {
     if (nextFocus.current != null) {

@@ -7,10 +7,11 @@
  * @format
  */
 
+import invariant from 'invariant';
+
 import NativeAnimatedHelper from '../NativeAnimatedHelper';
 
 const NativeAnimatedAPI = NativeAnimatedHelper.API;
-import invariant from 'invariant';
 
 import type { Nullable } from '../../../../types';
 import type { EventSubscription } from '../../vendor/emitter/EventEmitter';

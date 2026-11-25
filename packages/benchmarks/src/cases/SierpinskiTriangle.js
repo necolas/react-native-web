@@ -1,15 +1,15 @@
 import {
-  interpolatePurples,
   interpolateBuPu,
+  interpolatePurples,
   interpolateRdPu
 } from 'd3-scale-chromatic';
-import React from 'react';
+import { Component, Fragment } from 'react';
 
 import { BenchmarkType } from '../app/Benchmark';
 
 const targetSize = 10;
 
-class SierpinskiTriangle extends React.Component {
+class SierpinskiTriangle extends Component {
   static displayName = 'SierpinskiTriangle';
 
   static benchmarkType = BenchmarkType.UPDATE;
@@ -54,7 +54,7 @@ class SierpinskiTriangle extends React.Component {
       s /= 2;
 
       return (
-        <React.Fragment>
+        <Fragment>
           <SierpinskiTriangle
             components={components}
             depth={1}
@@ -79,7 +79,7 @@ class SierpinskiTriangle extends React.Component {
             x={x + s}
             y={y + s / 2}
           />
-        </React.Fragment>
+        </Fragment>
       );
     } else {
       return (

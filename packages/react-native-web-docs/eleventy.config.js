@@ -2,7 +2,7 @@ import eleventyNavigationPlugin from '@11ty/eleventy-navigation';
 import eleventySyntaxHighlightPlugin from '@11ty/eleventy-plugin-syntaxhighlight';
 import * as csso from 'csso';
 import eleventySvgContentsPlugin from 'eleventy-plugin-svg-contents';
-import htmlmin from 'html-minifier-terser';
+import { minify } from 'html-minifier-terser';
 import markdown from 'markdown-it';
 import markdownAnchor from 'markdown-it-anchor';
 import markdownAttrs from 'markdown-it-attrs';
@@ -31,7 +31,7 @@ export default function (eleventyConfig) {
   // Minify HTML output
   eleventyConfig.addTransform('htmlmin', function (content, outputPath) {
     if (typeof outputPath === 'string' && outputPath.includes('.html')) {
-      return htmlmin.minify(content, {
+      return minify(content, {
         useShortDoctype: true,
         removeComments: true,
         collapseWhitespace: true

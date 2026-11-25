@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Dot = ({ size, x, y, children, color }) => (
   <div
     style={Object.assign({}, styles.root, {

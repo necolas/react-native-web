@@ -4,7 +4,7 @@
  * https://github.com/paularmstrong/react-component-benchmark
  */
 
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 import { getMean, getMedian, getStdDev } from './math';
 import * as Timing from './timing';
@@ -55,7 +55,7 @@ export const BenchmarkType = {
 
 /**
  * @typedef {Object} BenchmarkPropsType
- * @property {React.ComponentType<ComponentPropsType>} component
+ * @property {import('react').ComponentType<ComponentPropsType>} component
  * @property {boolean} [forceLayout]
  * @property {(x: { cycle: number }) => ComponentPropsType} getComponentProps
  * @property {(x: BenchResultsType) => void} onComplete
@@ -230,7 +230,7 @@ export default class Benchmark extends Component {
     }
   }
 
-  /** @returns {React.ReactNode} */
+  /** @returns {import('react').ReactNode} */
   render() {
     const { component: Component, type } = this.props;
     const { componentProps, cycle, running } = this.state;

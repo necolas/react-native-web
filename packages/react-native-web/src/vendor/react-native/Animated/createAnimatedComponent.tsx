@@ -7,16 +7,20 @@
  * @format
  */
 
-import * as React from 'react';
+import type {
+  ComponentProps,
+  ComponentType,
+  ReactNode,
+  RefAttributes
+} from 'react';
+import { useMemo } from 'react';
 
 import View from '../../../exports/View';
 import useMergeRefs from '../Utilities/useMergeRefs';
 import useAnimatedProps from './useAnimatedProps';
 
 type PassthroughProps = {
-  readonly passthroughAnimatedPropExplicitValues?: React.ComponentProps<
-    typeof View
-  >;
+  readonly passthroughAnimatedPropExplicitValues?: ComponentProps<typeof View>;
 };
 
 type AnimatedProps<Props> = {
@@ -26,9 +30,7 @@ type AnimatedProps<Props> = {
 export type AnimatedComponentType<
   Props extends { readonly [key: string]: unknown },
   Instance = unknown
-> = (
-  props: AnimatedProps<Props> & React.RefAttributes<Instance>
-) => React.ReactNode;
+> = (props: AnimatedProps<Props> & RefAttributes<Instance>) => ReactNode;
 
 /**
  * Experimental implementation of `createAnimatedComponent` that is intended to
@@ -38,15 +40,15 @@ export default function createAnimatedComponent<
   TProps extends { readonly [key: string]: unknown },
   TInstance
 >(
-  Component: React.ComponentType<TProps & React.RefAttributes<TInstance>>
+  Component: ComponentType<TProps & RefAttributes<TInstance>>
 ): AnimatedComponentType<TProps, TInstance> {
   const AnimatedComponent = (
-    propsWithRef: AnimatedProps<TProps> & React.RefAttributes<TInstance>
+    propsWithRef: AnimatedProps<TProps> & RefAttributes<TInstance>
   ) => {
     const forwardedRef = propsWithRef.ref;
     // Keep the same `props` object when only the animated values update.
     // `useAnimatedProps` creates new animated nodes when `props` changes.
-    const props = React.useMemo(() => {
+    const props = useMemo(() => {
       const { ref, ...rest } = propsWithRef;
       return rest;
     }, [propsWithRef]);

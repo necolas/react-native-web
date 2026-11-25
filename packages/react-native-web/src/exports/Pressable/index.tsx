@@ -7,18 +7,28 @@
 
 'use client';
 
-import * as React from 'react';
-import { memo, useMemo, useState, useRef } from 'react';
+import {
+  type ComponentRef,
+  type FocusEvent,
+  type FunctionComponent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  type Ref,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 
-import type { HoverEventsConfig } from '../../modules/useHover';
-import useHover from '../../modules/useHover';
+import useHover, { type HoverEventsConfig } from '../../modules/useHover';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { PlatformMethods, Nullable } from '../../types';
+import type { Nullable, PlatformMethods } from '../../types';
 import StyleSheet from '../StyleSheet';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 export type StateCallbackType = Readonly<{
   focused: boolean;
@@ -29,7 +39,7 @@ export type StateCallbackType = Readonly<{
 type ViewStyleProp = ViewProps['style'];
 
 type Props = Omit<ViewProps, 'children' | 'style' | 'unstable_type'> & {
-  children?: React.ReactNode | ((state: StateCallbackType) => React.ReactNode);
+  children?: ReactNode | ((state: StateCallbackType) => ReactNode);
   // Duration (in milliseconds) from `onPressIn` before `onLongPress` is called.
   delayLongPress?: Nullable<number>;
   // Duration (in milliseconds) from `onPressStart` is called after pointerdown
@@ -55,7 +65,7 @@ type Props = Omit<ViewProps, 'children' | 'style' | 'unstable_type'> & {
   // Called when a touch is released, before `onPress`.
   onPressOut?: PressResponderConfig['onPressEnd'];
   // Ref to the underlying host view.
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
   // Style, or a function that receives the interaction state and returns a style.
   style?: ViewStyleProp | ((state: StateCallbackType) => ViewStyleProp);
   // The `type` attribute of the rendered element.
@@ -71,7 +81,7 @@ type Props = Omit<ViewProps, 'children' | 'style' | 'unstable_type'> & {
  * Component used to build display components that should respond to whether the
  * component is currently pressed or not.
  */
-function Pressable(props: Props): React.ReactNode {
+function Pressable(props: Props): ReactNode {
   const {
     children,
     delayLongPress,
@@ -150,8 +160,8 @@ function Pressable(props: Props): React.ReactNode {
 
   const interactionState = { hovered, focused, pressed };
 
-  const blurHandler = React.useCallback(
-    (e: React.FocusEvent<HTMLElement>) => {
+  const blurHandler = useCallback(
+    (e: FocusEvent<HTMLElement>) => {
       if (e.nativeEvent.target === hostRef.current) {
         if (hasStateCallback) {
           setFocused(false);
@@ -164,8 +174,8 @@ function Pressable(props: Props): React.ReactNode {
     [hostRef, setFocused, hasStateCallback, onBlur]
   );
 
-  const focusHandler = React.useCallback(
-    (e: React.FocusEvent<HTMLElement>) => {
+  const focusHandler = useCallback(
+    (e: FocusEvent<HTMLElement>) => {
       if (e.nativeEvent.target === hostRef.current) {
         if (hasStateCallback) {
           setFocused(true);
@@ -178,8 +188,8 @@ function Pressable(props: Props): React.ReactNode {
     [hostRef, setFocused, hasStateCallback, onFocus]
   );
 
-  const contextMenuHandler = React.useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
+  const contextMenuHandler = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
       if (onContextMenuPress != null) {
         onContextMenuPress(e);
       }
@@ -190,8 +200,8 @@ function Pressable(props: Props): React.ReactNode {
     [onContextMenu, onContextMenuPress]
   );
 
-  const keyDownHandler = React.useCallback(
-    (e: React.KeyboardEvent<HTMLElement>) => {
+  const keyDownHandler = useCallback(
+    (e: KeyboardEvent<HTMLElement>) => {
       if (onKeyDownPress != null) {
         onKeyDownPress(e);
       }
@@ -249,7 +259,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedPressable: React.FunctionComponent<Props> = memo(Pressable);
+const MemoedPressable: FunctionComponent<Props> = memo(Pressable);
 MemoedPressable.displayName = 'Pressable';
 
 export default MemoedPressable;

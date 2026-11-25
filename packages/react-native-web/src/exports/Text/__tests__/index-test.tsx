@@ -7,7 +7,7 @@
 
 import { act, render, type RenderResult } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { createRef } from 'react';
 
 import Text from '../';
 import type { HostNode } from '../../../types';
@@ -182,7 +182,7 @@ describe('components/Text', () => {
   describe('prop "onBlur"', () => {
     test('is called', () => {
       const onBlur = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onBlur={onBlur} ref={ref} />);
       });
@@ -199,7 +199,7 @@ describe('components/Text', () => {
   describe('prop "onClick"', () => {
     test('is called', () => {
       const onClick = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onClick={onClick} ref={ref} />);
       });
@@ -212,7 +212,7 @@ describe('components/Text', () => {
 
     test('is still called if "onPress" is provided', () => {
       const onClick = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onClick={onClick} onPress={() => {}} ref={ref} />);
       });
@@ -227,7 +227,7 @@ describe('components/Text', () => {
   describe('prop "onFocus"', () => {
     test('is called', () => {
       const onFocus = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onFocus={onFocus} ref={ref} />);
       });
@@ -242,7 +242,7 @@ describe('components/Text', () => {
   describe('prop "onPointerDown"', () => {
     test('is called', () => {
       const onPointerDown = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onPointerDown={onPointerDown} ref={ref} />);
       });
@@ -257,7 +257,7 @@ describe('components/Text', () => {
   describe('prop "onPress"', () => {
     test('is called', () => {
       const onPress = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onPress={onPress} ref={ref} />);
       });
@@ -271,7 +271,7 @@ describe('components/Text', () => {
 
     test('is not called if "onClick" is provided', () => {
       const onPress = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text onClick={() => {}} onPress={onPress} ref={ref} />);
       });
@@ -306,7 +306,7 @@ describe('components/Text', () => {
     });
 
     test('node has imperative methods', () => {
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Text ref={ref} />);
       });

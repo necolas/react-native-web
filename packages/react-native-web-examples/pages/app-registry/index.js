@@ -1,5 +1,5 @@
-import React from 'react';
-import { AppRegistry, Text, StyleSheet } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { AppRegistry, StyleSheet, Text } from 'react-native';
 
 import Example from '../../shared/example';
 
@@ -17,10 +17,10 @@ const styles = StyleSheet.create({
 AppRegistry.registerComponent('App', () => App);
 
 export default function AppStatePage() {
-  const iframeRef = React.useRef(null);
-  const shadowRef = React.useRef(null);
+  const iframeRef = useRef(null);
+  const shadowRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const iframeElement = iframeRef.current;
     const iframeBody = iframeElement.contentWindow.document.body;
     const iframeRootTag = document.createElement('div');

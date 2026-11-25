@@ -7,7 +7,7 @@
 
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { type ComponentProps, createRef } from 'react';
 
 import TextInput from '..';
 import type { PlatformMethods } from '../../../types';
@@ -337,7 +337,7 @@ describe('components/TextInput', () => {
 
   test('prop "onBlur"', () => {
     const onBlur = vi.fn();
-    const ref = React.createRef<TextInputNode>();
+    const ref = createRef<TextInputNode>();
     act(() => {
       render(<TextInput onBlur={onBlur} ref={ref} />);
     });
@@ -372,7 +372,7 @@ describe('components/TextInput', () => {
 
   test('prop "onFocus"', () => {
     const onFocus = vi.fn();
-    const ref = React.createRef<TextInputNode>();
+    const ref = createRef<TextInputNode>();
     act(() => {
       render(<TextInput onFocus={onFocus} ref={ref} />);
     });
@@ -711,7 +711,7 @@ describe('components/TextInput', () => {
       vi.useRealTimers();
     });
 
-    function renderAndSubmit(props: React.ComponentProps<typeof TextInput>) {
+    function renderAndSubmit(props: ComponentProps<typeof TextInput>) {
       const onSubmitEditing = vi.fn();
       const preventDefault = vi.fn();
 
@@ -927,13 +927,13 @@ describe('components/TextInput', () => {
 
   describe('imperative methods', () => {
     test('node.clear()', () => {
-      const ref = React.createRef<TextInputNode>();
+      const ref = createRef<TextInputNode>();
       render(<TextInput ref={ref} />);
       expect(ref.current?.clear).toBeTypeOf('function');
     });
 
     test('node.isFocused()', () => {
-      const ref = React.createRef<TextInputNode>();
+      const ref = createRef<TextInputNode>();
       render(<TextInput ref={ref} />);
       expect(ref.current?.isFocused).toBeTypeOf('function');
     });

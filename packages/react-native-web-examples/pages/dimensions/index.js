@@ -1,13 +1,13 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { Dimensions, Text } from 'react-native';
 
 import Example from '../../shared/example';
 
 export default function DimensionsPage() {
-  const [screenDims, setScreen] = React.useState(Dimensions.get('screen'));
-  const [windowDims, setWindow] = React.useState(Dimensions.get('window'));
+  const [screenDims, setScreen] = useState(Dimensions.get('screen'));
+  const [windowDims, setWindow] = useState(Dimensions.get('window'));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleChange = ({ screen, window: win }) => {
       setScreen(screen);
       setWindow(win);

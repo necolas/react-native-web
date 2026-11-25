@@ -1,6 +1,6 @@
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { createRef } from 'react';
 
 import TouchableWithoutFeedback from '../';
 import type { HostNode } from '../../../types';
@@ -66,7 +66,7 @@ describe('components/TouchableWithoutFeedback', () => {
 
   test('prop "disabled" disables press', () => {
     const onPress = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
     let container!: HTMLElement;
 
     act(() => {

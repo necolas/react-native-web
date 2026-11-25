@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, StyleSheet, Text, Pressable, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import Button from '../../shared/button';
 import Example from '../../shared/example';
@@ -19,9 +19,9 @@ function Divider() {
 }
 
 export default function ScrollViewPage() {
-  const [scrollEnabled, setEnabled] = React.useState(true);
-  const [throttle, setThrottle] = React.useState(16);
-  const scrollRef = React.useRef(null);
+  const [scrollEnabled, setEnabled] = useState(true);
+  const [throttle, setThrottle] = useState(16);
+  const scrollRef = useRef(null);
 
   return (
     <Example title="ScrollView">

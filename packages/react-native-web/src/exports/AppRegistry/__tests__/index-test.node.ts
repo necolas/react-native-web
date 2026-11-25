@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { type ReactNode, createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 import AppRegistry from '..';
 import StyleSheet from '../../StyleSheet';
 import Text from '../../Text';
 import View from '../../View';
 
-const NoopComponent = () => React.createElement('div');
+const NoopComponent = () => createElement('div');
 
 describe('AppRegistry', () => {
   describe('getApplication', () => {
@@ -29,8 +29,7 @@ describe('AppRegistry', () => {
         {}
       );
 
-      const styleElement =
-        ReactDOMServer.renderToStaticMarkup(getStyleElement());
+      const styleElement = renderToStaticMarkup(getStyleElement());
 
       expect(element).toMatchInlineSnapshot(`
        <AppContainer
@@ -102,8 +101,8 @@ describe('AppRegistry', () => {
       };
 
       // First render "RootComponent"
-      const RootComponent = (): React.ReactNode =>
-        React.createElement(View, React.createElement(Text));
+      const RootComponent = (): ReactNode =>
+        createElement(View, createElement(Text));
       AppRegistry.registerComponent('App', () => RootComponent);
       const first = getApplicationStyles('App');
       expect(first).toMatchInlineSnapshot(`
@@ -158,7 +157,7 @@ describe('AppRegistry', () => {
         root: { borderWidth: 1234, backgroundColor: 'purple' }
       });
       const AlternativeComponent = () =>
-        React.createElement(View, { style: styles.root });
+        createElement(View, { style: styles.root });
       AppRegistry.registerComponent(
         'AlternativeApp',
         () => AlternativeComponent

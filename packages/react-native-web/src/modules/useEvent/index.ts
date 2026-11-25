@@ -8,8 +8,7 @@
 import { useLayoutEffect } from 'react';
 
 import type { Nullable } from '../../types';
-import type { EventOptions } from '../addEventListener';
-import { addEventListener } from '../addEventListener';
+import { type EventOptions, addEventListener } from '../addEventListener';
 import useStable from '../useStable';
 
 type Callback<E> = null | ((e: E) => void);

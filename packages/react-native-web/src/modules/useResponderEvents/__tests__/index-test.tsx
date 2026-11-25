@@ -13,14 +13,14 @@ import {
   createEventTarget,
   testWithPointerType
 } from 'dom-event-testing-library';
-import React, { createRef } from 'react';
+import { type RefObject, createRef } from 'react';
 import { assert } from 'vitest';
 
 import useResponderEvents from '..';
 import type { ResponderEvent } from '../createResponderEvent';
 import { getResponderNode, terminateResponder } from '../ResponderSystem';
 
-type DivRef = React.RefObject<HTMLDivElement | null>;
+type DivRef = RefObject<HTMLDivElement | null>;
 
 describe('useResponderEvents', () => {
   afterEach(() => {
