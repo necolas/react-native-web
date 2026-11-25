@@ -1,9 +1,8 @@
 import { act, render, type RenderResult } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { createRef } from 'react';
 
-import ScrollView from '../';
-import type { ScrollViewNode } from '../';
+import ScrollView, { type ScrollViewNode } from '../';
 
 describe('components/ScrollView', () => {
   describe('prop "centerContent"', () => {
@@ -25,7 +24,7 @@ describe('components/ScrollView', () => {
   describe('prop "onScroll"', () => {
     test('is called when element scrolls', () => {
       const onScroll = vi.fn();
-      const ref = React.createRef<ScrollViewNode>();
+      const ref = createRef<ScrollViewNode>();
       act(() => {
         render(
           <ScrollView onScroll={onScroll} ref={ref} scrollEventThrottle={16} />
@@ -41,7 +40,7 @@ describe('components/ScrollView', () => {
 
     test('is not called when descendant scrolls', () => {
       const onScroll = vi.fn();
-      const ref = React.createRef<HTMLDivElement>();
+      const ref = createRef<HTMLDivElement>();
       act(() => {
         render(
           <ScrollView onScroll={onScroll} scrollEventThrottle={16}>
@@ -80,7 +79,7 @@ describe('components/ScrollView', () => {
     });
 
     test('node has imperative methods', () => {
-      const ref = React.createRef<ScrollViewNode>();
+      const ref = createRef<ScrollViewNode>();
       act(() => {
         render(<ScrollView ref={ref} />);
       });

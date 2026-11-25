@@ -8,19 +8,19 @@
 import {
   buttonType,
   buttonsType,
+  defaultBrowserChromeSize,
   defaultPointerId,
-  defaultPointerSize,
-  defaultBrowserChromeSize
+  defaultPointerSize
 } from './constants';
 import { platform } from './domEnvironment';
-import * as domEvents from './domEvents';
 import type {
   FocusEventPayload,
   PointerEventPayload,
   PointerType
 } from './domEvents';
-import * as touchStore from './touchStore';
+import * as domEvents from './domEvents';
 import type { TouchData } from './touchStore';
+import * as touchStore from './touchStore';
 
 /**
  * Converts a PointerEvent payload to a Touch

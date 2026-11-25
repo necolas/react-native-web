@@ -6,7 +6,6 @@
  */
 
 import { act, render } from '@testing-library/react';
-import * as React from 'react';
 import { hydrateRoot, type Root } from 'react-dom/client';
 
 import useWindowDimensions from '..';

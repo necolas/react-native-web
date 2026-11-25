@@ -6,21 +6,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import type { ComponentRef, ReactNode, Ref } from 'react';
 
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 type KeyboardAvoidingViewProps = ViewProps & {
   behavior?: 'height' | 'padding' | 'position';
   contentContainerStyle?: ViewProps['style'];
   keyboardVerticalOffset?: number;
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
 };
 
-const KeyboardAvoidingView = (
-  props: KeyboardAvoidingViewProps
-): React.ReactNode => {
+const KeyboardAvoidingView = (props: KeyboardAvoidingViewProps): ReactNode => {
   const {
     /* oxlint-disable no-unused-vars */
     behavior,

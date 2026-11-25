@@ -16,10 +16,10 @@ You'll notice that there is no reference to `react-dom` in components. The `App`
 
 ```js
 // Example component
-import React from 'react';
+import { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, View } from 'react-native';
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <View style={styles.box}>

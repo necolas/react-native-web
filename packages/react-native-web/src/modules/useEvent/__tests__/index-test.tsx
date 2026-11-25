@@ -7,7 +7,7 @@
 
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import * as React from 'react';
+import { createRef, useEffect } from 'react';
 import { assert } from 'vitest';
 
 import useEvent from '..';
@@ -18,11 +18,11 @@ describe('use-event', () => {
   describe('setListener()', () => {
     test('event dispatched on target', () => {
       const listener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, listener);
         });
@@ -43,14 +43,14 @@ describe('use-event', () => {
     test('event dispatched on parent', () => {
       const listener = vi.fn();
       const listenerCapture = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
-      const parentRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
+      const parentRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addClickListener = useEvent('click');
         const addClickCaptureListener = useEvent('click', { capture: true });
 
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, listener);
           addClickCaptureListener(targetRef.current, listenerCapture);
@@ -82,14 +82,14 @@ describe('use-event', () => {
       const listenerCapture = vi.fn(() => {
         log.push('capture');
       });
-      const targetRef = React.createRef<HTMLDivElement>();
-      const childRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
+      const childRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addClickListener = useEvent('click');
         const addClickCaptureListener = useEvent('click', { capture: true });
 
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, listener);
           addClickCaptureListener(targetRef.current, listenerCapture);
@@ -116,12 +116,12 @@ describe('use-event', () => {
 
     test('event dispatched on text node', () => {
       const listener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
-      const childRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
+      const childRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, listener);
         });
@@ -145,11 +145,11 @@ describe('use-event', () => {
 
     test('listener can be attached to document ', () => {
       const listener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component({ target }: { target: EventTarget }) {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           addClickListener(target, listener);
         });
         return <div ref={targetRef} />;
@@ -167,11 +167,11 @@ describe('use-event', () => {
 
     test('listener can be attached to window ', () => {
       const listener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component({ target }: { target: EventTarget }) {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           addClickListener(target, listener);
         });
         return <div ref={targetRef} />;
@@ -190,11 +190,11 @@ describe('use-event', () => {
     test('listener is replaceable', () => {
       const listener = vi.fn();
       const listenerAlt = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component({ onClick }: { onClick: (e: Event) => void }) {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, onClick);
         });
@@ -220,11 +220,11 @@ describe('use-event', () => {
 
     test('listener is removed when value is null', () => {
       const listener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component({ off }: { off: boolean }) {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, off ? null : listener);
         });
@@ -251,11 +251,11 @@ describe('use-event', () => {
 
     test('custom event dispatched on target', () => {
       const listener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addMagicEventListener = useEvent('magic-event');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addMagicEventListener(targetRef.current, listener);
         });
@@ -274,9 +274,9 @@ describe('use-event', () => {
 
     test('listeners can be set on multiple targets simultaneously', () => {
       const log: [string, string][] = [];
-      const targetRef = React.createRef<HTMLDivElement>();
-      const parentRef = React.createRef<HTMLDivElement>();
-      const childRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
+      const parentRef = createRef<HTMLDivElement>();
+      const childRef = createRef<HTMLDivElement>();
 
       const listener = vi.fn((e: ElementEvent) => {
         log.push(['bubble', e.currentTarget.id]);
@@ -290,7 +290,7 @@ describe('use-event', () => {
         const addClickCaptureListener = useEvent<ElementEvent>('click', {
           capture: true
         });
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           assert(parentRef.current != null);
           // the same event handle is used to set listeners on different targets
@@ -328,8 +328,8 @@ describe('use-event', () => {
 
     test('listeners are specific to each event handle', () => {
       const log: [string, string][] = [];
-      const targetRef = React.createRef<HTMLDivElement>();
-      const childRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
+      const childRef = createRef<HTMLDivElement>();
 
       const listener = vi.fn((e: Event) => {
         log.push(['bubble', 'target']);
@@ -349,7 +349,7 @@ describe('use-event', () => {
         const addClickAltListener = useEvent('click');
         const addClickCaptureListener = useEvent('click', { capture: true });
         const addClickCaptureAltListener = useEvent('click', { capture: true });
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addClickListener(targetRef.current, listener);
           addClickAltListener(targetRef.current, listenerAlt);
@@ -389,7 +389,7 @@ describe('use-event', () => {
       const clickListener = vi.fn();
       function Component() {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           addClickListener(document, clickListener);
         });
         return <div />;
@@ -414,12 +414,12 @@ describe('use-event', () => {
         e.stopPropagation();
       });
       const targetListener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
-      const childRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
+      const childRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(childRef.current != null);
           assert(targetRef.current != null);
           addClickListener(childRef.current, childListener);
@@ -449,12 +449,12 @@ describe('use-event', () => {
         e.stopImmediatePropagation();
       });
       const secondListener = vi.fn();
-      const targetRef = React.createRef<HTMLDivElement>();
+      const targetRef = createRef<HTMLDivElement>();
 
       function Component() {
         const addFirstClickListener = useEvent('click');
         const addSecondClickListener = useEvent('click');
-        React.useEffect(() => {
+        useEffect(() => {
           assert(targetRef.current != null);
           addFirstClickListener(targetRef.current, firstListener);
           addSecondClickListener(targetRef.current, secondListener);

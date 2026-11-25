@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
-
+import { useRef } from 'react';
 const UNINITIALIZED = Symbol();
 
 export default function useStable<T>(getInitialValue: () => T): T {
-  const ref = React.useRef<T | typeof UNINITIALIZED>(UNINITIALIZED);
+  const ref = useRef<T | typeof UNINITIALIZED>(UNINITIALIZED);
   if (ref.current === UNINITIALIZED) {
     ref.current = getInitialValue();
   }

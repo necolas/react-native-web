@@ -1,14 +1,14 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View, Text, Pressable } from 'react-native';
+import { useRef, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import Button from '../../shared/button';
 import Example from '../../shared/example';
 
 export default function PressablePage() {
-  const [eventLog, updateEventLog] = React.useState([]);
-  const [disabled, setDisabled] = React.useState(false);
-  const [delay, setDelay] = React.useState(0);
-  const nextEventId = React.useRef(0);
+  const [eventLog, updateEventLog] = useState([]);
+  const [disabled, setDisabled] = useState(false);
+  const [delay, setDelay] = useState(0);
+  const nextEventId = useRef(0);
 
   const handleEvent = (name) => {
     return () => {

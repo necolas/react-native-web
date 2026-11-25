@@ -4,14 +4,15 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import * as React from 'react';
+
+import { PureComponent } from 'react';
 import {
   Animated,
   FlatList,
   Image,
+  Pressable,
   StyleSheet,
   Switch,
-  Pressable,
   Text,
   TextInput,
   View
@@ -65,7 +66,7 @@ function genItemData(count, start = 0) {
   return dataBlob;
 }
 
-class ItemComponent extends React.PureComponent {
+class ItemComponent extends PureComponent {
   _onPress = () => {
     this.props.onPress(this.props.item.key);
   };
@@ -100,7 +101,7 @@ class ItemComponent extends React.PureComponent {
   }
 }
 
-class FooterComponent extends React.PureComponent {
+class FooterComponent extends PureComponent {
   render() {
     return (
       <View style={styles.headerFooterContainer}>
@@ -113,7 +114,7 @@ class FooterComponent extends React.PureComponent {
   }
 }
 
-class HeaderComponent extends React.PureComponent {
+class HeaderComponent extends PureComponent {
   render() {
     return (
       <View style={styles.headerFooterContainer}>
@@ -126,13 +127,13 @@ class HeaderComponent extends React.PureComponent {
   }
 }
 
-class SeparatorComponent extends React.PureComponent {
+class SeparatorComponent extends PureComponent {
   render() {
     return <View style={styles.separator} />;
   }
 }
 
-class ItemSeparatorComponent extends React.PureComponent {
+class ItemSeparatorComponent extends PureComponent {
   render() {
     const style = this.props.highlighted
       ? [
@@ -144,7 +145,7 @@ class ItemSeparatorComponent extends React.PureComponent {
   }
 }
 
-class Spindicator extends React.PureComponent {
+class Spindicator extends PureComponent {
   render() {
     return (
       <Animated.View
@@ -218,7 +219,7 @@ function PlainInput(props) {
   );
 }
 
-class SingleColumnExample extends React.PureComponent {
+class SingleColumnExample extends PureComponent {
   static title = '<FlatList>';
   static description = 'Performant, scrollable list of data.';
 

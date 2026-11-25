@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import type { Ref } from 'react';
 
 import type { Nullable } from '../../types';
 
 export default function mergeRefs<T = HTMLElement>(
-  ...args: ReadonlyArray<Nullable<React.Ref<T>>>
+  ...args: ReadonlyArray<Nullable<Ref<T>>>
 ): (node: T | null) => void {
   return (node: T | null) => {
     args.forEach((ref) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ImageBackground, StyleSheet, Text } from 'react-native';
 
 import Example from '../../shared/example';

@@ -17,8 +17,8 @@ import type AnimatedInterpolation from '../nodes/AnimatedInterpolation';
 import type AnimatedValue from '../nodes/AnimatedValue';
 import type AnimatedValueXY from '../nodes/AnimatedValueXY';
 import SpringConfig from '../SpringConfig';
-import Animation from './Animation';
 import type { AnimationConfig, EndCallback } from './Animation';
+import Animation from './Animation';
 
 export type SpringAnimationConfig = AnimationConfig & {
   toValue:

@@ -8,13 +8,13 @@
 import { buttonType, buttonsType } from './constants';
 import type { EventPayload } from './createEvent';
 import { platform } from './domEnvironment';
-import * as domEvents from './domEvents';
 import type {
   FocusEventPayload,
   KeyboardEventPayload,
   MouseEventPayload,
   PointerEventPayload
 } from './domEvents';
+import * as domEvents from './domEvents';
 import * as domEventSequences from './domEventSequences';
 import { testWithPointerType } from './testHelpers';
 

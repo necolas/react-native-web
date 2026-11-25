@@ -9,7 +9,13 @@
 'use client';
 
 import invariant from 'invariant';
-import React from 'react';
+import {
+  type ReactNode,
+  type Ref,
+  type TouchEvent,
+  Children,
+  Component
+} from 'react';
 
 import dismissKeyboard from '../../modules/dismissKeyboard';
 import mergeRefs from '../../modules/mergeRefs';
@@ -33,7 +39,7 @@ export type Props = Omit<ViewProps, 'onScroll'> & {
   onContentSizeChange?: (width: number, height: number) => void;
   onScroll?: (e: ScrollEvent) => void;
   pagingEnabled?: boolean;
-  refreshControl?: React.ReactNode;
+  refreshControl?: ReactNode;
   scrollEnabled?: boolean;
   scrollEventThrottle?: number;
   stickyHeaderIndices?: Array<number>;
@@ -46,7 +52,7 @@ export type Props = Omit<ViewProps, 'onScroll'> & {
 };
 
 type ScrollViewProps = Props & {
-  forwardedRef?: React.Ref<ScrollViewNode>;
+  forwardedRef?: Ref<ScrollViewNode>;
 };
 
 export type ScrollViewNode = HostNode & {
@@ -83,7 +89,7 @@ function handleMeasureError(e: unknown) {
   console.warn('Error measuring text field: ', e);
 }
 
-class ScrollView extends React.Component<ScrollViewProps> {
+class ScrollView extends Component<ScrollViewProps> {
   _scrollNodeRef: Nullable<ScrollViewNode> = null;
   _innerViewRef: Nullable<HostNode> = null;
 
@@ -97,17 +103,17 @@ class ScrollView extends React.Component<ScrollViewProps> {
   additionalScrollOffset!: number;
   preventNegativeScrollOffset!: boolean;
 
-  _handleTouchStart = (e: React.TouchEvent<HTMLElement>) => {
+  _handleTouchStart = (e: TouchEvent<HTMLElement>) => {
     this.isTouching = true;
     this.props.onTouchStart?.(e);
   };
 
-  _handleTouchEnd = (e: React.TouchEvent<HTMLElement>) => {
+  _handleTouchEnd = (e: TouchEvent<HTMLElement>) => {
     this.isTouching = e.nativeEvent.touches.length !== 0;
     this.props.onTouchEnd?.(e);
   };
 
-  _handleTouchCancel = (e: React.TouchEvent<HTMLElement>) => {
+  _handleTouchCancel = (e: TouchEvent<HTMLElement>) => {
     this.isTouching = false;
     this.props.onTouchCancel?.(e);
   };
@@ -310,7 +316,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
     this.scrollResponderScrollTo({ x, y, animated });
   };
 
-  render(): React.ReactNode {
+  render(): ReactNode {
     const {
       contentContainerStyle,
       horizontal,
@@ -350,7 +356,7 @@ class ScrollView extends React.Component<ScrollViewProps> {
       !horizontal && Array.isArray(stickyHeaderIndices);
     const children =
       hasStickyHeaderIndices || pagingEnabled
-        ? React.Children.map(this.props.children, (child, i) => {
+        ? Children.map(this.props.children, (child, i) => {
             const isSticky =
               hasStickyHeaderIndices &&
               stickyHeaderIndices != null &&
@@ -519,9 +525,9 @@ const styles = StyleSheet.create({
 
 const ForwardedScrollView = (
   props: Props & {
-    ref?: React.Ref<ScrollViewNode>;
+    ref?: Ref<ScrollViewNode>;
   }
-): React.ReactNode => {
+): ReactNode => {
   const { ref, ...rest } = props;
   return <ScrollView {...rest} forwardedRef={ref} />;
 };

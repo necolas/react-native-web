@@ -13,7 +13,6 @@ import type {
   ReactElement,
   ReactNode
 } from 'react';
-import React from 'react';
 
 import type { Nullable } from '../../types';
 import render, { hydrate } from '../render';

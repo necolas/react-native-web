@@ -1,17 +1,17 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AppState, Text } from 'react-native';
 
 import Example from '../../shared/example';
 
 export default function AppStatePage() {
-  const appState = React.useRef(AppState.currentState);
-  const [state, setState] = React.useState({
+  const appState = useRef(AppState.currentState);
+  const [state, setState] = useState({
     active: 0,
     background: 0,
     currentState: appState.current
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleChange = (nextState) => {
       setState((previousState) => ({
         ...previousState,

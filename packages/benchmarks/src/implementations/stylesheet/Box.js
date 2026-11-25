@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native-web';
 
 import View from './View';

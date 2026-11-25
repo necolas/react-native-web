@@ -68,7 +68,7 @@ You might need to adjust the styles of the HTML document's root elements for you
 Server-side rendering to HTML is supported using `AppRegistry`:
 
 ```js
-import ReactDOMServer from 'react-dom/server';
+import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { AppRegistry } from 'react-native-web';
 
 import App from './src/App';
@@ -81,9 +81,9 @@ const { element, getStyleElement } = AppRegistry.getApplication('App', {
   initialProps
 });
 // first the element
-const html = ReactDOMServer.renderToString(element);
+const html = renderToString(element);
 // then the styles (optionally include a nonce if your CSP policy requires it)
-const css = ReactDOMServer.renderToStaticMarkup(getStyleElement({ nonce }));
+const css = renderToStaticMarkup(getStyleElement({ nonce }));
 
 // example HTML document string
 const document = `

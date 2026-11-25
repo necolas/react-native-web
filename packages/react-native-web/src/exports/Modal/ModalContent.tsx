@@ -6,26 +6,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import {
+  type ComponentRef,
+  type ReactNode,
+  type Ref,
+  useLayoutEffect,
+  useMemo
+} from 'react';
 
 import canUseDOM from '../../modules/canUseDom';
 import type { Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 export type ModalContentProps = ViewProps & {
   active?: Nullable<boolean>;
-  children?: React.ReactNode;
+  children?: ReactNode;
   onRequestClose?: Nullable<() => void>;
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
   transparent?: Nullable<boolean>;
 };
 
-const ModalContent = (props: ModalContentProps): React.ReactNode => {
+const ModalContent = (props: ModalContentProps): ReactNode => {
   const { active, children, onRequestClose, transparent, ...rest } = props;
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (canUseDOM && active) {
       const closeOnEscape = (e: KeyboardEvent) => {
         if (e.key === 'Escape' && !e.repeat && !e.defaultPrevented) {
@@ -42,7 +47,7 @@ const ModalContent = (props: ModalContentProps): React.ReactNode => {
     }
   }, [active, onRequestClose]);
 
-  const style = React.useMemo(() => {
+  const style = useMemo(() => {
     return [
       styles.modal,
       transparent ? styles.modalTransparent : styles.modalOpaque

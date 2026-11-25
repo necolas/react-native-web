@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment, PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Text from './Text';
@@ -9,7 +9,7 @@ const fmt = (time) => {
   return 10 / i > 1 ? `0${i}` : i;
 };
 
-class ReportCard extends React.PureComponent {
+class ReportCard extends PureComponent {
   render() {
     const {
       benchmarkName,

@@ -8,26 +8,27 @@
  */
 
 import invariant from 'invariant';
-import * as React from 'react';
+import memoizeOne from 'memoize-one';
+import type { ComponentProps, ReactNode } from 'react';
+import { Fragment, PureComponent } from 'react';
 
 import Platform from '../../../exports/Platform';
 import StyleSheet from '../../../exports/StyleSheet';
 import View, { type ViewProps } from '../../../exports/View';
 import deepDiffer from '../deepDiffer';
-
-type ViewStyleProp = ViewProps['style'];
 import type {
-  ViewToken,
-  ViewabilityConfigCallbackPair
+  ViewabilityConfigCallbackPair,
+  ViewToken
 } from '../ViewabilityHelper';
 import type {
-  RenderItemType,
   RenderItemProps,
+  RenderItemType,
   ScrollableNode,
   ScrollRef
 } from '../VirtualizedList';
+
+type ViewStyleProp = ViewProps['style'];
 type ScrollResponderType = unknown;
-import memoizeOne from 'memoize-one';
 
 import type { Nullable } from '../../../types';
 import VirtualizedList from '../VirtualizedList';
@@ -175,7 +176,7 @@ function isArrayLike(data: unknown): boolean {
 
 type FlatListProps<ItemT> = RequiredProps<ItemT> & OptionalProps<ItemT>;
 
-type VirtualizedListProps = React.ComponentProps<typeof VirtualizedList>;
+type VirtualizedListProps = ComponentProps<typeof VirtualizedList>;
 
 export type Props<ItemT> = Omit<
   VirtualizedListProps,
@@ -296,7 +297,7 @@ export type Props<ItemT> = Omit<
  *
  * Also inherits [ScrollView Props](docs/scrollview.html#props), unless it is nested in another FlatList of same orientation.
  */
-class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, {}> {
+class FlatList<ItemT> extends PureComponent<Props<ItemT>, {}> {
   props!: Props<ItemT>;
   /**
    * Scrolls to the end of the content. May be janky without `getItemLayout` prop.
@@ -595,7 +596,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, {}> {
   ) => {
     const cols = numColumnsOrDefault(numColumns);
 
-    const render = (props: RenderItemProps<ItemT>): React.ReactNode => {
+    const render = (props: RenderItemProps<ItemT>): ReactNode => {
       if (ListItemComponent) {
         return <ListItemComponent {...props} />;
       } else if (renderItem) {
@@ -621,7 +622,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, {}> {
                 separators: info.separators
               });
               return element != null ? (
-                <React.Fragment key={kk}>{element}</React.Fragment>
+                <Fragment key={kk}>{element}</Fragment>
               ) : null;
             })}
           </View>
@@ -638,7 +639,7 @@ class FlatList<ItemT> extends React.PureComponent<Props<ItemT>, {}> {
 
   _memoizedRenderer = memoizeOne(this._renderer);
 
-  render(): React.ReactNode {
+  render(): ReactNode {
     const {
       numColumns,
       columnWrapperStyle,

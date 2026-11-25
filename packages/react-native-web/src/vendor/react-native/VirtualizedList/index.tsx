@@ -9,7 +9,13 @@
 
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
-import * as React from 'react';
+import type {
+  ComponentProps,
+  ContextType,
+  ReactElement,
+  ReactNode
+} from 'react';
+import { cloneElement, isValidElement } from 'react';
 
 import RefreshControl from '../../../exports/RefreshControl';
 import ScrollView from '../../../exports/ScrollView';
@@ -31,8 +37,8 @@ import {
 import { CellRenderMask } from './CellRenderMask';
 import ChildListCollection from './ChildListCollection';
 import StateSafePureComponent from './StateSafePureComponent';
-import CellRenderer from './VirtualizedListCellRenderer';
 import type { SeparatorProps } from './VirtualizedListCellRenderer';
+import CellRenderer from './VirtualizedListCellRenderer';
 import {
   VirtualizedListCellContextProvider,
   VirtualizedListContext,
@@ -107,9 +113,7 @@ type ScrollMetrics = {
 };
 type ViewStyleProp = ViewProps['style'];
 
-type NestedContext = NonNullable<
-  React.ContextType<typeof VirtualizedListContext>
->;
+type NestedContext = NonNullable<ContextType<typeof VirtualizedListContext>>;
 
 type KeylessItem = { type: { displayName: string } };
 
@@ -117,7 +121,7 @@ type ListScrollEvent = ScrollViewScrollEvent & {
   readonly nativeEvent: { readonly zoomScale?: number };
 };
 
-type ScrollComponentProps = React.ComponentProps<typeof ScrollView> & {
+type ScrollComponentProps = ComponentProps<typeof ScrollView> & {
   onRefresh?: Nullable<() => void>;
   progressViewOffset?: number;
   refreshing?: Nullable<boolean>;
@@ -478,7 +482,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
   state: State;
 
-  context!: React.ContextType<typeof VirtualizedListContext>;
+  context!: ContextType<typeof VirtualizedListContext>;
 
   // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
   invertedWheelEventHandler: (ev: InvertedWheelEvent) => void;
@@ -888,7 +892,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
   }
 
   _pushCells(
-    cells: Array<React.ReactNode>,
+    cells: Array<ReactNode>,
     stickyHeaderIndices: Array<number>,
     stickyIndicesFromProps: Set<number>,
     first: number,
@@ -1015,7 +1019,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     return key;
   }
 
-  render(): React.ReactNode {
+  render(): ReactNode {
     this._checkProps(this.props);
     const { ListEmptyComponent, ListFooterComponent, ListHeaderComponent } =
       this.props;
@@ -1025,7 +1029,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         ? styles.horizontallyInverted
         : styles.verticallyInverted
       : null;
-    const cells: Array<React.ReactNode> = [];
+    const cells: Array<ReactNode> = [];
     const stickyIndicesFromProps = new Set(this.props.stickyHeaderIndices);
     const stickyHeaderIndices = [];
 
@@ -1034,9 +1038,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       if (stickyIndicesFromProps.has(0)) {
         stickyHeaderIndices.push(0);
       }
-      const element: React.ReactNode = React.isValidElement(
-        ListHeaderComponent
-      ) ? (
+      const element: ReactNode = isValidElement(ListHeaderComponent) ? (
         ListHeaderComponent
       ) : (
         <ListHeaderComponent />
@@ -1059,8 +1061,8 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     // 2a. Add a cell for ListEmptyComponent if applicable
     const itemCount = this.props.getItemCount(data);
     if (itemCount === 0 && ListEmptyComponent) {
-      const element: React.ReactElement<EmptyComponentProps> =
-        React.isValidElement<EmptyComponentProps>(ListEmptyComponent) ? (
+      const element: ReactElement<EmptyComponentProps> =
+        isValidElement<EmptyComponentProps>(ListEmptyComponent) ? (
           ListEmptyComponent
         ) : (
           <ListEmptyComponent />
@@ -1070,7 +1072,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           cellKey={this._getCellKey() + '-empty'}
           key="$empty"
         >
-          {React.cloneElement(element, {
+          {cloneElement(element, {
             onLayout: (event: LayoutEvent) => {
               this._onLayoutEmpty(event);
               if (element.props.onLayout) {
@@ -1150,9 +1152,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
     // 3. Add cell for ListFooterComponent
     if (ListFooterComponent) {
-      const element: React.ReactNode = React.isValidElement(
-        ListFooterComponent
-      ) ? (
+      const element: ReactNode = isValidElement(ListFooterComponent) ? (
         ListFooterComponent
       ) : (
         <ListFooterComponent />
@@ -1208,7 +1208,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           unregisterAsNestedChild: this._unregisterAsNestedChild
         }}
       >
-        {React.cloneElement(
+        {cloneElement(
           (
             this.props.renderScrollComponent ||
             this._defaultRenderScrollComponent
@@ -1220,7 +1220,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         )}
       </VirtualizedListContextProvider>
     );
-    let ret: React.ReactNode = innerRet;
+    let ret: ReactNode = innerRet;
     /* https://github.com/necolas/react-native-web/issues/2239: Re-enable when ScrollView.Context.Consumer is available.
     if (__DEV__) {
       ret = (
@@ -1514,7 +1514,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     this._headerLength = this._selectLength(e.nativeEvent.layout);
   };
 
-  _renderDebugOverlay(): React.ReactNode {
+  _renderDebugOverlay(): ReactNode {
     const normalize =
       this._scrollMetrics.visibleLength /
       (this._scrollMetrics.contentLength || 1);

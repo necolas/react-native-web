@@ -15,7 +15,7 @@
  *   }
  */
 
-import * as React from 'react';
+import { useDebugValue, useEffect, useRef } from 'react';
 
 import type { Nullable } from '../../types';
 import type { ResponderConfig } from './ResponderSystem';
@@ -26,7 +26,7 @@ const emptyObject: ResponderConfig = {};
 let idCounter = 0;
 
 function useStable<T>(getInitialValue: () => T): T {
-  const ref = React.useRef<T | null>(null);
+  const ref = useRef<T | null>(null);
   ref.current ??= getInitialValue();
   return ref.current;
 }
@@ -36,12 +36,12 @@ export default function useResponderEvents(
   config: ResponderConfig = emptyObject
 ) {
   const id = useStable(() => idCounter++);
-  const isAttachedRef = React.useRef(false);
+  const isAttachedRef = useRef(false);
 
   // This is a separate effects so it doesn't run when the config changes.
   // On initial mount, attach global listeners if needed.
   // On unmount, remove node potentially attached to the Responder System.
-  React.useEffect(() => {
+  useEffect(() => {
     ResponderSystem.attachListeners();
     return () => {
       ResponderSystem.removeNode(id);
@@ -72,7 +72,7 @@ export default function useResponderEvents(
   const responderConfig = requiresResponderSystem ? config : null;
 
   // Register and unregister with the Responder System as necessary
-  React.useEffect(() => {
+  useEffect(() => {
     const node = hostRef.current;
 
     if (responderConfig != null) {
@@ -84,8 +84,8 @@ export default function useResponderEvents(
     }
   }, [responderConfig, hostRef, id]);
 
-  React.useDebugValue({
+  useDebugValue({
     isResponder: hostRef.current === ResponderSystem.getResponderNode()
   });
-  React.useDebugValue(config);
+  useDebugValue(config);
 }

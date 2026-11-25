@@ -7,19 +7,24 @@
  * @format
  */
 
-import ScrollView from '../../../exports/ScrollView';
+import type {
+  ComponentClass,
+  ComponentType,
+  ReactElement,
+  ReactNode
+} from 'react';
+
 import type { Props as ScrollViewProps } from '../../../exports/ScrollView';
 import type { ViewProps } from '../../../exports/View';
 import type { LayoutEvent, Nullable } from '../../../types';
 import type { FocusEvent } from '../Types/CoreEventTypes';
-type ViewStyleProp = ViewProps['style'];
-import * as React from 'react';
-
 import type {
   ViewabilityConfig,
   ViewabilityConfigCallbackPair,
   ViewToken
 } from '../ViewabilityHelper';
+
+type ViewStyleProp = ViewProps['style'];
 
 export type Item = unknown;
 
@@ -44,7 +49,7 @@ export type RenderItemProps<ItemT> = {
 
 export type CellRendererProps<ItemT> = Readonly<{
   cellKey: string;
-  children: React.ReactNode;
+  children: ReactNode;
   index: number;
   item: ItemT;
   onFocusCapture?: (event: FocusEvent) => void;
@@ -54,7 +59,7 @@ export type CellRendererProps<ItemT> = Readonly<{
 
 export type RenderItemType<ItemT> = Bivariant<
   [info: RenderItemProps<ItemT>],
-  React.ReactNode
+  ReactNode
 >;
 
 type RequiredProps = {
@@ -133,9 +138,7 @@ type OptionalProps = {
    * underlying ScrollView. This component must accept event handlers which
    * notify VirtualizedList of changes within the cell.
    */
-  CellRendererComponent?: Nullable<
-    React.ComponentType<CellRendererProps<Item>>
-  >;
+  CellRendererComponent?: Nullable<ComponentType<CellRendererProps<Item>>>;
   /**
    * Rendered in between each item, but not at the top or bottom. By default, `highlighted` and
    * `leadingItem` props are provided. `renderItem` provides `separators.highlight`/`unhighlight`
@@ -143,7 +146,7 @@ type OptionalProps = {
    * `separators.updateProps`.
    */
   ItemSeparatorComponent?: Nullable<
-    React.ComponentType<{
+    ComponentType<{
       highlighted: boolean;
       leadingItem: Nullable<Item>;
     }>
@@ -175,15 +178,15 @@ type OptionalProps = {
    * your use-case.
    */
   ListItemComponent?: Nullable<
-    React.ComponentClass<RenderItemProps<Item>> | RenderItemType<Item>
+    ComponentClass<RenderItemProps<Item>> | RenderItemType<Item>
   >;
   /**
    * Rendered when the list is empty. Can be a React Component Class, a render function, or
    * a rendered element.
    */
   ListEmptyComponent?: Nullable<
-    | React.ComponentType<{}>
-    | React.ReactElement<{
+    | ComponentType<{}>
+    | ReactElement<{
         onLayout?: (event: LayoutEvent) => void;
         style?: ViewStyleProp;
       }>
@@ -192,7 +195,7 @@ type OptionalProps = {
    * Rendered at the bottom of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListFooterComponent?: Nullable<React.ComponentType<{}> | React.ReactElement>;
+  ListFooterComponent?: Nullable<ComponentType<{}> | ReactElement>;
   /**
    * Styling for internal View for ListFooterComponent
    */
@@ -201,7 +204,7 @@ type OptionalProps = {
    * Rendered at the top of all the items. Can be a React Component Class, a render function, or
    * a rendered element.
    */
-  ListHeaderComponent?: Nullable<React.ComponentType<{}> | React.ReactElement>;
+  ListHeaderComponent?: Nullable<ComponentType<{}> | ReactElement>;
   /**
    * Styling for internal View for ListHeaderComponent
    */
@@ -273,7 +276,7 @@ type OptionalProps = {
    * <RefreshControl> component built internally. The onRefresh and refreshing
    * props are also ignored. Only works for vertical VirtualizedList.
    */
-  refreshControl?: Nullable<React.ReactElement>;
+  refreshControl?: Nullable<ReactElement>;
   /**
    * Set this true while waiting for new data from a refresh.
    */
@@ -287,7 +290,7 @@ type OptionalProps = {
   /**
    * Render a custom scroll component, e.g. with a differently styled `RefreshControl`.
    */
-  renderScrollComponent?: (props: object) => React.ReactElement;
+  renderScrollComponent?: (props: object) => ReactElement;
   /**
    * Amount of time between low-pri item render batches, e.g. for rendering items quite a ways off
    * screen. Similar fill rate/responsiveness tradeoff as `maxToRenderPerBatch`.

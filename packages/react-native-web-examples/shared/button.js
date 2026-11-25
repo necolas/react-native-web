@@ -1,4 +1,4 @@
-import { StyleSheet, Text, Pressable } from 'react-native';
+import { Pressable, StyleSheet, Text } from 'react-native';
 
 export default function Button(props) {
   const { title, ...rest } = props;

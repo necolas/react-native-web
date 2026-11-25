@@ -9,10 +9,10 @@ const context = import.meta.webpackContext('./implementations/', {
 
 /**
  * @typedef {Object} ComponentsType
- * @property {React.ComponentType<any>} Box
- * @property {React.ComponentType<any>} Dot
- * @property {React.ComponentType<any>} Provider
- * @property {React.ComponentType<any>} View
+ * @property {import('react').ComponentType<any>} Box
+ * @property {import('react').ComponentType<any>} Dot
+ * @property {import('react').ComponentType<any>} Provider
+ * @property {import('react').ComponentType<any>} View
  */
 
 /**

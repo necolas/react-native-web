@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 import { colors } from './theme';
 
-class AppText extends React.Component {
+class AppText extends Component {
   static displayName = '@app/Text';
 
   render() {

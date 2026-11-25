@@ -8,11 +8,20 @@
 
 'use client';
 
-import * as React from 'react';
+import {
+  type ComponentRef,
+  type ReactNode,
+  type Ref,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState
+} from 'react';
 
 import type { Nullable } from '../../types';
-import type { ViewProps } from '../View';
 import type View from '../View';
+import type { ViewProps } from '../View';
 import ModalAnimation from './ModalAnimation';
 import ModalContent from './ModalContent';
 import ModalFocusTrap from './ModalFocusTrap';
@@ -20,7 +29,7 @@ import ModalPortal from './ModalPortal';
 
 export type ModalProps = ViewProps & {
   animationType?: 'none' | 'slide' | 'fade';
-  children?: React.ReactNode;
+  children?: ReactNode;
   hardwareAccelerated?: Nullable<boolean>;
   onDismiss?: Nullable<() => unknown>;
   onOrientationChange?: Nullable<
@@ -28,7 +37,7 @@ export type ModalProps = ViewProps & {
   >;
   onRequestClose?: Nullable<() => void>;
   onShow?: Nullable<() => void>;
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
   presentationStyle?: Nullable<
     'fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'
   >;
@@ -81,7 +90,7 @@ function addActiveModal(listener: (active: boolean) => void, showId: number) {
   notifyActiveModalListeners();
 }
 
-const Modal = (props: ModalProps): React.ReactNode => {
+const Modal = (props: ModalProps): ReactNode => {
   const {
     animationType,
     children,
@@ -95,14 +104,14 @@ const Modal = (props: ModalProps): React.ReactNode => {
 
   // Set in render, not in an effect: parents render before their children, so
   // a nested modal shown with its parent gets a higher id
-  const showId = React.useMemo(
+  const showId = useMemo(
     () => (visible ? uniqueShowIdentifier++ : -1),
     [visible]
   );
 
-  const [isActive, setIsActive] = React.useState(false);
+  const [isActive, setIsActive] = useState(false);
 
-  const onDismissCallback = React.useCallback(() => {
+  const onDismissCallback = useCallback(() => {
     // The modal can be shown again in the update that ends its close
     if (!visible) {
       removeActiveModal(setIsActive);
@@ -113,13 +122,13 @@ const Modal = (props: ModalProps): React.ReactNode => {
 
   // Active when shown, not when the animation ends, so the modal below stops
   // trapping focus and handling Escape
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (visible) {
       addActiveModal(setIsActive, showId);
     }
   }, [showId, visible]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => removeActiveModal(setIsActive);
   }, []);
 

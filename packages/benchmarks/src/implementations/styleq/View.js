@@ -1,4 +1,3 @@
-import React from 'react';
 import { styleq } from 'styleq';
 
 const q = styleq.factory({ disableCache: false });

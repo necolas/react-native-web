@@ -9,16 +9,24 @@
 
 'use client';
 
-import * as React from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import {
+  type FunctionComponent,
+  type ReactElement,
+  type ReactNode,
+  Children,
+  cloneElement,
+  memo,
+  useCallback,
+  useMemo,
+  useState
+} from 'react';
 
 import usePressEvents from '../../modules/usePressEvents';
 import type { PressEvent } from '../../modules/usePressEvents/PressResponder';
 import type { ColorValue, Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
 import type { Props as TouchableWithoutFeedbackProps } from '../TouchableWithoutFeedback';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 type ViewStyle = ViewProps['style'];
 
@@ -72,7 +80,7 @@ function hasPressHandler(props: Props): boolean {
  * TouchableHighlight must have one child (not zero or more than one).
  * If you wish to have several child components, wrap them in a View.
  */
-function TouchableHighlight(props: Props): React.ReactNode {
+function TouchableHighlight(props: Props): ReactNode {
   const {
     activeOpacity,
     children,
@@ -162,7 +170,7 @@ function TouchableHighlight(props: Props): React.ReactNode {
 
   const pressEventHandlers = usePressEvents(pressConfig);
 
-  const child = React.Children.only(children) as React.ReactElement<{
+  const child = Children.only(children) as ReactElement<{
     style?: ViewStyle;
   }>;
 
@@ -182,7 +190,7 @@ function TouchableHighlight(props: Props): React.ReactNode {
       ]}
       unstable_type={type}
     >
-      {React.cloneElement(child, {
+      {cloneElement(child, {
         style: [child.props.style, extraStyles?.child]
       })}
     </View>
@@ -199,8 +207,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const MemoedTouchableHighlight: React.FunctionComponent<Props> =
-  React.memo(TouchableHighlight);
+const MemoedTouchableHighlight: FunctionComponent<Props> =
+  memo(TouchableHighlight);
 MemoedTouchableHighlight.displayName = 'TouchableHighlight';
 
 export default MemoedTouchableHighlight;

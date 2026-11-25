@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import { createRef, useEffect } from 'react';
 import * as ReactDOMServer from 'react-dom/server';
 import { assert } from 'vitest';
 
@@ -14,10 +14,10 @@ import { addEventListener } from '..';
 describe('addEventListener', () => {
   test('can render correctly using ReactDOMServer', () => {
     const listener = vi.fn();
-    const targetRef = React.createRef<HTMLDivElement>();
+    const targetRef = createRef<HTMLDivElement>();
 
     function Component() {
-      React.useEffect(() => {
+      useEffect(() => {
         assert(targetRef.current != null);
         return addEventListener(targetRef.current, 'click', listener);
       });

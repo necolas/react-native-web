@@ -1,6 +1,6 @@
-import React from 'react';
+import { PureComponent } from 'react';
 import { StyleSheet } from 'react-native';
-import { FlatList, Text, Pressable, View } from 'react-native-web';
+import { FlatList, Pressable, Text, View } from 'react-native-web';
 
 import Example from '../../shared/example';
 
@@ -11,7 +11,7 @@ const multiSelectData = ['First', 'Second', 'Third'].map((title, id) => ({
 const minimalData = ['a', 'b', 'c', 'd', 'e'].map((key) => ({ key }));
 const pageExamplesData = ['minimal', 'multiSelect'].map((type) => ({ type }));
 
-class MyListItem extends React.PureComponent {
+class MyListItem extends PureComponent {
   _onPress = () => {
     this.props.onPressItem(this.props.id);
   };
@@ -30,7 +30,7 @@ class MyListItem extends React.PureComponent {
   }
 }
 
-class MultiSelectList extends React.PureComponent {
+class MultiSelectList extends PureComponent {
   state = { selected: new Map() };
 
   _keyExtractor = (item, index) => item.id;

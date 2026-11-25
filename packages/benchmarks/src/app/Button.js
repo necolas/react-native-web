@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StyleSheet, TouchableHighlight, Text } from 'react-native';
+import { Component } from 'react';
+import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 
 export default class Button extends Component {
   static displayName = '@app/Button';

@@ -9,21 +9,29 @@
 
 'use client';
 
-import * as React from 'react';
-import { useMemo } from 'react';
+import {
+  type FunctionComponent,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+  Children,
+  cloneElement,
+  memo,
+  useMemo
+} from 'react';
 
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { PlatformMethods, Nullable } from '../../types';
+import type { Nullable, PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
 import type { AccessibilityProps } from '../View/types';
 
 export type Props = Readonly<
   AccessibilityProps & {
-    children?: Nullable<React.ReactNode>;
+    children?: Nullable<ReactNode>;
     delayLongPress?: Nullable<number>;
     delayPressIn?: Nullable<number>;
     delayPressOut?: Nullable<number>;
@@ -37,7 +45,7 @@ export type Props = Readonly<
     onPress?: PressResponderConfig['onPress'];
     onPressIn?: PressResponderConfig['onPressStart'];
     onPressOut?: PressResponderConfig['onPressEnd'];
-    ref?: React.Ref<HTMLElement & PlatformMethods>;
+    ref?: Ref<HTMLElement & PlatformMethods>;
     rejectResponderTermination?: Nullable<boolean>;
     testID?: ViewProps['testID'];
     title?: ViewProps['title'];
@@ -58,7 +66,7 @@ const forwardPropsList = new Set([
   'title'
 ]);
 
-function TouchableWithoutFeedback(props: Props): React.ReactNode {
+function TouchableWithoutFeedback(props: Props): ReactNode {
   const {
     delayPressIn,
     delayPressOut,
@@ -101,9 +109,9 @@ function TouchableWithoutFeedback(props: Props): React.ReactNode {
 
   const pressEventHandlers = usePressEvents(pressConfig);
 
-  const element = React.Children.only(props.children) as React.ReactElement<{
+  const element = Children.only(props.children) as ReactElement<{
     'aria-disabled'?: AccessibilityProps['aria-disabled'];
-    children?: React.ReactNode;
+    children?: ReactNode;
     ref?: Props['ref'];
     [key: string]: unknown;
   }>;
@@ -126,15 +134,16 @@ function TouchableWithoutFeedback(props: Props): React.ReactNode {
   supportedProps.focusable = !disabled && focusable !== false;
   supportedProps.ref = useMergeRefs(ref, element.props.ref);
 
-  return React.cloneElement(
+  return cloneElement(
     element,
     { ...supportedProps, ...pressEventHandlers },
     ...children
   );
 }
 
-const MemoedTouchableWithoutFeedback: React.FunctionComponent<Props> =
-  React.memo(TouchableWithoutFeedback);
+const MemoedTouchableWithoutFeedback: FunctionComponent<Props> = memo(
+  TouchableWithoutFeedback
+);
 MemoedTouchableWithoutFeedback.displayName = 'TouchableWithoutFeedback';
 
 export default MemoedTouchableWithoutFeedback;

@@ -6,11 +6,12 @@
  */
 
 import { act, render } from '@testing-library/react';
-import React from 'react';
+import { type ComponentRef, createRef } from 'react';
 
 import Animated from '..';
-import AnimatedImplementation from '../../../vendor/react-native/Animated/AnimatedImplementation';
-import type { CompositeAnimation } from '../../../vendor/react-native/Animated/AnimatedImplementation';
+import AnimatedImplementation, {
+  type CompositeAnimation
+} from '../../../vendor/react-native/Animated/AnimatedImplementation';
 import type { EndCallback } from '../../../vendor/react-native/Animated/animations/Animation';
 import Easing from '../../Easing';
 
@@ -419,7 +420,7 @@ describe('Animated', () => {
   describe('createAnimatedComponent', () => {
     test('keeps the same animated nodes when a value updates', () => {
       const value = new Animated.Value(0);
-      const ref = React.createRef<React.ComponentRef<typeof Animated.View>>();
+      const ref = createRef<ComponentRef<typeof Animated.View>>();
 
       const { container } = render(
         <Animated.View ref={ref} style={{ opacity: value }} />

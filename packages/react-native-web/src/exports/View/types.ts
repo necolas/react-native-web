@@ -8,10 +8,10 @@
 
 import type {
   FocusEvent,
-  ReactNode,
   KeyboardEvent,
   MouseEvent,
   PointerEvent,
+  ReactNode,
   TouchEvent,
   UIEvent,
   WheelEvent

@@ -7,7 +7,7 @@
 
 import { act, render, type RenderResult } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { createRef } from 'react';
 
 import View from '../';
 import type { HostNode } from '../../../types';
@@ -185,7 +185,7 @@ describe('components/View', () => {
   describe('prop "onBlur"', () => {
     test('is called', () => {
       const onBlur = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<View onBlur={onBlur} ref={ref} />);
       });
@@ -202,7 +202,7 @@ describe('components/View', () => {
   describe('prop "onClick"', () => {
     test('is called', () => {
       const onClick = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<View onClick={onClick} ref={ref} />);
       });
@@ -217,7 +217,7 @@ describe('components/View', () => {
   describe('prop "onFocus"', () => {
     test('is called', () => {
       const onFocus = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<View onFocus={onFocus} ref={ref} />);
       });
@@ -233,7 +233,7 @@ describe('components/View', () => {
   describe('prop "onPointerDown"', () => {
     test('is called', () => {
       const onPointerDown = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<View onPointerDown={onPointerDown} ref={ref} />);
       });
@@ -268,7 +268,7 @@ describe('components/View', () => {
     });
 
     test('node has imperative methods', () => {
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<View ref={ref} />);
       });

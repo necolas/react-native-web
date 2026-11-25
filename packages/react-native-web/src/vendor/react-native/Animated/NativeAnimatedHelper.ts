@@ -17,12 +17,12 @@ import Platform from '../Utilities/Platform';
 import type { EventSubscription } from '../vendor/emitter/EventEmitter';
 import type { EventConfig } from './AnimatedEvent';
 import type { AnimationConfig, EndCallback } from './animations/Animation';
-import NativeAnimatedNonTurboModule from './NativeAnimatedModule';
 import type {
-  EventMapping,
   AnimatedNodeConfig,
-  AnimatingNodeConfig
+  AnimatingNodeConfig,
+  EventMapping
 } from './NativeAnimatedModule';
+import NativeAnimatedNonTurboModule from './NativeAnimatedModule';
 import NativeAnimatedTurboModule from './NativeAnimatedTurboModule';
 import type { InterpolationConfigType } from './nodes/AnimatedInterpolation';
 
@@ -564,22 +564,22 @@ function transformDataType(value: number | string): number | string {
 }
 
 export {
-  API,
-  isSupportedColorStyleProp,
-  isSupportedStyleProp,
-  isSupportedTransformProp,
-  isSupportedInterpolationParam,
+  addWhitelistedInterpolationParam,
   addWhitelistedStyleProp,
   addWhitelistedTransformProp,
-  addWhitelistedInterpolationParam,
-  validateStyles,
-  validateTransform,
-  validateInterpolation,
-  generateNewNodeTag,
-  generateNewAnimationId,
+  API,
   assertNativeAnimatedModule,
+  generateNewAnimationId,
+  generateNewNodeTag,
+  isSupportedColorStyleProp,
+  isSupportedInterpolationParam,
+  isSupportedStyleProp,
+  isSupportedTransformProp,
   shouldUseNativeDriver,
-  transformDataType
+  transformDataType,
+  validateInterpolation,
+  validateStyles,
+  validateTransform
 };
 
 export default {

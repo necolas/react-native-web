@@ -6,17 +6,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import type { ComponentRef, ReactNode, Ref } from 'react';
 
 import StyleSheet from '../StyleSheet';
-import type { ViewProps } from '../View';
-import View from '../View';
+import View, { type ViewProps } from '../View';
 
 type SafeAreaViewProps = ViewProps & {
-  ref?: React.Ref<React.ComponentRef<typeof View>>;
+  ref?: Ref<ComponentRef<typeof View>>;
 };
 
-const SafeAreaView = (props: SafeAreaViewProps): React.ReactNode => {
+const SafeAreaView = (props: SafeAreaViewProps): ReactNode => {
   const { style, ...rest } = props;
   return <View {...rest} style={[styles.root, style]} />;
 };

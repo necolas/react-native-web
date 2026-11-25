@@ -7,7 +7,7 @@
 
 import { act, render } from '@testing-library/react';
 import { createEventTarget } from 'dom-event-testing-library';
-import React from 'react';
+import { Profiler, createRef, useState } from 'react';
 
 import Pressable from '../';
 import type { HostNode } from '../../../types';
@@ -86,7 +86,7 @@ describe('components/Pressable', () => {
     let container!: HTMLElement;
     const onBlur = vi.fn();
     const onFocus = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
     act(() => {
       ({ container } = render(
         <Pressable
@@ -118,7 +118,7 @@ describe('components/Pressable', () => {
   test('focus interaction (disabled)', () => {
     const onBlur = vi.fn();
     const onFocus = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
     act(() => {
       render(
         <Pressable
@@ -145,7 +145,7 @@ describe('components/Pressable', () => {
     let container!: HTMLElement;
     const onHoverIn = vi.fn();
     const onHoverOut = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
     act(() => {
       ({ container } = render(
         <Pressable
@@ -177,13 +177,13 @@ describe('components/Pressable', () => {
     const onHoverIn = vi.fn();
     const onHoverOut = vi.fn();
     const onRender = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
 
     act(() => {
       render(
-        <React.Profiler id="pressable" onRender={onRender}>
+        <Profiler id="pressable" onRender={onRender}>
           <Pressable onHoverIn={onHoverIn} onHoverOut={onHoverOut} ref={ref} />
-        </React.Profiler>
+        </Profiler>
       );
     });
 
@@ -208,7 +208,7 @@ describe('components/Pressable', () => {
     const onPress = vi.fn();
     const onPressIn = vi.fn();
     const onPressOut = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
     act(() => {
       ({ container } = render(
         <Pressable
@@ -251,10 +251,10 @@ describe('components/Pressable', () => {
       const onPress = vi.fn();
       const onPressIn = vi.fn();
       const onPressOut = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
 
       function TestCase() {
-        const [shown, setShown] = React.useState(true);
+        const [shown, setShown] = useState(true);
         return shown ? (
           <Pressable
             children={({ pressed }) =>
@@ -294,7 +294,7 @@ describe('components/Pressable', () => {
 
     test('ignore press when keyup is on a different element', () => {
       const onPress = vi.fn();
-      const firstRef = React.createRef<HostNode>();
+      const firstRef = createRef<HostNode>();
 
       function TestCase() {
         return (
@@ -322,7 +322,7 @@ describe('components/Pressable', () => {
 
     test('trigger press when role is "link"', () => {
       const onPress = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
 
       act(() => {
         render(<Pressable onPress={onPress} ref={ref} role="link" />);
@@ -342,7 +342,7 @@ describe('components/Pressable', () => {
     test('ignore press when role is "link" and href is set', () => {
       // The browser dispatches a native 'click' for anchors
       const onPress = vi.fn();
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
 
       act(() => {
         render(
@@ -371,7 +371,7 @@ describe('components/Pressable', () => {
   test('press interaction as button (keyboard)', () => {
     const onPress = vi.fn();
     const preventDefault = vi.fn();
-    const ref = React.createRef<HostNode>();
+    const ref = createRef<HostNode>();
 
     function TestCase() {
       return (
@@ -401,8 +401,8 @@ describe('components/Pressable', () => {
     const onKeyDown = vi.fn();
     const onPress = vi.fn();
     const onPressIn = vi.fn();
-    const inputRef = React.createRef<HostNode>();
-    const textAreaRef = React.createRef<HostNode>();
+    const inputRef = createRef<HostNode>();
+    const textAreaRef = createRef<HostNode>();
 
     function TestCase() {
       return (
@@ -447,7 +447,7 @@ describe('components/Pressable', () => {
     });
 
     test('node has imperative methods', () => {
-      const ref = React.createRef<HostNode>();
+      const ref = createRef<HostNode>();
       act(() => {
         render(<Pressable ref={ref} />);
       });

@@ -8,33 +8,33 @@
  */
 
 import type { Nullable } from '../../../types';
-import { AnimatedEvent, attachNativeEvent } from './AnimatedEvent';
 import type {
   AnimatedEventHandler,
   AnimatedEventListener,
-  Mapping,
-  EventConfig
+  EventConfig,
+  Mapping
 } from './AnimatedEvent';
+import { AnimatedEvent, attachNativeEvent } from './AnimatedEvent';
 import type {
   AnimationConfig,
   EndCallback,
   EndResult
 } from './animations/Animation';
-import DecayAnimation from './animations/DecayAnimation';
 import type {
   DecayAnimationConfig,
   DecayAnimationConfigSingle
 } from './animations/DecayAnimation';
-import SpringAnimation from './animations/SpringAnimation';
+import DecayAnimation from './animations/DecayAnimation';
 import type {
   SpringAnimationConfig,
   SpringAnimationConfigSingle
 } from './animations/SpringAnimation';
-import TimingAnimation from './animations/TimingAnimation';
+import SpringAnimation from './animations/SpringAnimation';
 import type {
   TimingAnimationConfig,
   TimingAnimationConfigSingle
 } from './animations/TimingAnimation';
+import TimingAnimation from './animations/TimingAnimation';
 import createAnimatedComponent from './createAnimatedComponent';
 import AnimatedAddition from './nodes/AnimatedAddition';
 import AnimatedColor from './nodes/AnimatedColor';
@@ -43,8 +43,8 @@ import AnimatedDivision from './nodes/AnimatedDivision';
 import AnimatedInterpolation from './nodes/AnimatedInterpolation';
 import AnimatedModulo from './nodes/AnimatedModulo';
 import AnimatedMultiplication from './nodes/AnimatedMultiplication';
-import AnimatedNode from './nodes/AnimatedNode';
 import type { AnimatedNumericNode } from './nodes/AnimatedNode';
+import AnimatedNode from './nodes/AnimatedNode';
 import AnimatedSubtraction from './nodes/AnimatedSubtraction';
 import AnimatedTracking from './nodes/AnimatedTracking';
 import AnimatedValue from './nodes/AnimatedValue';

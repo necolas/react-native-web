@@ -6,7 +6,7 @@
  */
 
 import UIManager from '../../exports/UIManager';
-import type { PlatformMethods, Nullable } from '../../types';
+import type { Nullable, PlatformMethods } from '../../types';
 
 /**
  * Adds non-standard methods to the hode element. This is temporarily until an

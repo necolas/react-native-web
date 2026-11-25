@@ -8,12 +8,22 @@
 
 'use client';
 
-import * as React from 'react';
+import {
+  type ComponentRef,
+  type ReactNode,
+  type Ref,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react';
 
-import type { PackagerAsset } from '../../modules/AssetRegistry';
-import { getAssetByID } from '../../modules/AssetRegistry';
-import ImageLoader, { ImageUriCache } from '../../modules/ImageLoader';
-import type { ImageSize } from '../../modules/ImageLoader';
+import { type PackagerAsset, getAssetByID } from '../../modules/AssetRegistry';
+import ImageLoader, {
+  type ImageSize,
+  ImageUriCache
+} from '../../modules/ImageLoader';
 import type { ColorValue, LayoutEvent, Nullable } from '../../types';
 import createElement from '../createElement';
 import PixelRatio from '../PixelRatio';
@@ -36,7 +46,7 @@ const svgDataUriPattern = /^(data:image\/svg\+xml;utf8,)(.*)/;
 function createTintColorSVG(
   tintColor: Nullable<ColorValue>,
   id: Nullable<number>
-): React.ReactNode {
+): ReactNode {
   return tintColor && id != null ? (
     <svg
       style={{
@@ -164,9 +174,9 @@ function resolveAssetUri(source: Nullable<Source>): Nullable<string> {
 
 const Image = (
   props: ImageProps & {
-    ref?: React.Ref<React.ComponentRef<typeof View>>;
+    ref?: Ref<ComponentRef<typeof View>>;
   }
-): React.ReactNode => {
+): ReactNode => {
   const {
     'aria-label': _ariaLabel,
     accessibilityLabel,
@@ -197,7 +207,7 @@ const Image = (
     }
   }
 
-  const [state, updateState] = React.useState(() => {
+  const [state, updateState] = useState(() => {
     const uri = resolveAssetUri(source);
     if (uri != null) {
       const isLoaded = ImageLoader.has(uri);
@@ -208,14 +218,14 @@ const Image = (
     return IDLE;
   });
 
-  const [layout, updateLayout] = React.useState<{
+  const [layout, updateLayout] = useState<{
     readonly height?: number;
     readonly width?: number;
   }>({});
-  const hasTextAncestor = React.useContext(TextAncestorContext);
-  const hiddenImageRef = React.useRef(null);
-  const filterRef = React.useRef(_filterId++);
-  const requestRef = React.useRef<Nullable<number>>(null);
+  const hasTextAncestor = useContext(TextAncestorContext);
+  const hiddenImageRef = useRef(null);
+  const filterRef = useRef(_filterId++);
+  const requestRef = useRef<Nullable<number>>(null);
   const shouldDisplaySource =
     state === LOADED || (state === LOADING && defaultSource == null);
   const [_resizeMode, filter, _tintColor] = extractNonStandardStyleProps(
@@ -274,20 +284,20 @@ const Image = (
   // Image loading
   // Read the load handlers through a ref, so that a new handler identity does
   // not abort and restart the request for the same uri.
-  const handlersRef = React.useRef({
+  const handlersRef = useRef({
     onError,
     onLoad,
     onLoadEnd,
     onLoadStart
   });
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     handlersRef.current = { onError, onLoad, onLoadEnd, onLoadStart };
   });
 
   const uri = resolveAssetUri(source);
 
-  React.useEffect(() => {
+  useEffect(() => {
     function abortPendingRequest() {
       if (requestRef.current != null) {
         ImageLoader.abort(requestRef.current);

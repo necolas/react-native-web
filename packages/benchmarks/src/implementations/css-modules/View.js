@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import React from 'react';
+import { Component } from 'react';
 
 import styles from './view-styles.css';
 
-class View extends React.Component {
+class View extends Component {
   render() {
     const props = this.props;
     return (

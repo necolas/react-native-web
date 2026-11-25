@@ -12,8 +12,7 @@ import type { GenericStyleProp } from '../../types';
 import { atomic, classic, inline, type Style } from './compiler';
 import { createSheet } from './dom';
 import { localizeStyle, type LocalizedStyle } from './localizeStyle';
-import { preprocess } from './preprocess';
-import type { PreprocessOptions } from './preprocess';
+import { preprocess, type PreprocessOptions } from './preprocess';
 import { validate } from './validate';
 
 const staticStyleMap: WeakMap<object, LocalizedStyle> = new WeakMap();

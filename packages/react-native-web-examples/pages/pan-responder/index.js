@@ -1,11 +1,11 @@
-import React from 'react';
+import { Component, PureComponent } from 'react';
 import { PanResponder, StyleSheet, View } from 'react-native';
 
 import Example from '../../shared/example';
 
 const CIRCLE_SIZE = 80;
 
-class DraggableCircle extends React.PureComponent {
+class DraggableCircle extends PureComponent {
   _panResponder = {};
   _previousLeft = 0;
   _previousTop = 0;
@@ -92,7 +92,7 @@ class DraggableCircle extends React.PureComponent {
   };
 }
 
-class LocationXY extends React.Component {
+class LocationXY extends Component {
   constructor() {
     super();
     this.state = { translateX: 0 };

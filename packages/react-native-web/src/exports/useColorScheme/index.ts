@@ -8,10 +8,9 @@
 
 'use client';
 
-import * as React from 'react';
+import { useSyncExternalStore } from 'react';
 
-import type { ColorSchemeName } from '../Appearance';
-import Appearance from '../Appearance';
+import Appearance, { type ColorSchemeName } from '../Appearance';
 
 function subscribe(callback: () => void): () => void {
   return Appearance.addChangeListener(callback).remove;
@@ -22,7 +21,7 @@ function getServerSnapshot(): ColorSchemeName {
 }
 
 export default function useColorScheme(): ColorSchemeName {
-  return React.useSyncExternalStore(
+  return useSyncExternalStore(
     subscribe,
     Appearance.getColorScheme,
     getServerSnapshot

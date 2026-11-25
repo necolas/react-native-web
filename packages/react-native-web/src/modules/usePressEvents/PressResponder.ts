@@ -7,15 +7,12 @@
  * @format
  */
 
-import type {
-  KeyboardEvent as ReactKeyboardEvent,
-  MouseEvent as ReactMouseEvent
-} from 'react';
+import type { MouseEvent, KeyboardEvent as ReactKeyboardEvent } from 'react';
 
 import type { Nullable } from '../../types';
 import type { ResponderEvent } from '../useResponderEvents/createResponderEvent';
 
-type ClickEvent = ReactMouseEvent<HTMLElement>;
+type ClickEvent = MouseEvent<HTMLElement>;
 type KeyDownEvent = ReactKeyboardEvent<HTMLElement>;
 type KeyUpEvent = KeyboardEvent;
 type PressStartEvent = ResponderEvent | KeyDownEvent;

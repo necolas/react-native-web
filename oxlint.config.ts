@@ -1,7 +1,7 @@
 import { defineConfig } from 'oxlint';
 
 export default defineConfig({
-  plugins: ['node', 'promise', 'react', 'typescript'],
+  plugins: ['import', 'node', 'promise', 'react', 'typescript'],
   ignorePatterns: ['packages/**/vendor/*', 'packages/**/types/*'],
   env: {
     browser: true,
@@ -58,6 +58,9 @@ export default defineConfig({
     //   { argsIgnorePattern: '^_', ignoreRestSiblings: true }
     // ]
 
+    // import
+    'import/no-duplicates': ['error', { preferInline: true }],
+
     // node
     'node/handle-callback-err': ['error', '^(err|error)$'],
     'node/no-path-concat': 'error',
@@ -85,6 +88,7 @@ export default defineConfig({
     'react/exhaustive-deps': 'warn',
 
     // typescript
+    'typescript/consistent-type-imports': 'error',
     'typescript/no-empty-object-type': 'error',
     'typescript/no-explicit-any': 'error',
     'typescript/no-import-type-side-effects': 'error',

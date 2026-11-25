@@ -6,15 +6,15 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react';
+import { Component } from 'react';
 import {
   Image,
   PixelRatio,
   Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   Switch,
+  Text,
   View
 } from 'react-native';
 
@@ -67,8 +67,8 @@ function TextAlignmentExample(props) {
   );
 }
 
-function withRTLState(Component) {
-  return class extends React.Component {
+function withRTLState(WrappedComponent) {
+  return class extends Component {
     constructor(...args) {
       super(...args);
       this.state = {
@@ -79,7 +79,7 @@ function withRTLState(Component) {
     render() {
       const isRTL = this.state.isRTL;
       const setRTL = (isRTL) => this.setState({ isRTL: isRTL });
-      return <Component isRTL={isRTL} setRTL={setRTL} />;
+      return <WrappedComponent isRTL={isRTL} setRTL={setRTL} />;
     }
   };
 }
@@ -366,7 +366,7 @@ const blockStyles = StyleSheet.create({
   }
 });
 
-class LayoutRTLExample extends React.Component {
+class LayoutRTLExample extends Component {
   constructor(props) {
     super(props);
 

@@ -7,19 +7,20 @@
  * @format
  */
 
-import * as React from 'react';
+import type { ReactElement, ReactNode } from 'react';
+import { PureComponent } from 'react';
 
 import Platform from '../../../exports/Platform';
-import VirtualizedSectionList from '../VirtualizedSectionList';
-
-type ScrollResponderType = unknown;
 import type { Nullable } from '../../../types';
 import type { ScrollableNode, Separators } from '../VirtualizedList';
 import type {
   SectionBase as _SectionBase,
-  Props as VirtualizedSectionListProps,
-  ScrollToLocationParamsType
+  ScrollToLocationParamsType,
+  Props as VirtualizedSectionListProps
 } from '../VirtualizedSectionList';
+import VirtualizedSectionList from '../VirtualizedSectionList';
+
+type ScrollResponderType = unknown;
 
 type Item = unknown;
 
@@ -49,7 +50,7 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
     index: number;
     section: SectionT;
     separators: Separators;
-  }) => null | React.ReactElement;
+  }) => null | ReactElement;
   /**
    * A marker property for telling the list to re-render (since it implements `PureComponent`). If
    * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
@@ -155,7 +156,7 @@ export type Props<SectionT extends SectionBase<Item>> = Omit<
  */
 export default class SectionList<
   SectionT extends SectionBase<Item>
-> extends React.PureComponent<Props<SectionT>, {}> {
+> extends PureComponent<Props<SectionT>, {}> {
   props!: Props<SectionT>;
 
   /**
@@ -214,7 +215,7 @@ export default class SectionList<
   // Not supported on web. Kept so code shared with native doesn't crash.
   setNativeProps(props: { [key: string]: unknown }) {}
 
-  render(): React.ReactNode {
+  render(): ReactNode {
     const {
       stickySectionHeadersEnabled: _stickySectionHeadersEnabled,
       ...restProps

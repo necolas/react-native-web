@@ -10,8 +10,8 @@
 import type { Nullable } from '../../../../types';
 import { shouldUseNativeDriver } from '../NativeAnimatedHelper';
 import type AnimatedValue from '../nodes/AnimatedValue';
-import Animation from './Animation';
 import type { AnimationConfig, EndCallback } from './Animation';
+import Animation from './Animation';
 
 export type DecayAnimationConfig = AnimationConfig & {
   velocity:

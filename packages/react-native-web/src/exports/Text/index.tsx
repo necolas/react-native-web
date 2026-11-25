@@ -8,16 +8,23 @@
 
 'use client';
 
-import * as React from 'react';
+import {
+  type MouseEvent,
+  type ReactNode,
+  type Ref,
+  useCallback,
+  useContext,
+  useRef
+} from 'react';
 
 import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import setPlatformMethods from '../../modules/setPlatformMethods';
 import useElementLayout from '../../modules/useElementLayout';
-import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
+import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
-import type { PlatformMethods, Nullable } from '../../types';
+import type { Nullable, PlatformMethods } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
@@ -40,9 +47,9 @@ const forwardPropsList = new Set([
 
 const Text = (
   props: TextProps & {
-    ref?: React.Ref<HTMLElement & PlatformMethods>;
+    ref?: Ref<HTMLElement & PlatformMethods>;
   }
-): React.ReactNode => {
+): ReactNode => {
   const {
     ellipsizeMode,
     hrefAttrs,
@@ -71,8 +78,8 @@ const Text = (
     unstable_type
   } = props;
 
-  const hasTextAncestor = React.useContext(TextAncestorContext);
-  const hostRef = React.useRef<Nullable<HTMLElement>>(null);
+  const hasTextAncestor = useContext(TextAncestorContext);
+  const hostRef = useRef<Nullable<HTMLElement>>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);
@@ -95,8 +102,8 @@ const Text = (
     onStartShouldSetResponderCapture
   });
 
-  const handleClick = React.useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
+  const handleClick = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
       if (onClick != null) {
         onClick(e);
       } else if (onPress != null) {

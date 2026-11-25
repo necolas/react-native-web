@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SectionList, Text, View } from 'react-native-web';
 

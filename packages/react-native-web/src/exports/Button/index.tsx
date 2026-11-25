@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as React from 'react';
+import type { ComponentRef, ReactNode, Ref } from 'react';
 
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
 import type { Nullable } from '../../types';
@@ -19,13 +19,13 @@ type ButtonProps = {
   color?: Nullable<string>;
   disabled?: boolean;
   onPress?: PressResponderConfig['onPress'];
-  ref?: React.Ref<React.ComponentRef<typeof TouchableOpacity>>;
+  ref?: Ref<ComponentRef<typeof TouchableOpacity>>;
   testID?: Nullable<string>;
   title: string;
   type?: Nullable<'button' | 'reset' | 'submit'>;
 };
 
-const Button = (props: ButtonProps): React.ReactNode => {
+const Button = (props: ButtonProps): ReactNode => {
   const {
     accessibilityLabel,
     color,

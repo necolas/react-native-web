@@ -8,7 +8,13 @@
  */
 
 import invariant from 'invariant';
-import * as React from 'react';
+import type {
+  ComponentProps,
+  ComponentType,
+  ReactElement,
+  ReactNode
+} from 'react';
+import { PureComponent, useEffect, useState } from 'react';
 
 import View from '../../../exports/View';
 import type { Nullable } from '../../../types';
@@ -41,11 +47,11 @@ export type SectionBase<SectionItemT> = {
           separators: Separators;
         }
       ],
-      null | React.ReactElement
+      null | ReactElement
     >
   >;
   readonly ItemSeparatorComponent?: Nullable<
-    React.ComponentType<SeparatorComponentProps>
+    ComponentType<SeparatorComponentProps>
   >;
   readonly keyExtractor?: Bivariant<
     [item: SectionItemT, index?: Nullable<number>],
@@ -80,19 +86,19 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
     index: number;
     section: SectionT;
     separators: Separators;
-  }) => null | React.ReactElement;
+  }) => null | ReactElement;
   /**
    * Rendered at the top of each section. These stick to the top of the `ScrollView` by default on
    * iOS. See `stickySectionHeadersEnabled`.
    */
   renderSectionHeader?: Nullable<
-    (info: { section: SectionT }) => null | React.ReactElement
+    (info: { section: SectionT }) => null | ReactElement
   >;
   /**
    * Rendered at the bottom of each section.
    */
   renderSectionFooter?: Nullable<
-    (info: { section: SectionT }) => null | React.ReactElement
+    (info: { section: SectionT }) => null | ReactElement
   >;
   /**
    * Rendered at the top and bottom of each section (note this is different from
@@ -101,12 +107,8 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
    * `ItemSeparatorComponent`. Also receives `highlighted`, `[leading/trailing][Item/Separator]`,
    * and any custom props from `separators.updateProps`.
    */
-  SectionSeparatorComponent?: Nullable<
-    React.ComponentType<SeparatorComponentProps>
-  >;
-  ItemSeparatorComponent?: Nullable<
-    React.ComponentType<SeparatorComponentProps>
-  >;
+  SectionSeparatorComponent?: Nullable<ComponentType<SeparatorComponentProps>>;
+  ItemSeparatorComponent?: Nullable<ComponentType<SeparatorComponentProps>>;
   /**
    * Makes section headers stick to the top of the screen until the next one pushes it off. Only
    * enabled by default on iOS because that is the platform standard there.
@@ -115,7 +117,7 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
   onEndReached?: Nullable<(info: { distanceFromEnd: number }) => void>;
 };
 
-type VirtualizedListProps = React.ComponentProps<typeof VirtualizedList>;
+type VirtualizedListProps = ComponentProps<typeof VirtualizedList>;
 
 export type Props<SectionT extends SectionBase<Item>> = Omit<
   RequiredProps<SectionT> & OptionalProps<SectionT>,
@@ -142,7 +144,7 @@ type State = { childProps: VirtualizedListProps };
  */
 class VirtualizedSectionList<
   SectionT extends SectionBase<Item>
-> extends React.PureComponent<Props<SectionT>, State> {
+> extends PureComponent<Props<SectionT>, State> {
   scrollToLocation(params: ScrollToLocationParamsType) {
     let index = params.itemIndex;
     for (let i = 0; i < params.sectionIndex; i++) {
@@ -172,7 +174,7 @@ class VirtualizedSectionList<
     return this._listRef;
   }
 
-  render(): React.ReactNode {
+  render(): ReactNode {
     const {
       ItemSeparatorComponent, // don't pass through, rendered with renderItem
       SectionSeparatorComponent,
@@ -436,7 +438,7 @@ class VirtualizedSectionList<
     index: number,
     info: Nullable<SubExtractorInfo<SectionT>>,
     listItemCount: number
-  ): Nullable<React.ComponentType<SeparatorComponentProps>> {
+  ): Nullable<ComponentType<SeparatorComponentProps>> {
     info = info || this._subExtractor(index);
     if (!info) {
       return null;
@@ -487,10 +489,8 @@ type ItemWithSeparatorProps<SectionT extends SectionBase<Item>> = Readonly<{
   section: SectionT;
   trailingItem: Nullable<Item>;
   trailingSection: Nullable<SectionT>;
-  LeadingSeparatorComponent: Nullable<
-    React.ComponentType<SeparatorComponentProps>
-  >;
-  SeparatorComponent: Nullable<React.ComponentType<SeparatorComponentProps>>;
+  LeadingSeparatorComponent: Nullable<ComponentType<SeparatorComponentProps>>;
+  SeparatorComponent: Nullable<ComponentType<SeparatorComponentProps>>;
   cellKey: string;
   index: number;
   item: Item;
@@ -510,13 +510,13 @@ type ItemWithSeparatorProps<SectionT extends SectionBase<Item>> = Readonly<{
     index: number;
     section: SectionT;
     separators: Separators;
-  }) => null | React.ReactElement;
+  }) => null | ReactElement;
   inverted: boolean;
 }>;
 
 function ItemWithSeparator<SectionT extends SectionBase<Item>>(
   props: ItemWithSeparatorProps<SectionT>
-): React.ReactNode {
+): ReactNode {
   const {
     LeadingSeparatorComponent,
     // this is the trailing separator and is associated with this item
@@ -534,18 +534,18 @@ function ItemWithSeparator<SectionT extends SectionBase<Item>>(
   } = props;
 
   const [leadingSeparatorHiglighted, setLeadingSeparatorHighlighted] =
-    React.useState(false);
+    useState(false);
 
-  const [separatorHighlighted, setSeparatorHighlighted] = React.useState(false);
+  const [separatorHighlighted, setSeparatorHighlighted] = useState(false);
 
-  const [leadingSeparatorProps, setLeadingSeparatorProps] = React.useState({
+  const [leadingSeparatorProps, setLeadingSeparatorProps] = useState({
     leadingItem: props.leadingItem,
     leadingSection: props.leadingSection,
     section: props.section,
     trailingItem: props.item,
     trailingSection: props.trailingSection
   });
-  const [separatorProps, setSeparatorProps] = React.useState<SeparatorProps>({
+  const [separatorProps, setSeparatorProps] = useState<SeparatorProps>({
     leadingItem: props.item,
     leadingSection: props.leadingSection,
     section: props.section,
@@ -553,7 +553,7 @@ function ItemWithSeparator<SectionT extends SectionBase<Item>>(
     trailingSection: props.trailingSection
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setSelfHighlightCallback(cellKey, setSeparatorHighlighted);
     setSelfUpdatePropsCallback(cellKey, setSeparatorProps);
 

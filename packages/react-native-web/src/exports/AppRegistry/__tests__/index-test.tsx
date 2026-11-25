@@ -6,12 +6,12 @@
  */
 
 import { act } from '@testing-library/react';
-import React from 'react';
+import { createElement, useEffect } from 'react';
 
 import AppRegistry from '..';
 import type { Application } from '../renderApplication';
 
-const NoopComponent = () => React.createElement('div');
+const NoopComponent = () => createElement('div');
 
 describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
   describe('runApplication', () => {
@@ -44,7 +44,7 @@ describe.each([['concurrent'], ['legacy']] as const)('AppRegistry', (mode) => {
     test('unmount ran application', () => {
       const setMountedState = vi.fn();
       const MountedStateComponent = () => {
-        React.useEffect(() => {
+        useEffect(() => {
           setMountedState(true);
           return () => {
             setMountedState(false);

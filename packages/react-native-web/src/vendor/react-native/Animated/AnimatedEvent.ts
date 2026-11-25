@@ -10,8 +10,9 @@
 import invariant from 'invariant';
 
 import type { Nullable } from '../../../types';
-import NativeAnimatedHelper from './NativeAnimatedHelper';
-import { shouldUseNativeDriver } from './NativeAnimatedHelper';
+import NativeAnimatedHelper, {
+  shouldUseNativeDriver
+} from './NativeAnimatedHelper';
 import type { EventMapping } from './NativeAnimatedModule';
 import AnimatedValue from './nodes/AnimatedValue';
 

@@ -6,7 +6,7 @@
  */
 
 import { render } from '@testing-library/react';
-import * as React from 'react';
+import type { ReactNode } from 'react';
 
 import useAnimatedColor from '..';
 import Animated from '../../Animated';
@@ -15,7 +15,7 @@ describe('useAnimatedColor', () => {
   test('returns an Animated.Color with the initial value', () => {
     let value: ReturnType<typeof useAnimatedColor> | undefined;
 
-    function Component(): React.ReactNode {
+    function Component(): ReactNode {
       value = useAnimatedColor({ r: 255, g: 0, b: 0, a: 1 });
       return null;
     }
@@ -28,7 +28,7 @@ describe('useAnimatedColor', () => {
   test('accepts a color string', () => {
     let value: ReturnType<typeof useAnimatedColor> | undefined;
 
-    function Component(): React.ReactNode {
+    function Component(): ReactNode {
       value = useAnimatedColor('red');
       return null;
     }
@@ -44,7 +44,7 @@ describe('useAnimatedColor', () => {
       inputValue
     }: {
       inputValue: Parameters<typeof useAnimatedColor>[0];
-    }): React.ReactNode {
+    }): ReactNode {
       values.push(useAnimatedColor(inputValue));
       return null;
     }

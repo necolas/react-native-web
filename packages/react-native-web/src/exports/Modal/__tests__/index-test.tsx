@@ -6,7 +6,7 @@
  */
 
 import { fireEvent, render } from '@testing-library/react';
-import React from 'react';
+import { useEffect, useState } from 'react';
 
 import Modal from '..';
 
@@ -197,9 +197,9 @@ describe('components/Modal', () => {
 
   test('a modal shown again in the update that dismisses it is active', () => {
     function TestComponent() {
-      const [visible, setVisible] = React.useState(true);
+      const [visible, setVisible] = useState(true);
 
-      React.useEffect(() => {
+      useEffect(() => {
         if (!visible) {
           setVisible(true);
         }
@@ -696,7 +696,7 @@ describe('components/Modal', () => {
     const spy = vi.fn();
 
     function TestComponent() {
-      React.useEffect(() => spy('mount'), []);
+      useEffect(() => spy('mount'), []);
       return (
         <Modal visible={true}>
           <a ref={(ref) => (ref ? spy('ref') : spy('noref'))} />
@@ -805,7 +805,7 @@ describe('components/Modal', () => {
     const spyB = vi.fn();
 
     function TestComponent() {
-      const [visibleB, setVisibleB] = React.useState(true);
+      const [visibleB, setVisibleB] = useState(true);
 
       return (
         <>

@@ -8,8 +8,8 @@
 import {
   buttonType,
   buttonsType,
-  defaultPointerSize,
-  defaultBrowserChromeSize
+  defaultBrowserChromeSize,
+  defaultPointerSize
 } from './constants';
 import createEvent, { type EventPayload } from './createEvent';
 import type { TouchData } from './touchStore';
