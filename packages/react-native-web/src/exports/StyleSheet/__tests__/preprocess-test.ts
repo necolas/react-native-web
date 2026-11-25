@@ -355,6 +355,15 @@ describe('StyleSheet/preprocess', () => {
         ).toEqual({
           transitionProperty: 'border-start-start-radius, inset-inline-start'
         });
+
+        expect(
+          preprocess({
+            transitionProperty: 'margin-start, border-top-end-radius, end'
+          })
+        ).toEqual({
+          transitionProperty:
+            'margin-inline-start, border-start-end-radius, inset-inline-end'
+        });
       });
     });
   });

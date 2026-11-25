@@ -175,12 +175,13 @@ const PROPERTIES_STANDARD: Record<string, string> = {
 };
 
 // React Native aliases and camelCase names to CSS names, e.g.
-// 'marginStart' and 'marginInlineStart' => 'margin-inline-start'
+// 'marginStart', 'margin-start' and 'marginInlineStart' => 'margin-inline-start'
 const TRANSITION_PROPERTIES = new Map<string, string>();
 
 for (const [alias, prop] of Object.entries(PROPERTIES_STANDARD)) {
   const name = hyphenateStyleName(prop);
   TRANSITION_PROPERTIES.set(alias, name);
+  TRANSITION_PROPERTIES.set(hyphenateStyleName(alias), name);
   TRANSITION_PROPERTIES.set(prop, name);
 }
 
