@@ -14,7 +14,6 @@ import * as forwardedProps from '../../modules/forwardedProps';
 import pick from '../../modules/pick';
 import setPlatformMethods from '../../modules/setPlatformMethods';
 import useElementLayout from '../../modules/useElementLayout';
-import { useLocaleContext, getLocaleDirection } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
 import type { PlatformMethods, Nullable } from '../../types';
@@ -34,7 +33,6 @@ const forwardPropsList = new Set([
   ...forwardedProps.styleProps,
   'disabled',
   'href',
-  'lang',
   'onScroll',
   'onWheel',
   'pointerEvents'
@@ -80,7 +78,6 @@ const View = (
 
   const hasTextAncestor = React.useContext(TextAncestorContext);
   const hostRef = React.useRef<Nullable<HTMLElement>>(null);
-  const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);
   useResponderEvents(hostRef, {
@@ -104,13 +101,7 @@ const View = (
 
   let component: 'div' | 'a' = 'div';
 
-  const langDirection =
-    props.lang != null ? getLocaleDirection(props.lang) : null;
-  const componentDirection = props.dir || langDirection;
-  const writingDirection = componentDirection || contextDirection;
-
   const supportedProps = pick(props, forwardPropsList);
-  supportedProps.dir = componentDirection;
 
   if (
     unstable_type === 'button' ||
@@ -146,7 +137,7 @@ const View = (
 
   supportedProps.ref = setRef;
 
-  return createElement(component, supportedProps, { writingDirection });
+  return createElement(component, supportedProps);
 };
 
 View.displayName = 'View';

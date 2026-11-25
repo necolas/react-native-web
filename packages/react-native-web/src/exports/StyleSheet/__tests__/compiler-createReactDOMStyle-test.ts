@@ -35,12 +35,12 @@ describe('compiler/createReactDOMStyle', () => {
       borderBottomWidth: 1,
       borderWidth: 0,
       marginTop: 50,
-      marginBlock: 25,
+      marginVertical: 25,
       margin: 10,
       overflow: 'hidden',
       overscrollBehavior: 'contain',
       paddingLeft: 50,
-      paddingInline: 25,
+      paddingHorizontal: 25,
       padding: 10
     };
 

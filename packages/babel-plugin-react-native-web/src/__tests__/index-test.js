@@ -8,7 +8,7 @@ const tests = [
     code: `import ReactNative from 'react-native';
 import { View } from 'react-native';
 import { Invalid, View as MyView } from 'react-native';
-import { useLocaleContext } from 'react-native';
+import { useColorScheme } from 'react-native';
 import * as ReactNativeModules from 'react-native';`,
     snapshot: true
   },

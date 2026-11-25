@@ -130,8 +130,7 @@ export type TextStyle = ViewStyle & {
   textAlignVertical?: Nullable<string>;
 };
 
-export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
-  dir?: 'auto' | 'ltr' | 'rtl';
+export type TextProps = Omit<ViewProps, 'style'> & {
   ellipsizeMode?: Nullable<'clip' | 'head' | 'middle' | 'tail'>;
   numberOfLines?: Nullable<number>;
   role?:

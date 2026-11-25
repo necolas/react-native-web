@@ -59,6 +59,5 @@ module.exports = {
   useAnimatedValue: true,
   useAnimatedValueXY: true,
   useColorScheme: true,
-  useLocaleContext: true,
   useWindowDimensions: true
 };

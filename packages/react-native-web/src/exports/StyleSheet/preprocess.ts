@@ -6,6 +6,7 @@
  */
 
 import type { Nullable } from '../../types';
+import hyphenateStyleName from './compiler/hyphenateStyleName';
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
 
@@ -154,28 +155,35 @@ const mergeFontFeatureSettings = (a: unknown, b: unknown): unknown => {
   return a;
 };
 
-export const PROPERTIES_STANDARD: Record<string, string> = {
+const PROPERTIES_STANDARD: Record<string, string> = {
   borderBottomEndRadius: 'borderEndEndRadius',
   borderBottomStartRadius: 'borderEndStartRadius',
-  borderTopEndRadius: 'borderStartEndRadius',
-  borderTopStartRadius: 'borderStartStartRadius',
   borderEndColor: 'borderInlineEndColor',
   borderEndStyle: 'borderInlineEndStyle',
   borderEndWidth: 'borderInlineEndWidth',
   borderStartColor: 'borderInlineStartColor',
   borderStartStyle: 'borderInlineStartStyle',
   borderStartWidth: 'borderInlineStartWidth',
+  borderTopEndRadius: 'borderStartEndRadius',
+  borderTopStartRadius: 'borderStartStartRadius',
   end: 'insetInlineEnd',
   marginEnd: 'marginInlineEnd',
-  marginHorizontal: 'marginInline',
   marginStart: 'marginInlineStart',
-  marginVertical: 'marginBlock',
   paddingEnd: 'paddingInlineEnd',
-  paddingHorizontal: 'paddingInline',
   paddingStart: 'paddingInlineStart',
-  paddingVertical: 'paddingBlock',
   start: 'insetInlineStart'
 };
+
+// React Native aliases and camelCase names to CSS names, e.g.
+// 'marginStart', 'margin-start' and 'marginInlineStart' => 'margin-inline-start'
+const TRANSITION_PROPERTIES = new Map<string, string>();
+
+for (const [alias, prop] of Object.entries(PROPERTIES_STANDARD)) {
+  const name = hyphenateStyleName(prop);
+  TRANSITION_PROPERTIES.set(alias, name);
+  TRANSITION_PROPERTIES.set(hyphenateStyleName(alias), name);
+  TRANSITION_PROPERTIES.set(prop, name);
+}
 
 const ignoredProps = new Set([
   'elevation',
@@ -191,28 +199,21 @@ const ignoredProps = new Set([
   'tintColor'
 ]);
 
-export type PreprocessOptions = {
-  readonly shadow?: boolean;
-  readonly textShadow?: boolean;
-};
-
 /**
  * Preprocess styles
  */
 export const preprocess = <T extends Readonly<Record<string, unknown>>>(
-  originalStyle: T,
-  options: PreprocessOptions = {}
+  originalStyle: T
 ): T => {
   const style = originalStyle || emptyObject;
   const nextStyle: Record<string, unknown> = {};
 
   // Convert shadow styles
   if (
-    options.shadow === true &&
-    (style.shadowColor != null ||
-      style.shadowOffset != null ||
-      style.shadowOpacity != null ||
-      style.shadowRadius != null)
+    style.shadowColor != null ||
+    style.shadowOffset != null ||
+    style.shadowOpacity != null ||
+    style.shadowRadius != null
   ) {
     const boxShadowValue = createBoxShadowValue(style);
     if (boxShadowValue != null) {
@@ -222,10 +223,9 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
 
   // Convert text shadow styles
   if (
-    options.textShadow === true &&
-    (style.textShadowColor != null ||
-      style.textShadowOffset != null ||
-      style.textShadowRadius != null)
+    style.textShadowColor != null ||
+    style.textShadowOffset != null ||
+    style.textShadowRadius != null
   ) {
     const textShadowValue = createTextShadowValue(style);
     if (textShadowValue != null && nextStyle.textShadow == null) {
@@ -319,7 +319,13 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
       if (Array.isArray(value)) {
         value = value.join(', ');
       }
-      nextStyle.transitionProperty = value;
+      nextStyle.transitionProperty =
+        typeof value === 'string'
+          ? value.replace(
+              /[^\s,]+/g,
+              (name) => TRANSITION_PROPERTIES.get(name) ?? name
+            )
+          : value;
     } else {
       nextStyle[prop] = value;
     }

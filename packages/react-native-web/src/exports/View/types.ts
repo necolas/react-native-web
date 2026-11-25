@@ -225,9 +225,7 @@ export type ViewProps = AccessibilityProps &
     children?: Nullable<ReactNode>;
     collapsable?: Nullable<boolean>;
     dataSet?: Readonly<Record<string, unknown>>;
-    dir?: 'ltr' | 'rtl';
     id?: Nullable<string>;
-    lang?: string;
     style?: GenericStyleProp<ViewStyle>;
     tabIndex?: Nullable<0 | -1>;
     suppressHydrationWarning?: Nullable<boolean>;

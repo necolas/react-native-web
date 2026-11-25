@@ -62,18 +62,6 @@ describe('components/Text', () => {
     });
   });
 
-  describe('prop "dir"', () => {
-    test('value is "ltr"', () => {
-      const { container } = render(<Text dir="ltr" />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
-    test('value is "rtl"', () => {
-      const { container } = render(<Text dir="rtl" />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-  });
-
   describe('prop "href"', () => {
     test('value is set', () => {
       const { container } = render(<Text href="https://example.com" />);
@@ -127,28 +115,6 @@ describe('components/Text', () => {
       const { container } = render(
         <Text href="https://example.com" hrefAttrs={hrefAttrs} />
       );
-      expect(container.firstChild).toMatchSnapshot();
-    });
-  });
-
-  describe('prop "lang"', () => {
-    test('undefined', () => {
-      const { container } = render(<Text />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
-    test('fr', () => {
-      const { container } = render(<Text lang="fr" />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
-    test('ar', () => {
-      const { container } = render(<Text lang="ar" />);
-      expect(container.firstChild).toMatchSnapshot();
-    });
-
-    test('with dir', () => {
-      const { container } = render(<Text dir="ltr" lang="ar" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });

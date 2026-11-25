@@ -11,14 +11,11 @@ import * as React from 'react';
 
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
-import { LocaleProvider } from '../../modules/useLocale';
 import type { Nullable } from '../../types';
-import type { StyleSheetOptions } from '../StyleSheet';
 
 const createElement = (
   component: React.ElementType,
   props?: Nullable<Record<string, unknown>>,
-  options?: Nullable<StyleSheetOptions>,
   ...children: ReadonlyArray<React.ReactNode>
 ): React.ReactNode => {
   // Use equivalent platform elements where possible.
@@ -28,22 +25,8 @@ const createElement = (
       AccessibilityUtil.propsToAccessibilityComponent(props);
   }
   const Component = accessibilityComponent || component;
-  const domProps = createDOMProps(Component, props, options);
-
-  const element = React.createElement(Component, domProps, ...children);
-
-  // Update locale context if element's writing direction prop changes
-  const elementWithLocaleProvider = domProps.dir ? (
-    <LocaleProvider
-      children={element}
-      direction={domProps.dir}
-      locale={domProps.lang}
-    />
-  ) : (
-    element
-  );
-
-  return elementWithLocaleProvider;
+  const domProps = createDOMProps(Component, props);
+  return React.createElement(Component, domProps, ...children);
 };
 
 export default createElement;

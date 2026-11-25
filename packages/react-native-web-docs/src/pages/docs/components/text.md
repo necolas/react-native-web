@@ -60,10 +60,6 @@ The children of a `Text` element can be strings as well as other elements like `
 Equivalent to [HTMLElement.dataset](https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/dataset).
 {% endcall %}
 
-{% call macro.prop('dir', '?("auto" | "ltr" | "rtl") = "auto"') %}
-Equivalent to [HTMLElement.dir](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dir). The default value of `"auto"` is not set on _nested_ text elements.
-{% endcall %}
-
 {% call macro.prop('ellipsizeMode', '?("clip" | "head" | "middle" | "tail") = "tail"') %}
 When `numberOfLines` is set, defines how the text is truncated. Only `"clip"` and `"tail"` are supported on web.
 {% endcall %}
@@ -78,10 +74,6 @@ If `href` is defined, this prop defines related attributes to include on the anc
 
 {% call macro.prop('id', '?string') %}
 Equivalent to [HTMLElement.id](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id).
-{% endcall %}
-
-{% call macro.prop('lang', '?string') %}
-Equivalent to [HTMLElement.lang](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang). This prop is used to infer writing direction if no `dir` is set.
 {% endcall %}
 
 {% call macro.prop('numberOfLines', '?number') %}

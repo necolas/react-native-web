@@ -60,6 +60,12 @@ You have greater control over how styles are composed when compared to using cla
 
 {{ site.name }} supports all _long-form_ CSS properties. There is no direct support for `@`-rules, selectors, pseudo-selectors, and pseudo-elements, equivalents of which are demonstrated in the [styling patterns](#styling-patterns) section below.
 
+### Direction
+
+{% call macro.prop('direction', '?("ltr" | "rtl")') %}
+Equivalent to [direction](https://developer.mozilla.org/en-US/docs/Web/CSS/direction). Sets the writing direction of a component and its subtree. Logical properties (e.g., `marginInlineStart`) follow it.
+{% endcall %}
+
 ### Short-form properties
 
 The supported short-form CSS properties accept only a _single_ value.
@@ -83,6 +89,10 @@ Accepts only a single value that is applied to all sides.
 {% call macro.prop('flex', '?number') %}
 Accepts only positive integers, `0`, or `-1`.
 The value of `-1` is non-standard and equivalent to setting `flowGrow:0` and `flexShrink:1`.
+{% endcall %}
+
+{% call macro.prop('gap', '?(number | string)') %}
+Accepts only a single value that is applied to both axes.
 {% endcall %}
 
 {% call macro.prop('inset', '?(string | number)') %}

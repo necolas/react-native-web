@@ -5,7 +5,7 @@ exports[`Rewrite react-native to react-native-web > 1. import from "react-native
 import ReactNative from 'react-native';
 import { View } from 'react-native';
 import { Invalid, View as MyView } from 'react-native';
-import { useLocaleContext } from 'react-native';
+import { useColorScheme } from 'react-native';
 import * as ReactNativeModules from 'react-native';
 
       ↓ ↓ ↓ ↓ ↓ ↓
@@ -14,7 +14,7 @@ import ReactNative from "react-native-web/dist/index.js";
 import View from "react-native-web/dist/exports/View";
 import { Invalid } from "react-native-web/dist/index.js";
 import MyView from "react-native-web/dist/exports/View";
-import useLocaleContext from "react-native-web/dist/exports/useLocaleContext";
+import useColorScheme from "react-native-web/dist/exports/useColorScheme";
 import * as ReactNativeModules from "react-native-web/dist/index.js";
 
 `;

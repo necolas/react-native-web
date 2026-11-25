@@ -20,10 +20,7 @@ export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline';
 
 type TextInputEvent = { nativeEvent: { text: string } };
 
-export type TextInputProps = Omit<
-  ViewProps,
-  'dir' | 'onBlur' | 'onFocus' | 'style'
-> & {
+export type TextInputProps = Omit<ViewProps, 'onBlur' | 'onFocus' | 'style'> & {
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words';
   autoComplete?: Nullable<string>;
   autoCompleteType?: Nullable<string>; // Compat with React Native (Bug react-native#26003)
@@ -32,7 +29,6 @@ export type TextInputProps = Omit<
   caretHidden?: Nullable<boolean>;
   clearTextOnFocus?: Nullable<boolean>;
   defaultValue?: Nullable<string>;
-  dir?: Nullable<'auto' | 'ltr' | 'rtl'>;
   disabled?: Nullable<boolean>;
   enterKeyHint?:
     | 'enter'

@@ -13,12 +13,12 @@ type Style = Record<string, unknown>;
 /**
  * The browser implements the CSS cascade, where the order of properties is a
  * factor in determining which styles to paint. React Native is different. It
- * gives giving precedence to the more specific style property. For example,
- * the value of `paddingTop` takes precedence over that of `padding`.
+ * gives precedence to the more specific style property. For example, the value
+ * of `paddingTop` takes precedence over that of `padding`.
  *
- * This module creates mutally exclusive style declarations by expanding all of
+ * This module creates mutually exclusive inline style declarations by expanding
  * React Native's supported shortform properties (e.g. `padding`) to their
- * longfrom equivalents.
+ * longform equivalents. Static styles rely on the rules order instead.
  */
 
 const emptyObject = {};
@@ -28,15 +28,19 @@ const MONOSPACE_FONT_STACK = 'monospace,monospace';
 const SYSTEM_FONT_STACK =
   '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
 
-const STYLE_SHORT_FORM_EXPANSIONS: Record<string, Array<string>> = {
+const SHORT_FORM_EXPANSIONS: Record<string, Array<string>> = {
+  borderBlockColor: ['borderBlockStartColor', 'borderBlockEndColor'],
+  borderBlockStyle: ['borderBlockStartStyle', 'borderBlockEndStyle'],
+  borderBlockWidth: ['borderBlockStartWidth', 'borderBlockEndWidth'],
   borderColor: [
     'borderTopColor',
     'borderRightColor',
     'borderBottomColor',
     'borderLeftColor'
   ],
-  borderBlockColor: ['borderTopColor', 'borderBottomColor'],
-  borderInlineColor: ['borderRightColor', 'borderLeftColor'],
+  borderInlineColor: ['borderInlineStartColor', 'borderInlineEndColor'],
+  borderInlineStyle: ['borderInlineStartStyle', 'borderInlineEndStyle'],
+  borderInlineWidth: ['borderInlineStartWidth', 'borderInlineEndWidth'],
   borderRadius: [
     'borderTopLeftRadius',
     'borderTopRightRadius',
@@ -49,53 +53,135 @@ const STYLE_SHORT_FORM_EXPANSIONS: Record<string, Array<string>> = {
     'borderBottomStyle',
     'borderLeftStyle'
   ],
-  borderBlockStyle: ['borderTopStyle', 'borderBottomStyle'],
-  borderInlineStyle: ['borderRightStyle', 'borderLeftStyle'],
   borderWidth: [
     'borderTopWidth',
     'borderRightWidth',
     'borderBottomWidth',
     'borderLeftWidth'
   ],
-  borderBlockWidth: ['borderTopWidth', 'borderBottomWidth'],
-  borderInlineWidth: ['borderRightWidth', 'borderLeftWidth'],
-  insetBlock: ['top', 'bottom'],
-  insetInline: ['left', 'right'],
-  marginBlock: ['marginTop', 'marginBottom'],
-  marginInline: ['marginRight', 'marginLeft'],
-  paddingBlock: ['paddingTop', 'paddingBottom'],
-  paddingInline: ['paddingRight', 'paddingLeft'],
+  gap: ['rowGap', 'columnGap'],
+  inset: ['top', 'right', 'bottom', 'left'],
+  insetBlock: ['insetBlockStart', 'insetBlockEnd'],
+  insetInline: ['insetInlineStart', 'insetInlineEnd'],
+  margin: ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'],
+  marginBlock: ['marginBlockStart', 'marginBlockEnd'],
+  marginHorizontal: ['marginLeft', 'marginRight'],
+  marginInline: ['marginInlineStart', 'marginInlineEnd'],
+  marginVertical: ['marginTop', 'marginBottom'],
   overflow: ['overflowX', 'overflowY'],
   overscrollBehavior: ['overscrollBehaviorX', 'overscrollBehaviorY'],
-  borderBlockStartColor: ['borderTopColor'],
-  borderBlockStartStyle: ['borderTopStyle'],
-  borderBlockStartWidth: ['borderTopWidth'],
-  borderBlockEndColor: ['borderBottomColor'],
-  borderBlockEndStyle: ['borderBottomStyle'],
-  borderBlockEndWidth: ['borderBottomWidth'],
-  //borderInlineStartColor: ['borderLeftColor'],
-  //borderInlineStartStyle: ['borderLeftStyle'],
-  //borderInlineStartWidth: ['borderLeftWidth'],
-  //borderInlineEndColor: ['borderRightColor'],
-  //borderInlineEndStyle: ['borderRightStyle'],
-  //borderInlineEndWidth: ['borderRightWidth'],
-  borderEndStartRadius: ['borderBottomLeftRadius'],
-  borderEndEndRadius: ['borderBottomRightRadius'],
-  borderStartStartRadius: ['borderTopLeftRadius'],
-  borderStartEndRadius: ['borderTopRightRadius'],
-  insetBlockEnd: ['bottom'],
-  insetBlockStart: ['top'],
-  //insetInlineEnd: ['right'],
-  //insetInlineStart: ['left'],
-  marginBlockStart: ['marginTop'],
-  marginBlockEnd: ['marginBottom'],
-  //marginInlineStart: ['marginLeft'],
-  //marginInlineEnd: ['marginRight'],
-  paddingBlockStart: ['paddingTop'],
-  paddingBlockEnd: ['paddingBottom']
-  //paddingInlineStart: ['marginLeft'],
-  //paddingInlineEnd: ['marginRight'],
+  padding: ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'],
+  paddingBlock: ['paddingBlockStart', 'paddingBlockEnd'],
+  paddingHorizontal: ['paddingLeft', 'paddingRight'],
+  paddingInline: ['paddingInlineStart', 'paddingInlineEnd'],
+  paddingVertical: ['paddingTop', 'paddingBottom']
 };
+
+// Static styles expand these shortforms too
+const STATIC_SHORT_FORMS = new Set([
+  'borderColor',
+  'borderRadius',
+  'borderStyle',
+  'borderWidth',
+  'marginHorizontal',
+  'marginVertical',
+  'overflow',
+  'overscrollBehavior',
+  'paddingHorizontal',
+  'paddingVertical'
+]);
+
+const PHYSICAL_TO_LOGICAL: Array<[physical: string[], logical: string[]]> = [
+  [
+    ['top', 'bottom'],
+    ['insetBlockStart', 'insetBlockEnd']
+  ],
+  [
+    ['left', 'right'],
+    ['insetInlineStart', 'insetInlineEnd']
+  ],
+  [
+    ['marginTop', 'marginBottom'],
+    ['marginBlockStart', 'marginBlockEnd']
+  ],
+  [
+    ['marginLeft', 'marginRight'],
+    ['marginInlineStart', 'marginInlineEnd']
+  ],
+  [
+    ['paddingTop', 'paddingBottom'],
+    ['paddingBlockStart', 'paddingBlockEnd']
+  ],
+  [
+    ['paddingLeft', 'paddingRight'],
+    ['paddingInlineStart', 'paddingInlineEnd']
+  ],
+  [
+    ['borderTopColor', 'borderBottomColor'],
+    ['borderBlockStartColor', 'borderBlockEndColor']
+  ],
+  [
+    ['borderLeftColor', 'borderRightColor'],
+    ['borderInlineStartColor', 'borderInlineEndColor']
+  ],
+  [
+    ['borderTopStyle', 'borderBottomStyle'],
+    ['borderBlockStartStyle', 'borderBlockEndStyle']
+  ],
+  [
+    ['borderLeftStyle', 'borderRightStyle'],
+    ['borderInlineStartStyle', 'borderInlineEndStyle']
+  ],
+  [
+    ['borderTopWidth', 'borderBottomWidth'],
+    ['borderBlockStartWidth', 'borderBlockEndWidth']
+  ],
+  [
+    ['borderLeftWidth', 'borderRightWidth'],
+    ['borderInlineStartWidth', 'borderInlineEndWidth']
+  ],
+  [
+    [
+      'borderTopLeftRadius',
+      'borderTopRightRadius',
+      'borderBottomRightRadius',
+      'borderBottomLeftRadius'
+    ],
+    [
+      'borderStartStartRadius',
+      'borderStartEndRadius',
+      'borderEndEndRadius',
+      'borderEndStartRadius'
+    ]
+  ]
+];
+
+const LOGICAL_LONGHANDS: Record<string, { prop: string; group: string[] }> = {};
+const PHYSICAL_LONGHANDS: Record<string, string> = {};
+
+for (const [physical, logical] of PHYSICAL_TO_LOGICAL) {
+  for (const [index, prop] of physical.entries()) {
+    LOGICAL_LONGHANDS[prop] = { prop: logical[index], group: logical };
+    PHYSICAL_LONGHANDS[logical[index]] = prop;
+  }
+}
+
+const AXIS_SHORT_FORM_NAMES = new Set<string>();
+
+// Physical longform to its axis shortforms,
+// e.g. 'marginTop' => ['marginBlock', 'marginVertical']
+const AXIS_SHORT_FORMS: Record<string, string[]> = {};
+
+for (const [shortForm, longForms] of Object.entries(SHORT_FORM_EXPANSIONS)) {
+  if (/Block|Inline|Horizontal|Vertical/.test(shortForm)) {
+    AXIS_SHORT_FORM_NAMES.add(shortForm);
+
+    for (const longForm of longForms) {
+      const physical = PHYSICAL_LONGHANDS[longForm] ?? longForm;
+      (AXIS_SHORT_FORMS[physical] ??= []).push(shortForm);
+    }
+  }
+}
 
 const PREFIXED_PROPERTIES = Object.fromEntries(
   [
@@ -222,6 +308,30 @@ const createReactDOMStyle = (
 
   const resolvedStyle: Style = {};
 
+  // The value of any longform property in the original styles takes
+  // precedence over the shortform's value.
+  const setLongForm = (shortForm: string, longForm: string, value: unknown) => {
+    let prop = longForm;
+
+    // Axis shortforms (e.g. 'marginInline') only expand to their own longforms
+    if (!AXIS_SHORT_FORM_NAMES.has(shortForm)) {
+      // An axis shortform set in the original styles takes precedence
+      if (AXIS_SHORT_FORMS[longForm]?.some((p) => style[p] != null)) {
+        return;
+      }
+
+      const logical = LOGICAL_LONGHANDS[longForm];
+
+      if (logical?.group.some((p) => style[p] != null)) {
+        prop = logical.prop;
+      }
+    }
+
+    if (style[prop] == null) {
+      resolvedStyle[prop] = value;
+    }
+  };
+
   for (const prop in style) {
     const value = style[prop];
 
@@ -264,42 +374,14 @@ const createReactDOMStyle = (
       resolvedStyle.direction = value;
     } else {
       const value = normalizeValueWithProperty(style[prop], prop);
-      const longFormProperties = STYLE_SHORT_FORM_EXPANSIONS[prop];
-      if (isInline && prop === 'inset') {
-        if (style.insetInline == null) {
-          resolvedStyle.left = value;
-          resolvedStyle.right = value;
+      const longFormProperties =
+        isInline || STATIC_SHORT_FORMS.has(prop)
+          ? SHORT_FORM_EXPANSIONS[prop]
+          : undefined;
+      if (longFormProperties != null) {
+        for (const longForm of longFormProperties) {
+          setLongForm(prop, longForm, value);
         }
-        if (style.insetBlock == null) {
-          resolvedStyle.top = value;
-          resolvedStyle.bottom = value;
-        }
-      } else if (isInline && prop === 'margin') {
-        if (style.marginInline == null) {
-          resolvedStyle.marginLeft = value;
-          resolvedStyle.marginRight = value;
-        }
-        if (style.marginBlock == null) {
-          resolvedStyle.marginTop = value;
-          resolvedStyle.marginBottom = value;
-        }
-      } else if (isInline && prop === 'padding') {
-        if (style.paddingInline == null) {
-          resolvedStyle.paddingLeft = value;
-          resolvedStyle.paddingRight = value;
-        }
-        if (style.paddingBlock == null) {
-          resolvedStyle.paddingTop = value;
-          resolvedStyle.paddingBottom = value;
-        }
-      } else if (longFormProperties) {
-        longFormProperties.forEach((longForm) => {
-          // The value of any longform property in the original styles takes
-          // precedence over the shortform's value.
-          if (style[longForm] == null) {
-            resolvedStyle[longForm] = value;
-          }
-        });
       } else if (isInline) {
         resolvedStyle[prop] = value;
       } else {

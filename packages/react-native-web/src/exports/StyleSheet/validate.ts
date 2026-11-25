@@ -21,11 +21,18 @@ const invalidShortforms = new Set([
 
 const invalidMultiValueShortforms = new Set([
   'backgroundPosition',
+  'borderBlockColor',
+  'borderBlockStyle',
+  'borderBlockWidth',
   'borderColor',
+  'borderInlineColor',
+  'borderInlineStyle',
+  'borderInlineWidth',
   'borderRadius',
   'borderStyle',
   'borderWidth',
   'flex',
+  'gap',
   'inset',
   'insetBlock',
   'insetInline',
@@ -66,9 +73,6 @@ export function validate(obj: Record<string, unknown>) {
       let suggestion = '';
       if (prop === 'animation' || prop === 'animationName') {
         suggestion = 'Did you mean "animationKeyframes"?';
-        isInvalid = true;
-      } else if (prop === 'direction') {
-        suggestion = 'Did you mean "writingDirection"?';
         isInvalid = true;
       } else if (invalidShortforms.has(prop)) {
         suggestion = 'Please use long-form properties.';

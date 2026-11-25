@@ -15,7 +15,6 @@ import pick from '../../modules/pick';
 import setPlatformMethods from '../../modules/setPlatformMethods';
 import TextInputState from '../../modules/TextInputState';
 import useElementLayout from '../../modules/useElementLayout';
-import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
 import type { PlatformMethods, Nullable } from '../../types';
@@ -74,7 +73,6 @@ const forwardPropsList = new Set([
   'autoFocus',
   'defaultValue',
   'disabled',
-  'lang',
   'maxLength',
   'onChange',
   'onScroll',
@@ -116,7 +114,6 @@ const TextInput = (
     blurOnSubmit,
     caretHidden,
     clearTextOnFocus,
-    dir,
     editable,
     enterKeyHint,
     inputMode,
@@ -422,14 +419,11 @@ const TextInput = (
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture
   });
-  const { direction: contextDirection } = useLocaleContext();
 
   const supportedProps = pick(props, forwardPropsList);
   supportedProps.autoCapitalize = autoCapitalize;
   supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
-  // 'auto' by default allows browsers to infer writing direction
-  supportedProps.dir = dir !== undefined ? dir : 'auto';
   supportedProps.enterKeyHint = enterKeyHint || returnKeyType;
   supportedProps.inputMode = _inputMode;
   supportedProps.onBlur = handleBlur;
@@ -456,16 +450,7 @@ const TextInput = (
 
   supportedProps.ref = setRef;
 
-  const langDirection =
-    props.lang != null ? getLocaleDirection(props.lang) : null;
-  const componentDirection = props.dir || langDirection;
-  const writingDirection = componentDirection || contextDirection;
-
-  const element = createElement(component, supportedProps, {
-    writingDirection
-  });
-
-  return element;
+  return createElement(component, supportedProps);
 };
 
 TextInput.displayName = 'TextInput';
