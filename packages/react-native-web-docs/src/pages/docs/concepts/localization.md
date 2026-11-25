@@ -25,6 +25,16 @@ const style = { paddingInlineStart: 10, marginInlineStart: 10 };
 return <View style={style} />;
 ```
 
+## Document language and direction
+
+Set the language and writing direction of the app on the `html` element. The `dir` attribute sets the direction of the whole page, and logical styles follow it. The `lang` attribute tells browsers and screen readers which language the content uses, for pronunciation, hyphenation, and font selection.
+
+```html
+<html lang="ar" dir="rtl">
+```
+
+Browsers, assistive technologies, and tools that read the page without CSS (e.g., reader modes and search engines) all use these attributes, so prefer them over styles for the direction of the whole app.
+
 ## Writing direction
 
 To flip the layout of a component and its subtree, set the `direction` style to the desired writing direction (e.g., `"rtl"`).
@@ -32,5 +42,5 @@ To flip the layout of a component and its subtree, set the `direction` style to 
 ```jsx
 const styles = StyleSheet.create({ root: { direction: 'rtl' } });
 
-<View style={styles.root}>...</View>
+<View style={styles.root}>...</View>;
 ```
