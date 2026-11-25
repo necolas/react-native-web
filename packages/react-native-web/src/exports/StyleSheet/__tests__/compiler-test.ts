@@ -274,6 +274,10 @@ describe('StyleSheet/compile', () => {
       expect(atomic({ transitionProperty: 'marginStart, opacity' })).toEqual(
         atomic({ transitionProperty: 'margin-inline-start, opacity' })
       );
+
+      expect(
+        atomic({ transitionProperty: ['marginInlineStart', 'opacity'] })
+      ).toEqual(atomic({ transitionProperty: 'margin-inline-start, opacity' }));
     });
   });
 
@@ -401,18 +405,8 @@ describe('StyleSheet/compile', () => {
 
           expect(inline(array, isRTL)).toEqual({
             transitionProperty: isRTL
-              ? ['border-top-left-radius', 'padding-right, opacity']
-              : ['border-top-right-radius', 'padding-left, opacity']
-          });
-        });
-
-        test(`does not mutate transitionProperty arrays for ${dir}`, () => {
-          const initial = {
-            transitionProperty: Object.freeze(['marginInlineStart'])
-          };
-
-          expect(inline(initial, isRTL)).toEqual({
-            transitionProperty: [isRTL ? 'margin-right' : 'margin-left']
+              ? 'border-top-left-radius, padding-right, opacity'
+              : 'border-top-right-radius, padding-left, opacity'
           });
         });
 

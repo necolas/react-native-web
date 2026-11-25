@@ -164,17 +164,10 @@ for (const prop of [
 function localizeTransitionProperty(
   value: StyleValue,
   isRTL?: boolean
-): StyleValue {
-  if (Array.isArray(value)) {
-    return value.map((item) => localizeTransitionProperty(item, isRTL));
-  }
-  if (typeof value !== 'string') {
-    return value;
-  }
-
+): string {
   const map = isRTL ? TRANSITION_PROPERTIES_RTL : TRANSITION_PROPERTIES_LTR;
 
-  return value
+  return (Array.isArray(value) ? value.join(', ') : String(value))
     .split(',')
     .map((name) => {
       const trimmedName = name.trim();
@@ -242,7 +235,7 @@ export function atomic(style: Style): CompilerOutput {
         if (srcProp === 'transitionProperty') {
           const ltrValue = localizeTransitionProperty(value, false);
           const rtlValue = localizeTransitionProperty(value, true);
-          if (String(ltrValue) !== String(rtlValue)) {
+          if (ltrValue !== rtlValue) {
             const ltr = atomicCompile(srcProp, srcProp, ltrValue);
             const rtl = atomicCompile(srcProp, srcProp, rtlValue);
             localizeableValue = [ltr, rtl];
