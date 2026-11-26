@@ -219,10 +219,6 @@ const mapFilter = (filter: FilterFunction): string => {
   return `${name}(${value})`;
 };
 
-export const createFilterValue = (
-  filter: ReadonlyArray<FilterFunction>
-): string => filter.map(mapFilter).join(' ');
-
 // { scale: 2 } => 'scale(2)'
 // { translateX: 20 } => 'translateX(20px)'
 // { matrix: [1,2,3,4,5,6] } => 'matrix(1,2,3,4,5,6)'
@@ -402,7 +398,7 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
       nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
     } else if (prop === 'filter') {
       if (Array.isArray(value)) {
-        value = createFilterValue(value);
+        value = value.map(mapFilter).join(' ');
       }
       nextStyle.filter = value;
     } else if (prop === 'fontFeatureSettings') {

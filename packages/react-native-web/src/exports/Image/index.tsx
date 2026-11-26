@@ -28,10 +28,7 @@ import type { ColorValue, LayoutEvent, Nullable } from '../../types';
 import createElement from '../createElement';
 import PixelRatio from '../PixelRatio';
 import StyleSheet from '../StyleSheet';
-import {
-  createBoxShadowValue,
-  createFilterValue
-} from '../StyleSheet/preprocess';
+import { createBoxShadowValue } from '../StyleSheet/preprocess';
 import TextAncestorContext from '../Text/TextAncestorContext';
 import View from '../View';
 import type { ImageProps, ResizeMode, Source, SourceObject } from './types';
@@ -76,18 +73,13 @@ function extractNonStandardStyleProps(
   tintColorProp: Nullable<ColorValue>
 ): [Nullable<ResizeMode>, Nullable<string>, Nullable<ColorValue>] {
   const flatStyle = StyleSheet.flatten(style);
-  const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
+  const { resizeMode, shadowOffset, tintColor } = flatStyle;
 
   // Add CSS filters
   // React Native exposes these features as props and proprietary styles
   const filters = [];
   let _filter = null;
 
-  if (typeof filter === 'string') {
-    filters.push(filter);
-  } else if (filter) {
-    filters.push(createFilterValue(filter));
-  }
   if (blurRadius) {
     filters.push(`blur(${blurRadius}px)`);
   }
@@ -378,9 +370,7 @@ const Image = (
         styles.undo,
         // TEMP: avoid shadow props regression
         // until Image refactored to use createElement.
-        { boxShadow: null },
-        // Applied to the element displaying the background image
-        { filter: null }
+        { boxShadow: null }
       ]}
     >
       <View

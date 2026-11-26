@@ -514,7 +514,7 @@ describe('components/Image', () => {
     );
     const root = container.firstChild as HTMLElement;
     const image = root.firstChild as HTMLElement;
-    expect(root.style.filter).toBe('');
-    expect(image.style.filter).toBe('blur(2px) brightness(0.5) blur(5px)');
+    expect(root.style.filter).toBe('blur(2px) brightness(0.5)');
+    expect(image.style.filter).toBe('blur(5px)');
   });
 });
