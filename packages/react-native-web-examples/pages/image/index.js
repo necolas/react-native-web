@@ -118,6 +118,23 @@ export default function ImagePage() {
           />
         </View>
       </View>
+      <Divider />
+      <View style={styles.row}>
+        <View style={styles.column}>
+          <Text style={styles.text}>Filter (string)</Text>
+          <Image
+            source={process.env.basePath + '/image/ladybug.jpg'}
+            style={[styles.image, styles.filterString]}
+          />
+        </View>
+        <View style={styles.column}>
+          <Text style={styles.text}>Filter (array)</Text>
+          <Image
+            source={process.env.basePath + '/image/ladybug.jpg'}
+            style={[styles.image, styles.filterArray]}
+          />
+        </View>
+      </View>
     </Example>
   );
 }
@@ -154,6 +171,23 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     height: 120,
     width: 120
+  },
+  filterString: {
+    filter: 'grayscale(1) drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.5))'
+  },
+  filterArray: {
+    filter: [
+      { hueRotate: '180deg' },
+      { saturate: 2 },
+      {
+        dropShadow: {
+          offsetX: 4,
+          offsetY: 4,
+          standardDeviation: 4,
+          color: 'rgba(0, 0, 0, 0.5)'
+        }
+      }
+    ]
   },
   leftMargin: {
     marginLeft: 10
