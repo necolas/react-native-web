@@ -8,8 +8,6 @@
 import type { StyleValue } from '../exports/StyleSheet/compiler/normalizeValueWithProperty';
 import type { ColorValue, DimensionValue, Nullable } from './index';
 
-type NumberOrString = number | string;
-
 /**
  * Animations and transitions
  */
@@ -187,7 +185,7 @@ export type LayoutStyles = {
   alignSelf?: Nullable<
     'auto' | 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'
   >;
-  aspectRatio?: Nullable<NumberOrString>;
+  aspectRatio?: Nullable<number | string>;
   backfaceVisibility?: Nullable<VisiblilityValue>;
   borderWidth?: Nullable<DimensionValue>;
   borderBlockWidth?: Nullable<DimensionValue>;
@@ -318,12 +316,12 @@ export type ShadowStyles = {
  */
 
 export type TransformStyles = {
-  perspective?: Nullable<NumberOrString>;
+  perspective?: Nullable<number | string>;
   perspectiveOrigin?: Nullable<string>;
   transform?: Nullable<
     | string
     | Array<
-        | { readonly perspective: NumberOrString }
+        | { readonly perspective: number | string }
         | { readonly rotate: string }
         | { readonly rotateX: string }
         | { readonly rotateY: string }
@@ -335,12 +333,12 @@ export type TransformStyles = {
         | { readonly scale3d: string }
         | { readonly skewX: string }
         | { readonly skewY: string }
-        | { readonly translateX: NumberOrString }
-        | { readonly translateY: NumberOrString }
-        | { readonly translateZ: NumberOrString }
+        | { readonly translateX: number | string }
+        | { readonly translateY: number | string }
+        | { readonly translateZ: number | string }
         | { readonly translate3d: string }
       >
   >;
-  transformOrigin?: Nullable<string | Array<NumberOrString>>;
+  transformOrigin?: Nullable<string | Array<number | string>>;
   transformStyle?: Nullable<'flat' | 'preserve-3d'>;
 };

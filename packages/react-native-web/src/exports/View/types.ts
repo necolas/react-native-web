@@ -33,28 +33,27 @@ import type {
   TransformStyles
 } from '../../types/styles';
 
-type NumberOrString = number | string;
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
 type PointerEventsValue = 'box-none' | 'none' | 'box-only' | 'auto';
 
-export type GradientColorStop = Readonly<{
+export type GradientColorStop = {
   color: ColorValue;
   positions?: ReadonlyArray<string>;
-}>;
+};
 
 export type BackgroundPositionValue =
-  | Readonly<{ top: NumberOrString; left: NumberOrString }>
-  | Readonly<{ top: NumberOrString; right: NumberOrString }>
-  | Readonly<{ bottom: NumberOrString; left: NumberOrString }>
-  | Readonly<{ bottom: NumberOrString; right: NumberOrString }>;
+  | { top: number | string; left: number | string }
+  | { top: number | string; right: number | string }
+  | { bottom: number | string; left: number | string }
+  | { bottom: number | string; right: number | string };
 
 export type BackgroundImageValue =
-  | Readonly<{
+  | {
       type: 'linear-gradient';
       direction?: string;
       colorStops: ReadonlyArray<GradientColorStop>;
-    }>
-  | Readonly<{
+    }
+  | {
       type: 'radial-gradient';
       shape: 'circle' | 'ellipse';
       size:
@@ -62,22 +61,22 @@ export type BackgroundImageValue =
         | 'closest-side'
         | 'farthest-corner'
         | 'farthest-side'
-        | Readonly<{ x: NumberOrString; y: NumberOrString }>;
+        | { x: number | string; y: number | string };
       position: BackgroundPositionValue;
       colorStops: ReadonlyArray<GradientColorStop>;
-    }>;
+    };
 
 type BackgroundRepeatKeyword = 'no-repeat' | 'repeat' | 'round' | 'space';
 
-export type BackgroundRepeatValue = Readonly<{
+export type BackgroundRepeatValue = {
   x: BackgroundRepeatKeyword;
   y: BackgroundRepeatKeyword;
-}>;
+};
 
-export type BackgroundSizeValue = Readonly<{
-  x: NumberOrString;
-  y: NumberOrString;
-}>;
+export type BackgroundSizeValue = {
+  x: number | string;
+  y: number | string;
+};
 
 export type AccessibilityProps = {
   'aria-activedescendant'?: Nullable<string>;
@@ -249,9 +248,9 @@ export type ViewStyle = AnimationStyles &
     forcedColorAdjust?: 'auto' | 'none';
     opacity?: Nullable<number>;
     outlineColor?: Nullable<ColorValue>;
-    outlineOffset?: Nullable<NumberOrString>;
+    outlineOffset?: Nullable<number | string>;
     outlineStyle?: Nullable<string>;
-    outlineWidth?: Nullable<NumberOrString>;
+    outlineWidth?: Nullable<number | string>;
     overscrollBehavior?: Nullable<OverscrollBehaviorValue>;
     overscrollBehaviorX?: Nullable<OverscrollBehaviorValue>;
     overscrollBehaviorY?: Nullable<OverscrollBehaviorValue>;

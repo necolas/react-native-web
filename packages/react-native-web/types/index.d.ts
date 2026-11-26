@@ -25,7 +25,6 @@ import type {
 type LoosePick<T, K extends PropertyKey> = Pick<T, Extract<K, keyof T>>;
 
 type ButtonType = 'button' | 'reset' | 'submit';
-type NumberOrString = number | string;
 
 // Roles that react-native-web renders as a specific HTML element.
 // See src/modules/AccessibilityUtil/propsToAccessibilityComponent.js
@@ -280,7 +279,7 @@ interface WebViewStyle {
   overscrollBehavior?: OverscrollBehaviorValue | undefined;
   overscrollBehaviorX?: OverscrollBehaviorValue | undefined;
   overscrollBehaviorY?: OverscrollBehaviorValue | undefined;
-  perspective?: NumberOrString | undefined;
+  perspective?: number | string | undefined;
   perspectiveOrigin?: string | undefined;
   printColorAdjust?: 'economy' | 'exact' | undefined;
   scrollbarWidth?: 'auto' | 'none' | 'thin' | undefined;
@@ -303,14 +302,14 @@ interface WebTextStyle {
   fontFeatureSettings?: string | undefined;
   hyphenateCharacter?: string | undefined;
   hyphens?: 'auto' | 'manual' | 'none' | undefined;
-  initialLetter?: NumberOrString | undefined;
+  initialLetter?: number | string | undefined;
   lineClamp?: number | undefined;
   rubyPosition?: 'alternate' | 'over' | 'under' | undefined;
   textEmphasis?: string | undefined;
   textEmphasisColor?: ColorValue | undefined;
   textEmphasisPosition?: string | undefined;
   textEmphasisStyle?: string | undefined;
-  textIndent?: NumberOrString | undefined;
+  textIndent?: number | string | undefined;
   textOverflow?: string | undefined;
   textRendering?:
     | 'auto'
@@ -468,9 +467,9 @@ declare module 'react-native' {
     maxWidth?: DimensionValue | undefined;
     minHeight?: DimensionValue | undefined;
     minWidth?: DimensionValue | undefined;
-    outlineOffset?: NumberOrString | undefined;
+    outlineOffset?: number | string | undefined;
     outlineStyle?: string | undefined;
-    outlineWidth?: NumberOrString | undefined;
+    outlineWidth?: number | string | undefined;
     overflow?: OverflowValue | undefined;
     padding?: DimensionValue | undefined;
     paddingBlock?: DimensionValue | undefined;
@@ -514,7 +513,7 @@ declare module 'react-native' {
     cursor?: CursorValue | undefined;
     display?: string | undefined;
     end?: DimensionValue | undefined;
-    fontSize?: NumberOrString | undefined;
+    fontSize?: number | string | undefined;
     height?: DimensionValue | undefined;
     inset?: DimensionValue | undefined;
     insetBlock?: DimensionValue | undefined;
@@ -524,8 +523,8 @@ declare module 'react-native' {
     insetInlineEnd?: DimensionValue | undefined;
     insetInlineStart?: DimensionValue | undefined;
     left?: DimensionValue | undefined;
-    letterSpacing?: NumberOrString | undefined;
-    lineHeight?: NumberOrString | undefined;
+    letterSpacing?: number | string | undefined;
+    lineHeight?: number | string | undefined;
     margin?: DimensionValue | undefined;
     marginBlock?: DimensionValue | undefined;
     marginBlockEnd?: DimensionValue | undefined;
@@ -545,9 +544,9 @@ declare module 'react-native' {
     maxWidth?: DimensionValue | undefined;
     minHeight?: DimensionValue | undefined;
     minWidth?: DimensionValue | undefined;
-    outlineOffset?: NumberOrString | undefined;
+    outlineOffset?: number | string | undefined;
     outlineStyle?: string | undefined;
-    outlineWidth?: NumberOrString | undefined;
+    outlineWidth?: number | string | undefined;
     overflow?: OverflowValue | undefined;
     padding?: DimensionValue | undefined;
     paddingBlock?: DimensionValue | undefined;
@@ -630,9 +629,9 @@ declare module 'react-native' {
     maxWidth?: DimensionValue | undefined;
     minHeight?: DimensionValue | undefined;
     minWidth?: DimensionValue | undefined;
-    outlineOffset?: NumberOrString | undefined;
+    outlineOffset?: number | string | undefined;
     outlineStyle?: string | undefined;
-    outlineWidth?: NumberOrString | undefined;
+    outlineWidth?: number | string | undefined;
     overflow?: OverflowValue | undefined;
     padding?: DimensionValue | undefined;
     paddingBlock?: DimensionValue | undefined;
