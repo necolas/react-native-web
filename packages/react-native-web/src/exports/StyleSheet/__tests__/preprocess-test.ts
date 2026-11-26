@@ -112,9 +112,7 @@ describe('StyleSheet/preprocess', () => {
       test('string', () => {
         const boxShadow = '0 1px 2px rgba(0, 0, 0, 0.5)';
         const style = { boxShadow };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({ boxShadow });
+        expect(preprocess(style)).toEqual({ boxShadow });
       });
 
       test('array', () => {
@@ -135,9 +133,7 @@ describe('StyleSheet/preprocess', () => {
           }
         ];
         const style = { boxShadow };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({
+        expect(preprocess(style)).toEqual({
           boxShadow:
             '0 1px 2px rgba(0, 0, 0, 0.5), 1px 2px 3px 0 black, inset 5px 6px 7px 8px rgba(0,255,0,0.75)'
         });
@@ -284,9 +280,7 @@ describe('StyleSheet/preprocess', () => {
         const transform =
           'perspective(50px) scaleX(20) translateX(20px) rotate(20deg)';
         const style = { transform };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({ transform });
+        expect(preprocess(style)).toEqual({ transform });
       });
 
       test('array', () => {
@@ -300,9 +294,7 @@ describe('StyleSheet/preprocess', () => {
             { matrix3d: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4] }
           ]
         };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({
+        expect(preprocess(style)).toEqual({
           transform:
             'perspective(50px) scaleX(20) translateX(20px) rotate(20deg) matrix(1,2,3,4,5,6) matrix3d(1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4)'
         });
@@ -314,18 +306,14 @@ describe('StyleSheet/preprocess', () => {
       test('string', () => {
         const transformOrigin = '2px 30% 10px';
         const style = { transformOrigin };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({ transformOrigin });
+        expect(preprocess(style)).toEqual({ transformOrigin });
       });
 
       test('array', () => {
         const style = {
           transformOrigin: [2, '30%', 10]
         };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({
+        expect(preprocess(style)).toEqual({
           transformOrigin: '2px 30% 10px'
         });
       });
@@ -335,19 +323,145 @@ describe('StyleSheet/preprocess', () => {
       test('string', () => {
         const transitionProperty = 'opacity, transform';
         const style = { transitionProperty };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({ transitionProperty });
+        expect(preprocess(style)).toEqual({ transitionProperty });
       });
 
       test('array', () => {
         const style = {
           transitionProperty: ['opacity', 'transform']
         };
-        const resolved = preprocess(style);
-
-        expect(resolved).toEqual({
+        expect(preprocess(style)).toEqual({
           transitionProperty: 'opacity, transform'
+        });
+      });
+    });
+
+    describe('backgroundImage', () => {
+      test('string', () => {
+        const backgroundImage =
+          'linear-gradient(to right, red, blue), url("image.png")';
+        const style = { backgroundImage };
+        expect(preprocess(style)).toEqual({ backgroundImage });
+      });
+
+      test('array', () => {
+        const style = {
+          backgroundImage: [
+            {
+              type: 'linear-gradient',
+              direction: 'to right',
+              colorStops: [
+                { color: 'red' },
+                { color: null, positions: ['20%'] },
+                { color: 'rgba(0, 0, 255, 0.5)', positions: ['50%', '100%'] }
+              ]
+            },
+            {
+              type: 'linear-gradient',
+              colorStops: [{ color: '#f00' }, { color: 'blue' }]
+            },
+            {
+              type: 'linear-gradient',
+              colorStops: [
+                { color: 'oklch(0.7 0.1 200)' },
+                { color: 'var(--color)' }
+              ]
+            },
+            {
+              type: 'radial-gradient',
+              shape: 'circle',
+              size: { x: 50, y: 50 },
+              position: { top: 10, left: '20%' },
+              colorStops: [{ color: 'red' }, { color: 'blue' }]
+            },
+            {
+              type: 'radial-gradient',
+              shape: 'ellipse',
+              size: 'closest-side',
+              position: { bottom: 0, right: 0 },
+              colorStops: [{ color: 'red' }, { color: 'blue' }]
+            },
+            {
+              type: 'radial-gradient',
+              shape: 'ellipse',
+              size: { x: '50%', y: 20 },
+              position: { top: '50%', left: '50%' },
+              colorStops: [{ color: 'red' }, { color: 'blue' }]
+            }
+          ]
+        };
+        expect(preprocess(style)).toEqual({
+          backgroundImage: [
+            'linear-gradient(to right, rgba(255,0,0,1.00),  20%, rgba(0,0,255,0.50) 50% 100%)',
+            'linear-gradient(rgba(255,0,0,1.00), rgba(0,0,255,1.00))',
+            'linear-gradient(oklch(0.7 0.1 200), var(--color))',
+            'radial-gradient(circle 50px at top 10px left 20%, rgba(255,0,0,1.00), rgba(0,0,255,1.00))',
+            'radial-gradient(ellipse closest-side at bottom 0px right 0px, rgba(255,0,0,1.00), rgba(0,0,255,1.00))',
+            'radial-gradient(ellipse 50% 20px at top 50% left 50%, rgba(255,0,0,1.00), rgba(0,0,255,1.00))'
+          ].join(', ')
+        });
+      });
+    });
+
+    describe('backgroundPosition', () => {
+      test('string', () => {
+        const backgroundPosition = 'left top, right 10px bottom 20%';
+        const style = { backgroundPosition };
+        expect(preprocess(style)).toEqual({ backgroundPosition });
+      });
+
+      test('array', () => {
+        const style = {
+          backgroundPosition: [
+            { top: 10, left: '20%' },
+            { top: 0, right: 0 },
+            { bottom: '50%', left: 5 },
+            { bottom: 0, right: '10%' }
+          ]
+        };
+        expect(preprocess(style)).toEqual({
+          backgroundPosition:
+            'top 10px left 20%, top 0px right 0px, bottom 50% left 5px, bottom 0px right 10%'
+        });
+      });
+    });
+
+    describe('backgroundRepeat', () => {
+      test('string', () => {
+        const backgroundRepeat = 'repeat-x, no-repeat';
+        const style = { backgroundRepeat };
+        expect(preprocess(style)).toEqual({ backgroundRepeat });
+      });
+
+      test('array', () => {
+        const style = {
+          backgroundRepeat: [
+            { x: 'repeat', y: 'no-repeat' },
+            { x: 'space', y: 'round' }
+          ]
+        };
+        expect(preprocess(style)).toEqual({
+          backgroundRepeat: 'repeat no-repeat, space round'
+        });
+      });
+    });
+
+    describe('backgroundSize', () => {
+      test('string', () => {
+        const backgroundSize = 'cover, 50% auto';
+        const style = { backgroundSize };
+        expect(preprocess(style)).toEqual({ backgroundSize });
+      });
+
+      test('array', () => {
+        const style = {
+          backgroundSize: [
+            { x: 100, y: '50%' },
+            { x: 'auto', y: 20 }
+          ]
+        };
+        expect(preprocess(style)).toEqual({
+          backgroundSize: '100px 50%, auto 20px'
         });
       });
     });

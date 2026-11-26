@@ -24,6 +24,7 @@ describe('validate', () => {
     validate({ margin: 10 });
     validate({ margin: 'calc(10 * 1px)' });
     validate({ margin: 'calc(10 * calc(10 * 1px))' });
+    validate({ backgroundPosition: 'left 10px top 20%, center' });
     expect(console.error).not.toHaveBeenCalled();
   });
 

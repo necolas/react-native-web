@@ -20,7 +20,6 @@ const invalidShortforms = new Set([
 ]);
 
 const invalidMultiValueShortforms = new Set([
-  'backgroundPosition',
   'borderColor',
   'borderRadius',
   'borderStyle',

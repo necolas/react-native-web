@@ -37,6 +37,48 @@ type NumberOrString = number | string;
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
 type PointerEventsValue = 'box-none' | 'none' | 'box-only' | 'auto';
 
+export type GradientColorStop = Readonly<{
+  color: ColorValue;
+  positions?: ReadonlyArray<string>;
+}>;
+
+export type BackgroundPositionValue =
+  | Readonly<{ top: NumberOrString; left: NumberOrString }>
+  | Readonly<{ top: NumberOrString; right: NumberOrString }>
+  | Readonly<{ bottom: NumberOrString; left: NumberOrString }>
+  | Readonly<{ bottom: NumberOrString; right: NumberOrString }>;
+
+export type BackgroundImageValue =
+  | Readonly<{
+      type: 'linear-gradient';
+      direction?: string;
+      colorStops: ReadonlyArray<GradientColorStop>;
+    }>
+  | Readonly<{
+      type: 'radial-gradient';
+      shape: 'circle' | 'ellipse';
+      size:
+        | 'closest-corner'
+        | 'closest-side'
+        | 'farthest-corner'
+        | 'farthest-side'
+        | Readonly<{ x: NumberOrString; y: NumberOrString }>;
+      position: BackgroundPositionValue;
+      colorStops: ReadonlyArray<GradientColorStop>;
+    }>;
+
+type BackgroundRepeatKeyword = 'no-repeat' | 'repeat' | 'round' | 'space';
+
+export type BackgroundRepeatValue = Readonly<{
+  x: BackgroundRepeatKeyword;
+  y: BackgroundRepeatKeyword;
+}>;
+
+export type BackgroundSizeValue = Readonly<{
+  x: NumberOrString;
+  y: NumberOrString;
+}>;
+
 export type AccessibilityProps = {
   'aria-activedescendant'?: Nullable<string>;
   'aria-atomic'?: Nullable<boolean>;
@@ -185,11 +227,13 @@ export type ViewStyle = AnimationStyles &
     backgroundBlendMode?: Nullable<string>;
     backgroundClip?: Nullable<string>;
     backgroundColor?: Nullable<ColorValue>;
-    backgroundImage?: Nullable<string>;
+    backgroundImage?: Nullable<string | ReadonlyArray<BackgroundImageValue>>;
     backgroundOrigin?: 'border-box' | 'content-box' | 'padding-box';
-    backgroundPosition?: Nullable<string>;
-    backgroundRepeat?: Nullable<string>;
-    backgroundSize?: Nullable<string>;
+    backgroundPosition?: Nullable<
+      string | ReadonlyArray<BackgroundPositionValue>
+    >;
+    backgroundRepeat?: Nullable<string | ReadonlyArray<BackgroundRepeatValue>>;
+    backgroundSize?: Nullable<string | ReadonlyArray<BackgroundSizeValue>>;
     boxDecorationBreak?: 'clone' | 'slice';
     boxShadow?: Nullable<string>;
     clip?: Nullable<string>;
