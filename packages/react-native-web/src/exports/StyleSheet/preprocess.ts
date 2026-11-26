@@ -134,13 +134,13 @@ const mapColorStop = ({ color, positions }: GradientColorStop): string =>
 // { type: 'linear-gradient', direction: 'to right', colorStops: [{ color: 'red' }, { color: 'blue' }] }
 // => 'linear-gradient(to right, rgba(255,0,0,1.00), rgba(0,0,255,1.00))'
 const mapBackgroundImage = (image: BackgroundImageValue): string => {
-  const items: Array<string> = [];
+  const args: Array<string> = [];
 
   if (image.type === 'linear-gradient') {
     const { direction } = image;
 
     if (direction != null) {
-      items.push(direction);
+      args.push(direction);
     }
   } else {
     const { shape, size, position } = image;
@@ -152,11 +152,11 @@ const mapBackgroundImage = (image: BackgroundImageValue): string => {
           ? normalizeValueWithProperty(size.x)
           : mapBackgroundSize(size);
 
-    items.push(`${shape} ${radius} at ${mapBackgroundPosition(position)}`);
+    args.push(`${shape} ${radius} at ${mapBackgroundPosition(position)}`);
   }
 
-  items.push(...image.colorStops.map(mapColorStop));
-  return `${image.type}(${items.join(', ')})`;
+  args.push(...image.colorStops.map(mapColorStop));
+  return `${image.type}(${args.join(', ')})`;
 };
 
 // { scale: 2 } => 'scale(2)'
