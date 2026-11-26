@@ -336,6 +336,41 @@ describe('StyleSheet/preprocess', () => {
       });
     });
 
+    describe('filter', () => {
+      test('string', () => {
+        const filter = 'blur(4px) brightness(0.5)';
+        const style = { filter };
+        expect(preprocess(style)).toEqual({ filter });
+      });
+
+      test('array', () => {
+        const style = {
+          filter: [
+            { blur: 4 },
+            { brightness: 0.5 },
+            { contrast: '120%' },
+            { hueRotate: 90 },
+            { hueRotate: '1rad' },
+            {
+              dropShadow: {
+                offsetX: 1,
+                offsetY: '2px',
+                standardDeviation: 3,
+                color: 'red'
+              }
+            },
+            { dropShadow: { offsetX: 1, offsetY: 2 } },
+            { dropShadow: { offsetX: 0, offsetY: 0, color: 'var(--color)' } },
+            { dropShadow: '1px 2px blue' }
+          ]
+        };
+        expect(preprocess(style)).toEqual({
+          filter:
+            'blur(4px) brightness(0.5) contrast(120%) hue-rotate(90deg) hue-rotate(1rad) drop-shadow(1px 2px 3px rgba(255,0,0,1.00)) drop-shadow(1px 2px) drop-shadow(0px 0px var(--color)) drop-shadow(1px 2px blue)'
+        });
+      });
+    });
+
     describe('backgroundImage', () => {
       test('string', () => {
         const backgroundImage =

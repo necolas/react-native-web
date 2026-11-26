@@ -11,7 +11,7 @@ import { getSystemColor } from '../../../modules/systemColors';
 import type { Nullable } from '../../../types';
 
 const normalizeColor = (
-  color?: number | string,
+  color?: Nullable<number | string>,
   opacity: number | null = 1
 ): string | undefined => {
   if (color == null) return;

@@ -78,6 +78,25 @@ export type BackgroundSizeValue = {
   y: number | string;
 };
 
+export type DropShadowValue = {
+  color?: ColorValue;
+  offsetX: number | string;
+  offsetY: number | string;
+  standardDeviation?: number | string;
+};
+
+export type FilterFunction =
+  | { blur: number | string }
+  | { brightness: number | string }
+  | { contrast: number | string }
+  | { dropShadow: DropShadowValue | string }
+  | { grayscale: number | string }
+  | { hueRotate: number | string }
+  | { invert: number | string }
+  | { opacity: number | string }
+  | { saturate: number | string }
+  | { sepia: number | string };
+
 export type AccessibilityProps = {
   'aria-activedescendant'?: Nullable<string>;
   'aria-atomic'?: Nullable<boolean>;
@@ -236,7 +255,7 @@ export type ViewStyle = AnimationStyles &
     boxDecorationBreak?: 'clone' | 'slice';
     boxShadow?: Nullable<string>;
     clip?: Nullable<string>;
-    filter?: Nullable<string>;
+    filter?: Nullable<string | ReadonlyArray<FilterFunction>>;
     mask?: Nullable<string>;
     maskClip?: Nullable<string>;
     maskComposite?: Nullable<string>;

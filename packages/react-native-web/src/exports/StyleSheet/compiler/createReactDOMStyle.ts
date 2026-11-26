@@ -6,7 +6,7 @@
  */
 
 import hyphenateStyleName from './hyphenateStyleName';
-import normalizeValueWithProperty from './normalizeValueWithProperty';
+import { normalizeValueWithProperty } from './normalizeValue';
 
 type Style = Record<string, unknown>;
 
