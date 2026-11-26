@@ -108,6 +108,25 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       expect(input.getAttribute('autoComplete')).toEqual('off');
     });
+
+    test.each([
+      ['birthdate-day', 'bday-day'],
+      ['birthdate-month', 'bday-month'],
+      ['birthdate-year', 'bday-year'],
+      ['birthdate-full', 'bday']
+    ])('maps "%s" to HTML "%s"', (value, expected) => {
+      const { container } = render(<TextInput autoComplete={value} />);
+      const input = findInput(container);
+      expect(input.getAttribute('autoComplete')).toEqual(expected);
+    });
+
+    test('maps autoCompleteType birthdate values', () => {
+      const { container } = render(
+        <TextInput autoCompleteType="birthdate-full" />
+      );
+      const input = findInput(container);
+      expect(input.getAttribute('autoComplete')).toEqual('bday');
+    });
   });
 
   describe('prop "autoFocus"', () => {

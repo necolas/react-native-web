@@ -99,6 +99,13 @@ const forwardPropsList = new Set([
   'value'
 ]);
 
+const AUTO_COMPLETE_MAP = new Map<string, string>([
+  ['birthdate-day', 'bday-day'],
+  ['birthdate-full', 'bday'],
+  ['birthdate-month', 'bday-month'],
+  ['birthdate-year', 'bday-year']
+]);
+
 // If an Input Method Editor is processing key input, the 'keyCode' is 229.
 // https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode
 function isEventComposing(nativeEvent: KeyboardEvent) {
@@ -432,7 +439,9 @@ const TextInput = (
 
   const supportedProps = pick(props, forwardPropsList);
   supportedProps.autoCapitalize = autoCapitalize;
-  supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
+  const rawAutoComplete = autoComplete || autoCompleteType || 'on';
+  supportedProps.autoComplete =
+    AUTO_COMPLETE_MAP.get(rawAutoComplete) ?? rawAutoComplete;
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';
