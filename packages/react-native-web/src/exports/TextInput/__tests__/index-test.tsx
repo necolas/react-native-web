@@ -91,16 +91,16 @@ function keydown(payload: KeyboardEventPayload) {
 
 describe('components/TextInput', () => {
   describe('prop "autoComplete"', () => {
-    test('value "on"', () => {
+    test('default value', () => {
       const { container } = render(<TextInput />);
       const input = findInput(container);
-      expect(input.getAttribute('autoComplete')).toEqual('on');
+      expect(input.hasAttribute('autoComplete')).toBe(false);
     });
 
-    test('value "off"', () => {
-      const { container } = render(<TextInput autoComplete="off" />);
+    test('React Native value is mapped to HTML value', () => {
+      const { container } = render(<TextInput autoComplete="birthdate-day" />);
       const input = findInput(container);
-      expect(input.getAttribute('autoComplete')).toEqual('off');
+      expect(input.getAttribute('autoComplete')).toEqual('bday-day');
     });
   });
 

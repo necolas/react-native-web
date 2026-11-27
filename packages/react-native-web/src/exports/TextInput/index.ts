@@ -33,7 +33,17 @@ import useResponderEvents from '../../modules/useResponderEvents';
 import type { Nullable, PlatformMethods } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
-import type { SubmitBehavior, TextInputProps } from './types';
+import type { AutoComplete, SubmitBehavior, TextInputProps } from './types';
+
+/**
+ * Maps React Native autoComplete values to their HTML equivalent.
+ */
+const autoCompleteAliases: Partial<Record<AutoComplete, string>> = {
+  'birthdate-day': 'bday-day',
+  'birthdate-full': 'bday',
+  'birthdate-month': 'bday-month',
+  'birthdate-year': 'bday-year'
+};
 
 /**
  * Determines whether a 'selection' prop differs from a node's existing
@@ -122,7 +132,7 @@ const TextInput = (
 ): ReactNode => {
   const {
     autoCapitalize = 'sentences',
-    autoComplete = 'on',
+    autoComplete,
     autoCorrect = true,
     caretHidden,
     clearTextOnFocus,
@@ -428,7 +438,10 @@ const TextInput = (
 
   const supportedProps = pick(props, forwardPropsList);
   supportedProps.autoCapitalize = autoCapitalize;
-  supportedProps.autoComplete = autoComplete;
+  supportedProps.autoComplete =
+    autoComplete != null
+      ? (autoCompleteAliases[autoComplete] ?? autoComplete)
+      : autoComplete;
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';

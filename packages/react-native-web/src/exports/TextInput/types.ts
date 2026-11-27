@@ -20,12 +20,43 @@ export type SubmitBehavior = 'submit' | 'blurAndSubmit' | 'newline';
 
 type TextInputEvent = { nativeEvent: { text: string } };
 
+export type AutoComplete =
+  | 'additional-name'
+  | 'address-line1'
+  | 'address-line2'
+  | 'birthdate-day'
+  | 'birthdate-full'
+  | 'birthdate-month'
+  | 'birthdate-year'
+  | 'cc-csc'
+  | 'cc-exp'
+  | 'cc-exp-month'
+  | 'cc-exp-year'
+  | 'cc-number'
+  | 'country'
+  | 'current-password'
+  | 'email'
+  | 'family-name'
+  | 'given-name'
+  | 'honorific-prefix'
+  | 'honorific-suffix'
+  | 'name'
+  | 'new-password'
+  | 'off'
+  | 'one-time-code'
+  | 'postal-code'
+  | 'street-address'
+  | 'tel'
+  | 'username'
+  /** @platform android, ios */
+  | 'cc-exp-day';
+
 export type TextInputProps = Omit<
   ViewProps,
   'dir' | 'onBlur' | 'onFocus' | 'style'
 > & {
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words';
-  autoComplete?: Nullable<string>;
+  autoComplete?: Nullable<AutoComplete>;
   autoCorrect?: Nullable<boolean>;
   autoFocus?: Nullable<boolean>;
   caretHidden?: Nullable<boolean>;
