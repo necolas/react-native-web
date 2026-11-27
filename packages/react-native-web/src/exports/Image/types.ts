@@ -77,7 +77,6 @@ export type ResizeMode =
 export type Source = number | string | SourceObject | Array<SourceObject>;
 
 export type ImageStyle = ViewStyle & {
-  // @deprecated
   resizeMode?: ResizeMode;
   tintColor?: ColorValue;
 };

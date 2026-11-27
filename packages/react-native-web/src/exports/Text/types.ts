@@ -86,6 +86,7 @@ export type TextStyle = ViewStyle & {
     | 'left'
     | 'right'
     | 'start';
+  textAlignVertical?: Nullable<string>;
   textDecorationColor?: Nullable<ColorValue>;
   textDecorationLine?:
     | 'none'
@@ -126,11 +127,18 @@ export type TextStyle = ViewStyle & {
   /* @platform web */
   MozOsxFontSmoothing?: Nullable<string>;
   WebkitFontSmoothing?: Nullable<string>;
-  // deprecated
-  textAlignVertical?: Nullable<string>;
 };
 
 export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
+  accessibilityRole?:
+    | 'button'
+    | 'header'
+    | 'heading'
+    | 'label'
+    | 'link'
+    | 'listitem'
+    | 'none'
+    | 'text';
   dir?: 'auto' | 'ltr' | 'rtl';
   ellipsizeMode?: Nullable<'clip' | 'head' | 'middle' | 'tail'>;
   numberOfLines?: Nullable<number>;
@@ -145,16 +153,6 @@ export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
     | 'text';
   style?: GenericStyleProp<TextStyle>;
   testID?: Nullable<string>;
-  // @deprecated
-  accessibilityRole?:
-    | 'button'
-    | 'header'
-    | 'heading'
-    | 'label'
-    | 'link'
-    | 'listitem'
-    | 'none'
-    | 'text';
   onPress?: (e: MouseEvent<HTMLElement>) => void;
   selectable?: boolean;
 };

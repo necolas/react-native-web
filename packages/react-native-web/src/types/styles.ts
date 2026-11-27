@@ -59,22 +59,28 @@ export type BorderStyles = {
   borderBlockEndColor?: Nullable<ColorValue>;
   borderBlockStartColor?: Nullable<ColorValue>;
   borderBottomColor?: Nullable<ColorValue>;
+  borderEndColor?: Nullable<ColorValue>;
   borderInlineColor?: Nullable<ColorValue>;
   borderInlineEndColor?: Nullable<ColorValue>;
   borderInlineStartColor?: Nullable<ColorValue>;
   borderLeftColor?: Nullable<ColorValue>;
   borderRightColor?: Nullable<ColorValue>;
+  borderStartColor?: Nullable<ColorValue>;
   borderTopColor?: Nullable<ColorValue>;
   // radius
   borderRadius?: Nullable<BorderRadiusValue>;
+  borderBottomEndRadius?: Nullable<BorderRadiusValue>;
+  borderBottomLeftRadius?: Nullable<BorderRadiusValue>;
+  borderBottomRightRadius?: Nullable<BorderRadiusValue>;
+  borderBottomStartRadius?: Nullable<BorderRadiusValue>;
   borderEndEndRadius?: Nullable<BorderRadiusValue>;
   borderEndStartRadius?: Nullable<BorderRadiusValue>;
   borderStartEndRadius?: Nullable<BorderRadiusValue>;
   borderStartStartRadius?: Nullable<BorderRadiusValue>;
-  borderBottomLeftRadius?: Nullable<BorderRadiusValue>;
-  borderBottomRightRadius?: Nullable<BorderRadiusValue>;
+  borderTopEndRadius?: Nullable<BorderRadiusValue>;
   borderTopLeftRadius?: Nullable<BorderRadiusValue>;
   borderTopRightRadius?: Nullable<BorderRadiusValue>;
+  borderTopStartRadius?: Nullable<BorderRadiusValue>;
   // style
   borderStyle?: Nullable<BorderStyleValue>;
   borderBlockStyle?: Nullable<BorderStyleValue>;
@@ -87,15 +93,6 @@ export type BorderStyles = {
   borderLeftStyle?: Nullable<BorderStyleValue>;
   borderRightStyle?: Nullable<BorderStyleValue>;
   borderTopStyle?: Nullable<BorderStyleValue>;
-  // deprecated
-  borderEndColor?: Nullable<ColorValue>;
-  borderStartColor?: Nullable<ColorValue>;
-  borderEndStyle?: Nullable<BorderStyleValue>;
-  borderStartStyle?: Nullable<BorderStyleValue>;
-  borderBottomEndRadius?: Nullable<BorderRadiusValue>;
-  borderBottomStartRadius?: Nullable<BorderRadiusValue>;
-  borderTopEndRadius?: Nullable<BorderRadiusValue>;
-  borderTopStartRadius?: Nullable<BorderRadiusValue>;
 };
 
 /**
@@ -281,9 +278,6 @@ export type LayoutStyles = {
   gridTemplateColumns?: Nullable<string>;
   gridTemplateRows?: Nullable<string>;
   gridTemplateAreas?: Nullable<string>;
-  /**
-   * @deprecated
-   */
   borderEndWidth?: Nullable<DimensionValue>;
   borderStartWidth?: Nullable<DimensionValue>;
   end?: Nullable<DimensionValue>;
@@ -303,7 +297,6 @@ export type LayoutStyles = {
  */
 
 export type ShadowStyles = {
-  // @deprecated
   shadowColor?: Nullable<ColorValue>;
   shadowOffset?: Nullable<{
     width?: DimensionValue;

@@ -60,10 +60,6 @@ A string indicating whether or not auto-correct behavior is on or off. Safari on
 If `true`, focuses the input on mount. Only the first form element in a document with auto-focus is focused.
 {% endcall %}
 
-{% call macro.prop('blurOnSubmit', '?boolean') %}
-Deprecated. Use `submitBehavior`. If `true`, the text field will blur when submitted. The default value is `true` for single-line fields and `false` for multiline fields. Note, for multiline fields setting `blurOnSubmit` to `true` means that pressing return will blur the field and trigger the `onSubmitEditing` event instead of inserting a newline into the field.
-{% endcall %}
-
 {% call macro.prop('clearTextOnFocus', '?boolean = false') %}
 If `true`, clears the text field automatically when focused.
 {% endcall %}

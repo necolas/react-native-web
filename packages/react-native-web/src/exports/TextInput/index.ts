@@ -122,10 +122,8 @@ const TextInput = (
 ): ReactNode => {
   const {
     autoCapitalize = 'sentences',
-    autoComplete,
-    autoCompleteType,
+    autoComplete = 'on',
     autoCorrect = true,
-    blurOnSubmit,
     caretHidden,
     clearTextOnFocus,
     dir,
@@ -180,10 +178,8 @@ const TextInput = (
       !multiline && props.submitBehavior === 'newline'
         ? 'blurAndSubmit'
         : props.submitBehavior;
-  } else if (multiline) {
-    submitBehavior = blurOnSubmit === true ? 'blurAndSubmit' : 'newline';
   } else {
-    submitBehavior = blurOnSubmit !== false ? 'blurAndSubmit' : 'submit';
+    submitBehavior = multiline ? 'newline' : 'blurAndSubmit';
   }
 
   let type;
@@ -432,7 +428,7 @@ const TextInput = (
 
   const supportedProps = pick(props, forwardPropsList);
   supportedProps.autoCapitalize = autoCapitalize;
-  supportedProps.autoComplete = autoComplete || autoCompleteType || 'on';
+  supportedProps.autoComplete = autoComplete;
   supportedProps.autoCorrect = autoCorrect ? 'on' : 'off';
   // 'auto' by default allows browsers to infer writing direction
   supportedProps.dir = dir !== undefined ? dir : 'auto';

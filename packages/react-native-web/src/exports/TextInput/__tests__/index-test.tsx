@@ -102,12 +102,6 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       expect(input.getAttribute('autoComplete')).toEqual('off');
     });
-
-    test('autoCompleteType fallback', () => {
-      const { container } = render(<TextInput autoCompleteType="off" />);
-      const input = findInput(container);
-      expect(input.getAttribute('autoComplete')).toEqual('off');
-    });
   });
 
   describe('prop "autoFocus"', () => {
@@ -676,16 +670,16 @@ describe('components/TextInput', () => {
       vi.useRealTimers();
     });
 
-    test('multi-line input with "blurOnSubmit" triggers "onSubmitEditing"', () => {
+    test('multi-line input with "submitBehavior" triggers "onSubmitEditing"', () => {
       const onSubmitEditing = vi.fn();
       const preventDefault = vi.fn();
 
       const { container } = render(
         <TextInput
-          blurOnSubmit
           defaultValue="12345"
           multiline
           onSubmitEditing={onSubmitEditing}
+          submitBehavior="blurAndSubmit"
         />
       );
       const textarea = findTextArea(container);
@@ -764,23 +758,6 @@ describe('components/TextInput', () => {
       expect(onSubmitEditing).toHaveBeenCalledOnce();
       expect(preventDefault).toHaveBeenCalledOnce();
       expect(blur).toHaveBeenCalledOnce();
-    });
-
-    test('takes precedence over "blurOnSubmit"', () => {
-      const { blur, onSubmitEditing } = renderAndSubmit({
-        blurOnSubmit: true,
-        submitBehavior: 'submit'
-      });
-      expect(onSubmitEditing).toHaveBeenCalledOnce();
-      expect(blur).not.toHaveBeenCalled();
-    });
-
-    test('single-line "blurOnSubmit={false}" is "submit"', () => {
-      const { blur, onSubmitEditing } = renderAndSubmit({
-        blurOnSubmit: false
-      });
-      expect(onSubmitEditing).toHaveBeenCalledOnce();
-      expect(blur).not.toHaveBeenCalled();
     });
 
     test('multi-line without "onSubmitEditing" does not insert a newline', () => {

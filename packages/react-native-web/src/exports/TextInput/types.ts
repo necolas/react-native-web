@@ -26,7 +26,6 @@ export type TextInputProps = Omit<
 > & {
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words';
   autoComplete?: Nullable<string>;
-  autoCompleteType?: Nullable<string>; // Compat with React Native (Bug react-native#26003)
   autoCorrect?: Nullable<boolean>;
   autoFocus?: Nullable<boolean>;
   caretHidden?: Nullable<boolean>;
@@ -88,8 +87,6 @@ export type TextInputProps = Omit<
   submitBehavior?: Nullable<SubmitBehavior>;
   textAlign?: Nullable<'left' | 'center' | 'right' | 'start' | 'end'>;
   value?: Nullable<string>;
-  // deprecated
-  blurOnSubmit?: Nullable<boolean>;
   editable?: Nullable<boolean>;
   keyboardType?:
     | 'default'

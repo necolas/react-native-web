@@ -371,7 +371,7 @@ const Image = (
         imageSizeStyle,
         style,
         styles.undo,
-        // TEMP: avoid deprecated shadow props regression
+        // TEMP: avoid shadow props regression
         // until Image refactored to use createElement.
         { boxShadow: null }
       ]}
