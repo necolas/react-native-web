@@ -503,4 +503,18 @@ describe('components/Image', () => {
       expect(ImageUriCache._entries[uri]).toBeDefined();
     });
   });
+
+  // Keep last: each render increments the tint filter id used in snapshots
+  test('style "filter" array', () => {
+    const { container } = render(
+      <Image
+        blurRadius={5}
+        style={{ filter: [{ blur: 2 }, { brightness: 0.5 }] }}
+      />
+    );
+    const root = container.firstChild as HTMLElement;
+    const image = root.firstChild as HTMLElement;
+    expect(root.style.filter).toBe('blur(2px) brightness(0.5)');
+    expect(image.style.filter).toBe('blur(5px)');
+  });
 });

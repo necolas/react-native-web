@@ -10,9 +10,7 @@ import { PROPERTIES_STANDARD } from '../preprocess';
 import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
-import normalizeValueWithProperty, {
-  type StyleValue
-} from './normalizeValueWithProperty';
+import { normalizeValueWithProperty, type StyleValue } from './normalizeValue';
 
 export type Style = Readonly<Record<string, Nullable<StyleValue>>>;
 type Keyframes = Readonly<Record<string, Style>>;
@@ -342,7 +340,7 @@ export function inline(
  */
 function stringifyValueWithProperty(
   value: StyleValue,
-  property: Nullable<string>
+  property: string
 ): string {
   // e.g., 0 => '0px', 'black' => 'rgba(0,0,0,1)'
   const normalizedValue = normalizeValueWithProperty(value, property);

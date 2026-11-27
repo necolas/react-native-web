@@ -11,10 +11,13 @@ import type {
   BackgroundPositionValue,
   BackgroundRepeatValue,
   BackgroundSizeValue,
+  FilterFunction,
   GradientColorStop
 } from '../View/types';
 import normalizeColor from './compiler/normalizeColor';
-import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
+import normalizeValue, {
+  normalizeValueWithProperty
+} from './compiler/normalizeValue';
 
 const emptyObject: Readonly<Record<string, never>> = {};
 
@@ -60,9 +63,9 @@ export const createBoxShadowValue = (
 ): string | undefined => {
   const { shadowColor, shadowOffset, shadowOpacity, shadowRadius } = style;
   const { height, width } = shadowOffset || defaultOffset;
-  const offsetX = normalizeValueWithProperty(width);
-  const offsetY = normalizeValueWithProperty(height);
-  const blurRadius = normalizeValueWithProperty(shadowRadius || 0);
+  const offsetX = normalizeValue(width);
+  const offsetY = normalizeValue(height);
+  const blurRadius = normalizeValue(shadowRadius || 0);
   const color = normalizeColor(shadowColor || 'black', shadowOpacity);
   if (
     color != null &&
@@ -78,10 +81,10 @@ const createTextShadowValue = (style: TextShadowStyle): string | undefined => {
   const { textShadowColor, textShadowOffset, textShadowRadius } = style;
   const { height, width } = textShadowOffset || defaultOffset;
   const radius = textShadowRadius || 0;
-  const offsetX = normalizeValueWithProperty(width);
-  const offsetY = normalizeValueWithProperty(height);
-  const blurRadius = normalizeValueWithProperty(radius);
-  const color = normalizeValueWithProperty(textShadowColor, 'textShadowColor');
+  const offsetX = normalizeValue(width);
+  const offsetY = normalizeValue(height);
+  const blurRadius = normalizeValue(radius);
+  const color = normalizeColor(textShadowColor);
 
   if (
     color &&
@@ -100,11 +103,10 @@ const mapBoxShadow = (boxShadow: BoxShadow | string): string => {
   if (typeof boxShadow === 'string') {
     return boxShadow;
   }
-  const offsetX = normalizeValueWithProperty(boxShadow.offsetX) || 0;
-  const offsetY = normalizeValueWithProperty(boxShadow.offsetY) || 0;
-  const blurRadius = normalizeValueWithProperty(boxShadow.blurRadius) || 0;
-  const spreadDistance =
-    normalizeValueWithProperty(boxShadow.spreadDistance) || 0;
+  const offsetX = normalizeValue(boxShadow.offsetX) || 0;
+  const offsetY = normalizeValue(boxShadow.offsetY) || 0;
+  const blurRadius = normalizeValue(boxShadow.blurRadius) || 0;
+  const spreadDistance = normalizeValue(boxShadow.spreadDistance) || 0;
   const color = normalizeColor(boxShadow.color) || 'black';
   const position = boxShadow.inset ? 'inset ' : '';
   return `${position}${offsetX} ${offsetY} ${blurRadius} ${spreadDistance} ${color}`;
@@ -113,7 +115,7 @@ const mapBoxShadow = (boxShadow: BoxShadow | string): string => {
 // { top: 10, left: '20%' } => 'top 10px left 20%'
 const mapBackgroundPosition = (position: BackgroundPositionValue): string =>
   Object.entries(position)
-    .map(([edge, offset]) => `${edge} ${normalizeValueWithProperty(offset)}`)
+    .map(([edge, offset]) => `${edge} ${normalizeValue(offset)}`)
     .join(' ');
 
 // { x: 'repeat', y: 'no-repeat' } => 'repeat no-repeat'
@@ -122,7 +124,7 @@ const mapBackgroundRepeat = ({ x, y }: BackgroundRepeatValue): string =>
 
 // { x: 100, y: '50%' } => '100px 50%'
 const mapBackgroundSize = ({ x, y }: BackgroundSizeValue): string =>
-  `${normalizeValueWithProperty(x)} ${normalizeValueWithProperty(y)}`;
+  `${normalizeValue(x)} ${normalizeValue(y)}`;
 
 // Use the larger of x and y, as native does. Percentages fall back to the default radius.
 // { x: 10, y: 40 } => '40px'
@@ -133,7 +135,6 @@ const mapCircleRadius = ({ x, y }: BackgroundSizeValue): string | undefined => {
     return `${Math.max(x, y)}px`;
   }
 
-  // TODO: use `normalizeValue`
   const radiusX = typeof x === 'number' ? `${x}px` : x;
   const radiusY = typeof y === 'number' ? `${y}px` : y;
 
@@ -176,6 +177,45 @@ const mapBackgroundImage = (image: BackgroundImageValue): string => {
 
   args.push(...image.colorStops.map(mapColorStop));
   return `${image.type}(${args.join(', ')})`;
+};
+
+// { blur: 4 } => 'blur(4px)'
+// { hueRotate: 90 } => 'hue-rotate(90deg)'
+// { dropShadow: { offsetX: 1, offsetY: 2, color: 'red' } } => 'drop-shadow(1px 2px rgba(255,0,0,1.00))'
+const mapFilter = (filter: FilterFunction): string => {
+  if ('blur' in filter) {
+    return `blur(${normalizeValue(filter.blur)})`;
+  }
+
+  if ('dropShadow' in filter) {
+    const { dropShadow } = filter;
+
+    if (typeof dropShadow === 'string') {
+      return `drop-shadow(${dropShadow})`;
+    }
+
+    const { offsetX, offsetY, standardDeviation, color } = dropShadow;
+    const args = [normalizeValue(offsetX), normalizeValue(offsetY)];
+
+    if (standardDeviation != null) {
+      args.push(normalizeValue(standardDeviation));
+    }
+    if (color != null) {
+      args.push(normalizeColor(color) ?? color);
+    }
+
+    return `drop-shadow(${args.join(' ')})`;
+  }
+
+  if ('hueRotate' in filter) {
+    const { hueRotate } = filter;
+    const angle = typeof hueRotate === 'number' ? `${hueRotate}deg` : hueRotate;
+    return `hue-rotate(${angle})`;
+  }
+
+  // brightness, contrast, grayscale, invert, opacity, saturate, sepia
+  const [name, value] = Object.entries(filter)[0];
+  return `${name}(${value})`;
 };
 
 // { scale: 2 } => 'scale(2)'
@@ -355,6 +395,11 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
       }
       const { boxShadow } = nextStyle;
       nextStyle.boxShadow = boxShadow ? `${value}, ${boxShadow}` : value;
+    } else if (prop === 'filter') {
+      if (Array.isArray(value)) {
+        value = value.map(mapFilter).join(' ');
+      }
+      nextStyle.filter = value;
     } else if (prop === 'fontFeatureSettings') {
       nextStyle.fontFeatureSettings = mergeFontFeatureSettings(
         value,
@@ -405,7 +450,7 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
     } else if (prop === 'transformOrigin') {
       if (Array.isArray(value)) {
         // [2, '30%', 10] => '2px 30% 10px'
-        value = value.map((v) => normalizeValueWithProperty(v)).join(' ');
+        value = value.map(normalizeValue).join(' ');
       }
       nextStyle.transformOrigin = value;
     } else if (prop === 'transitionProperty') {

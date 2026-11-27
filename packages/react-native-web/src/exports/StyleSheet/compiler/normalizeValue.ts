@@ -29,19 +29,20 @@ const colorProps = new Set([
   'textShadowColor'
 ]);
 
-export default function normalizeValueWithProperty<T>(
+export default function normalizeValue<T>(value: T): T | string {
+  return typeof value === 'number' ? `${value}px` : value;
+}
+
+export function normalizeValueWithProperty<T>(
   value: T,
-  property?: Nullable<string>
+  property: string
 ): T | string | undefined {
-  if (
-    typeof value === 'number' &&
-    (property == null || !isUnitlessNumber(property))
-  ) {
+  if (typeof value === 'number' && !isUnitlessNumber(property)) {
     return `${value}px`;
-  } else if (
-    property != null &&
-    colorProps.has(property) &&
-    (typeof value === 'number' || typeof value === 'string')
+  }
+  if (
+    (typeof value === 'number' || typeof value === 'string') &&
+    colorProps.has(property)
   ) {
     return normalizeColor(value);
   }

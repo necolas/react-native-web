@@ -73,16 +73,13 @@ function extractNonStandardStyleProps(
   tintColorProp: Nullable<ColorValue>
 ): [Nullable<ResizeMode>, Nullable<string>, Nullable<ColorValue>] {
   const flatStyle = StyleSheet.flatten(style);
-  const { filter, resizeMode, shadowOffset, tintColor } = flatStyle;
+  const { resizeMode, shadowOffset, tintColor } = flatStyle;
 
   // Add CSS filters
   // React Native exposes these features as props and proprietary styles
   const filters = [];
   let _filter = null;
 
-  if (filter) {
-    filters.push(filter);
-  }
   if (blurRadius) {
     filters.push(`blur(${blurRadius}px)`);
   }
