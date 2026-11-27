@@ -434,7 +434,8 @@ const TextInput = (
 
   const component = multiline ? 'textarea' : 'input';
 
-  useElementLayout(hostRef, onLayout);
+  useElementLayout(hostRef, component, onLayout);
+
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -453,9 +454,10 @@ const TextInput = (
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture
   });
-  const { direction: contextDirection } = useLocaleContext();
 
+  const { direction: contextDirection } = useLocaleContext();
   const supportedProps = pick(props, forwardPropsList);
+
   supportedProps.autoCapitalize = autoCapitalize;
   supportedProps.autoComplete =
     autoComplete != null

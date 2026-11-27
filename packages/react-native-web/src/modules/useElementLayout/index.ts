@@ -52,7 +52,8 @@ function getResizeObserver(): Nullable<ResizeObserver> {
 
 export default function useElementLayout(
   ref: { readonly current: Nullable<LayoutHandlerNode> },
-  onLayout?: Nullable<(e: LayoutEvent) => void>
+  elementType: string,
+  onLayout: ((e: LayoutEvent) => void) | undefined
 ) {
   const observer = getResizeObserver();
 
@@ -65,21 +66,25 @@ export default function useElementLayout(
     ) {
       node[DOM_LAYOUT_HANDLER_NAME] = onLayout;
     }
-  }, [ref, onLayout]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
+  }, [ref, elementType, onLayout]);
 
   // Observing is done in a separate effect to avoid this effect running
   // when 'onLayout' changes.
   useLayoutEffect(() => {
     const node = ref.current;
+
     if (
       node != null &&
       observer != null &&
       typeof node[DOM_LAYOUT_HANDLER_NAME] === 'function'
     ) {
       observer.observe(node);
+
       return () => {
         observer.unobserve(node);
       };
     }
-  }, [ref, observer]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
+  }, [ref, elementType, observer]);
 }

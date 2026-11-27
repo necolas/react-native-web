@@ -82,7 +82,10 @@ const View = (
   const hostRef = useRef<HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
-  useElementLayout(hostRef, onLayout);
+  const component = props.href != null ? 'a' : 'div';
+
+  useElementLayout(hostRef, component, onLayout);
+
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -102,14 +105,13 @@ const View = (
     onStartShouldSetResponderCapture
   });
 
-  let component: 'div' | 'a' = 'div';
-
   const langDirection =
     props.lang != null ? getLocaleDirection(props.lang) : null;
+
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
-
   const supportedProps = pick(props, forwardPropsList);
+
   supportedProps.dir = componentDirection;
 
   if (
@@ -126,7 +128,6 @@ const View = (
     props.style
   ];
   if (props.href != null) {
-    component = 'a';
     if (hrefAttrs != null) {
       const { download, rel, target } = hrefAttrs;
       if (download != null) {

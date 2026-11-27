@@ -386,6 +386,29 @@ describe('components/Text', () => {
       ]);
     });
 
+    test('is called for the new element when "href" is set', () => {
+      const onTextLayout = vi.fn();
+
+      const { container, rerender } = render(
+        <Text onTextLayout={onTextLayout}>Hello world</Text>
+      );
+
+      resize();
+
+      rerender(
+        <Text href="https://example.com" onTextLayout={onTextLayout}>
+          Hello world
+        </Text>
+      );
+
+      resize();
+
+      expect(onTextLayout).toHaveBeenCalledTimes(2);
+      expect(onTextLayout.mock.calls[1][0].nativeEvent.target).toBe(
+        container.firstChild
+      );
+    });
+
     test('is not called on nested text', () => {
       const onTextLayout = vi.fn();
 

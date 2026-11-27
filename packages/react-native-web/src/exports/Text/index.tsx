@@ -83,9 +83,17 @@ const Text = (
   const hasTextAncestor = useContext(TextAncestorContext);
   const hostRef = useRef<HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
+  const component = props.href != null ? 'a' : hasTextAncestor ? 'span' : 'div';
 
-  useElementLayout(hostRef, onLayout);
-  useTextLayout(hostRef, hasTextAncestor ? null : onTextLayout, numberOfLines);
+  useElementLayout(hostRef, component, onLayout);
+
+  useTextLayout(
+    hostRef,
+    component,
+    hasTextAncestor ? undefined : onTextLayout,
+    numberOfLines
+  );
+
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,
@@ -117,15 +125,15 @@ const Text = (
     [onClick, onPress]
   );
 
-  let component: 'span' | 'div' | 'a' = hasTextAncestor ? 'span' : 'div';
-
   const langDirection =
     props.lang != null ? getLocaleDirection(props.lang) : null;
+
   const componentDirection = props.dir || langDirection;
   const writingDirection = componentDirection || contextDirection;
-
   const supportedProps = pick(props, forwardPropsList);
+
   supportedProps.dir = componentDirection;
+
   // 'auto' by default allows browsers to infer writing direction (root elements only)
   if (!hasTextAncestor) {
     supportedProps.dir = componentDirection ?? 'auto';
@@ -157,7 +165,6 @@ const Text = (
   ];
 
   if (props.href != null) {
-    component = 'a';
     if (hrefAttrs != null) {
       const { download, rel, target } = hrefAttrs;
       if (download != null) {

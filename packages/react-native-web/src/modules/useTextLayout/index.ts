@@ -183,8 +183,9 @@ export function measureTextLines(
 
 export default function useTextLayout(
   ref: { readonly current: Nullable<HTMLElement> },
-  onTextLayout: Nullable<(e: TextLayoutEvent) => void>,
-  numberOfLines: Nullable<number>
+  elementType: string,
+  onTextLayout: ((e: TextLayoutEvent) => void) | undefined,
+  numberOfLines: number | undefined
 ) {
   const onTextLayoutRef = useRef(onTextLayout);
   const hasOnTextLayout = onTextLayout != null;
@@ -249,5 +250,6 @@ export default function useTextLayout(
       mutationObserver.disconnect();
       fonts?.removeEventListener('loadingdone', handleFontsLoadingDone);
     };
-  }, [ref, hasOnTextLayout, numberOfLines]);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies
+  }, [ref, elementType, numberOfLines, hasOnTextLayout]);
 }
