@@ -9,15 +9,14 @@ export const defaultProps: string[] = [
   'children',
   'dataSet',
   'dir',
+  'focusable',
   'id',
+  'nativeID',
   'ref',
   'suppressHydrationWarning',
   'tabIndex',
   'testID',
-  'title',
-  // @deprecated
-  'focusable',
-  'nativeID'
+  'title'
 ];
 
 export const accessibilityProps: string[] = [

@@ -226,8 +226,11 @@ export type ViewProps = AccessibilityProps &
     collapsable?: Nullable<boolean>;
     dataSet?: Readonly<Record<string, unknown>>;
     dir?: 'ltr' | 'rtl';
+    focusable?: Nullable<boolean>;
     id?: Nullable<string>;
     lang?: string;
+    nativeID?: Nullable<string>;
+    pointerEvents?: PointerEventsValue;
     style?: GenericStyleProp<ViewStyle>;
     tabIndex?: Nullable<0 | -1>;
     suppressHydrationWarning?: Nullable<boolean>;
@@ -242,8 +245,4 @@ export type ViewProps = AccessibilityProps &
       target?: Nullable<string>;
     }>;
     unstable_type?: Nullable<'button' | 'reset' | 'submit'>;
-    // @deprecated
-    focusable?: Nullable<boolean>;
-    pointerEvents?: PointerEventsValue;
-    nativeID?: Nullable<string>;
   };

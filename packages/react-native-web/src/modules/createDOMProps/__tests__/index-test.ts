@@ -126,7 +126,6 @@ describe('modules/createDOMProps', () => {
     `);
   });
 
-  // @deprecated
   describe('prop "focusable"', () => {
     test('is not set', () => {
       expect(createProps({})).toEqual({});

@@ -14,13 +14,11 @@ describe('modules/AccessibilityUtil/propsToAriaRole', () => {
 
   test('when "role" is defined', () => {
     expect(propsToAriaRole({ role: 'banner' })).toEqual('banner');
-    // @deprecated
     expect(propsToAriaRole({ accessibilityRole: 'banner' })).toEqual('banner');
   });
 
   test('when "role" is defined', () => {
     expect(propsToAriaRole({ role: 'banner' })).toEqual('banner');
-    // @deprecated
     expect(propsToAriaRole({ accessibilityRole: 'banner' })).toEqual('banner');
   });
 
@@ -32,7 +30,6 @@ describe('modules/AccessibilityUtil/propsToAriaRole', () => {
     expect(propsToAriaRole({ role: 'label' })).toBeUndefined();
   });
 
-  // @deprecated
   test('when "accessibilityRole" is a native-only value', () => {
     expect(propsToAriaRole({ accessibilityRole: 'none' })).toEqual(
       'presentation'

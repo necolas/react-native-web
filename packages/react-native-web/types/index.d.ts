@@ -247,10 +247,6 @@ interface WebViewStyle {
   borderLeftStyle?: BorderStyleValue | undefined;
   borderRightStyle?: BorderStyleValue | undefined;
   borderTopStyle?: BorderStyleValue | undefined;
-  /** @deprecated */
-  borderEndStyle?: BorderStyleValue | undefined;
-  /** @deprecated */
-  borderStartStyle?: BorderStyleValue | undefined;
   boxDecorationBreak?: 'clone' | 'slice' | undefined;
   clip?: string | undefined;
   forcedColorAdjust?: 'auto' | 'none' | undefined;
@@ -388,8 +384,6 @@ declare module 'react-native' {
   }
 
   interface TextInputProps {
-    /** @deprecated Use `autoComplete`. */
-    autoCompleteType?: string | undefined;
     dir?: 'auto' | 'ltr' | 'rtl' | undefined;
     disabled?: boolean | undefined;
   }

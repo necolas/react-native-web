@@ -23,9 +23,9 @@ export default function TextInputPage() {
           style={styles.textinput}
         />
         <TextInput
-          blurOnSubmit={true}
           onSubmitEditing={() => focusNextField()}
-          placeholder="blurOnSubmit"
+          placeholder="submitBehavior"
+          submitBehavior="blurAndSubmit"
           style={styles.textinput}
         />
         <TextInput
