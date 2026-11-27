@@ -33,9 +33,50 @@ import type {
   TransformStyles
 } from '../../types/styles';
 
-type NumberOrString = number | string;
 type OverscrollBehaviorValue = 'auto' | 'contain' | 'none';
 type PointerEventsValue = 'box-none' | 'none' | 'box-only' | 'auto';
+
+export type GradientColorStop = {
+  color: ColorValue;
+  positions?: ReadonlyArray<string>;
+};
+
+export type BackgroundPositionValue =
+  | { top: number | string; left: number | string }
+  | { top: number | string; right: number | string }
+  | { bottom: number | string; left: number | string }
+  | { bottom: number | string; right: number | string };
+
+export type BackgroundImageValue =
+  | {
+      type: 'linear-gradient';
+      direction?: string;
+      colorStops: ReadonlyArray<GradientColorStop>;
+    }
+  | {
+      type: 'radial-gradient';
+      shape: 'circle' | 'ellipse';
+      size:
+        | 'closest-corner'
+        | 'closest-side'
+        | 'farthest-corner'
+        | 'farthest-side'
+        | { x: number | string; y: number | string };
+      position: BackgroundPositionValue;
+      colorStops: ReadonlyArray<GradientColorStop>;
+    };
+
+type BackgroundRepeatKeyword = 'no-repeat' | 'repeat' | 'round' | 'space';
+
+export type BackgroundRepeatValue = {
+  x: BackgroundRepeatKeyword;
+  y: BackgroundRepeatKeyword;
+};
+
+export type BackgroundSizeValue = {
+  x: number | string;
+  y: number | string;
+};
 
 export type AccessibilityProps = {
   'aria-activedescendant'?: Nullable<string>;
@@ -185,11 +226,13 @@ export type ViewStyle = AnimationStyles &
     backgroundBlendMode?: Nullable<string>;
     backgroundClip?: Nullable<string>;
     backgroundColor?: Nullable<ColorValue>;
-    backgroundImage?: Nullable<string>;
+    backgroundImage?: Nullable<string | ReadonlyArray<BackgroundImageValue>>;
     backgroundOrigin?: 'border-box' | 'content-box' | 'padding-box';
-    backgroundPosition?: Nullable<string>;
-    backgroundRepeat?: Nullable<string>;
-    backgroundSize?: Nullable<string>;
+    backgroundPosition?: Nullable<
+      string | ReadonlyArray<BackgroundPositionValue>
+    >;
+    backgroundRepeat?: Nullable<string | ReadonlyArray<BackgroundRepeatValue>>;
+    backgroundSize?: Nullable<string | ReadonlyArray<BackgroundSizeValue>>;
     boxDecorationBreak?: 'clone' | 'slice';
     boxShadow?: Nullable<string>;
     clip?: Nullable<string>;
@@ -205,9 +248,9 @@ export type ViewStyle = AnimationStyles &
     forcedColorAdjust?: 'auto' | 'none';
     opacity?: Nullable<number>;
     outlineColor?: Nullable<ColorValue>;
-    outlineOffset?: Nullable<NumberOrString>;
+    outlineOffset?: Nullable<number | string>;
     outlineStyle?: Nullable<string>;
-    outlineWidth?: Nullable<NumberOrString>;
+    outlineWidth?: Nullable<number | string>;
     overscrollBehavior?: Nullable<OverscrollBehaviorValue>;
     overscrollBehaviorX?: Nullable<OverscrollBehaviorValue>;
     overscrollBehaviorY?: Nullable<OverscrollBehaviorValue>;

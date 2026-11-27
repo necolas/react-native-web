@@ -6,6 +6,13 @@
  */
 
 import type { Nullable } from '../../types';
+import type {
+  BackgroundImageValue,
+  BackgroundPositionValue,
+  BackgroundRepeatValue,
+  BackgroundSizeValue,
+  GradientColorStop
+} from '../View/types';
 import normalizeColor from './compiler/normalizeColor';
 import normalizeValueWithProperty from './compiler/normalizeValueWithProperty';
 
@@ -101,6 +108,74 @@ const mapBoxShadow = (boxShadow: BoxShadow | string): string => {
   const color = normalizeColor(boxShadow.color) || 'black';
   const position = boxShadow.inset ? 'inset ' : '';
   return `${position}${offsetX} ${offsetY} ${blurRadius} ${spreadDistance} ${color}`;
+};
+
+// { top: 10, left: '20%' } => 'top 10px left 20%'
+const mapBackgroundPosition = (position: BackgroundPositionValue): string =>
+  Object.entries(position)
+    .map(([edge, offset]) => `${edge} ${normalizeValueWithProperty(offset)}`)
+    .join(' ');
+
+// { x: 'repeat', y: 'no-repeat' } => 'repeat no-repeat'
+const mapBackgroundRepeat = ({ x, y }: BackgroundRepeatValue): string =>
+  `${x} ${y}`;
+
+// { x: 100, y: '50%' } => '100px 50%'
+const mapBackgroundSize = ({ x, y }: BackgroundSizeValue): string =>
+  `${normalizeValueWithProperty(x)} ${normalizeValueWithProperty(y)}`;
+
+// Use the larger of x and y, as native does. Percentages fall back to the default radius.
+// { x: 10, y: 40 } => '40px'
+// { x: 10, y: '2em' } => 'max(10px, 2em)'
+// { x: '50%', y: 10 } => undefined
+const mapCircleRadius = ({ x, y }: BackgroundSizeValue): string | undefined => {
+  if (typeof x === 'number' && typeof y === 'number') {
+    return `${Math.max(x, y)}px`;
+  }
+
+  // TODO: use `normalizeValue`
+  const radiusX = typeof x === 'number' ? `${x}px` : x;
+  const radiusY = typeof y === 'number' ? `${y}px` : y;
+
+  if (!radiusX.includes('%') && !radiusY.includes('%')) {
+    return radiusX === radiusY ? radiusX : `max(${radiusX}, ${radiusY})`;
+  }
+};
+
+// { color: 'red', positions: ['10%', '20%'] } => 'rgba(255,0,0,1.00) 10% 20%'
+const mapColorStop = ({ color, positions }: GradientColorStop): string =>
+  [
+    color != null ? (normalizeColor(color) ?? color) : '',
+    ...(positions ?? [])
+  ].join(' ');
+
+// { type: 'linear-gradient', direction: 'to right', colorStops: [{ color: 'red' }, { color: 'blue' }] }
+// => 'linear-gradient(to right, rgba(255,0,0,1.00), rgba(0,0,255,1.00))'
+const mapBackgroundImage = (image: BackgroundImageValue): string => {
+  const args: Array<string> = [];
+
+  if (image.type === 'linear-gradient') {
+    const { direction } = image;
+
+    if (direction != null) {
+      args.push(direction);
+    }
+  } else {
+    const { shape, size, position } = image;
+
+    const radius =
+      typeof size === 'string'
+        ? size
+        : shape === 'circle'
+          ? mapCircleRadius(size)
+          : mapBackgroundSize(size);
+
+    const shapeAndRadius = radius != null ? `${shape} ${radius}` : shape;
+    args.push(`${shapeAndRadius} at ${mapBackgroundPosition(position)}`);
+  }
+
+  args.push(...image.colorStops.map(mapColorStop));
+  return `${image.type}(${args.join(', ')})`;
 };
 
 // { scale: 2 } => 'scale(2)'
@@ -254,6 +329,26 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
 
     if (prop === 'aspectRatio' && typeof value === 'number') {
       nextStyle[prop] = value.toString();
+    } else if (prop === 'backgroundImage') {
+      if (Array.isArray(value)) {
+        value = value.map(mapBackgroundImage).join(', ');
+      }
+      nextStyle.backgroundImage = value;
+    } else if (prop === 'backgroundPosition') {
+      if (Array.isArray(value)) {
+        value = value.map(mapBackgroundPosition).join(', ');
+      }
+      nextStyle.backgroundPosition = value;
+    } else if (prop === 'backgroundRepeat') {
+      if (Array.isArray(value)) {
+        value = value.map(mapBackgroundRepeat).join(', ');
+      }
+      nextStyle.backgroundRepeat = value;
+    } else if (prop === 'backgroundSize') {
+      if (Array.isArray(value)) {
+        value = value.map(mapBackgroundSize).join(', ');
+      }
+      nextStyle.backgroundSize = value;
     } else if (prop === 'boxShadow') {
       if (Array.isArray(value)) {
         value = value.map(mapBoxShadow).join(', ');

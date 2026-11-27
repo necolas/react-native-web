@@ -29,13 +29,11 @@ type FontWeightValue =
   | '800'
   | '900';
 
-type NumberOrString = number | string;
-
 export type TextStyle = ViewStyle & {
   color?: Nullable<ColorValue>;
   fontFamily?: Nullable<string>;
   fontFeatureSettings?: Nullable<string>;
-  fontSize?: Nullable<NumberOrString>;
+  fontSize?: Nullable<number | string>;
   fontStyle?: 'italic' | 'normal';
   fontWeight?: Nullable<FontWeightValue>;
   fontVariant?:
@@ -77,10 +75,10 @@ export type TextStyle = ViewStyle & {
     | string;
   hyphenateCharacter?: Nullable<string>;
   hyphens?: 'auto' | 'manual' | 'none';
-  initialLetter?: Nullable<NumberOrString>;
-  letterSpacing?: Nullable<NumberOrString>;
+  initialLetter?: Nullable<number | string>;
+  letterSpacing?: Nullable<number | string>;
   lineClamp?: Nullable<number>;
-  lineHeight?: Nullable<NumberOrString>;
+  lineHeight?: Nullable<number | string>;
   rubyPosition?: 'alternate' | 'over' | 'under';
   textAlign?:
     | 'center'
@@ -103,7 +101,7 @@ export type TextStyle = ViewStyle & {
   textEmphasisColor?: Nullable<ColorValue>;
   textEmphasisPosition?: Nullable<string>;
   textEmphasisStyle?: Nullable<string>;
-  textIndent?: Nullable<NumberOrString>;
+  textIndent?: Nullable<number | string>;
   textOverflow?: Nullable<string>;
   textRendering?:
     | 'auto'
