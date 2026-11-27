@@ -6,7 +6,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { type ReactNode, useEffect, useLayoutEffect, useRef } from 'react';
+import {
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react';
 
 import canUseDOM from '../../modules/canUseDom';
 import type { HostNode, Nullable } from '../../types';
@@ -91,6 +97,10 @@ const ModalFocusTrap = ({
     trapFocusInProgress: false,
     lastFocusedElement: null
   });
+  // Read during render, before a child with autoFocus takes focus
+  const [lastFocusedElementOutsideTrap] = useState(() =>
+    canUseDOM ? document.activeElement : null
+  );
 
   useLayoutEffect(() => {
     if (canUseDOM && active) {
@@ -158,23 +168,25 @@ const ModalFocusTrap = ({
 
   // To be fully compliant with WCAG we need to refocus element that triggered opening modal
   // after closing it
-  useEffect(function () {
-    if (canUseDOM) {
-      const lastFocusedElementOutsideTrap = document.activeElement;
-      return function () {
-        if (
-          lastFocusedElementOutsideTrap &&
-          document.contains(lastFocusedElementOutsideTrap) &&
-          // Don't take focus back if it moved somewhere else while the modal
-          // was closing, e.g. to another modal
-          (document.activeElement == null ||
-            document.activeElement === document.body)
-        ) {
-          UIManager.focus(lastFocusedElementOutsideTrap as HTMLElement);
-        }
-      };
-    }
-  }, []);
+  useEffect(
+    function () {
+      if (canUseDOM) {
+        return function () {
+          if (
+            lastFocusedElementOutsideTrap &&
+            document.contains(lastFocusedElementOutsideTrap) &&
+            // Don't take focus back if it moved somewhere else while the modal
+            // was closing, e.g. to another modal
+            (document.activeElement == null ||
+              document.activeElement === document.body)
+          ) {
+            UIManager.focus(lastFocusedElementOutsideTrap as HTMLElement);
+          }
+        };
+      }
+    },
+    [lastFocusedElementOutsideTrap]
+  );
 
   return (
     <>

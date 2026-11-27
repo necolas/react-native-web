@@ -377,6 +377,26 @@ describe('components/Modal', () => {
     expect(document.activeElement).toBe(modalTrigger);
   });
 
+  test('focus is brought back to the element that triggered modal after closing, when its content took focus on mount', () => {
+    const modal = (visible: boolean) => (
+      <>
+        <a data-testid="trigger" href="#" />
+        <Modal visible={visible}>
+          <input autoFocus data-testid="inside" />
+        </Modal>
+      </>
+    );
+
+    const { getByTestId, rerender } = render(modal(false));
+    getByTestId('trigger').focus();
+
+    rerender(modal(true));
+    expect(document.activeElement).toBe(getByTestId('inside'));
+
+    rerender(modal(false));
+    expect(document.activeElement).toBe(getByTestId('trigger'));
+  });
+
   test('focus is brought back to the body when element that triggered modal is removed from the DOM after closing modal', () => {
     const { rerender } = render(
       <>
