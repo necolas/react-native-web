@@ -63,7 +63,6 @@ type LineBox = {
   metrics: FontMetrics;
   text: string;
   top: number;
-  bottom: number;
   left: number;
   right: number;
   // Horizontal extent before the trailing whitespace
@@ -78,9 +77,15 @@ export function measureTextLines(
   numberOfLines: Nullable<number>
 ): Array<TextLayoutLine> {
   const style = getComputedStyle(node);
-  const lineHeight = Number.parseFloat(style.lineHeight);
-
   const box = node.getBoundingClientRect();
+
+  const contentHeight =
+    box.height -
+    Number.parseFloat(style.borderTopWidth) -
+    Number.parseFloat(style.borderBottomWidth) -
+    Number.parseFloat(style.paddingTop) -
+    Number.parseFloat(style.paddingBottom);
+
   const originX =
     box.left + node.clientLeft + Number.parseFloat(style.paddingLeft);
 
@@ -134,7 +139,6 @@ export function measureTextLines(
           metrics: getFontMetrics(textNode.parentElement ?? node),
           text: '',
           top: rect.top,
-          bottom: rect.bottom,
           left,
           right: left,
           inkLeft: left,
@@ -148,7 +152,6 @@ export function measureTextLines(
 
       lineBox.text += char;
       lineBox.top = Math.min(lineBox.top, rect.top);
-      lineBox.bottom = Math.max(lineBox.bottom, rect.bottom);
       lineBox.left = Math.min(lineBox.left, left);
       lineBox.right = Math.max(lineBox.right, right);
 
@@ -167,9 +170,9 @@ export function measureTextLines(
       : lineBoxes;
 
   return visibleLineBoxes.map(
-    ({ metrics, text, top, bottom, inkLeft, inkRight }) => ({
+    ({ metrics, text, top, inkLeft, inkRight }, index) => ({
       ...metrics,
-      height: Number.isNaN(lineHeight) ? bottom - top : lineHeight,
+      height: (lineBoxes[index + 1]?.top ?? firstLineTop + contentHeight) - top,
       text,
       width: inkRight - inkLeft,
       x: inkLeft - originX,

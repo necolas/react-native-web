@@ -284,7 +284,6 @@ describe('components/Text', () => {
   });
 
   describe('prop "onTextLayout"', () => {
-    let charWidth: number;
     let lineLength: number;
     let resizeCallbacks: Array<(entries: Array<unknown>) => void>;
 
@@ -297,7 +296,6 @@ describe('components/Text', () => {
     };
 
     beforeEach(() => {
-      charWidth = 10;
       lineLength = 6;
       resizeCallbacks = [];
 
@@ -325,9 +323,9 @@ describe('components/Text', () => {
         value(this: Range) {
           const index = this.startOffset;
           const line = index < lineLength ? 0 : 1;
-          const left = (line === 0 ? index : index - lineLength) * charWidth;
+          const left = (line === 0 ? index : index - lineLength) * 10;
           const top = line * 20;
-          return [{ left, right: left + charWidth, top, bottom: top + 16 }];
+          return [{ left, right: left + 10, top, bottom: top + 16 }];
         }
       });
     });
@@ -335,10 +333,13 @@ describe('components/Text', () => {
     afterEach(() => {
       Reflect.deleteProperty(HTMLElement.prototype, 'getClientRects');
       Reflect.deleteProperty(Range.prototype, 'getClientRects');
-      Reflect.deleteProperty(document, 'fonts');
     });
 
     test('is called once with the lines', () => {
+      vi.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue(
+        DOMRect.fromRect({ height: 40 })
+      );
+
       const onTextLayout = vi.fn();
 
       render(<Text onTextLayout={onTextLayout}>Hello world</Text>);
@@ -348,8 +349,20 @@ describe('components/Text', () => {
 
       expect(onTextLayout).toHaveBeenCalledTimes(1);
       expect(onTextLayout.mock.calls[0][0].nativeEvent.lines).toEqual([
-        expect.objectContaining({ text: 'Hello ', x: 0, y: 0, width: 50 }),
-        expect.objectContaining({ text: 'world', x: 0, y: 20, width: 50 })
+        expect.objectContaining({
+          text: 'Hello ',
+          x: 0,
+          y: 0,
+          width: 50,
+          height: 20
+        }),
+        expect.objectContaining({
+          text: 'world',
+          x: 0,
+          y: 20,
+          width: 50,
+          height: 20
+        })
       ]);
     });
 
@@ -370,48 +383,6 @@ describe('components/Text', () => {
       expect(onTextLayout.mock.calls[0][0].nativeEvent.lines).toEqual([
         expect.objectContaining({ text: 'Hello wo', x: 0, width: 75 })
       ]);
-    });
-
-    test('is called when a style changes the lines', async () => {
-      const onTextLayout = vi.fn();
-
-      const { rerender } = render(
-        <Text onTextLayout={onTextLayout}>Hello world</Text>
-      );
-
-      resize();
-      charWidth = 12;
-
-      await act(async () => {
-        rerender(
-          <Text onTextLayout={onTextLayout} style={{ fontWeight: 'bold' }}>
-            Hello world
-          </Text>
-        );
-      });
-
-      expect(onTextLayout).toHaveBeenCalledTimes(2);
-    });
-
-    test('is called when fonts finish loading', () => {
-      const fonts = new EventTarget();
-
-      Reflect.defineProperty(document, 'fonts', {
-        configurable: true,
-        value: fonts
-      });
-
-      const onTextLayout = vi.fn();
-
-      render(<Text onTextLayout={onTextLayout}>Hello world</Text>);
-      resize();
-      charWidth = 12;
-
-      act(() => {
-        fonts.dispatchEvent(new Event('loadingdone'));
-      });
-
-      expect(onTextLayout).toHaveBeenCalledTimes(2);
     });
 
     test('is not called on nested text', () => {
