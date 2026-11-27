@@ -314,14 +314,14 @@ export type PreprocessOptions = {
  */
 export const preprocess = <T extends Readonly<Record<string, unknown>>>(
   originalStyle: T,
-  options: PreprocessOptions = {}
+  { shadow = true, textShadow = true }: PreprocessOptions = {}
 ): T => {
   const style = originalStyle || emptyObject;
   const nextStyle: Record<string, unknown> = {};
 
   // Convert shadow styles
   if (
-    options.shadow === true &&
+    shadow &&
     (style.shadowColor != null ||
       style.shadowOffset != null ||
       style.shadowOpacity != null ||
@@ -335,18 +335,16 @@ export const preprocess = <T extends Readonly<Record<string, unknown>>>(
 
   // Convert text shadow styles
   if (
-    options.textShadow === true &&
+    textShadow &&
     (style.textShadowColor != null ||
       style.textShadowOffset != null ||
       style.textShadowRadius != null)
   ) {
     const textShadowValue = createTextShadowValue(style);
     if (textShadowValue != null && nextStyle.textShadow == null) {
-      const { textShadow } = style;
-      const value = textShadow
-        ? `${textShadow}, ${textShadowValue}`
+      nextStyle.textShadow = style.textShadow
+        ? `${style.textShadow}, ${textShadowValue}`
         : textShadowValue;
-      nextStyle.textShadow = value;
     }
   }
 

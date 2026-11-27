@@ -279,6 +279,39 @@ describe('StyleSheet/compile', () => {
         atomic({ transitionProperty: ['marginInlineStart', 'opacity'] })
       ).toEqual(atomic({ transitionProperty: 'margin-inline-start, opacity' }));
     });
+
+    test('preprocesses animationKeyframes steps', () => {
+      const [, rules] = atomic({
+        animationKeyframes: {
+          from: {
+            filter: [{ blur: 0 }],
+            marginHorizontal: 0,
+            shadowColor: 'black',
+            shadowRadius: 0,
+            transform: [{ translateY: 0 }, { scale: 1 }]
+          },
+          to: {
+            filter: [{ blur: 4 }, { grayscale: 1 }],
+            marginHorizontal: 10,
+            shadowColor: 'black',
+            shadowRadius: 8,
+            transform: [{ translateY: 100 }, { scale: 2 }]
+          }
+        }
+      });
+
+      expect(rules).toMatchInlineSnapshot(`
+        [
+          [
+            [
+              ".r-animationKeyframes-cyjan7{animation-name:r-animation-1qclimi;}",
+              "@keyframes r-animation-1qclimi{from{box-shadow:0px 0px 0px rgba(0,0,0,1.00);filter:blur(0px);margin-left:0px;margin-right:0px;transform:translateY(0px) scale(1);}to{box-shadow:0px 0px 8px rgba(0,0,0,1.00);filter:blur(4px) grayscale(1);margin-left:10px;margin-right:10px;transform:translateY(100px) scale(2);}}",
+            ],
+            3,
+          ],
+        ]
+      `);
+    });
   });
 
   describe('classic', () => {

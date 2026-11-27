@@ -736,18 +736,31 @@ describe('StyleSheet/preprocess', () => {
   });
 
   describe('shadow conversion options', () => {
-    test('shadow styles are not converted when options.shadow is not true', () => {
-      expect(preprocess({ shadowColor: 'red' })).toEqual({});
+    test('shadow styles are converted by default', () => {
+      expect(preprocess({ shadowColor: 'red' })).toEqual({
+        boxShadow: '0px 0px 0px rgba(255,0,0,1.00)'
+      });
+      expect(preprocess({ shadowColor: 'red' }, { textShadow: false })).toEqual(
+        { boxShadow: '0px 0px 0px rgba(255,0,0,1.00)' }
+      );
+    });
+
+    test('shadow styles are not converted when options.shadow is false', () => {
       expect(preprocess({ shadowColor: 'red' }, { shadow: false })).toEqual({});
     });
 
-    test('textShadow styles are not converted when options.textShadow is not true', () => {
+    test('textShadow styles are converted by default', () => {
       expect(
         preprocess({
           textShadowColor: 'red',
           textShadowOffset: { width: 1, height: 2 }
         })
-      ).toEqual({});
+      ).toEqual({
+        textShadow: '1px 2px 0px rgba(255,0,0,1.00)'
+      });
+    });
+
+    test('textShadow styles are not converted when options.textShadow is false', () => {
       expect(
         preprocess(
           {

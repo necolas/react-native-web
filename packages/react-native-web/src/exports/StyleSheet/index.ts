@@ -18,12 +18,7 @@ import { validate } from './validate';
 const staticStyleMap: WeakMap<object, LocalizedStyle> = new WeakMap();
 const sheet = createSheet();
 
-const defaultPreprocessOptions: PreprocessOptions = {
-  shadow: true,
-  textShadow: true
-};
-
-function createStyleq(isRTL: boolean, preprocessOptions: PreprocessOptions) {
+function createStyleq(isRTL: boolean, preprocessOptions?: PreprocessOptions) {
   return styleq.factory({
     transform(style) {
       // Don't preprocess compiled objects: it rewrites keys and breaks styleq's cache
@@ -38,8 +33,8 @@ function createStyleq(isRTL: boolean, preprocessOptions: PreprocessOptions) {
   });
 }
 
-const styleqLTR = createStyleq(false, defaultPreprocessOptions);
-const styleqRTL = createStyleq(true, defaultPreprocessOptions);
+const styleqLTR = createStyleq(false);
+const styleqRTL = createStyleq(true);
 
 function customStyleq(styles: Styles, options: StyleSheetOptions = {}) {
   if (!('shadow' in options) && !('textShadow' in options)) {
@@ -50,10 +45,7 @@ function customStyleq(styles: Styles, options: StyleSheetOptions = {}) {
 
   const { writingDirection, ...preprocessOptions } = options;
 
-  return createStyleq(writingDirection === 'rtl', {
-    ...defaultPreprocessOptions,
-    ...preprocessOptions
-  })(styles);
+  return createStyleq(writingDirection === 'rtl', preprocessOptions)(styles);
 }
 
 function insertRules(compiledOrderedRules: Array<[Array<string>, number]>) {
@@ -67,9 +59,7 @@ function insertRules(compiledOrderedRules: Array<[Array<string>, number]>) {
 }
 
 function compileAndInsertAtomic(style: Style) {
-  const [compiledStyle, compiledOrderedRules] = atomic(
-    preprocess(style, defaultPreprocessOptions)
-  );
+  const [compiledStyle, compiledOrderedRules] = atomic(preprocess(style));
   insertRules(compiledOrderedRules);
   return compiledStyle;
 }

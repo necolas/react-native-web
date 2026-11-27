@@ -6,7 +6,7 @@
  */
 
 import type { Nullable } from '../../../types';
-import { PROPERTIES_STANDARD } from '../preprocess';
+import { PROPERTIES_STANDARD, preprocess } from '../preprocess';
 import createReactDOMStyle from './createReactDOMStyle';
 import hash from './hash';
 import hyphenateStyleName from './hyphenateStyleName';
@@ -479,7 +479,7 @@ function createKeyframes(keyframes: Keyframes): [string, Rules] {
     '{' +
     Object.keys(keyframes)
       .map((stepName) => {
-        const rule = keyframes[stepName];
+        const rule = preprocess(keyframes[stepName]);
         const block = createDeclarationBlock(rule);
         return `${stepName}${block}`;
       })
