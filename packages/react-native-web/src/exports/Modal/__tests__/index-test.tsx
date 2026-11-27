@@ -6,9 +6,10 @@
  */
 
 import { fireEvent, render } from '@testing-library/react';
-import { useEffect, useState } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 
 import Modal from '..';
+import ModalPortal from '../ModalPortal';
 
 describe('components/Modal', () => {
   test('visible by default', () => {
@@ -832,6 +833,24 @@ describe('components/Modal', () => {
 
     expect(spyA).not.toHaveBeenCalled();
     expect(spyB).not.toHaveBeenCalled();
+  });
+
+  test('portal stays attached to the document under StrictMode', () => {
+    const { getByTestId, unmount } = render(
+      <StrictMode>
+        <ModalPortal>
+          <a data-testid="inside" href="#hello">
+            Hello
+          </a>
+        </ModalPortal>
+      </StrictMode>
+    );
+
+    const portal = getByTestId('inside').parentElement;
+    expect(portal?.isConnected).toBe(true);
+
+    unmount();
+    expect(portal?.isConnected).toBe(false);
   });
 });
 

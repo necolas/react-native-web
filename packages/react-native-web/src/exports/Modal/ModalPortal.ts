@@ -29,13 +29,18 @@ function ModalPortal(props: ModalPortalProps): ReactNode {
     }
   }
 
+  // StrictMode runs the cleanup and then the effect again on the same
+  // instance, so the effect attaches the element back
   useEffect(() => {
-    if (canUseDOM) {
+    const element = elementRef.current;
+
+    if (element != null && document.body) {
+      if (element.parentNode !== document.body) {
+        document.body.appendChild(element);
+      }
+
       return () => {
-        if (document.body && elementRef.current) {
-          document.body.removeChild(elementRef.current);
-          elementRef.current = null;
-        }
+        element.remove();
       };
     }
   }, []);
