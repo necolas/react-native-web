@@ -401,6 +401,32 @@ describe('StyleSheet/preprocess', () => {
           ].join(', ')
         });
       });
+
+      test('circle radius', () => {
+        const circle = (size: { x: number | string; y: number | string }) => ({
+          type: 'radial-gradient',
+          shape: 'circle',
+          size,
+          position: { top: 0, left: 0 },
+          colorStops: [{ color: 'red' }, { color: 'blue' }]
+        });
+        const style = {
+          backgroundImage: [
+            circle({ x: 10, y: 40 }),
+            circle({ x: 10, y: '2em' }),
+            circle({ x: '2em', y: '2em' }),
+            circle({ x: '50%', y: 10 })
+          ]
+        };
+        expect(preprocess(style)).toEqual({
+          backgroundImage: [
+            'radial-gradient(circle 40px at top 0px left 0px, rgba(255,0,0,1.00), rgba(0,0,255,1.00))',
+            'radial-gradient(circle max(10px, 2em) at top 0px left 0px, rgba(255,0,0,1.00), rgba(0,0,255,1.00))',
+            'radial-gradient(circle 2em at top 0px left 0px, rgba(255,0,0,1.00), rgba(0,0,255,1.00))',
+            'radial-gradient(circle at top 0px left 0px, rgba(255,0,0,1.00), rgba(0,0,255,1.00))'
+          ].join(', ')
+        });
+      });
     });
 
     describe('backgroundPosition', () => {

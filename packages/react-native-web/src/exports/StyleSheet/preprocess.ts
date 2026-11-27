@@ -124,6 +124,24 @@ const mapBackgroundRepeat = ({ x, y }: BackgroundRepeatValue): string =>
 const mapBackgroundSize = ({ x, y }: BackgroundSizeValue): string =>
   `${normalizeValueWithProperty(x)} ${normalizeValueWithProperty(y)}`;
 
+// Use the larger of x and y, as native does. Percentages fall back to the default radius.
+// { x: 10, y: 40 } => '40px'
+// { x: 10, y: '2em' } => 'max(10px, 2em)'
+// { x: '50%', y: 10 } => undefined
+const mapCircleRadius = ({ x, y }: BackgroundSizeValue): string | undefined => {
+  if (typeof x === 'number' && typeof y === 'number') {
+    return `${Math.max(x, y)}px`;
+  }
+
+  // TODO: use `normalizeValue`
+  const radiusX = typeof x === 'number' ? `${x}px` : x;
+  const radiusY = typeof y === 'number' ? `${y}px` : y;
+
+  if (!radiusX.includes('%') && !radiusY.includes('%')) {
+    return radiusX === radiusY ? radiusX : `max(${radiusX}, ${radiusY})`;
+  }
+};
+
 // { color: 'red', positions: ['10%', '20%'] } => 'rgba(255,0,0,1.00) 10% 20%'
 const mapColorStop = ({ color, positions }: GradientColorStop): string =>
   [
@@ -149,10 +167,11 @@ const mapBackgroundImage = (image: BackgroundImageValue): string => {
       typeof size === 'string'
         ? size
         : shape === 'circle'
-          ? normalizeValueWithProperty(size.x)
+          ? mapCircleRadius(size)
           : mapBackgroundSize(size);
 
-    args.push(`${shape} ${radius} at ${mapBackgroundPosition(position)}`);
+    const shapeAndRadius = radius != null ? `${shape} ${radius}` : shape;
+    args.push(`${shapeAndRadius} at ${mapBackgroundPosition(position)}`);
   }
 
   args.push(...image.colorStops.map(mapColorStop));
