@@ -63,7 +63,7 @@ export {
   VirtualizedList
 } from 'react-native';
 
-// See src/exports/AppRegistry/renderApplication.js
+// See src/exports/AppRegistry/renderApplication.tsx
 type Application = { unmount(): void };
 
 export const AppRegistry: Pick<
@@ -94,7 +94,7 @@ export const AppRegistry: Pick<
   };
 };
 
-// See src/exports/StyleSheet/index.js
+// See src/exports/StyleSheet/index.ts
 export const StyleSheet: Omit<
   typeof StyleSheetRN,
   'setStyleAttributePreprocessor'

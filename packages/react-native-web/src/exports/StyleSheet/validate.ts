@@ -42,10 +42,6 @@ const invalidMultiValueShortforms = new Set([
   'paddingVertical'
 ]);
 
-function error(message: string) {
-  console.error(message);
-}
-
 export function validate(obj: Record<string, unknown>) {
   for (const k in obj) {
     const prop = k.trim();
@@ -57,7 +53,7 @@ export function validate(obj: Record<string, unknown>) {
     }
 
     if (typeof value === 'string' && value.indexOf('!important') > -1) {
-      error(
+      console.error(
         `Invalid style declaration "${prop}:${value}". Values cannot include "!important"`
       );
       isInvalid = true;
@@ -79,7 +75,7 @@ export function validate(obj: Record<string, unknown>) {
         }
       }
       if (suggestion !== '') {
-        error(`Invalid style property of "${prop}". ${suggestion}`);
+        console.error(`Invalid style property of "${prop}". ${suggestion}`);
       }
     }
 

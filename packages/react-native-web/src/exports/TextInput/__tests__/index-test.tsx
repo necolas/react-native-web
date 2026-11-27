@@ -116,6 +116,30 @@ describe('components/TextInput', () => {
       const input = findInput(container);
       expect(document.activeElement).toBe(input);
     });
+
+    test('multiline puts the caret at the end', () => {
+      const { container } = render(
+        <TextInput autoFocus defaultValue="hello" multiline />
+      );
+      const textarea = findTextArea(container);
+      expect(document.activeElement).toBe(textarea);
+      expect(textarea.selectionStart).toBe(5);
+      expect(textarea.selectionEnd).toBe(5);
+    });
+
+    test('multiline keeps the "selection" prop', () => {
+      const { container } = render(
+        <TextInput
+          autoFocus
+          defaultValue="hello"
+          multiline
+          selection={{ start: 1, end: 2 }}
+        />
+      );
+      const textarea = findTextArea(container);
+      expect(textarea.selectionStart).toBe(1);
+      expect(textarea.selectionEnd).toBe(2);
+    });
   });
 
   describe('prop "caretHidden"', () => {

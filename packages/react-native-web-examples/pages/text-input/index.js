@@ -1,10 +1,11 @@
-import { useRef } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 import Example from '../../shared/example';
 
 export default function TextInputPage() {
   const nextFocus = useRef(null);
+  const [showMultilineAutoFocus, setShowMultilineAutoFocus] = useState(false);
 
   const focusNextField = () => {
     if (nextFocus.current != null) {
@@ -76,6 +77,23 @@ export default function TextInputPage() {
           rows={3}
           style={styles.multiline}
         />
+        <Button
+          onPress={() => setShowMultilineAutoFocus((value) => !value)}
+          title={
+            showMultilineAutoFocus
+              ? 'Unmount multiline autoFocus'
+              : 'Mount multiline autoFocus'
+          }
+        />
+        {showMultilineAutoFocus ? (
+          <TextInput
+            autoFocus
+            defaultValue={'multiline autoFocus\ncaret goes at the end'}
+            multiline={true}
+            rows={3}
+            style={styles.multiline}
+          />
+        ) : null}
         <TextInput
           caretHidden
           defaultValue="caretHidden"

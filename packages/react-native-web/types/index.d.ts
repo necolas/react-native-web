@@ -27,7 +27,7 @@ type LoosePick<T, K extends PropertyKey> = Pick<T, Extract<K, keyof T>>;
 type ButtonType = 'button' | 'reset' | 'submit';
 
 // Roles that react-native-web renders as a specific HTML element.
-// See src/modules/AccessibilityUtil/propsToAccessibilityComponent.js
+// See src/modules/AccessibilityUtil/propsToAccessibilityComponent.ts
 type WebRole =
   | 'blockquote'
   | 'code'
@@ -38,7 +38,7 @@ type WebRole =
   | 'paragraph'
   | 'strong';
 
-// See src/exports/View/types.js
+// See src/exports/View/types.ts
 interface WebAccessibilityProps {
   'aria-activedescendant'?: string | undefined;
   'aria-atomic'?: boolean | undefined;
@@ -90,7 +90,7 @@ interface WebAccessibilityProps {
 }
 
 // Events that react-native does not declare.
-// See src/exports/View/types.js and src/modules/forwardedProps/index.js
+// See src/exports/View/types.ts and src/modules/forwardedProps/index.ts
 interface WebEventProps {
   onAuxClick?: MouseEventHandler | undefined;
   onContextMenu?: MouseEventHandler | undefined;
@@ -132,7 +132,7 @@ interface WebSharedProps extends WebEventProps {
 }
 
 // Styles that react-native does not declare.
-// See src/exports/View/types.js and src/types/styles.js
+// See src/exports/View/types.ts and src/types/styles.ts
 type AnimationDirection =
   | 'alternate'
   | 'alternate-reverse'
@@ -293,7 +293,7 @@ interface WebViewStyle {
   WebkitOverflowScrolling?: 'auto' | 'touch' | undefined;
 }
 
-// See src/exports/Text/types.js and src/exports/TextInput/types.js
+// See src/exports/Text/types.ts and src/exports/TextInput/types.ts
 interface WebTextStyle {
   fontFeatureSettings?: string | undefined;
   hyphenateCharacter?: string | undefined;

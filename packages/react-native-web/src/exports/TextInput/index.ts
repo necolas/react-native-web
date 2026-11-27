@@ -134,6 +134,7 @@ const TextInput = (
     autoCapitalize = 'sentences',
     autoComplete,
     autoCorrect = true,
+    autoFocus,
     caretHidden,
     clearTextOnFocus,
     dir,
@@ -405,13 +406,31 @@ const TextInput = (
 
   useLayoutEffect(() => {
     const node = hostRef.current;
+
     if (node != null && selection != null) {
       setSelection(node, selection);
     }
     if (document.activeElement === node) {
       TextInputState._currentlyFocusedNode = node;
     }
-  }, [hostRef, selection]);
+  }, [selection]);
+
+  // Match input: browsers put the textarea caret at the start on autoFocus
+  useLayoutEffect(() => {
+    const node = hostRef.current;
+
+    if (
+      node != null &&
+      autoFocus &&
+      multiline &&
+      selection == null &&
+      document.activeElement === node
+    ) {
+      const end = node.value.length;
+      node.setSelectionRange(end, end);
+    }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const component = multiline ? 'textarea' : 'input';
 
