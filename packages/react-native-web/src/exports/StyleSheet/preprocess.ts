@@ -135,7 +135,6 @@ const mapCircleRadius = ({ x, y }: BackgroundSizeValue): string | undefined => {
     return `${Math.max(x, y)}px`;
   }
 
-  // TODO: use `normalizeValue`
   const radiusX = typeof x === 'number' ? `${x}px` : x;
   const radiusY = typeof y === 'number' ? `${y}px` : y;
 
