@@ -32,12 +32,12 @@ type ViewStyle = ViewProps['style'];
 
 type Props = Readonly<
   TouchableWithoutFeedbackProps & {
-    activeOpacity?: Nullable<number>;
-    onHideUnderlay?: Nullable<() => void>;
-    onShowUnderlay?: Nullable<() => void>;
+    activeOpacity?: number;
+    onHideUnderlay?: () => void;
+    onShowUnderlay?: () => void;
     style?: ViewStyle;
-    testOnly_pressed?: Nullable<boolean>;
-    underlayColor?: Nullable<ColorValue>;
+    testOnly_pressed?: boolean;
+    underlayColor?: ColorValue;
   }
 >;
 

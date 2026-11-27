@@ -19,7 +19,6 @@ import {
   useState
 } from 'react';
 
-import type { Nullable } from '../../types';
 import type View from '../View';
 import type { ViewProps } from '../View';
 import ModalAnimation from './ModalAnimation';
@@ -30,29 +29,27 @@ import ModalPortal from './ModalPortal';
 export type ModalProps = ViewProps & {
   animationType?: 'none' | 'slide' | 'fade';
   children?: ReactNode;
-  hardwareAccelerated?: Nullable<boolean>;
-  onDismiss?: Nullable<() => unknown>;
-  onOrientationChange?: Nullable<
-    (e: { orientation: 'portrait' | 'landscape' }) => void
-  >;
-  onRequestClose?: Nullable<() => void>;
-  onShow?: Nullable<() => void>;
+  hardwareAccelerated?: boolean;
+  onDismiss?: () => unknown;
+  onOrientationChange?: (e: { orientation: 'portrait' | 'landscape' }) => void;
+  onRequestClose?: () => void;
+  onShow?: () => void;
   ref?: Ref<ComponentRef<typeof View>>;
-  presentationStyle?: Nullable<
-    'fullScreen' | 'pageSheet' | 'formSheet' | 'overFullScreen'
+  presentationStyle?:
+    | 'fullScreen'
+    | 'pageSheet'
+    | 'formSheet'
+    | 'overFullScreen';
+  statusBarTranslucent?: boolean;
+  supportedOrientations?: Array<
+    | 'portrait'
+    | 'portrait-upside-down'
+    | 'landscape'
+    | 'landscape-left'
+    | 'landscape-right'
   >;
-  statusBarTranslucent?: Nullable<boolean>;
-  supportedOrientations?: Nullable<
-    Array<
-      | 'portrait'
-      | 'portrait-upside-down'
-      | 'landscape'
-      | 'landscape-left'
-      | 'landscape-right'
-    >
-  >;
-  transparent?: Nullable<boolean>;
-  visible?: Nullable<boolean>;
+  transparent?: boolean;
+  visible?: boolean;
 };
 
 let uniqueShowIdentifier = 0;

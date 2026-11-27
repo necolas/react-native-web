@@ -7,7 +7,7 @@
 
 import type { KeyboardEvent, UIEvent } from 'react';
 
-import type { ColorValue, GenericStyleProp, Nullable } from '../../types';
+import type { ColorValue, GenericStyleProp } from '../../types';
 import type { TextStyle } from '../Text/types';
 import type { ViewProps } from '../View/types';
 
@@ -56,14 +56,14 @@ export type TextInputProps = Omit<
   'dir' | 'onBlur' | 'onFocus' | 'style'
 > & {
   autoCapitalize?: 'characters' | 'none' | 'sentences' | 'words';
-  autoComplete?: Nullable<AutoComplete>;
-  autoCorrect?: Nullable<boolean>;
-  autoFocus?: Nullable<boolean>;
-  caretHidden?: Nullable<boolean>;
-  clearTextOnFocus?: Nullable<boolean>;
-  defaultValue?: Nullable<string>;
-  dir?: Nullable<'auto' | 'ltr' | 'rtl'>;
-  disabled?: Nullable<boolean>;
+  autoComplete?: AutoComplete;
+  autoCorrect?: boolean;
+  autoFocus?: boolean;
+  caretHidden?: boolean;
+  clearTextOnFocus?: boolean;
+  defaultValue?: string;
+  dir?: 'auto' | 'ltr' | 'rtl';
+  disabled?: boolean;
   enterKeyHint?:
     | 'enter'
     | 'done'
@@ -72,7 +72,7 @@ export type TextInputProps = Omit<
     | 'previous'
     | 'search'
     | 'send';
-  inputAccessoryViewID?: Nullable<string>;
+  inputAccessoryViewID?: string;
   inputMode?:
     | 'decimal'
     | 'email'
@@ -82,8 +82,8 @@ export type TextInputProps = Omit<
     | 'tel'
     | 'text'
     | 'url';
-  maxLength?: Nullable<number>;
-  multiline?: Nullable<boolean>;
+  maxLength?: number;
+  multiline?: boolean;
   onBlur?: (e: TextInputEvent) => void;
   onChange?: (e: TextInputEvent) => void;
   onChangeText?: (e: string) => void;
@@ -101,24 +101,24 @@ export type TextInputProps = Omit<
   }) => void;
   onScroll?: (e: UIEvent<HTMLElement>) => void;
   onSubmitEditing?: (e: TextInputEvent) => void;
-  placeholder?: Nullable<string>;
-  placeholderTextColor?: Nullable<ColorValue>;
-  readOnly?: Nullable<boolean>;
-  rows?: Nullable<number>;
-  secureTextEntry?: Nullable<boolean>;
-  selectTextOnFocus?: Nullable<boolean>;
+  placeholder?: string;
+  placeholderTextColor?: ColorValue;
+  readOnly?: boolean;
+  rows?: number;
+  secureTextEntry?: boolean;
+  selectTextOnFocus?: boolean;
   selection?: {
     start: number;
     end?: number;
   };
-  selectionColor?: Nullable<ColorValue>;
-  showSoftInputOnFocus?: Nullable<boolean>;
-  spellCheck?: Nullable<boolean>;
-  style?: Nullable<GenericStyleProp<TextInputStyle>>;
-  submitBehavior?: Nullable<SubmitBehavior>;
-  textAlign?: Nullable<'left' | 'center' | 'right' | 'start' | 'end'>;
-  value?: Nullable<string>;
-  editable?: Nullable<boolean>;
+  selectionColor?: ColorValue;
+  showSoftInputOnFocus?: boolean;
+  spellCheck?: boolean;
+  style?: GenericStyleProp<TextInputStyle>;
+  submitBehavior?: SubmitBehavior;
+  textAlign?: 'left' | 'center' | 'right' | 'start' | 'end';
+  value?: string;
+  editable?: boolean;
   keyboardType?:
     | 'default'
     | 'decimal-pad'
@@ -130,7 +130,7 @@ export type TextInputProps = Omit<
     | 'search'
     | 'url'
     | 'web-search';
-  numberOfLines?: Nullable<number>;
+  numberOfLines?: number;
   returnKeyType?:
     | 'enter'
     | 'done'

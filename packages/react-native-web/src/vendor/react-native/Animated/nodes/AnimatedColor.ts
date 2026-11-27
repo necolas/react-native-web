@@ -133,7 +133,7 @@ export default class AnimatedColor extends AnimatedWithChildren {
   _listeners: Record<string, { r: string; g: string; b: string; a: string }> =
     {};
 
-  constructor(valueIn?: InputValue, config?: Nullable<AnimatedColorConfig>) {
+  constructor(valueIn?: InputValue, config?: AnimatedColorConfig) {
     super();
     let value: RgbaValue | RgbaAnimatedValue | ColorValue =
       valueIn ?? defaultColor;

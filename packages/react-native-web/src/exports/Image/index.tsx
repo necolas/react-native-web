@@ -71,14 +71,14 @@ function extractNonStandardStyleProps(
   blurRadius: Nullable<number>,
   filterId: Nullable<number>,
   tintColorProp: Nullable<ColorValue>
-): [Nullable<ResizeMode>, Nullable<string>, Nullable<ColorValue>] {
+): [Nullable<ResizeMode>, string | undefined, Nullable<ColorValue>] {
   const flatStyle = StyleSheet.flatten(style);
   const { resizeMode, shadowOffset, tintColor } = flatStyle;
 
   // Add CSS filters
   // React Native exposes these features as props and proprietary styles
   const filters = [];
-  let _filter = null;
+  let _filter: string | undefined;
 
   if (blurRadius) {
     filters.push(`blur(${blurRadius}px)`);
@@ -236,7 +236,9 @@ const Image = (
   const selectedSource = shouldDisplaySource ? source : defaultSource;
   const displayImageUri = resolveAssetUri(selectedSource);
   const imageSizeStyle = resolveAssetDimensions(selectedSource);
-  const backgroundImage = displayImageUri ? `url("${displayImageUri}")` : null;
+  const backgroundImage = displayImageUri
+    ? `url("${displayImageUri}")`
+    : undefined;
   const backgroundSize = getBackgroundSize();
 
   // Accessibility image allows users to trigger the browser's image context menu
@@ -367,9 +369,10 @@ const Image = (
         hasTextAncestor && styles.inline,
         imageSizeStyle,
         style,
+        // @ts-expect-error: null values remove these styles
         styles.undo,
-        // TEMP: avoid shadow props regression
-        // until Image refactored to use createElement.
+        // TEMP: avoid shadow props regression until Image refactored to use createElement
+        // @ts-expect-error: null value removes this style
         { boxShadow: null }
       ]}
     >

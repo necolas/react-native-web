@@ -68,7 +68,7 @@ type OptionalProps<ItemT> = {
    * `highlight` and `unhighlight` (which set the `highlighted: boolean` prop) are insufficient for
    * your use-case.
    */
-  renderItem?: Nullable<RenderItemType<ItemT>>;
+  renderItem?: RenderItemType<ItemT>;
 
   /**
    * Optional custom style for multi-item rows generated when numColumns > 1.
@@ -104,30 +104,30 @@ type OptionalProps<ItemT> = {
   /**
    * If true, renders items next to each other horizontally instead of stacked vertically.
    */
-  horizontal?: Nullable<boolean>;
+  horizontal?: boolean;
   /**
    * How many items to render in the initial batch. This should be enough to fill the screen but not
    * much more. Note these items will never be unmounted as part of the windowed rendering in order
    * to improve perceived performance of scroll-to-top actions.
    */
-  initialNumToRender?: Nullable<number>;
+  initialNumToRender?: number;
   /**
    * Instead of starting at the top with the first item, start at `initialScrollIndex`. This
    * disables the "scroll to top" optimization that keeps the first `initialNumToRender` items
    * always rendered and immediately renders the items starting at this initial index. Requires
    * `getItemLayout` to be implemented.
    */
-  initialScrollIndex?: Nullable<number>;
+  initialScrollIndex?: number;
   /**
    * Reverses the direction of scroll. Uses scale transforms of -1.
    */
-  inverted?: Nullable<boolean>;
+  inverted?: boolean;
   /**
    * Used to extract a unique key for a given item at the specified index. Key is used for caching
    * and as the react key to track item re-ordering. The default extractor checks `item.key`, then
    * falls back to using the index, like React does.
    */
-  keyExtractor?: Nullable<(item: ItemT, index: number) => string>;
+  keyExtractor?: (item: ItemT, index: number) => string;
   /**
    * Multiple columns can only be rendered with `horizontal={false}` and will zig-zag like a
    * `flexWrap` layout. Items should all be the same height - masonry layouts are not supported.
@@ -146,7 +146,7 @@ type OptionalProps<ItemT> = {
   /**
    * See `ScrollView` for flow type and further documentation.
    */
-  fadingEdgeLength?: Nullable<number>;
+  fadingEdgeLength?: number;
   /**
    * Enable an optimization to memoize the item renderer to prevent unnecessary rerenders.
    */
@@ -302,7 +302,7 @@ class FlatList<ItemT> extends PureComponent<Props<ItemT>, {}> {
   /**
    * Scrolls to the end of the content. May be janky without `getItemLayout` prop.
    */
-  scrollToEnd(params?: Nullable<{ animated?: Nullable<boolean> }>) {
+  scrollToEnd(params?: { animated?: boolean }) {
     if (this._listRef) {
       this._listRef.scrollToEnd(params);
     }
@@ -317,7 +317,7 @@ class FlatList<ItemT> extends PureComponent<Props<ItemT>, {}> {
    * `getItemLayout` prop.
    */
   scrollToIndex(params: {
-    animated?: Nullable<boolean>;
+    animated?: boolean;
     index: number;
     viewOffset?: number;
     viewPosition?: number;
@@ -334,7 +334,7 @@ class FlatList<ItemT> extends PureComponent<Props<ItemT>, {}> {
    * `getItemLayout` prop.
    */
   scrollToItem(params: {
-    animated?: Nullable<boolean>;
+    animated?: boolean;
     item: ItemT;
     viewOffset?: number;
     viewPosition?: number;
@@ -349,7 +349,7 @@ class FlatList<ItemT> extends PureComponent<Props<ItemT>, {}> {
    *
    * Check out [scrollToOffset](docs/virtualizedlist.html#scrolltooffset) of VirtualizedList
    */
-  scrollToOffset(params: { animated?: Nullable<boolean>; offset: number }) {
+  scrollToOffset(params: { animated?: boolean; offset: number }) {
     if (this._listRef) {
       this._listRef.scrollToOffset(params);
     }

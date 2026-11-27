@@ -11,14 +11,13 @@
 
 import { useRef } from 'react';
 
-import type { Nullable } from '../../types';
 import type AnimatedValue from '../../vendor/react-native/Animated/nodes/AnimatedValue';
 import type { AnimatedValueConfig } from '../../vendor/react-native/Animated/nodes/AnimatedValue';
 import Animated from '../Animated';
 
 export default function useAnimatedValue(
   initialValue: number,
-  config?: Nullable<AnimatedValueConfig>
+  config?: AnimatedValueConfig
 ): AnimatedValue {
   const ref = useRef<null | AnimatedValue>(null);
   if (ref.current == null) {

@@ -25,22 +25,20 @@ type AnimationKeyframes =
 type AnimationPlayState = 'paused' | 'running';
 
 export type AnimationStyles = {
-  animationDelay?: Nullable<string | Array<string>>;
-  animationDirection?: Nullable<AnimationDirection | Array<AnimationDirection>>;
-  animationDuration?: Nullable<string | Array<string>>;
-  animationFillMode?: Nullable<AnimationFillMode | Array<AnimationFillMode>>;
-  animationIterationCount?: Nullable<
-    AnimationIterationCount | Array<AnimationIterationCount>
-  >;
-  animationKeyframes?: Nullable<
-    AnimationKeyframes | ReadonlyArray<AnimationKeyframes>
-  >;
-  animationPlayState?: Nullable<AnimationPlayState | Array<AnimationPlayState>>;
-  animationTimingFunction?: Nullable<string | Array<string>>;
-  transitionDelay?: Nullable<string | Array<string>>;
-  transitionDuration?: Nullable<string | Array<string>>;
-  transitionProperty?: Nullable<string | Array<string>>;
-  transitionTimingFunction?: Nullable<string | Array<string>>;
+  animationDelay?: string | Array<string>;
+  animationDirection?: AnimationDirection | Array<AnimationDirection>;
+  animationDuration?: string | Array<string>;
+  animationFillMode?: AnimationFillMode | Array<AnimationFillMode>;
+  animationIterationCount?:
+    | AnimationIterationCount
+    | Array<AnimationIterationCount>;
+  animationKeyframes?: AnimationKeyframes | ReadonlyArray<AnimationKeyframes>;
+  animationPlayState?: AnimationPlayState | Array<AnimationPlayState>;
+  animationTimingFunction?: string | Array<string>;
+  transitionDelay?: string | Array<string>;
+  transitionDuration?: string | Array<string>;
+  transitionProperty?: string | Array<string>;
+  transitionTimingFunction?: string | Array<string>;
 };
 
 /**
@@ -52,45 +50,45 @@ type BorderStyleValue = 'solid' | 'dotted' | 'dashed';
 
 export type BorderStyles = {
   // color
-  borderColor?: Nullable<ColorValue>;
-  borderBlockColor?: Nullable<ColorValue>;
-  borderBlockEndColor?: Nullable<ColorValue>;
-  borderBlockStartColor?: Nullable<ColorValue>;
-  borderBottomColor?: Nullable<ColorValue>;
-  borderEndColor?: Nullable<ColorValue>;
-  borderInlineColor?: Nullable<ColorValue>;
-  borderInlineEndColor?: Nullable<ColorValue>;
-  borderInlineStartColor?: Nullable<ColorValue>;
-  borderLeftColor?: Nullable<ColorValue>;
-  borderRightColor?: Nullable<ColorValue>;
-  borderStartColor?: Nullable<ColorValue>;
-  borderTopColor?: Nullable<ColorValue>;
+  borderColor?: ColorValue;
+  borderBlockColor?: ColorValue;
+  borderBlockEndColor?: ColorValue;
+  borderBlockStartColor?: ColorValue;
+  borderBottomColor?: ColorValue;
+  borderEndColor?: ColorValue;
+  borderInlineColor?: ColorValue;
+  borderInlineEndColor?: ColorValue;
+  borderInlineStartColor?: ColorValue;
+  borderLeftColor?: ColorValue;
+  borderRightColor?: ColorValue;
+  borderStartColor?: ColorValue;
+  borderTopColor?: ColorValue;
   // radius
-  borderRadius?: Nullable<BorderRadiusValue>;
-  borderBottomEndRadius?: Nullable<BorderRadiusValue>;
-  borderBottomLeftRadius?: Nullable<BorderRadiusValue>;
-  borderBottomRightRadius?: Nullable<BorderRadiusValue>;
-  borderBottomStartRadius?: Nullable<BorderRadiusValue>;
-  borderEndEndRadius?: Nullable<BorderRadiusValue>;
-  borderEndStartRadius?: Nullable<BorderRadiusValue>;
-  borderStartEndRadius?: Nullable<BorderRadiusValue>;
-  borderStartStartRadius?: Nullable<BorderRadiusValue>;
-  borderTopEndRadius?: Nullable<BorderRadiusValue>;
-  borderTopLeftRadius?: Nullable<BorderRadiusValue>;
-  borderTopRightRadius?: Nullable<BorderRadiusValue>;
-  borderTopStartRadius?: Nullable<BorderRadiusValue>;
+  borderRadius?: BorderRadiusValue;
+  borderBottomEndRadius?: BorderRadiusValue;
+  borderBottomLeftRadius?: BorderRadiusValue;
+  borderBottomRightRadius?: BorderRadiusValue;
+  borderBottomStartRadius?: BorderRadiusValue;
+  borderEndEndRadius?: BorderRadiusValue;
+  borderEndStartRadius?: BorderRadiusValue;
+  borderStartEndRadius?: BorderRadiusValue;
+  borderStartStartRadius?: BorderRadiusValue;
+  borderTopEndRadius?: BorderRadiusValue;
+  borderTopLeftRadius?: BorderRadiusValue;
+  borderTopRightRadius?: BorderRadiusValue;
+  borderTopStartRadius?: BorderRadiusValue;
   // style
-  borderStyle?: Nullable<BorderStyleValue>;
-  borderBlockStyle?: Nullable<BorderStyleValue>;
-  borderBlockEndStyle?: Nullable<BorderStyleValue>;
-  borderBlockStartStyle?: Nullable<BorderStyleValue>;
-  borderBottomStyle?: Nullable<BorderStyleValue>;
-  borderInlineStyle?: Nullable<BorderStyleValue>;
-  borderInlineEndStyle?: Nullable<BorderStyleValue>;
-  borderInlineStartStyle?: Nullable<BorderStyleValue>;
-  borderLeftStyle?: Nullable<BorderStyleValue>;
-  borderRightStyle?: Nullable<BorderStyleValue>;
-  borderTopStyle?: Nullable<BorderStyleValue>;
+  borderStyle?: BorderStyleValue;
+  borderBlockStyle?: BorderStyleValue;
+  borderBlockEndStyle?: BorderStyleValue;
+  borderBlockStartStyle?: BorderStyleValue;
+  borderBottomStyle?: BorderStyleValue;
+  borderInlineStyle?: BorderStyleValue;
+  borderInlineEndStyle?: BorderStyleValue;
+  borderInlineStartStyle?: BorderStyleValue;
+  borderLeftStyle?: BorderStyleValue;
+  borderRightStyle?: BorderStyleValue;
+  borderTopStyle?: BorderStyleValue;
 };
 
 /**
@@ -153,12 +151,12 @@ type UserSelect = 'all' | 'auto' | 'contain' | 'none' | 'text';
 
 export type InteractionStyles = {
   // https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Formal_syntax
-  cursor?: Nullable<CursorValue>;
+  cursor?: CursorValue;
   // https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action#Formal_syntax
-  touchAction?: Nullable<TouchActionValue>;
+  touchAction?: TouchActionValue;
   // https://developer.mozilla.org/en-US/docs/Web/CSS/user-select#Formal_syntax_2
-  userSelect?: Nullable<UserSelect>;
-  willChange?: Nullable<string>;
+  userSelect?: UserSelect;
+  willChange?: string;
 };
 
 /**
@@ -176,118 +174,119 @@ export type LayoutStyles = {
     | 'space-around'
     | 'space-between'
     | 'stretch';
-  alignItems?: Nullable<
-    'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'
-  >;
-  alignSelf?: Nullable<
-    'auto' | 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch'
-  >;
-  aspectRatio?: Nullable<number | string>;
-  backfaceVisibility?: Nullable<VisiblilityValue>;
-  borderWidth?: Nullable<DimensionValue>;
-  borderBlockWidth?: Nullable<DimensionValue>;
-  borderBlockEndWidth?: Nullable<DimensionValue>;
-  borderBlockStartWidth?: Nullable<DimensionValue>;
-  borderBottomWidth?: Nullable<DimensionValue>;
-  borderInlineWidth?: Nullable<DimensionValue>;
-  borderInlineEndWidth?: Nullable<DimensionValue>;
-  borderInlineStartWidth?: Nullable<DimensionValue>;
-  borderLeftWidth?: Nullable<DimensionValue>;
-  borderRightWidth?: Nullable<DimensionValue>;
-  borderTopWidth?: Nullable<DimensionValue>;
-  bottom?: Nullable<DimensionValue>;
-  boxSizing?: Nullable<'border-box' | 'content-box' | 'padding-box'>;
-  columnGap?: Nullable<DimensionValue>;
-  direction?: Nullable<'inherit' | 'ltr' | 'rtl'>;
-  display?: Nullable<string>;
-  flex?: Nullable<number>;
-  flexBasis?: Nullable<DimensionValue>;
-  flexDirection?: Nullable<'column' | 'column-reverse' | 'row' | 'row-reverse'>;
-  flexGrow?: Nullable<number>;
-  flexShrink?: Nullable<number>;
-  flexWrap?: Nullable<'nowrap' | 'wrap' | 'wrap-reverse'>;
-  gap?: Nullable<DimensionValue>;
-  height?: Nullable<DimensionValue>;
-  inset?: Nullable<DimensionValue>;
-  insetBlock?: Nullable<DimensionValue>;
-  insetBlockEnd?: Nullable<DimensionValue>;
-  insetBlockStart?: Nullable<DimensionValue>;
-  insetInline?: Nullable<DimensionValue>;
-  insetInlineEnd?: Nullable<DimensionValue>;
-  insetInlineStart?: Nullable<DimensionValue>;
-  justifyContent?: Nullable<
+  alignItems?: 'baseline' | 'center' | 'flex-end' | 'flex-start' | 'stretch';
+  alignSelf?:
+    | 'auto'
+    | 'baseline'
+    | 'center'
+    | 'flex-end'
+    | 'flex-start'
+    | 'stretch';
+  aspectRatio?: number | string;
+  backfaceVisibility?: VisiblilityValue;
+  borderWidth?: DimensionValue;
+  borderBlockWidth?: DimensionValue;
+  borderBlockEndWidth?: DimensionValue;
+  borderBlockStartWidth?: DimensionValue;
+  borderBottomWidth?: DimensionValue;
+  borderInlineWidth?: DimensionValue;
+  borderInlineEndWidth?: DimensionValue;
+  borderInlineStartWidth?: DimensionValue;
+  borderLeftWidth?: DimensionValue;
+  borderRightWidth?: DimensionValue;
+  borderTopWidth?: DimensionValue;
+  bottom?: DimensionValue;
+  boxSizing?: 'border-box' | 'content-box' | 'padding-box';
+  columnGap?: DimensionValue;
+  direction?: 'inherit' | 'ltr' | 'rtl';
+  display?: string;
+  flex?: number;
+  flexBasis?: DimensionValue;
+  flexDirection?: 'column' | 'column-reverse' | 'row' | 'row-reverse';
+  flexGrow?: number;
+  flexShrink?: number;
+  flexWrap?: 'nowrap' | 'wrap' | 'wrap-reverse';
+  gap?: DimensionValue;
+  height?: DimensionValue;
+  inset?: DimensionValue;
+  insetBlock?: DimensionValue;
+  insetBlockEnd?: DimensionValue;
+  insetBlockStart?: DimensionValue;
+  insetInline?: DimensionValue;
+  insetInlineEnd?: DimensionValue;
+  insetInlineStart?: DimensionValue;
+  justifyContent?:
     | 'center'
     | 'flex-end'
     | 'flex-start'
     | 'space-around'
     | 'space-between'
-    | 'space-evenly'
-  >;
-  left?: Nullable<DimensionValue>;
-  margin?: Nullable<DimensionValue>;
-  marginBlock?: Nullable<DimensionValue>;
-  marginBlockEnd?: Nullable<DimensionValue>;
-  marginBlockStart?: Nullable<DimensionValue>;
-  marginBottom?: Nullable<DimensionValue>;
-  marginInline?: Nullable<DimensionValue>;
-  marginInlineEnd?: Nullable<DimensionValue>;
-  marginInlineStart?: Nullable<DimensionValue>;
-  marginLeft?: Nullable<DimensionValue>;
-  marginRight?: Nullable<DimensionValue>;
-  marginTop?: Nullable<DimensionValue>;
-  maxHeight?: Nullable<DimensionValue>;
-  maxWidth?: Nullable<DimensionValue>;
-  minHeight?: Nullable<DimensionValue>;
-  minWidth?: Nullable<DimensionValue>;
-  order?: Nullable<number>;
-  overflow?: Nullable<OverflowValue>;
-  overflowX?: Nullable<OverflowValue>;
-  overflowY?: Nullable<OverflowValue>;
-  padding?: Nullable<DimensionValue>;
-  paddingBlock?: Nullable<DimensionValue>;
-  paddingBlockEnd?: Nullable<DimensionValue>;
-  paddingBlockStart?: Nullable<DimensionValue>;
-  paddingBottom?: Nullable<DimensionValue>;
-  paddingInline?: Nullable<DimensionValue>;
-  paddingInlineEnd?: Nullable<DimensionValue>;
-  paddingInlineStart?: Nullable<DimensionValue>;
-  paddingLeft?: Nullable<DimensionValue>;
-  paddingRight?: Nullable<DimensionValue>;
-  paddingTop?: Nullable<DimensionValue>;
-  position?: Nullable<'absolute' | 'fixed' | 'relative' | 'static' | 'sticky'>;
-  right?: Nullable<DimensionValue>;
-  rowGap?: Nullable<DimensionValue>;
-  top?: Nullable<DimensionValue>;
-  visibility?: Nullable<VisiblilityValue>;
-  width?: Nullable<DimensionValue>;
-  zIndex?: Nullable<number>;
+    | 'space-evenly';
+  left?: DimensionValue;
+  margin?: DimensionValue;
+  marginBlock?: DimensionValue;
+  marginBlockEnd?: DimensionValue;
+  marginBlockStart?: DimensionValue;
+  marginBottom?: DimensionValue;
+  marginInline?: DimensionValue;
+  marginInlineEnd?: DimensionValue;
+  marginInlineStart?: DimensionValue;
+  marginLeft?: DimensionValue;
+  marginRight?: DimensionValue;
+  marginTop?: DimensionValue;
+  maxHeight?: DimensionValue;
+  maxWidth?: DimensionValue;
+  minHeight?: DimensionValue;
+  minWidth?: DimensionValue;
+  order?: number;
+  overflow?: OverflowValue;
+  overflowX?: OverflowValue;
+  overflowY?: OverflowValue;
+  padding?: DimensionValue;
+  paddingBlock?: DimensionValue;
+  paddingBlockEnd?: DimensionValue;
+  paddingBlockStart?: DimensionValue;
+  paddingBottom?: DimensionValue;
+  paddingInline?: DimensionValue;
+  paddingInlineEnd?: DimensionValue;
+  paddingInlineStart?: DimensionValue;
+  paddingLeft?: DimensionValue;
+  paddingRight?: DimensionValue;
+  paddingTop?: DimensionValue;
+  position?: 'absolute' | 'fixed' | 'relative' | 'static' | 'sticky';
+  right?: DimensionValue;
+  rowGap?: DimensionValue;
+  top?: DimensionValue;
+  visibility?: VisiblilityValue;
+  width?: DimensionValue;
+  zIndex?: number;
   /**
    * @platform web
    */
-  gridAutoColumns?: Nullable<string>;
-  gridAutoFlow?: Nullable<string>;
-  gridAutoRows?: Nullable<string>;
-  gridColumnEnd?: Nullable<string>;
-  gridColumnGap?: Nullable<string>;
-  gridColumnStart?: Nullable<string>;
-  gridRowEnd?: Nullable<string>;
-  gridRowGap?: Nullable<string>;
-  gridRowStart?: Nullable<string>;
-  gridTemplateColumns?: Nullable<string>;
-  gridTemplateRows?: Nullable<string>;
-  gridTemplateAreas?: Nullable<string>;
-  borderEndWidth?: Nullable<DimensionValue>;
-  borderStartWidth?: Nullable<DimensionValue>;
-  end?: Nullable<DimensionValue>;
-  marginHorizontal?: Nullable<DimensionValue>;
-  marginEnd?: Nullable<DimensionValue>;
-  marginStart?: Nullable<DimensionValue>;
-  marginVertical?: Nullable<DimensionValue>;
-  paddingHorizontal?: Nullable<DimensionValue>;
-  paddingStart?: Nullable<DimensionValue>;
-  paddingEnd?: Nullable<DimensionValue>;
-  paddingVertical?: Nullable<DimensionValue>;
-  start?: Nullable<DimensionValue>;
+  gridAutoColumns?: string;
+  gridAutoFlow?: string;
+  gridAutoRows?: string;
+  gridColumnEnd?: string;
+  gridColumnGap?: string;
+  gridColumnStart?: string;
+  gridRowEnd?: string;
+  gridRowGap?: string;
+  gridRowStart?: string;
+  gridTemplateColumns?: string;
+  gridTemplateRows?: string;
+  gridTemplateAreas?: string;
+  borderEndWidth?: DimensionValue;
+  borderStartWidth?: DimensionValue;
+  end?: DimensionValue;
+  marginHorizontal?: DimensionValue;
+  marginEnd?: DimensionValue;
+  marginStart?: DimensionValue;
+  marginVertical?: DimensionValue;
+  paddingHorizontal?: DimensionValue;
+  paddingStart?: DimensionValue;
+  paddingEnd?: DimensionValue;
+  paddingVertical?: DimensionValue;
+  start?: DimensionValue;
 };
 
 /**
@@ -295,13 +294,13 @@ export type LayoutStyles = {
  */
 
 export type ShadowStyles = {
-  shadowColor?: Nullable<ColorValue>;
-  shadowOffset?: Nullable<{
+  shadowColor?: ColorValue;
+  shadowOffset?: {
     width?: DimensionValue;
     height?: DimensionValue;
-  }>;
-  shadowOpacity?: Nullable<number>;
-  shadowRadius?: Nullable<DimensionValue>;
+  };
+  shadowOpacity?: number;
+  shadowRadius?: DimensionValue;
 };
 
 /**
@@ -309,9 +308,9 @@ export type ShadowStyles = {
  */
 
 export type TransformStyles = {
-  perspective?: Nullable<number | string>;
-  perspectiveOrigin?: Nullable<string>;
-  transform?: Nullable<
+  perspective?: number | string;
+  perspectiveOrigin?: string;
+  transform?:
     | string
     | Array<
         | { readonly perspective: number | string }
@@ -330,8 +329,7 @@ export type TransformStyles = {
         | { readonly translateY: number | string }
         | { readonly translateZ: number | string }
         | { readonly translate3d: string }
-      >
-  >;
-  transformOrigin?: Nullable<string | Array<number | string>>;
-  transformStyle?: Nullable<'flat' | 'preserve-3d'>;
+      >;
+  transformOrigin?: string | Array<number | string>;
+  transformStyle?: 'flat' | 'preserve-3d';
 };

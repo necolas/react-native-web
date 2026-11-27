@@ -9,7 +9,6 @@
 import invariant from 'invariant';
 
 import canUseDOM from '../../modules/canUseDom';
-import type { Nullable } from '../../types';
 
 const initialURL = canUseDOM ? window.location.href : '';
 
@@ -54,7 +53,7 @@ class Linking {
     return this._listeners[type]?.size ?? 0;
   }
 
-  removeAllListeners(type?: Nullable<string>) {
+  removeAllListeners(type?: string) {
     invariant(
       type != null,
       '`NativeEventEmitter.removeAllListener()` requires a non-null argument.'

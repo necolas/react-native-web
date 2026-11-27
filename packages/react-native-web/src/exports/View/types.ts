@@ -18,12 +18,7 @@ import type {
 } from 'react';
 
 import type { ResponderEvent } from '../../modules/useResponderEvents/createResponderEvent';
-import type {
-  ColorValue,
-  GenericStyleProp,
-  LayoutEvent,
-  Nullable
-} from '../../types';
+import type { ColorValue, GenericStyleProp, LayoutEvent } from '../../types';
 import type {
   AnimationStyles,
   BorderStyles,
@@ -98,76 +93,72 @@ export type FilterFunction =
   | { sepia: number | string };
 
 export type AccessibilityProps = {
-  'aria-activedescendant'?: Nullable<string>;
-  'aria-atomic'?: Nullable<boolean>;
-  'aria-autocomplete'?: Nullable<'none' | 'list' | 'inline' | 'both'>;
-  'aria-busy'?: Nullable<boolean>;
-  'aria-checked'?: Nullable<boolean | 'mixed'>;
-  'aria-colcount'?: Nullable<number>;
-  'aria-colindex'?: Nullable<number>;
-  'aria-colspan'?: Nullable<number>;
-  'aria-controls'?: Nullable<string>;
-  'aria-current'?: Nullable<
-    boolean | 'page' | 'step' | 'location' | 'date' | 'time'
-  >;
-  'aria-describedby'?: Nullable<string>;
-  'aria-description'?: Nullable<string>;
-  'aria-details'?: Nullable<string>;
-  'aria-disabled'?: Nullable<boolean>;
-  'aria-errormessage'?: Nullable<string>;
-  'aria-expanded'?: Nullable<boolean>;
-  'aria-flowto'?: Nullable<string>;
-  'aria-haspopup'?: Nullable<
-    'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false
-  >;
-  'aria-hidden'?: Nullable<boolean>;
-  'aria-invalid'?: Nullable<boolean>;
-  'aria-keyshortcuts'?: Nullable<string>;
-  'aria-label'?: Nullable<string>;
-  'aria-labelledby'?: Nullable<string>;
-  'aria-level'?: Nullable<number>;
-  'aria-live'?: Nullable<'assertive' | 'off' | 'polite'>;
-  'aria-modal'?: Nullable<boolean>;
-  'aria-multiline'?: Nullable<boolean>;
-  'aria-multiselectable'?: Nullable<boolean>;
-  'aria-orientation'?: Nullable<'horizontal' | 'vertical'>;
-  'aria-owns'?: Nullable<string>;
-  'aria-placeholder'?: Nullable<string>;
-  'aria-posinset'?: Nullable<number>;
-  'aria-pressed'?: Nullable<boolean | 'mixed'>;
-  'aria-readonly'?: Nullable<boolean>;
-  'aria-required'?: Nullable<boolean>;
-  'aria-roledescription'?: Nullable<string>;
-  'aria-rowcount'?: Nullable<number>;
-  'aria-rowindex'?: Nullable<number>;
-  'aria-rowspan'?: Nullable<number>;
-  'aria-selected'?: Nullable<boolean>;
-  'aria-setsize'?: Nullable<number>;
-  'aria-sort'?: Nullable<'ascending' | 'descending' | 'none' | 'other'>;
-  'aria-valuemax'?: Nullable<number>;
-  'aria-valuemin'?: Nullable<number>;
-  'aria-valuenow'?: Nullable<number>;
-  'aria-valuetext'?: Nullable<string>;
-  role?: Nullable<string>;
+  'aria-activedescendant'?: string;
+  'aria-atomic'?: boolean;
+  'aria-autocomplete'?: 'none' | 'list' | 'inline' | 'both';
+  'aria-busy'?: boolean;
+  'aria-checked'?: boolean | 'mixed';
+  'aria-colcount'?: number;
+  'aria-colindex'?: number;
+  'aria-colspan'?: number;
+  'aria-controls'?: string;
+  'aria-current'?: boolean | 'page' | 'step' | 'location' | 'date' | 'time';
+  'aria-describedby'?: string;
+  'aria-description'?: string;
+  'aria-details'?: string;
+  'aria-disabled'?: boolean;
+  'aria-errormessage'?: string;
+  'aria-expanded'?: boolean;
+  'aria-flowto'?: string;
+  'aria-haspopup'?: 'dialog' | 'grid' | 'listbox' | 'menu' | 'tree' | false;
+  'aria-hidden'?: boolean;
+  'aria-invalid'?: boolean;
+  'aria-keyshortcuts'?: string;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+  'aria-level'?: number;
+  'aria-live'?: 'assertive' | 'off' | 'polite';
+  'aria-modal'?: boolean;
+  'aria-multiline'?: boolean;
+  'aria-multiselectable'?: boolean;
+  'aria-orientation'?: 'horizontal' | 'vertical';
+  'aria-owns'?: string;
+  'aria-placeholder'?: string;
+  'aria-posinset'?: number;
+  'aria-pressed'?: boolean | 'mixed';
+  'aria-readonly'?: boolean;
+  'aria-required'?: boolean;
+  'aria-roledescription'?: string;
+  'aria-rowcount'?: number;
+  'aria-rowindex'?: number;
+  'aria-rowspan'?: number;
+  'aria-selected'?: boolean;
+  'aria-setsize'?: number;
+  'aria-sort'?: 'ascending' | 'descending' | 'none' | 'other';
+  'aria-valuemax'?: number;
+  'aria-valuemin'?: number;
+  'aria-valuenow'?: number;
+  'aria-valuetext'?: string;
+  role?: string;
 
-  accessibilityHint?: Nullable<string>;
-  accessibilityLabel?: Nullable<string>;
-  accessibilityLabelledBy?: Nullable<string | Array<string>>;
-  accessibilityLiveRegion?: Nullable<'assertive' | 'none' | 'polite'>;
-  accessibilityRole?: Nullable<string>;
-  accessibilityState?: Nullable<{
-    busy?: Nullable<boolean>;
-    checked?: Nullable<boolean | 'mixed'>;
-    disabled?: Nullable<boolean>;
-    expanded?: Nullable<boolean>;
-    selected?: Nullable<boolean>;
-  }>;
-  accessibilityValue?: Nullable<{
-    max?: Nullable<number>;
-    min?: Nullable<number>;
-    now?: Nullable<number>;
-    text?: Nullable<string>;
-  }>;
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
+  accessibilityLabelledBy?: string | Array<string>;
+  accessibilityLiveRegion?: 'assertive' | 'none' | 'polite';
+  accessibilityRole?: string;
+  accessibilityState?: {
+    busy?: boolean;
+    checked?: boolean | 'mixed';
+    disabled?: boolean;
+    expanded?: boolean;
+    selected?: boolean;
+  };
+  accessibilityValue?: {
+    max?: number;
+    min?: number;
+    now?: number;
+    text?: string;
+  };
 };
 
 type FocusHandler = (e: FocusEvent<HTMLElement>) => void;
@@ -239,72 +230,70 @@ export type ViewStyle = AnimationStyles &
   LayoutStyles &
   ShadowStyles &
   TransformStyles & {
-    appearance?: Nullable<string>;
-    backdropFilter?: Nullable<string>;
-    backgroundAttachment?: Nullable<string>;
-    backgroundBlendMode?: Nullable<string>;
-    backgroundClip?: Nullable<string>;
-    backgroundColor?: Nullable<ColorValue>;
-    backgroundImage?: Nullable<string | ReadonlyArray<BackgroundImageValue>>;
+    appearance?: string;
+    backdropFilter?: string;
+    backgroundAttachment?: string;
+    backgroundBlendMode?: string;
+    backgroundClip?: string;
+    backgroundColor?: ColorValue;
+    backgroundImage?: string | ReadonlyArray<BackgroundImageValue>;
     backgroundOrigin?: 'border-box' | 'content-box' | 'padding-box';
-    backgroundPosition?: Nullable<
-      string | ReadonlyArray<BackgroundPositionValue>
-    >;
-    backgroundRepeat?: Nullable<string | ReadonlyArray<BackgroundRepeatValue>>;
-    backgroundSize?: Nullable<string | ReadonlyArray<BackgroundSizeValue>>;
+    backgroundPosition?: string | ReadonlyArray<BackgroundPositionValue>;
+    backgroundRepeat?: string | ReadonlyArray<BackgroundRepeatValue>;
+    backgroundSize?: string | ReadonlyArray<BackgroundSizeValue>;
     boxDecorationBreak?: 'clone' | 'slice';
-    boxShadow?: Nullable<string>;
-    clip?: Nullable<string>;
-    filter?: Nullable<string | ReadonlyArray<FilterFunction>>;
-    mask?: Nullable<string>;
-    maskClip?: Nullable<string>;
-    maskComposite?: Nullable<string>;
-    maskImage?: Nullable<string>;
-    maskOrigin?: Nullable<string>;
-    maskPosition?: Nullable<string>;
-    maskRepeat?: Nullable<string>;
-    maskSize?: Nullable<string>;
+    boxShadow?: string;
+    clip?: string;
+    filter?: string | ReadonlyArray<FilterFunction>;
+    mask?: string;
+    maskClip?: string;
+    maskComposite?: string;
+    maskImage?: string;
+    maskOrigin?: string;
+    maskPosition?: string;
+    maskRepeat?: string;
+    maskSize?: string;
     forcedColorAdjust?: 'auto' | 'none';
-    opacity?: Nullable<number>;
-    outlineColor?: Nullable<ColorValue>;
-    outlineOffset?: Nullable<number | string>;
-    outlineStyle?: Nullable<string>;
-    outlineWidth?: Nullable<number | string>;
-    overscrollBehavior?: Nullable<OverscrollBehaviorValue>;
-    overscrollBehaviorX?: Nullable<OverscrollBehaviorValue>;
-    overscrollBehaviorY?: Nullable<OverscrollBehaviorValue>;
+    opacity?: number;
+    outlineColor?: ColorValue;
+    outlineOffset?: number | string;
+    outlineStyle?: string;
+    outlineWidth?: number | string;
+    overscrollBehavior?: OverscrollBehaviorValue;
+    overscrollBehaviorX?: OverscrollBehaviorValue;
+    overscrollBehaviorY?: OverscrollBehaviorValue;
     pointerEvents?: PointerEventsValue;
     printColorAdjust?: 'economy' | 'exact';
     scrollbarWidth?: 'auto' | 'none' | 'thin';
-    scrollSnapAlign?: Nullable<string>;
-    scrollSnapType?: Nullable<string>;
-    WebkitMaskImage?: Nullable<string>;
+    scrollSnapAlign?: string;
+    scrollSnapType?: string;
+    WebkitMaskImage?: string;
     WebkitOverflowScrolling?: 'auto' | 'touch';
   };
 
 export type ViewProps = AccessibilityProps &
   EventProps & {
-    children?: Nullable<ReactNode>;
-    collapsable?: Nullable<boolean>;
+    children?: ReactNode;
+    collapsable?: boolean;
     dataSet?: Readonly<Record<string, unknown>>;
     dir?: 'ltr' | 'rtl';
-    focusable?: Nullable<boolean>;
-    id?: Nullable<string>;
+    focusable?: boolean;
+    id?: string;
     lang?: string;
-    nativeID?: Nullable<string>;
+    nativeID?: string;
     pointerEvents?: PointerEventsValue;
     style?: GenericStyleProp<ViewStyle>;
-    tabIndex?: Nullable<0 | -1>;
-    suppressHydrationWarning?: Nullable<boolean>;
-    testID?: Nullable<string>;
-    title?: Nullable<string>;
+    tabIndex?: 0 | -1;
+    suppressHydrationWarning?: boolean;
+    testID?: string;
+    title?: string;
     // unstable
-    disabled?: Nullable<boolean>;
-    href?: Nullable<string>;
-    hrefAttrs?: Nullable<{
-      download?: Nullable<boolean | string>;
-      rel?: Nullable<string>;
-      target?: Nullable<string>;
-    }>;
-    unstable_type?: Nullable<'button' | 'reset' | 'submit'>;
+    disabled?: boolean;
+    href?: string;
+    hrefAttrs?: {
+      download?: boolean | string;
+      rel?: string;
+      target?: string;
+    };
+    unstable_type?: 'button' | 'reset' | 'submit';
   };

@@ -22,7 +22,7 @@ export type AnimatedEventListener = {
 }['bivarianceHack'];
 export type AnimatedEventHandler = (...args: ReadonlyArray<unknown>) => void;
 export type EventConfig = {
-  listener?: Nullable<AnimatedEventListener>;
+  listener?: AnimatedEventListener;
   useNativeDriver: boolean;
 };
 

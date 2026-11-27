@@ -9,20 +9,19 @@
 import type { ComponentRef, ReactNode, Ref } from 'react';
 
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
 import Text from '../Text';
 import TouchableOpacity from '../TouchableOpacity';
 
 type ButtonProps = {
-  accessibilityLabel?: Nullable<string>;
-  color?: Nullable<string>;
+  accessibilityLabel?: string;
+  color?: string;
   disabled?: boolean;
   onPress?: PressResponderConfig['onPress'];
   ref?: Ref<ComponentRef<typeof TouchableOpacity>>;
-  testID?: Nullable<string>;
+  testID?: string;
   title: string;
-  type?: Nullable<'button' | 'reset' | 'submit'>;
+  type?: 'button' | 'reset' | 'submit';
 };
 
 const Button = (props: ButtonProps): ReactNode => {

@@ -58,7 +58,7 @@ const ModalContent = (props: ModalContentProps): ReactNode => {
     <View
       {...rest}
       aria-modal={true}
-      role={active ? 'dialog' : null}
+      role={active ? 'dialog' : undefined}
       style={style}
     >
       <View style={styles.container}>{children}</View>

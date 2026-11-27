@@ -33,8 +33,8 @@ import AnimatedValueXY from './nodes/AnimatedValueXY';
 // callback, which may trigger another animation
 let inAnimationCallback = false;
 function mockAnimationStart(
-  start: (callback?: Nullable<EndCallback>) => void
-): (callback?: Nullable<EndCallback>) => void {
+  start: (callback?: EndCallback) => void
+): (callback?: EndCallback) => void {
   return (callback) => {
     const guardedCallback =
       callback == null
@@ -58,7 +58,7 @@ function mockAnimationStart(
 }
 
 export type CompositeAnimation = {
-  start: (callback?: Nullable<EndCallback>) => void;
+  start: (callback?: EndCallback) => void;
   stop: () => void;
   reset: () => void;
   _startNativeLoop: (iterations?: number) => void;
@@ -79,7 +79,7 @@ const mockCompositeAnimation = (
   animations: Array<CompositeAnimation>
 ): CompositeAnimation => ({
   ...emptyAnimation,
-  start: mockAnimationStart((callback?: Nullable<EndCallback>): void => {
+  start: mockAnimationStart((callback?: EndCallback): void => {
     animations.forEach((animation) => animation.start());
     callback?.({ finished: true });
   })
@@ -94,7 +94,7 @@ const spring = function (
   };
   return {
     ...emptyAnimation,
-    start: mockAnimationStart((callback?: Nullable<EndCallback>): void => {
+    start: mockAnimationStart((callback?: EndCallback): void => {
       anyValue.setValue(config.toValue);
       callback?.({ finished: true });
     })
@@ -110,7 +110,7 @@ const timing = function (
   };
   return {
     ...emptyAnimation,
-    start: mockAnimationStart((callback?: Nullable<EndCallback>): void => {
+    start: mockAnimationStart((callback?: EndCallback): void => {
       anyValue.setValue(config.toValue);
       callback?.({ finished: true });
     })
@@ -133,7 +133,7 @@ const sequence = function (
 type ParallelConfig = { stopTogether?: boolean };
 const parallel = function (
   animations: Array<CompositeAnimation>,
-  config?: Nullable<ParallelConfig>
+  config?: ParallelConfig
 ): CompositeAnimation {
   return mockCompositeAnimation(animations);
 };

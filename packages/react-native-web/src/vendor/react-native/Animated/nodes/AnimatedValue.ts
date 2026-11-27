@@ -88,7 +88,7 @@ class AnimatedValue extends AnimatedWithChildren {
   _animation: Nullable<Animation>;
   _tracking: Nullable<AnimatedTracking>;
 
-  constructor(value: number, config?: Nullable<AnimatedValueConfig>) {
+  constructor(value: number, config?: AnimatedValueConfig) {
     super();
     if (typeof value !== 'number') {
       throw new Error('AnimatedValue: Attempting to set value to undefined');
@@ -186,7 +186,7 @@ class AnimatedValue extends AnimatedWithChildren {
    *
    * See https://reactnative.dev/docs/animatedvalue#stopanimation
    */
-  stopAnimation(callback?: Nullable<(value: number) => void>): void {
+  stopAnimation(callback?: (value: number) => void): void {
     this.stopTracking();
     this._animation && this._animation.stop();
     this._animation = null;
@@ -204,7 +204,7 @@ class AnimatedValue extends AnimatedWithChildren {
    *
    * See https://reactnative.dev/docs/animatedvalue#resetanimation
    */
-  resetAnimation(callback?: Nullable<(value: number) => void>): void {
+  resetAnimation(callback?: (value: number) => void): void {
     this.stopAnimation(callback);
     this._value = this._startingValue;
     if (this.__isNative) {

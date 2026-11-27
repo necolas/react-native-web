@@ -125,6 +125,7 @@ describe('components/Text', () => {
         target: null
       };
       const { container } = render(
+        // @ts-expect-error: null values are not valid
         <Text href="https://example.com" hrefAttrs={hrefAttrs} />
       );
       expect(container.firstChild).toMatchSnapshot();

@@ -11,7 +11,6 @@
 
 import { useRef } from 'react';
 
-import type { Nullable } from '../../types';
 import type { AnimatedValueConfig } from '../../vendor/react-native/Animated/nodes/AnimatedValue';
 import type AnimatedValueXY from '../../vendor/react-native/Animated/nodes/AnimatedValueXY';
 import Animated from '../Animated';
@@ -22,7 +21,7 @@ export default function useAnimatedValueXY(
     y: number;
   },
   // `useNativeDriver` is not supported on web, so the config is not used.
-  config?: Nullable<AnimatedValueConfig>
+  config?: AnimatedValueConfig
 ): AnimatedValueXY {
   const ref = useRef<null | AnimatedValueXY>(null);
   if (ref.current == null) {

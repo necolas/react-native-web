@@ -25,18 +25,18 @@ import pick from '../../modules/pick';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { Nullable, PlatformMethods } from '../../types';
+import type { PlatformMethods } from '../../types';
 import type { ViewProps } from '../View';
 import type { AccessibilityProps } from '../View/types';
 
 export type Props = Readonly<
   AccessibilityProps & {
-    children?: Nullable<ReactNode>;
-    delayLongPress?: Nullable<number>;
-    delayPressIn?: Nullable<number>;
-    delayPressOut?: Nullable<number>;
-    disabled?: Nullable<boolean>;
-    focusable?: Nullable<boolean>;
+    children?: ReactNode;
+    delayLongPress?: number;
+    delayPressIn?: number;
+    delayPressOut?: number;
+    disabled?: boolean;
+    focusable?: boolean;
     nativeID?: ViewProps['nativeID'];
     onBlur?: ViewProps['onBlur'];
     onFocus?: ViewProps['onFocus'];
@@ -46,7 +46,7 @@ export type Props = Readonly<
     onPressIn?: PressResponderConfig['onPressStart'];
     onPressOut?: PressResponderConfig['onPressEnd'];
     ref?: Ref<HTMLElement & PlatformMethods>;
-    rejectResponderTermination?: Nullable<boolean>;
+    rejectResponderTermination?: boolean;
     testID?: ViewProps['testID'];
     title?: ViewProps['title'];
     type?: ViewProps['unstable_type'];

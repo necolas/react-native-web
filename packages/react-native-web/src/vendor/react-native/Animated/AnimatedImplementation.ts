@@ -51,7 +51,7 @@ import AnimatedValue from './nodes/AnimatedValue';
 import AnimatedValueXY from './nodes/AnimatedValueXY';
 
 export type CompositeAnimation = {
-  start: (callback?: Nullable<EndCallback>) => void;
+  start: (callback?: EndCallback) => void;
   stop: () => void;
   reset: () => void;
   _startNativeLoop: (iterations?: number) => void;
@@ -178,7 +178,7 @@ const spring = function (
   const start = function (
     animatedValue: AnimatedValue | AnimatedValueXY | AnimatedColor,
     configuration: SpringAnimationConfig,
-    callback?: Nullable<EndCallback>
+    callback?: EndCallback
   ): void {
     callback = _combineCallbacks(callback, configuration);
     const singleValue = animatedValue as AnimatedValue;
@@ -200,7 +200,7 @@ const spring = function (
   };
   return (
     maybeVectorAnim(value, config, spring) || {
-      start: function (callback?: Nullable<EndCallback>): void {
+      start: function (callback?: EndCallback): void {
         start(value, config, callback);
       },
 
@@ -231,7 +231,7 @@ const timing = function (
   const start = function (
     animatedValue: AnimatedValue | AnimatedValueXY | AnimatedColor,
     configuration: TimingAnimationConfig,
-    callback?: Nullable<EndCallback>
+    callback?: EndCallback
   ): void {
     callback = _combineCallbacks(callback, configuration);
     const singleValue = animatedValue as AnimatedValue;
@@ -254,7 +254,7 @@ const timing = function (
 
   return (
     maybeVectorAnim(value, config, timing) || {
-      start: function (callback?: Nullable<EndCallback>): void {
+      start: function (callback?: EndCallback): void {
         start(value, config, callback);
       },
 
@@ -285,7 +285,7 @@ const decay = function (
   const start = function (
     animatedValue: AnimatedValue | AnimatedValueXY | AnimatedColor,
     configuration: DecayAnimationConfig,
-    callback?: Nullable<EndCallback>
+    callback?: EndCallback
   ): void {
     callback = _combineCallbacks(callback, configuration);
     const singleValue = animatedValue as AnimatedValue;
@@ -296,7 +296,7 @@ const decay = function (
 
   return (
     maybeVectorAnim(value, config, decay) || {
-      start: function (callback?: Nullable<EndCallback>): void {
+      start: function (callback?: EndCallback): void {
         start(value, config, callback);
       },
 
@@ -325,7 +325,7 @@ const sequence = function (
 ): CompositeAnimation {
   let current = 0;
   return {
-    start: function (callback?: Nullable<EndCallback>) {
+    start: function (callback?: EndCallback) {
       const onComplete = function (result: EndResult) {
         if (!result.finished) {
           callback && callback(result);
@@ -384,7 +384,7 @@ type ParallelConfig = {
 };
 const parallel = function (
   animations: Array<CompositeAnimation>,
-  config?: Nullable<ParallelConfig>
+  config?: ParallelConfig
 ): CompositeAnimation {
   let doneCount = 0;
   // Make sure we only call stop() at most once for each animation
@@ -392,7 +392,7 @@ const parallel = function (
   const stopTogether = !(config && config.stopTogether === false);
 
   const result: CompositeAnimation = {
-    start: function (callback?: Nullable<EndCallback>) {
+    start: function (callback?: EndCallback) {
       if (doneCount === animations.length) {
         callback && callback({ finished: true });
         return;
@@ -483,7 +483,7 @@ const loop = function (
   let isFinished = false;
   let iterationsSoFar = 0;
   return {
-    start: function (callback?: Nullable<EndCallback>) {
+    start: function (callback?: EndCallback) {
       const restart = function (result: EndResult = { finished: true }): void {
         if (
           isFinished ||

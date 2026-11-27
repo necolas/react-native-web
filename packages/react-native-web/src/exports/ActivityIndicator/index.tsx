@@ -10,7 +10,6 @@
 
 import type { ComponentRef, ReactNode, Ref } from 'react';
 
-import type { Nullable } from '../../types';
 import StyleSheet from '../StyleSheet';
 import View, { type ViewProps } from '../View';
 
@@ -20,7 +19,7 @@ const createSvgCircle = (style: object) => (
 
 type ActivityIndicatorProps = ViewProps & {
   animating?: boolean;
-  color?: Nullable<string>;
+  color?: string;
   hidesWhenStopped?: boolean;
   ref?: Ref<ComponentRef<typeof View>>;
   size?: 'small' | 'large' | number;

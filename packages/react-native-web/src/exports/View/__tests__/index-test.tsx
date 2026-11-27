@@ -147,6 +147,7 @@ describe('components/View', () => {
         target: null
       };
       const { container } = render(
+        // @ts-expect-error: null values are not valid
         <View href="https://example.com" hrefAttrs={hrefAttrs} />
       );
       expect(container.firstChild).toMatchSnapshot();

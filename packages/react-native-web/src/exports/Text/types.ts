@@ -11,7 +11,6 @@ import type { MouseEvent } from 'react';
 import type {
   ColorValue,
   GenericStyleProp,
-  Nullable,
   TextLayoutEvent
 } from '../../types';
 import type { ViewProps, ViewStyle } from '../View/types';
@@ -30,12 +29,12 @@ type FontWeightValue =
   | '900';
 
 export type TextStyle = ViewStyle & {
-  color?: Nullable<ColorValue>;
-  fontFamily?: Nullable<string>;
-  fontFeatureSettings?: Nullable<string>;
-  fontSize?: Nullable<number | string>;
+  color?: ColorValue;
+  fontFamily?: string;
+  fontFeatureSettings?: string;
+  fontSize?: number | string;
   fontStyle?: 'italic' | 'normal';
-  fontWeight?: Nullable<FontWeightValue>;
+  fontWeight?: FontWeightValue;
   fontVariant?:
     | ReadonlyArray<
         | 'common-ligatures'
@@ -73,12 +72,12 @@ export type TextStyle = ViewStyle & {
         | 'tabular-nums'
       >
     | string;
-  hyphenateCharacter?: Nullable<string>;
+  hyphenateCharacter?: string;
   hyphens?: 'auto' | 'manual' | 'none';
-  initialLetter?: Nullable<number | string>;
-  letterSpacing?: Nullable<number | string>;
-  lineClamp?: Nullable<number>;
-  lineHeight?: Nullable<number | string>;
+  initialLetter?: number | string;
+  letterSpacing?: number | string;
+  lineClamp?: number;
+  lineHeight?: number | string;
   rubyPosition?: 'alternate' | 'over' | 'under';
   textAlign?:
     | 'center'
@@ -89,30 +88,30 @@ export type TextStyle = ViewStyle & {
     | 'left'
     | 'right'
     | 'start';
-  textAlignVertical?: Nullable<string>;
-  textDecorationColor?: Nullable<ColorValue>;
+  textAlignVertical?: string;
+  textDecorationColor?: ColorValue;
   textDecorationLine?:
     | 'none'
     | 'underline'
     | 'line-through'
     | 'underline line-through';
   textDecorationStyle?: 'solid' | 'double' | 'dotted' | 'dashed';
-  textEmphasis?: Nullable<string>;
-  textEmphasisColor?: Nullable<ColorValue>;
-  textEmphasisPosition?: Nullable<string>;
-  textEmphasisStyle?: Nullable<string>;
-  textIndent?: Nullable<number | string>;
-  textOverflow?: Nullable<string>;
+  textEmphasis?: string;
+  textEmphasisColor?: ColorValue;
+  textEmphasisPosition?: string;
+  textEmphasisStyle?: string;
+  textIndent?: number | string;
+  textOverflow?: string;
   textRendering?:
     | 'auto'
     | 'geometricPrecision'
     | 'optimizeLegibility'
     | 'optimizeSpeed';
-  textShadow?: Nullable<string>;
-  textShadowColor?: Nullable<ColorValue>;
+  textShadow?: string;
+  textShadowColor?: ColorValue;
   textShadowOffset?: { width?: number; height?: number };
-  textShadowRadius?: Nullable<number>;
-  textSizeAdjust?: Nullable<string>;
+  textShadowRadius?: number;
+  textSizeAdjust?: string;
   textTransform?: 'capitalize' | 'lowercase' | 'none' | 'uppercase';
   unicodeBidi?:
     | 'normal'
@@ -122,14 +121,14 @@ export type TextStyle = ViewStyle & {
     | 'isolate-override'
     | 'plaintext';
   userSelect?: 'none' | 'text';
-  verticalAlign?: Nullable<string>;
-  whiteSpace?: Nullable<string>;
+  verticalAlign?: string;
+  whiteSpace?: string;
   wordBreak?: 'normal' | 'break-all' | 'break-word' | 'keep-all';
-  wordWrap?: Nullable<string>;
+  wordWrap?: string;
   writingDirection?: 'auto' | 'ltr' | 'rtl';
   /* @platform web */
-  MozOsxFontSmoothing?: Nullable<string>;
-  WebkitFontSmoothing?: Nullable<string>;
+  MozOsxFontSmoothing?: string;
+  WebkitFontSmoothing?: string;
 };
 
 export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
@@ -143,8 +142,8 @@ export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
     | 'none'
     | 'text';
   dir?: 'auto' | 'ltr' | 'rtl';
-  ellipsizeMode?: Nullable<'clip' | 'head' | 'middle' | 'tail'>;
-  numberOfLines?: Nullable<number>;
+  ellipsizeMode?: 'clip' | 'head' | 'middle' | 'tail';
+  numberOfLines?: number;
   role?:
     | 'button'
     | 'header'
@@ -155,7 +154,7 @@ export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
     | 'none'
     | 'text';
   style?: GenericStyleProp<TextStyle>;
-  testID?: Nullable<string>;
+  testID?: string;
   onPress?: (e: MouseEvent<HTMLElement>) => void;
   onTextLayout?: (e: TextLayoutEvent) => void;
   selectable?: boolean;

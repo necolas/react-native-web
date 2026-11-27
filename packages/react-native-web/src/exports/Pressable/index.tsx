@@ -26,7 +26,7 @@ import useHover, { type HoverEventsConfig } from '../../modules/useHover';
 import useMergeRefs from '../../modules/useMergeRefs';
 import usePressEvents from '../../modules/usePressEvents';
 import type { PressResponderConfig } from '../../modules/usePressEvents/PressResponder';
-import type { Nullable, PlatformMethods } from '../../types';
+import type { PlatformMethods } from '../../types';
 import StyleSheet from '../StyleSheet';
 import View, { type ViewProps } from '../View';
 
@@ -41,13 +41,13 @@ type ViewStyleProp = ViewProps['style'];
 type Props = Omit<ViewProps, 'children' | 'style' | 'unstable_type'> & {
   children?: ReactNode | ((state: StateCallbackType) => ReactNode);
   // Duration (in milliseconds) from `onPressIn` before `onLongPress` is called.
-  delayLongPress?: Nullable<number>;
+  delayLongPress?: number;
   // Duration (in milliseconds) from `onPressStart` is called after pointerdown
-  delayPressIn?: Nullable<number>;
+  delayPressIn?: number;
   // Duration (in milliseconds) from `onPressEnd` is called after pointerup.
-  delayPressOut?: Nullable<number>;
+  delayPressOut?: number;
   // Whether the press behavior is disabled.
-  disabled?: Nullable<boolean>;
+  disabled?: boolean;
   // Called when the view is hovered
   onHoverIn?: HoverEventsConfig['onHoverStart'];
   // Called when the view is no longer hovered
@@ -73,8 +73,8 @@ type Props = Omit<ViewProps, 'children' | 'style' | 'unstable_type'> & {
   /**
    * Used only for documentation or testing (e.g. snapshot testing).
    */
-  testOnly_hovered?: Nullable<boolean>;
-  testOnly_pressed?: Nullable<boolean>;
+  testOnly_hovered?: boolean;
+  testOnly_pressed?: boolean;
 };
 
 /**

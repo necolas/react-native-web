@@ -31,12 +31,10 @@ class AnimatedValueXY extends AnimatedWithChildren {
   y: AnimatedValue;
   _listeners: Record<string, { x: string; y: string }>;
 
-  constructor(
-    valueIn?: Nullable<{
-      readonly x: number | AnimatedValue;
-      readonly y: number | AnimatedValue;
-    }>
-  ) {
+  constructor(valueIn?: {
+    readonly x: number | AnimatedValue;
+    readonly y: number | AnimatedValue;
+  }) {
     super();
     const value = valueIn || { x: 0, y: 0 };
     const { x, y } = value;

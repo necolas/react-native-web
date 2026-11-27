@@ -16,13 +16,12 @@ import {
 import AccessibilityUtil from '../../modules/AccessibilityUtil';
 import createDOMProps from '../../modules/createDOMProps';
 import { LocaleProvider } from '../../modules/useLocale';
-import type { Nullable } from '../../types';
 import type { StyleSheetOptions } from '../StyleSheet';
 
 const createElement = (
   component: ElementType,
-  props?: Nullable<Record<string, unknown>>,
-  options?: Nullable<StyleSheetOptions>,
+  props?: Record<string, unknown> | null,
+  options?: StyleSheetOptions,
   ...children: ReadonlyArray<ReactNode>
 ): ReactNode => {
   // Use equivalent platform elements where possible.

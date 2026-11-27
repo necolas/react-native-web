@@ -24,7 +24,7 @@ export type AnimationConfig = {
   isInteraction?: boolean;
   useNativeDriver: boolean;
   platformConfig?: PlatformConfig;
-  onComplete?: Nullable<EndCallback>;
+  onComplete?: EndCallback;
   iterations?: number;
 };
 

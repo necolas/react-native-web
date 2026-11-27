@@ -29,8 +29,8 @@ type ViewStyle = ViewProps['style'];
 
 type Props = Readonly<
   TouchableWithoutFeedbackProps & {
-    activeOpacity?: Nullable<number>;
-    style?: Nullable<ViewStyle>;
+    activeOpacity?: number;
+    style?: ViewStyle;
   }
 >;
 

@@ -37,22 +37,18 @@ export type SectionBase<SectionItemT> = {
    */
   readonly key?: string;
   // Optional props will override list-wide props just for this section.
-  readonly renderItem?: Nullable<
-    Bivariant<
-      [
-        info: {
-          item: SectionItemT;
-          index: number;
-          section: SectionBase<SectionItemT>;
-          separators: Separators;
-        }
-      ],
-      null | ReactElement
-    >
+  readonly renderItem?: Bivariant<
+    [
+      info: {
+        item: SectionItemT;
+        index: number;
+        section: SectionBase<SectionItemT>;
+        separators: Separators;
+      }
+    ],
+    null | ReactElement
   >;
-  readonly ItemSeparatorComponent?: Nullable<
-    ComponentType<SeparatorComponentProps>
-  >;
+  readonly ItemSeparatorComponent?: ComponentType<SeparatorComponentProps>;
   readonly keyExtractor?: Bivariant<
     [item: SectionItemT, index?: Nullable<number>],
     string
@@ -66,11 +62,11 @@ type SubExtractorInfo<SectionT> = {
   // Relative index within the section
   index: Nullable<number>;
   // True if this is the section header
-  header?: Nullable<boolean>;
-  leadingItem?: Nullable<Item>;
-  leadingSection?: Nullable<SectionT>;
-  trailingItem?: Nullable<Item>;
-  trailingSection?: Nullable<SectionT>;
+  header?: boolean;
+  leadingItem?: Item;
+  leadingSection?: SectionT;
+  trailingItem?: Item;
+  trailingSection?: SectionT;
 };
 
 type RequiredProps<SectionT extends SectionBase<Item>> = {
@@ -91,15 +87,11 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
    * Rendered at the top of each section. These stick to the top of the `ScrollView` by default on
    * iOS. See `stickySectionHeadersEnabled`.
    */
-  renderSectionHeader?: Nullable<
-    (info: { section: SectionT }) => null | ReactElement
-  >;
+  renderSectionHeader?: (info: { section: SectionT }) => null | ReactElement;
   /**
    * Rendered at the bottom of each section.
    */
-  renderSectionFooter?: Nullable<
-    (info: { section: SectionT }) => null | ReactElement
-  >;
+  renderSectionFooter?: (info: { section: SectionT }) => null | ReactElement;
   /**
    * Rendered at the top and bottom of each section (note this is different from
    * `ItemSeparatorComponent` which is only rendered between items). These are intended to separate
@@ -107,14 +99,14 @@ type OptionalProps<SectionT extends SectionBase<Item>> = {
    * `ItemSeparatorComponent`. Also receives `highlighted`, `[leading/trailing][Item/Separator]`,
    * and any custom props from `separators.updateProps`.
    */
-  SectionSeparatorComponent?: Nullable<ComponentType<SeparatorComponentProps>>;
-  ItemSeparatorComponent?: Nullable<ComponentType<SeparatorComponentProps>>;
+  SectionSeparatorComponent?: ComponentType<SeparatorComponentProps>;
+  ItemSeparatorComponent?: ComponentType<SeparatorComponentProps>;
   /**
    * Makes section headers stick to the top of the screen until the next one pushes it off. Only
    * enabled by default on iOS because that is the platform standard there.
    */
   stickySectionHeadersEnabled?: boolean;
-  onEndReached?: Nullable<(info: { distanceFromEnd: number }) => void>;
+  onEndReached?: (info: { distanceFromEnd: number }) => void;
 };
 
 type VirtualizedListProps = ComponentProps<typeof VirtualizedList>;
@@ -128,7 +120,7 @@ export type Props<SectionT extends SectionBase<Item>> = Omit<
 > &
   Omit<VirtualizedListProps, 'renderItem' | 'data' | 'ItemSeparatorComponent'>;
 export type ScrollToLocationParamsType = {
-  animated?: Nullable<boolean>;
+  animated?: boolean;
   itemIndex: number;
   sectionIndex: number;
   viewOffset?: number;

@@ -11,7 +11,6 @@
 
 import { useRef } from 'react';
 
-import type { Nullable } from '../../types';
 import type AnimatedColor from '../../vendor/react-native/Animated/nodes/AnimatedColor';
 import type {
   AnimatedColorConfig,
@@ -21,7 +20,7 @@ import Animated from '../Animated';
 
 export default function useAnimatedColor(
   inputValue?: InputValue,
-  config?: Nullable<AnimatedColorConfig>
+  config?: AnimatedColorConfig
 ): AnimatedColor {
   const ref = useRef<null | AnimatedColor>(null);
   if (ref.current == null) {

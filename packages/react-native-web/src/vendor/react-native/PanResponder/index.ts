@@ -199,24 +199,24 @@ type PassiveCallback = (
 ) => unknown;
 
 type PanResponderConfig = Readonly<{
-  onMoveShouldSetPanResponder?: Nullable<ActiveCallback>;
-  onMoveShouldSetPanResponderCapture?: Nullable<ActiveCallback>;
-  onStartShouldSetPanResponder?: Nullable<ActiveCallback>;
-  onStartShouldSetPanResponderCapture?: Nullable<ActiveCallback>;
+  onMoveShouldSetPanResponder?: ActiveCallback;
+  onMoveShouldSetPanResponderCapture?: ActiveCallback;
+  onStartShouldSetPanResponder?: ActiveCallback;
+  onStartShouldSetPanResponderCapture?: ActiveCallback;
   /**
    * The body of `onResponderGrant` returns a bool, but the vast majority of
    * callsites return void and this TODO notice is found in it:
    *   TODO: t7467124 investigate if this can be removed
    */
-  onPanResponderGrant?: Nullable<PassiveCallback | ActiveCallback>;
-  onPanResponderReject?: Nullable<PassiveCallback>;
-  onPanResponderStart?: Nullable<PassiveCallback>;
-  onPanResponderEnd?: Nullable<PassiveCallback>;
-  onPanResponderRelease?: Nullable<PassiveCallback>;
-  onPanResponderMove?: Nullable<PassiveCallback>;
-  onPanResponderTerminate?: Nullable<PassiveCallback>;
-  onPanResponderTerminationRequest?: Nullable<ActiveCallback>;
-  onShouldBlockNativeResponder?: Nullable<ActiveCallback>;
+  onPanResponderGrant?: PassiveCallback | ActiveCallback;
+  onPanResponderReject?: PassiveCallback;
+  onPanResponderStart?: PassiveCallback;
+  onPanResponderEnd?: PassiveCallback;
+  onPanResponderRelease?: PassiveCallback;
+  onPanResponderMove?: PassiveCallback;
+  onPanResponderTerminate?: PassiveCallback;
+  onPanResponderTerminationRequest?: ActiveCallback;
+  onShouldBlockNativeResponder?: ActiveCallback;
 }>;
 
 const PanResponder = {
