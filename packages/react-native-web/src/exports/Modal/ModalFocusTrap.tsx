@@ -91,6 +91,11 @@ const ModalFocusTrap = ({
     trapFocusInProgress: false,
     lastFocusedElement: null
   });
+  // Read while rendering, before the children commit: a child that focuses
+  // itself on mount (autoFocus) already has focus by the time an effect runs.
+  const lastFocusedElementOutsideTrapRef = useRef<Nullable<Element>>(
+    canUseDOM ? document.activeElement : null
+  );
 
   useLayoutEffect(() => {
     if (canUseDOM && active) {
@@ -160,7 +165,8 @@ const ModalFocusTrap = ({
   // after closing it
   useEffect(function () {
     if (canUseDOM) {
-      const lastFocusedElementOutsideTrap = document.activeElement;
+      const lastFocusedElementOutsideTrap =
+        lastFocusedElementOutsideTrapRef.current;
       return function () {
         if (
           lastFocusedElementOutsideTrap &&
