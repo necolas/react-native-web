@@ -25,7 +25,7 @@ import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
 import useTextLayout from '../../modules/useTextLayout';
-import type { Nullable, PlatformMethods } from '../../types';
+import type { PlatformMethods } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from './TextAncestorContext';
@@ -81,7 +81,7 @@ const Text = (
   } = props;
 
   const hasTextAncestor = useContext(TextAncestorContext);
-  const hostRef = useRef<Nullable<HTMLElement>>(null);
+  const hostRef = useRef<HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);

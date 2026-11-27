@@ -101,8 +101,8 @@ const ScrollViewBase = (props: Props): ReactNode => {
   } = props;
 
   const scrollState = useRef({ isScrolling: false, scrollLastTick: 0 });
-  const scrollTimeout = useRef<Nullable<number>>(null);
-  const scrollRef = useRef<Nullable<HTMLElement>>(null);
+  const scrollTimeout = useRef<number>(null);
+  const scrollRef = useRef<HTMLElement>(null);
 
   function createPreventableScrollHandler<T>(
     handler: Nullable<(e: T) => void>

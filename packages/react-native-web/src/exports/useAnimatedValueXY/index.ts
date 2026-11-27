@@ -23,7 +23,7 @@ export default function useAnimatedValueXY(
   // `useNativeDriver` is not supported on web, so the config is not used.
   config?: AnimatedValueConfig
 ): AnimatedValueXY {
-  const ref = useRef<null | AnimatedValueXY>(null);
+  const ref = useRef<AnimatedValueXY>(null);
   if (ref.current == null) {
     ref.current = new Animated.ValueXY(initialValue);
   }

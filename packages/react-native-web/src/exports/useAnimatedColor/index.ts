@@ -22,7 +22,7 @@ export default function useAnimatedColor(
   inputValue?: InputValue,
   config?: AnimatedColorConfig
 ): AnimatedColor {
-  const ref = useRef<null | AnimatedColor>(null);
+  const ref = useRef<AnimatedColor>(null);
   if (ref.current == null) {
     ref.current = new Animated.Color(inputValue, config);
   }

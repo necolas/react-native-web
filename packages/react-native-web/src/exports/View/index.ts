@@ -17,7 +17,7 @@ import useElementLayout from '../../modules/useElementLayout';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
-import type { Nullable, PlatformMethods } from '../../types';
+import type { PlatformMethods } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
 import TextAncestorContext from '../Text/TextAncestorContext';
@@ -79,7 +79,7 @@ const View = (
   }
 
   const hasTextAncestor = useContext(TextAncestorContext);
-  const hostRef = useRef<Nullable<HTMLElement>>(null);
+  const hostRef = useRef<HTMLElement>(null);
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);

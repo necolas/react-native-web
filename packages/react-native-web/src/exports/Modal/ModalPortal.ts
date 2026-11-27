@@ -10,7 +10,6 @@ import { type ReactNode, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import canUseDOM from '../../modules/canUseDom';
-import type { Nullable } from '../../types';
 
 export type ModalPortalProps = {
   children: ReactNode;
@@ -18,7 +17,7 @@ export type ModalPortalProps = {
 
 function ModalPortal(props: ModalPortalProps): ReactNode {
   const { children } = props;
-  const elementRef = useRef<Nullable<HTMLDivElement>>(null);
+  const elementRef = useRef<HTMLDivElement>(null);
 
   if (canUseDOM && !elementRef.current) {
     const element = document.createElement('div');

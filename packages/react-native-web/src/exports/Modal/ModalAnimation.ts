@@ -45,14 +45,14 @@ export type ModalAnimationProps = {
   children?: ReactNode;
   onDismiss?: Nullable<() => void>;
   onShow?: Nullable<() => void>;
-  visible?: Nullable<boolean>;
+  visible?: boolean;
 };
 
 function ModalAnimation(props: ModalAnimationProps): ReactNode {
   const { children, onDismiss, onShow, visible } = props;
 
   const [isRendering, setIsRendering] = useState(false);
-  const wasVisible = useRef<Nullable<boolean>>(false);
+  const wasVisible = useRef<boolean | undefined>(false);
   const wasRendering = useRef(false);
 
   // Reduced motion CSS resets often use "animation: none", and then browsers

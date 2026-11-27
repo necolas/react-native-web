@@ -61,7 +61,7 @@ const Switch = (props: SwitchProps): ReactNode => {
     ...rest
   } = props;
 
-  const thumbRef = useRef<ComponentRef<typeof View> | null>(null);
+  const thumbRef = useRef<ComponentRef<typeof View>>(null);
 
   function handleChange(event: {
     readonly nativeEvent: { readonly target: HTMLInputElement };

@@ -222,7 +222,7 @@ const Image = (
   const hasTextAncestor = useContext(TextAncestorContext);
   const hiddenImageRef = useRef(null);
   const filterRef = useRef(_filterId++);
-  const requestRef = useRef<Nullable<number>>(null);
+  const requestRef = useRef<number>(null);
   const shouldDisplaySource =
     state === LOADED || (state === LOADING && defaultSource == null);
   const [_resizeMode, filter, _tintColor] = extractNonStandardStyleProps(

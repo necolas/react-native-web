@@ -115,7 +115,7 @@ function Pressable(props: Props): ReactNode {
   const hasStateCallback =
     typeof children === 'function' || typeof style === 'function';
 
-  const hostRef = useRef<(HTMLElement & PlatformMethods) | null>(null);
+  const hostRef = useRef<HTMLElement & PlatformMethods>(null);
   const setRef = useMergeRefs(ref, hostRef);
 
   const pressConfig = useMemo(

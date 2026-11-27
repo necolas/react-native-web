@@ -26,7 +26,7 @@ const emptyObject: ResponderConfig = {};
 let idCounter = 0;
 
 function useStable<T>(getInitialValue: () => T): T {
-  const ref = useRef<T | null>(null);
+  const ref = useRef<T>(null);
   ref.current ??= getInitialValue();
   return ref.current;
 }

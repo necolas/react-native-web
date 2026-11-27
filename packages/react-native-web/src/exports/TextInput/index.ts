@@ -243,9 +243,9 @@ const TextInput = (
     height: null,
     width: null
   });
-  const hostRef = useRef<TextInputNode | null>(null);
-  const prevSelection = useRef<Nullable<Selection>>(null);
-  const prevSecureTextEntry = useRef<Nullable<boolean>>(false);
+  const hostRef = useRef<TextInputNode>(null);
+  const prevSelection = useRef<Selection>(null);
+  const prevSecureTextEntry = useRef<boolean>(false);
 
   useEffect(() => {
     if (hostRef.current && prevSelection.current) {

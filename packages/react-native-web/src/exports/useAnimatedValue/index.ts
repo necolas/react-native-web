@@ -19,7 +19,7 @@ export default function useAnimatedValue(
   initialValue: number,
   config?: AnimatedValueConfig
 ): AnimatedValue {
-  const ref = useRef<null | AnimatedValue>(null);
+  const ref = useRef<AnimatedValue>(null);
   if (ref.current == null) {
     ref.current = new Animated.Value(initialValue, config);
   }

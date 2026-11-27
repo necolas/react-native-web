@@ -32,7 +32,7 @@ export default function useAnimatedProps<TInstance>(
     (count: number) => count + 1,
     0
   );
-  const onUpdateRef = useRef<Nullable<() => void>>(null);
+  const onUpdateRef = useRef<() => void>(null);
 
   // TODO: Only invalidate `node` if animated props or `style` change. In the
   // previous implementation, we permitted `style` to override props with the
@@ -114,7 +114,7 @@ function reduceAnimatedProps(node: AnimatedProps): ReducedProps {
  * unless we are unmounting.
  */
 function useAnimatedPropsLifecycle(node: AnimatedProps): void {
-  const prevNodeRef = useRef<Nullable<AnimatedProps>>(null);
+  const prevNodeRef = useRef<AnimatedProps>(null);
   const isUnmountingRef = useRef<boolean>(false);
 
   useEffect(() => {
