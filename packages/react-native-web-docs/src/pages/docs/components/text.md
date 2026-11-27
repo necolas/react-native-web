@@ -92,6 +92,10 @@ Truncates the text with an ellipsis after this many lines.
 This is invoked when a component is mounted and when its layout changes. `x` and `y` are the offsets from the parent node.
 {% endcall %}
 
+{% call macro.prop('onTextLayout', '?({ nativeEvent: { lines: Array<{ x, y, width, height, text, ascender, capHeight, descender, xHeight }> } }) => void') %}
+This is invoked when the text lines change. Each line has its position and size relative to the text content box, its text, and the metrics of its first font. Only the outermost `Text` calls it.
+{% endcall %}
+
 {% call macro.prop('style', '?Style') %}
 Set the styles of the text. `Text` supports typographic styles in addition to those of `View`.
 {% endcall %}

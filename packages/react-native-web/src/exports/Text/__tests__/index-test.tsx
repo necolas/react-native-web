@@ -283,6 +283,151 @@ describe('components/Text', () => {
     });
   });
 
+  describe('prop "onTextLayout"', () => {
+    let charWidth: number;
+    let lineLength: number;
+    let resizeCallbacks: Array<(entries: Array<unknown>) => void>;
+
+    const resize = () => {
+      act(() => {
+        for (const callback of resizeCallbacks) {
+          callback([]);
+        }
+      });
+    };
+
+    beforeEach(() => {
+      charWidth = 10;
+      lineLength = 6;
+      resizeCallbacks = [];
+
+      vi.stubGlobal(
+        'ResizeObserver',
+        class {
+          constructor(callback: (entries: Array<unknown>) => void) {
+            resizeCallbacks.push(callback);
+          }
+          observe() {}
+          disconnect() {}
+        }
+      );
+
+      vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(null);
+
+      Reflect.defineProperty(HTMLElement.prototype, 'getClientRects', {
+        configurable: true,
+        value: () => [{}]
+      });
+
+      // "Hello " on the first line, "world" on the second line
+      Reflect.defineProperty(Range.prototype, 'getClientRects', {
+        configurable: true,
+        value(this: Range) {
+          const index = this.startOffset;
+          const line = index < lineLength ? 0 : 1;
+          const left = (line === 0 ? index : index - lineLength) * charWidth;
+          const top = line * 20;
+          return [{ left, right: left + charWidth, top, bottom: top + 16 }];
+        }
+      });
+    });
+
+    afterEach(() => {
+      Reflect.deleteProperty(HTMLElement.prototype, 'getClientRects');
+      Reflect.deleteProperty(Range.prototype, 'getClientRects');
+      Reflect.deleteProperty(document, 'fonts');
+    });
+
+    test('is called once with the lines', () => {
+      const onTextLayout = vi.fn();
+
+      render(<Text onTextLayout={onTextLayout}>Hello world</Text>);
+
+      resize();
+      resize();
+
+      expect(onTextLayout).toHaveBeenCalledTimes(1);
+      expect(onTextLayout.mock.calls[0][0].nativeEvent.lines).toEqual([
+        expect.objectContaining({ text: 'Hello ', x: 0, y: 0, width: 50 }),
+        expect.objectContaining({ text: 'world', x: 0, y: 20, width: 50 })
+      ]);
+    });
+
+    test('is clipped to the box with numberOfLines={1}', () => {
+      lineLength = Infinity;
+      vi.spyOn(Element.prototype, 'clientWidth', 'get').mockReturnValue(75);
+
+      const onTextLayout = vi.fn();
+
+      render(
+        <Text numberOfLines={1} onTextLayout={onTextLayout}>
+          Hello world
+        </Text>
+      );
+
+      resize();
+
+      expect(onTextLayout.mock.calls[0][0].nativeEvent.lines).toEqual([
+        expect.objectContaining({ text: 'Hello wo', x: 0, width: 75 })
+      ]);
+    });
+
+    test('is called when a style changes the lines', async () => {
+      const onTextLayout = vi.fn();
+
+      const { rerender } = render(
+        <Text onTextLayout={onTextLayout}>Hello world</Text>
+      );
+
+      resize();
+      charWidth = 12;
+
+      await act(async () => {
+        rerender(
+          <Text onTextLayout={onTextLayout} style={{ fontWeight: 'bold' }}>
+            Hello world
+          </Text>
+        );
+      });
+
+      expect(onTextLayout).toHaveBeenCalledTimes(2);
+    });
+
+    test('is called when fonts finish loading', () => {
+      const fonts = new EventTarget();
+
+      Reflect.defineProperty(document, 'fonts', {
+        configurable: true,
+        value: fonts
+      });
+
+      const onTextLayout = vi.fn();
+
+      render(<Text onTextLayout={onTextLayout}>Hello world</Text>);
+      resize();
+      charWidth = 12;
+
+      act(() => {
+        fonts.dispatchEvent(new Event('loadingdone'));
+      });
+
+      expect(onTextLayout).toHaveBeenCalledTimes(2);
+    });
+
+    test('is not called on nested text', () => {
+      const onTextLayout = vi.fn();
+
+      render(
+        <Text>
+          <Text onTextLayout={onTextLayout}>Hello world</Text>
+        </Text>
+      );
+
+      resize();
+      expect(onTextLayout).not.toHaveBeenCalled();
+    });
+  });
+
   describe('prop "ref"', () => {
     test('value is set', () => {
       const ref = vi.fn();

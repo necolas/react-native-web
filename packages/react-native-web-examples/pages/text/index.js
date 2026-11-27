@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 
+import Button from '../../shared/button';
 import Example from '../../shared/example';
 
 const Spacer = () => <View style={{ height: '1rem' }} />;
@@ -307,6 +309,53 @@ function TextShadow() {
   );
 }
 
+function TextLayout() {
+  const [lines, setLines] = useState([]);
+  const [wide, setWide] = useState(false);
+
+  return (
+    <View>
+      <Heading>onTextLayout</Heading>
+
+      <View style={{ alignItems: 'flex-start', marginBottom: 10 }}>
+        <Button
+          onPress={() => setWide((value) => !value)}
+          title="Toggle width"
+        />
+      </View>
+
+      <View style={{ width: wide ? 300 : 200 }}>
+        <Text onTextLayout={(e) => setLines(e.nativeEvent.lines)}>
+          Each line of this text gets a red box from the onTextLayout event.
+          Toggle the width to see the lines change.
+        </Text>
+
+        {lines.map((line) => (
+          <View
+            key={line.y}
+            pointerEvents="none"
+            style={{
+              borderColor: 'red',
+              borderWidth: 1,
+              height: line.height,
+              left: line.x,
+              position: 'absolute',
+              top: line.y,
+              width: line.width
+            }}
+          />
+        ))}
+      </View>
+
+      {lines.map((line, index) => (
+        <Text key={line.y} style={{ color: 'gray', marginTop: 5 }}>
+          {`${index}: ${JSON.stringify(line.text)} (${Math.round(line.width)}x${Math.round(line.height)})`}
+        </Text>
+      ))}
+    </View>
+  );
+}
+
 function LineExample({ description, children }) {
   return (
     <View style={{ marginTop: 20 }}>
@@ -510,6 +559,9 @@ export default function TextPage() {
           <Spacer />
 
           <TextShadow />
+          <Spacer />
+
+          <TextLayout />
         </View>
       </View>
     </Example>

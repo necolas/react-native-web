@@ -35,6 +35,22 @@ export type LayoutEvent = {
   timeStamp: number;
 };
 
+export type TextLayoutLine = LayoutValue & {
+  ascender: number;
+  capHeight: number;
+  descender: number;
+  text: string;
+  xHeight: number;
+};
+
+export type TextLayoutEvent = {
+  nativeEvent: {
+    lines: Array<TextLayoutLine>;
+    target?: Element;
+  };
+  timeStamp: number;
+};
+
 export type MeasureOnSuccessCallback = (
   x: number,
   y: number,

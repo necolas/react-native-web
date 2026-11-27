@@ -24,6 +24,7 @@ import useElementLayout from '../../modules/useElementLayout';
 import { getLocaleDirection, useLocaleContext } from '../../modules/useLocale';
 import useMergeRefs from '../../modules/useMergeRefs';
 import useResponderEvents from '../../modules/useResponderEvents';
+import useTextLayout from '../../modules/useTextLayout';
 import type { Nullable, PlatformMethods } from '../../types';
 import createElement from '../createElement';
 import StyleSheet from '../StyleSheet';
@@ -73,6 +74,7 @@ const Text = (
     onSelectionChangeShouldSetResponderCapture,
     onStartShouldSetResponder,
     onStartShouldSetResponderCapture,
+    onTextLayout,
     ref,
     selectable,
     unstable_type
@@ -83,6 +85,7 @@ const Text = (
   const { direction: contextDirection } = useLocaleContext();
 
   useElementLayout(hostRef, onLayout);
+  useTextLayout(hostRef, hasTextAncestor ? null : onTextLayout, numberOfLines);
   useResponderEvents(hostRef, {
     onMoveShouldSetResponder,
     onMoveShouldSetResponderCapture,

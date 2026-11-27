@@ -8,7 +8,12 @@
 
 import type { MouseEvent } from 'react';
 
-import type { ColorValue, GenericStyleProp, Nullable } from '../../types';
+import type {
+  ColorValue,
+  GenericStyleProp,
+  Nullable,
+  TextLayoutEvent
+} from '../../types';
 import type { ViewProps, ViewStyle } from '../View/types';
 
 type FontWeightValue =
@@ -154,5 +159,6 @@ export type TextProps = Omit<ViewProps, 'dir' | 'style'> & {
   style?: GenericStyleProp<TextStyle>;
   testID?: Nullable<string>;
   onPress?: (e: MouseEvent<HTMLElement>) => void;
+  onTextLayout?: (e: TextLayoutEvent) => void;
   selectable?: boolean;
 };
